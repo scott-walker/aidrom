@@ -83,14 +83,14 @@ export const createRequest = async (req, res, next) => {
   const prompt = req.body.prompt
 
   try {
-    logger.info("Создание нового запроса к AI", {
+    logger.info("Создание нового запроса к AI-боту", {
       bot,
       prompt
     })
 
     const request = await userService.createRequest(bot, prompt)
 
-    logger.info("Запрос к AI успешно создан", {
+    logger.info("Запрос к AI-боту успешно создан", {
       requestId: request[0].id,
       bot,
       prompt
@@ -98,7 +98,7 @@ export const createRequest = async (req, res, next) => {
 
     res.status(201).json(request)
   } catch (err) {
-    logger.error("Ошибка при создании запроса к AI", {
+    logger.error("Ошибка при создании запроса к AI-боту", {
       error: err.message,
       bot
     })

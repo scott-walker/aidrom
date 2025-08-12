@@ -1,4 +1,4 @@
-import { createControllerLogger, createServiceLogger, httpLogger, dbLogger, aiLogger } from "./src/utils/logger.js"
+import { createControllerLogger, createServiceLogger, httpLogger, dbLogger, apiLogger } from "./src/utils/logger.js"
 
 // Тестируем логгеры для контроллеров
 const userController = createControllerLogger("UserController")
@@ -54,8 +54,8 @@ dbLogger.info("Запрос выполнен", { query: "SELECT * FROM users", d
 dbLogger.error("Ошибка БД", { query: "INSERT INTO users", error: "Duplicate key" })
 
 // Тест AI логгера
-aiLogger.info("Запрос к AI отправлен", { bot: "gemini", prompt: "Привет, как дела?" })
-aiLogger.info("Ответ от AI получен", { bot: "gemini", cost: 0.05, tokens: 150 })
-aiLogger.error("Ошибка AI API", { bot: "claude", error: "Rate limit exceeded" })
+apiLogger.info("Запрос к AI отправлен", { bot: "gemini", prompt: "Привет, как дела?" })
+apiLogger.info("Ответ от AI получен", { bot: "gemini", cost: 0.05, tokens: 150 })
+apiLogger.error("Ошибка AI API", { bot: "claude", error: "Rate limit exceeded" })
 
 console.log("\n=== Тест завершен ===")

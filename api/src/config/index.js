@@ -11,7 +11,8 @@ const config = {
   genApiBaseUrl: process.env.GEN_API_BASE_URL,
   genApiKey: process.env.GEN_API_CLIENT_KEY,
   logLevel: process.env.LOG_LEVEL || "info",
-  logFile: resolve(rootDir, process.env.LOG_FILE || "../logs/app.log")
+  logFile: resolve(rootDir, process.env.LOG_FILE || "../logs/app.log"),
+  logMetaDir: resolve(rootDir, process.env.LOG_META_DIR || "../runtime/winston")
 }
 
 const getParam = (key) => {

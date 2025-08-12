@@ -1,6 +1,23 @@
 import winston from "winston"
 import DailyRotateFile from "winston-daily-rotate-file"
+import { mkdir } from "fs/promises"
+import { dirname } from "path"
 import config from "#config/index.js"
+
+/**
+ * Создает директории для логов и метаданных если они не существуют
+ */
+const ensureLogDirectories = async () => {
+  try {
+    const logDir = dirname(config("logFile"))
+    const metaDir = config("logMetaDir")
+
+    await mkdir(logDir, { recursive: true })
+    await mkdir(metaDir, { recursive: true })
+  } catch (error) {
+    console.error("Ошибка при создании директорий логов:", error.message)
+  }
+}
 
 /**
  * Создает форматтер для логов
@@ -12,7 +29,9 @@ const createLogFormat = () => {
     winston.format.errors({ stack: true }),
     winston.format.json(),
     winston.format.printf(({ timestamp, level, message, stack, ...meta }) => {
-      let log = `${timestamp} [${level.toUpperCase()}]: ${message}`
+      const layer = meta.layer || "APP"
+
+      let log = `${timestamp} [${level.toUpperCase()}]: ${layer} :: ${message}`
 
       if (Object.keys(meta).length > 0) {
         log += ` ${JSON.stringify(meta)}`
@@ -31,8 +50,9 @@ const createLogFormat = () => {
  * Создает транспорты для логгера
  * @returns {Array} Массив транспортов
  */
-const createTransports = () => {
+const createTransports = (fileMarker) => {
   const transports = []
+  const logFile = fileMarker ? config("logFile").replace(".log", `-${fileMarker}.log`) : config("logFile")
 
   // Консольный транспорт
   transports.push(
@@ -44,11 +64,13 @@ const createTransports = () => {
   // Файловый транспорт с ротацией
   transports.push(
     new DailyRotateFile({
-      filename: config("logFile").replace(".log", "-%DATE%.log"),
+      filename: logFile.replace(".log", "-%DATE%.log"),
       datePattern: "YYYY-MM-DD",
       maxSize: "20m",
       maxFiles: "14d",
-      format: createLogFormat()
+      format: createLogFormat(),
+      auditFile: config("logMetaDir") + "/audit.json",
+      zippedArchive: true
     })
   )
 
@@ -67,9 +89,10 @@ const getMethodName = () => {
   return match ? match[1] : "unknown"
 }
 
-/**
- * Основной логгер приложения
- */
+// Создаем директории при инициализации
+ensureLogDirectories()
+
+// Создаем логгер приложения
 const logger = winston.createLogger({
   level: config("logLevel"),
   format: createLogFormat(),
@@ -84,7 +107,7 @@ export const httpLogger = winston.createLogger({
   level: "info",
   format: createLogFormat(),
   transports: createTransports(),
-  defaultMeta: { service: "http" }
+  defaultMeta: { layer: "HTTP" }
 })
 
 /**
@@ -94,17 +117,17 @@ export const dbLogger = winston.createLogger({
   level: "info",
   format: createLogFormat(),
   transports: createTransports(),
-  defaultMeta: { service: "database" }
+  defaultMeta: { layer: "DB" }
 })
 
 /**
  * Логгер для работы с AI API
  */
-export const aiLogger = winston.createLogger({
+export const apiLogger = winston.createLogger({
   level: "info",
   format: createLogFormat(),
   transports: createTransports(),
-  defaultMeta: { service: "ai-api" }
+  defaultMeta: { layer: "API" }
 })
 
 /**
@@ -113,25 +136,22 @@ export const aiLogger = winston.createLogger({
  * @returns {Object} Логгер с методами info, warn, error
  */
 export const createControllerLogger = (controllerName) => {
-  const controllerLogger = winston.createLogger({
+  const logger = winston.createLogger({
     level: "info",
     format: createLogFormat(),
     transports: createTransports(),
-    defaultMeta: { service: "controller", controller: controllerName }
+    defaultMeta: { layer: "CONTROLLER", controller: controllerName }
   })
 
   return {
     info: (message, meta = {}) => {
-      const methodName = getMethodName()
-      controllerLogger.info(`[${controllerName}.${methodName}] ${message}`, meta)
+      logger.info(`[${controllerName}.${getMethodName()}] ${message}`, meta)
     },
     warn: (message, meta = {}) => {
-      const methodName = getMethodName()
-      controllerLogger.warn(`[${controllerName}.${methodName}] ${message}`, meta)
+      logger.warn(`[${controllerName}.${getMethodName()}] ${message}`, meta)
     },
     error: (message, meta = {}) => {
-      const methodName = getMethodName()
-      controllerLogger.error(`[${controllerName}.${methodName}] ${message}`, meta)
+      logger.error(`[${controllerName}.${getMethodName()}] ${message}`, meta)
     }
   }
 }
@@ -142,25 +162,49 @@ export const createControllerLogger = (controllerName) => {
  * @returns {Object} Логгер с методами info, warn, error
  */
 export const createServiceLogger = (serviceName) => {
-  const serviceLogger = winston.createLogger({
+  const logger = winston.createLogger({
     level: "info",
     format: createLogFormat(),
     transports: createTransports(),
-    defaultMeta: { service: "service", service: serviceName }
+    defaultMeta: { layer: "SERVICE", service: serviceName }
   })
 
   return {
     info: (message, meta = {}) => {
-      const methodName = getMethodName()
-      serviceLogger.info(`[${serviceName}.${methodName}] ${message}`, meta)
+      logger.info(`[${serviceName}.${getMethodName()}] ${message}`, meta)
     },
     warn: (message, meta = {}) => {
-      const methodName = getMethodName()
-      serviceLogger.warn(`[${serviceName}.${methodName}] ${message}`, meta)
+      logger.warn(`[${serviceName}.${getMethodName()}] ${message}`, meta)
     },
     error: (message, meta = {}) => {
-      const methodName = getMethodName()
-      serviceLogger.error(`[${serviceName}.${methodName}] ${message}`, meta)
+      logger.error(`[${serviceName}.${getMethodName()}] ${message}`, meta)
+    }
+  }
+}
+
+/**
+ * Создает логгер для AI клиентов
+ * @param {string} clientName - Название клиента
+ * @returns {Object} Логгер с методами info, warn, error
+ */
+export const createClientLogger = (clientName) => {
+  const fileMarker = "client-" + clientName.replace("Client", "").toLowerCase()
+  const logger = winston.createLogger({
+    level: "info",
+    format: createLogFormat(),
+    transports: createTransports(fileMarker),
+    defaultMeta: { layer: "CLIENT", client: clientName }
+  })
+
+  return {
+    info: (message, meta = {}) => {
+      logger.info(`[${clientName}] ${message}`, meta)
+    },
+    warn: (message, meta = {}) => {
+      logger.warn(`[${clientName}] ${message}`, meta)
+    },
+    error: (message, meta = {}) => {
+      logger.error(`[${clientName}] ${message}`, meta)
     }
   }
 }
