@@ -1,8 +1,16 @@
 import "dotenv/config"
 import { resolve } from "path"
 
+/**
+ * Корневой каталог проекта
+ * @type {String}
+ */
 const rootDir = resolve(import.meta.dirname, "..")
 
+/**
+ * Конфигурация проекта
+ * @type {Object}
+ */
 const config = {
   rootDir,
   port: process.env.PORT || 3000,
@@ -15,6 +23,11 @@ const config = {
   logMetaDir: resolve(rootDir, process.env.LOG_META_DIR || "../runtime/winston")
 }
 
+/**
+ * Получение параметра конфигурации
+ * @param {String} key ключ параметра
+ * @returns {String} значение параметра
+ */
 const getParam = (key) => {
   if (!config.hasOwnProperty(key)) {
     throw new Error(`Недоступный параметр конфигурации ${key}`)

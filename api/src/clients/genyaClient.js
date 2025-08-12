@@ -4,7 +4,7 @@ import { sendPrompt, PromptResponse } from "#utils/api.js"
 // https://gen-api.ru/model/gemini-2-5-flash/api
 const NETWORK = "gemini-2-5-flash"
 const MODEL = "gemini-2.5-flash-preview-04-17"
-const TOKENS = 1
+const TOKENS = 100
 
 // Создаем логгер для клиента
 const logger = createClientLogger("GenyaClient")

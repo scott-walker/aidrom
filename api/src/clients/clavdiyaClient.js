@@ -4,7 +4,7 @@ import { sendPrompt, PromptResponse } from "#utils/api.js"
 // https://gen-api.ru/model/claude-4/api
 const NETWORK = "claude-4"
 const MODEL = "claude-sonnet-4-20250522"
-const TOKENS = 1
+const TOKENS = 100
 
 // Создаем логгер для клиента
 const logger = createClientLogger("ClavdiyaClient")

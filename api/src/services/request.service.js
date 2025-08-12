@@ -3,7 +3,7 @@
  * @namespace Request.Service
  */
 
-import { eq } from "drizzle-orm"
+import { eq, desc } from "drizzle-orm"
 import { db } from "#db/index.js"
 import { requests } from "#db/schema/requests.js"
 import { createServiceLogger } from "#utils/logger.js"
@@ -23,7 +23,7 @@ export const getRequests = async () => {
   try {
     logger.info("Получение всех запросов из БД")
 
-    const items = await db.select().from(requests)
+    const items = await db.select().from(requests).orderBy(desc(requests.id))
 
     logger.info("Запрос к БД выполнен успешно", {
       count: items.length
