@@ -1,10 +1,10 @@
 import { Router } from "express"
-import { getRequest, getRequests, createRequest } from "#controllers/request.controller.js"
+import * as requestController from "#controllers/request.controller.js"
 
 const router = Router()
 
-router.get("/:requestId", getRequest)
-router.get("/", getRequests)
-router.post("/", createRequest)
+router.get("/:requestId", requestController.getRequest)
+router.get("/", requestController.getRequests)
+router.post("/", requestController.createRequest)
 
 export default router

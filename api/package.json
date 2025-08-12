@@ -7,7 +7,9 @@
     "#routes/*": "./src/routes/*",
     "#controllers/*": "./src/controllers/*",
     "#middlewares/*": "./src/middlewares/*",
-    "#services/*": "./src/services/*"
+    "#services/*": "./src/services/*",
+    "#clients/*": "./src/clients/*",
+    "#utils/*": "./src/utils/*"
   },
   "scripts": {
     "start": "node src/server.js",
@@ -16,13 +18,17 @@
     "gen": "drizzle-kit generate:pg --config=drizzle.config.js"
   },
   "dependencies": {
+    "axios": "^1.11.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.30.0",
     "express": "^4.19.2",
-    "pg": "^8.11.5"
+    "pg": "^8.11.5",
+    "winston": "^3.15.0",
+    "winston-daily-rotate-file": "^4.7.1"
   },
   "devDependencies": {
-    "drizzle-kit": "^0.20.14",
+    "drizzle-kit": "^0.31.4",
     "nodemon": "^3.1.4"
   }
 }

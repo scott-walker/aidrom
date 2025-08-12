@@ -7,7 +7,9 @@
       "#routes/*": ["routes/*"],
       "#controllers/*": ["controllers/*"],
       "#middlewares/*": ["middlewares/*"],
-      "#services/*": ["services/*"]
+      "#services/*": ["services/*"],
+      "#clients/*": ["clients/*"],
+      "#utils/*": ["utils/*"]
     }
   }
 }

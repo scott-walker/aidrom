@@ -3,7 +3,11 @@
  * @namespace Request.Controller
  */
 
+import { createControllerLogger } from "#utils/logger.js"
 import * as userService from "#services/request.service.js"
+
+// Создаем логгер для контроллера запросов
+const logger = createControllerLogger("RequestController")
 
 /**
  * Получает список всех запросов
@@ -15,10 +19,20 @@ import * as userService from "#services/request.service.js"
  */
 export const getRequests = async (req, res, next) => {
   try {
-    const all = await userService.getRequests()
+    logger.info("Получение списка всех запросов")
 
-    res.json(all)
+    const requests = await userService.getRequests()
+
+    logger.info("Список запросов успешно получен", {
+      count: requests.length
+    })
+
+    res.json(requests)
   } catch (err) {
+    logger.error("Ошибка при получении списка запросов", {
+      error: err.message
+    })
+
     next(err)
   }
 }
@@ -32,11 +46,25 @@ export const getRequests = async (req, res, next) => {
  * @returns {void}
  */
 export const getRequest = async (req, res, next) => {
+  const requestId = req.params.requestId
+
   try {
-    const request = await userService.getRequestById(req.params.requestId)
+    logger.info("Получение запроса по ID", {
+      requestId
+    })
+
+    const request = await userService.getRequestById(requestId)
+
+    logger.info("Запрос успешно получен", {
+      requestId
+    })
 
     res.json(request)
   } catch (err) {
+    logger.error("Ошибка при получении запроса", {
+      error: err.message
+    })
+
     next(err)
   }
 }
@@ -51,18 +79,30 @@ export const getRequest = async (req, res, next) => {
  * @returns {void}
  */
 export const createRequest = async (req, res, next) => {
+  const bot = req.body.bot
+  const prompt = req.body.prompt
+
   try {
-    const prompt = req.body.prompt
-    const [user] = await userService.createRequest({
-      model: "test",
-      prompt,
-      content: "test",
-      payload: { id: 1 },
-      response: { id: 2 }
+    logger.info("Создание нового запроса к AI", {
+      bot,
+      prompt
     })
 
-    res.status(201).json(user)
+    const request = await userService.createRequest(bot, prompt)
+
+    logger.info("Запрос к AI успешно создан", {
+      requestId: request[0].id,
+      bot,
+      prompt
+    })
+
+    res.status(201).json(request)
   } catch (err) {
+    logger.error("Ошибка при создании запроса к AI", {
+      error: err.message,
+      bot
+    })
+
     next(err)
   }
 }
