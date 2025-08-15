@@ -1,5 +1,5 @@
-import { createClientLogger } from "#utils/logger.js"
-import { sendPrompt, AgentResponse } from "#utils/api.js"
+import { createAgentLogger } from "#utils/logger.js"
+import { GenAPI, AgentInteraction } from "#utils/api/index.js"
 
 // https://gen-api.ru/model/claude-4/api
 const NETWORK = "claude-4"
@@ -7,7 +7,7 @@ const MODEL = "claude-sonnet-4-20250522"
 const TOKENS = 100
 
 // Создаем логгер для клиента
-const logger = createClientLogger("ClavdiyaClient")
+const logger = createAgentLogger("ClavdiyaClient")
 
 /**
  * Отправить запрос к AI
@@ -39,11 +39,11 @@ export const send = async prompt => {
       // top_p: 1
     }
 
-    const rawResponse = await sendPrompt(NETWORK, params)
+    const rawResponse = await GenAPI.sendPrompt(NETWORK, params)
 
     const { request_id, model, cost } = rawResponse
     const content = rawResponse.response[0].choices[0].message.content
-    const response = new AgentResponse(
+    const response = new AgentInteraction(
       request_id,
       model,
       cost,

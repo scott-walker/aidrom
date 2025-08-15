@@ -1,6 +1,9 @@
 import axios from "axios"
 import config from "#config/index.js"
-import { apiLogger } from "#utils/logger.js"
+import { createApiLogger } from "#utils/logger.js"
+
+// Создаем логгер для API
+const logger = createApiLogger("GenAPI")
 
 // Создаем клиент для отправки запросов к API
 // https://gen-api.ru/docs/schema-work#generation
@@ -15,7 +18,8 @@ const client = axios.create({
 
 // Логирование запросов к API
 client.interceptors.request.use(config => {
-  apiLogger.info("Отправка запроса к GenAPI", {
+  logger.info("Отправка запроса к GenAPI", {
+    action: "interceptor.request",
     method: config.method,
     url: config.url,
     data: config.data
@@ -27,7 +31,8 @@ client.interceptors.request.use(config => {
 // Логирование ответов от API
 client.interceptors.response.use(
   res => {
-    apiLogger.info("Успешный ответ от GenAPI", {
+    logger.info("Успешный запрос", {
+      action: "interceptor.successResponse",
       status: res.status,
       url: res.config.url,
       method: res.config.method,
@@ -37,7 +42,8 @@ client.interceptors.response.use(
     return res.data
   },
   err => {
-    apiLogger.error("Ошибка GenAPI Client", {
+    logger.error("Ошибка в запросе", {
+      action: "interceptor.errorResponse",
       message: err.message,
       status: err.response?.status,
       url: err.config?.url,
@@ -55,18 +61,18 @@ client.interceptors.response.use(
  */
 export const getAccount = async () => {
   try {
-    apiLogger.info("Получение информации об аккаунте GenAPI")
+    logger.info("Получение информации об аккаунте")
 
     const user = await client.get("user")
 
-    apiLogger.info("Информация об аккаунте получена", {
+    logger.info("Информация об аккаунте получена", {
       userId: user.id,
       balance: user.balance
     })
 
     return user
   } catch (error) {
-    apiLogger.error("Ошибка при получении информации об аккаунте", error)
+    logger.error("Ошибка при получении информации об аккаунте", error)
 
     throw error
   }
@@ -80,36 +86,14 @@ export const getAccount = async () => {
  */
 export const sendPrompt = async (network, params) => {
   try {
-    apiLogger.info("Отправка промпта к GenAPI", params)
+    logger.info("Отправка промпта", params)
 
     const response = await client.post(`networks/${network}`, params)
 
     return response
   } catch (error) {
-    apiLogger.error("Ошибка при отправке промпта к GenAPI", error)
+    logger.error("Ошибка при отправке промпта", error)
 
     throw error
-  }
-}
-
-/**
- * Класс для хранения ответа от API
- * @param {String} requestId - id запроса
- * @param {String} model - модель, которая была использована
- * @param {String} cost - стоимость запроса
- * @param {String} prompt - промпт, который был отправлен
- * @param {String} content - ответ от API
- * @param {Object} rawResponse - raw ответ от API
- */
-export class AgentResponse {
-  constructor(requestId, network, model, cost, prompt, content, rawResponse) {
-    this.requestId = requestId
-    this.network = network
-    this.model = model
-    this.cost = cost
-    this.prompt = prompt
-    this.content = content
-    this.payload = {}
-    this.response = {}
   }
 }
