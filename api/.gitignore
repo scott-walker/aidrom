@@ -1,25 +1,4 @@
-# Логи
-logs/
-*.log
-
-# Метаданные Winston
-logs/meta/
-
-# Node modules
-node_modules/
-
-# Environment variables
+node_modules
+runtime/*
+logs/*
 .env
-.env.local
-.env.production
-
-# IDE
-.vscode/
-.idea/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Runtime
-runtime/
