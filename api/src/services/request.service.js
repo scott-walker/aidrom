@@ -8,8 +8,8 @@ import { db } from "#db/index.js"
 import { requests } from "#db/schema/requests.js"
 import { createServiceLogger } from "#utils/logger.js"
 import { ApiError, NotFoundError } from "#utils/errors.js"
-import { PromptResponse } from "#utils/api.js"
-import clients from "#clients/index.js"
+import { AgentResponse } from "#utils/api.js"
+import agentService from "#services/agent.service.js"
 
 // Создаем логгер для сервиса запросов
 const logger = createServiceLogger("RequestService")
@@ -46,27 +46,26 @@ export const getRequests = async () => {
  * @param {String} prompt - Текст запроса к AI
  * @returns {Promise<Array<Object>>} Массив созданных записей (обычно одна запись).
  */
-export const createRequest = async (bot, prompt) => {
+export const sendRequest = async (agentId, prompt) => {
   try {
-    const client = clients[bot]
+    const agent = await agentService.getAgentById(agentId, true)
 
-    if (!client) {
-      throw new NotFoundError(`Неизвестный бот-клиент: ${bot}`)
-    }
-
-    // 1. Отправляем запрос к API
+    // Отправляем запрос к API
     logger.info("Отправка запроса к API", {
-      bot,
+      agentId,
+      agentAlias: agent.alias,
       prompt
     })
 
-    const response = await client.send(prompt)
+    const response = await agent.handler.send(prompt)
 
-    if (!(response instanceof PromptResponse)) {
-      throw new ApiError("Ответ от API не является экземпляром класса PromptResponse")
+    if (!(response instanceof AgentResponse)) {
+      throw new ApiError(
+        "Ответ от API не является экземпляром класса AgentResponse"
+      )
     }
 
-    // 2. Сохраняем запрос в БД
+    // Сохраняем запрос в БД
     logger.info("Создание нового запроса в БД")
 
     const data = await db.insert(requests).values(response).returning()
@@ -91,13 +90,16 @@ export const createRequest = async (bot, prompt) => {
  * @param {string|number} requestId - Идентификатор запроса.
  * @returns {Promise<Array<Object>>} Массив с найденной записью или пустой массив, если запись не найдена.
  */
-export const getRequestById = async (requestId) => {
+export const getRequestById = async requestId => {
   try {
     logger.info("Получение запроса по ID", {
       requestId
     })
 
-    const items = await db.select().from(requests).where(eq(requests.id, requestId))
+    const items = await db
+      .select()
+      .from(requests)
+      .where(eq(requests.id, requestId))
     const item = items[0] || null
 
     if (!item) {
