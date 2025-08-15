@@ -1,25 +1,40 @@
-import { createAgentLogger } from "#utils/logger.js"
-import { GenAPI, AgentInteraction } from "#utils/api/index.js"
+/**
+ * Агент "Clavdiya" для работы с Claude через GenAPI
+ * @namespace Agent.clavdiyaAgent
+ * @see {@link file://./../../../docs/AGENT_CLAVDIYA.md} Документация агента Clavdiya
+ * @see {@link https://gen-api.ru/model/claude-4/api} Документация API GenAPI
+ */
 
-// https://gen-api.ru/model/claude-4/api
+import { createAgentLogger } from "#utils/logger.js"
+import {
+  GenAPI,
+  AgentInteraction,
+  MOVED_AGENT_MESSAGE
+} from "#utils/api/index.js"
+
+const PROVIDER = "GenAPI"
 const NETWORK = "claude-4"
 const MODEL = "claude-sonnet-4-20250522"
 const TOKENS = 100
 
-// Создаем логгер для клиента
-const logger = createAgentLogger("ClavdiyaClient")
+// Создаем логгер для агента
+const logger = createAgentLogger("clavdiya")
 
 /**
  * Отправить запрос к AI
- * @param {String} bot псевдоним бота-бработчика
- * @param {String} prompt текст запроса к AI
+ * @param {String} clientMessage сообщение от клиента
+ * @param {Object} clientParams параметры запроса от клиента
  * @returns {Object}
  */
-export const send = async prompt => {
+export const send = async (clientMessage, clientParams = {}) => {
   try {
-    logger.info("Отправка запроса к AI", {
-      prompt: prompt,
-      network: NETWORK
+    logger.info("Отправка запроса", {
+      provider: PROVIDER,
+      network: NETWORK,
+      model: MODEL,
+      tokens: TOKENS,
+      clientMessage,
+      clientParams
     })
 
     // Формируем параметры запроса
@@ -27,43 +42,41 @@ export const send = async prompt => {
       is_sync: true,
       model: MODEL,
       max_tokens: TOKENS,
+      temperature: 0.1,
       messages: [
         {
           role: "user",
-          content: [{ type: "text", text: prompt }]
+          content: [{ type: "text", text: clientMessage }]
         }
       ]
       // stream: false,
-      // max_tokens: 4096,
-      // temperature: 1,
       // top_p: 1
     }
 
-    const rawResponse = await GenAPI.sendPrompt(NETWORK, params)
+    const agentResponse = await GenAPI.sendPrompt(NETWORK, params)
 
-    const { request_id, model, cost } = rawResponse
-    const content = rawResponse.response[0].choices[0].message.content
-    const response = new AgentInteraction(
+    const { request_id, cost } = agentResponse
+    const agentMessage = agentResponse.response[0].choices[0].message.content
+
+    // Помечаем сообщение от агента в ответе от API как перемещенное
+    agentResponse.response[0].choices[0].message.content = MOVED_AGENT_MESSAGE
+
+    // Создаем объект для хранения данных о запросе/ответе
+    const requestData = new AgentInteraction(
+      PROVIDER,
       request_id,
-      model,
-      cost,
-      prompt,
-      content,
-      rawResponse
+      clientParams,
+      clientMessage,
+      agentResponse,
+      agentMessage,
+      cost
     )
 
-    if (model !== MODEL) {
-      logger.warn("Модель не соответствует ожидаемой", {
-        model,
-        expected: MODEL
-      })
-    }
+    logger.info("Ответ успешно получен", { request_id, cost })
 
-    logger.info("Ответ от AI получен", { cost })
-
-    return response
+    return requestData
   } catch (error) {
-    logger.error("Ошибка при отправке запроса к AI", error)
+    logger.error("Ошибка при отправке запроса", error)
 
     throw error
   }

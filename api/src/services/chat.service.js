@@ -55,9 +55,11 @@ export const getChatById = async chatId => {
       chatId
     })
 
-    const item = await db.query.chats.findFirst({
+    const chat = await db.query.chats.findFirst({
       where: eq(chats.id, chatId),
       with: {
+        agent: true,
+        client: true,
         messagePairs: {
           with: {
             clientMessage: true,
@@ -67,7 +69,7 @@ export const getChatById = async chatId => {
       }
     })
 
-    if (!item) {
+    if (!chat) {
       throw new NotFoundError(`Чат с ID #${chatId} не найден`)
     }
 
@@ -75,7 +77,7 @@ export const getChatById = async chatId => {
       chatId
     })
 
-    return item
+    return chat
   } catch (error) {
     logger.error("Ошибка при получении чата по ID", {
       error: error.message,
@@ -194,21 +196,21 @@ export const deleteChat = async chatId => {
  * Отправляет сообщение в чат
  * @memberof MessagePair.Service
  * @param {number} chatId - ID чата
- * @param {string} content - Содержимое сообщения клиента
+ * @param {string} message - Сообщение от клиента
  * @returns {Promise<Object>} Созданная пара сообщений
  */
-export const sendMessage = async (chatId, content) => {
+export const sendMessage = async (chatId, message) => {
   try {
     logger.info("Отправка сообщения в чат", {
       chatId,
-      content
+      message
     })
 
     // Получаем чат по ID
     const chat = await getChatById(chatId)
 
     // Отправляем запрос к API
-    const request = await sendRequest(chat.agent.alias, content)
+    const request = await sendRequest(chat.agent.alias, message)
 
     // Создаем сообщение клиента
     logger.info("Создание сообщения клиента")
@@ -238,6 +240,7 @@ export const sendMessage = async (chatId, content) => {
 
     // Обновляем дату последнего обновления чата
     logger.info("Обновление даты последнего обновления чата")
+
     await db
       .update(chats)
       .set({ updatedAt: new Date() })
@@ -260,7 +263,8 @@ export const sendMessage = async (chatId, content) => {
   } catch (error) {
     logger.error("Ошибка при отправке сообщения в чат", {
       error: error.message,
-      chatId
+      chatId,
+      message
     })
 
     throw error

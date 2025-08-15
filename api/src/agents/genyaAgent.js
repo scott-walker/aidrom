@@ -76,7 +76,7 @@ export const send = async (clientMessage, clientParams = {}) => {
 
     return requestData
   } catch (error) {
-    logger.error("Ошибка при отправке запроса к AI", error)
+    logger.error("Ошибка при отправке запроса", error)
 
     throw error
   }

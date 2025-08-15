@@ -71,24 +71,24 @@ export const getAgentById = async (agentId, withHandler = false) => {
       agentId
     })
 
-    const item = await db.query.agents.findFirst({
+    const agent = await db.query.agents.findFirst({
       where: eq(agents.id, agentId)
     })
 
-    if (!item) {
+    if (!agent) {
       throw new NotFoundError(`Агент с ID #${agentId} не найден`)
     }
 
     // Если требуется получить обработчик агента, добавляем его в объект
     if (withHandler) {
-      item.handler = getAgentHandler(alias)
+      agent.handler = getAgentHandler(alias)
     }
 
     logger.info("Агент по ID успешно найден", {
       agentId
     })
 
-    return item
+    return agent
   } catch (error) {
     logger.error("Ошибка при получении агента по ID", {
       error: error.message,
@@ -112,24 +112,24 @@ export const getAgentByAlias = async (alias, withHandler = false) => {
       alias
     })
 
-    const item = await db.query.agents.findFirst({
+    const agent = await db.query.agents.findFirst({
       where: eq(agents.alias, alias)
     })
 
-    if (!item) {
+    if (!agent) {
       throw new NotFoundError(`Агент с алиасом ${alias} не найден`)
     }
 
     // Если требуется получить обработчик агента, добавляем его в объект
     if (withHandler) {
-      item.handler = getAgentHandler(alias)
+      agent.handler = getAgentHandler(alias)
     }
 
     logger.info("Агент по алиасу успешно найден", {
       alias
     })
 
-    return item
+    return agent
   } catch (error) {
     logger.error("Ошибка при получении агента по алиасу", {
       error: error.message,
@@ -154,13 +154,13 @@ export const createAgent = async data => {
   try {
     logger.info("Создание нового агента в БД", data)
 
-    const [item] = await db.insert(items).values(data).returning()
+    const [agent] = await db.insert(agents).values(data).returning()
 
     logger.info("Агент успешно создан", {
-      agentId: item.id
+      agentId: agent.id
     })
 
-    return item
+    return agent
   } catch (error) {
     logger.error("Ошибка при создании агента", {
       error: error.message,
@@ -269,8 +269,8 @@ export const sendRequest = async (agentAlias, prompt) => {
     })
 
     // Отправляем запрос к API
-    const handler = getAgentHandler(agentAlias)
-    const interactionData = await handler.send(prompt)
+    const agentHandler = getAgentHandler(agentAlias)
+    const interactionData = await agentHandler.send(prompt)
 
     if (!(interactionData instanceof AgentInteraction)) {
       throw new ApiError(
