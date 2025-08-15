@@ -2,6 +2,10 @@
   "semi": false,
   "singleQuote": false,
   "tabWidth": 2,
-  "printWidth": 140,
-  "trailingComma": "none"
+  "printWidth": 80,
+  "trailingComma": "none",
+  "bracketSameLine": false,
+  "arrowParens": "avoid",
+  "endOfLine": "lf",
+  "singleAttributePerLine": false
 }
