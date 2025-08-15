@@ -28,12 +28,14 @@ const config = {
  * @param {String} key ключ параметра
  * @returns {String} значение параметра
  */
-const getParam = (key) => {
+const getParam = key => {
   if (!config.hasOwnProperty(key)) {
     throw new Error(`Недоступный параметр конфигурации ${key}`)
   }
 
   return config[key]
 }
+
+console.log(config)
 
 export default getParam
