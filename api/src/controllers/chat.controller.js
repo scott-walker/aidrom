@@ -184,26 +184,26 @@ export const deleteChat = async (req, res, next) => {
  */
 export const sendMessage = async (req, res, next) => {
   const chatId = req.params.chatId
-  const content = req.body.content
+  const message = req.body.message
 
   try {
     logger.info("Отправка сообщения в чат", {
       chatId,
-      content
+      message
     })
 
-    const message = await chatService.sendMessage(chatId, content)
+    const data = await chatService.sendMessage(chatId, message)
 
     logger.info("Сообщение успешно отправлено", {
       chatId
     })
 
-    res.json(message)
+    res.json(data)
   } catch (err) {
     logger.error("Ошибка при отправке сообщения в чат", {
       error: err.message,
       chatId,
-      content
+      message
     })
   }
 }

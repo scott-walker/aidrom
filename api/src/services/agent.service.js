@@ -9,7 +9,7 @@ import { agents } from "#db/schema/agents.js"
 import { requests } from "#db/schema/requests.js"
 import { createServiceLogger } from "#utils/logger.js"
 import { NotFoundError, ApiError } from "#utils/errors.js"
-import { AgentResponse } from "#utils/api.js"
+import { AgentInteraction } from "#utils/api/index.js"
 import agentHandlers from "#agents/index.js"
 
 // Создаем логгер для сервиса агентов
@@ -264,11 +264,11 @@ export const sendRequest = async (agentAlias, prompt) => {
 
     // Отправляем запрос к API
     const handler = getAgentHandler(agentAlias)
-    const response = await handler.send(prompt)
+    const interactionData = await handler.send(prompt)
 
-    if (!(response instanceof AgentResponse)) {
+    if (!(interactionData instanceof AgentInteraction)) {
       throw new ApiError(
-        "Ответ от API агента не является экземпляром класса AgentResponse"
+        "Ответ от API агента не является экземпляром класса AgentInteraction"
       )
     }
 
@@ -279,7 +279,10 @@ export const sendRequest = async (agentAlias, prompt) => {
     logger.info("Сохранение нового запроса в БД")
 
     // Сохраняем запрос в БД
-    const request = await db.insert(requests).values(response).returning()
+    const [request] = await db
+      .insert(requests)
+      .values(interactionData)
+      .returning()
 
     logger.info("Запрос успешно сохранен в БД", {
       requestId: request.id

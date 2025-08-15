@@ -9,5 +9,6 @@ router.get("/:chatId", chatController.getChat)
 router.post("/", chatController.createChat)
 router.put("/:chatId", chatController.updateChat)
 router.delete("/:chatId", chatController.deleteChat)
+router.post("/:chatId/send", chatController.sendMessage)
 
 export default router

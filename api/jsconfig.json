@@ -8,7 +8,7 @@
       "#controllers/*": ["controllers/*"],
       "#middlewares/*": ["middlewares/*"],
       "#services/*": ["services/*"],
-      "#clients/*": ["clients/*"],
+      "#agents/*": ["agents/*"],
       "#utils/*": ["utils/*"]
     }
   }

@@ -11,7 +11,7 @@ import { clients } from "#db/schema/clients.js"
 import { messagePairs } from "#db/schema/messagePairs.js"
 import { clientMessages } from "#db/schema/clientMessages.js"
 import { agentMessages } from "#db/schema/agentMessages.js"
-import { complexSelectors } from "#db/selectors.js"
+import { complexSelectors, selectors } from "#db/selectors.js"
 import { createServiceLogger } from "#utils/logger.js"
 import { NotFoundError } from "#utils/errors.js"
 import { sendRequest } from "#services/agent.service.js"
@@ -29,10 +29,10 @@ export const getChats = async () => {
     logger.info("Получение всех чатов из БД")
 
     const items = await db
-      .select(complexSelectors.chatWithRelations)
+      .select(selectors.chat)
       .from(chats)
-      .leftJoin(agents, eq(chats.agentId, agents.id))
-      .leftJoin(clients, eq(chats.clientId, clients.id))
+      // .leftJoin(agents, eq(chats.agentId, agents.id))
+      // .leftJoin(clients, eq(chats.clientId, clients.id))
       .orderBy(desc(chats.updatedAt))
 
     logger.info("Запрос к БД выполнен успешно", {
@@ -61,11 +61,45 @@ export const getChatById = async chatId => {
       chatId
     })
 
+    const item = await db.query.chats.findFirst({
+      where: eq(chats.id, chatId),
+      with: {
+        messagePairs: {
+          with: {
+            clientMessage: true,
+            agentMessage: true
+          }
+        }
+      }
+    })
+
+    if (!item) {
+      throw new NotFoundError(`Чат с ID #${chatId} не найден`)
+    }
+
+    logger.info("Чат по ID успешно найден", {
+      chatId
+    })
+
+    return item
+  } catch (error) {
+    logger.error("Ошибка при получении чата по ID", {
+      error: error.message,
+      chatId
+    })
+
+    throw error
+  }
+}
+
+/**
+ * Создает новый чат
     const [item] = await db
-      .select(complexSelectors.chatWithRelations)
+      .select(complexSelectors.chatWithMessagePairs)
       .from(chats)
       .leftJoin(agents, eq(chats.agentId, agents.id))
       .leftJoin(clients, eq(chats.clientId, clients.id))
+      .leftJoin(messagePairs, eq(chats.id, messagePairs.chatId))
       .where(eq(chats.id, chatId))
 
     if (!item) {
@@ -215,24 +249,27 @@ export const sendMessage = async (chatId, content) => {
     logger.info("Создание сообщения клиента")
     const [clientMessage] = await db
       .insert(clientMessages)
-      .values({ content: request.clientContent })
+      .values({ content: request.clientMessage })
       .returning()
 
     // Создаем сообщение агента
     logger.info("Создание сообщения агента")
     const [agentMessage] = await db
       .insert(agentMessages)
-      .values({ content: request.agentContent })
+      .values({ content: request.agentMessage })
       .returning()
 
     // Создаем messagePair с ID сообщений
     logger.info("Создание messagePair")
-    const [messagePair] = await db.insert(messagePairs).values({
-      chatId: chatId,
-      requestId: request.id,
-      clientMessageId: clientMessage.id,
-      agentMessageId: agentMessage.id
-    })
+    const [messagePair] = await db
+      .insert(messagePairs)
+      .values({
+        chatId: chatId,
+        requestId: request.id,
+        clientMessageId: clientMessage.id,
+        agentMessageId: agentMessage.id
+      })
+      .returning()
 
     // Обновляем дату последнего обновления чата
     logger.info("Обновление даты последнего обновления чата")
@@ -242,19 +279,21 @@ export const sendMessage = async (chatId, content) => {
       .where(eq(chats.id, chatId))
 
     logger.info("Сообщение успешно отправлено в чат", {
-      chatId,
-      messagePairId: messagePair.id
+      chatId: chatId,
+      messagePairId: messagePair.id,
+      requestId: request.id,
+      clientMessageId: clientMessage.id,
+      agentMessageId: agentMessage.id
     })
 
-    const result = {
+    return {
       id: messagePair.id,
+      cost: request.cost,
       clientMessage,
       agentMessage
     }
-
-    return result
   } catch (error) {
-    logger.error("Ошибка при создании пары сообщений", {
+    logger.error("Ошибка при отправке сообщения в чат", {
       error: error.message,
       chatId
     })

@@ -43,6 +43,10 @@ export const selectors = {
   // Базовые поля для пар сообщений
   messagePair: {
     id: messagePairs.id,
+    chatId: messagePairs.chatId,
+    requestId: messagePairs.requestId,
+    clientMessageId: messagePairs.clientMessageId,
+    agentMessageId: messagePairs.agentMessageId,
     createdAt: messagePairs.createdAt,
     updatedAt: messagePairs.updatedAt
   },
@@ -97,14 +101,18 @@ export const complexSelectors = {
     request: selectors.request,
     clientMessage: selectors.clientMessage,
     agentMessage: selectors.agentMessage
-  }),
+  })
 
   // Чат с парами сообщений
-  chatWithMessagePairs: createNestedSelector(selectors.chat, {
-    agent: selectors.agent,
-    client: selectors.client,
-    messagePairs: selectors.messagePair
-  })
+  // chatWithMessagePairs: createNestedSelector(selectors.chat, {
+  //   agent: selectors.agent,
+  //   client: selectors.client,
+  //   messagePairs: [
+  //     selectors.messagePair
+  //     // clientMessage: selectors.clientMessage,
+  //     // agentMessage: selectors.agentMessage
+  //   ]
+  // })
 }
 
 // Утилита для создания селектора с пагинацией

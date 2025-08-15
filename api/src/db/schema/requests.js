@@ -7,19 +7,16 @@ export const requests = pgTable(
   "requests",
   table => ({
     id: table.serial("id").primaryKey(),
-    network: table.varchar("network", { length: 255 }).notNull(),
-    model: table.varchar("model", { length: 255 }).notNull(),
+    provider: table.varchar("provider", { length: 255 }).notNull(),
+    providerRequestId: table.varchar("provider_request_id", { length: 255 }),
+    clientParams: table.json("client_params"),
+    clientMessage: table.text("client_message").notNull(),
+    agentResponse: table.json("agent_response").notNull(),
+    agentMessage: table.text("agent_message").notNull(),
     cost: table
       .doublePrecision("cost", { precision: 7, scale: 2 })
       .notNull()
       .default(0.0),
-    clientParams: table.json("client_params").notNull(),
-    clientContent: table.text("client_content").notNull(),
-    agentRequestId: table
-      .varchar("agent_request_id", { length: 255 })
-      .notNull(),
-    agentMetadata: table.json("agent_metadata").notNull(),
-    agentContent: table.text("agent_content").notNull(),
     createdAt: table.timestamp("created_at").notNull().defaultNow()
   }),
   table => [index("requests_cost_idx").on(table.cost)]
