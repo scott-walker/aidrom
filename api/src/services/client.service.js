@@ -21,10 +21,9 @@ export const getClients = async () => {
   try {
     logger.info("Получение всех клиентов из БД")
 
-    const items = await db
-      .select()
-      .from(clients)
-      .orderBy(desc(clients.createdAt))
+    const items = await db.query.clients.findMany({
+      orderBy: [desc(clients.createdAt)]
+    })
 
     logger.info("Запрос к БД выполнен успешно", {
       count: items.length
@@ -52,10 +51,9 @@ export const getClientById = async clientId => {
       clientId
     })
 
-    const [item] = await db
-      .select()
-      .from(clients)
-      .where(eq(clients.id, clientId))
+    const item = await db.query.clients.findFirst({
+      where: eq(clients.id, clientId)
+    })
 
     if (!item) {
       throw new NotFoundError(`Клиент с ID #${clientId} не найден`)
@@ -88,10 +86,9 @@ export const getClientByEmail = async email => {
       email
     })
 
-    const [item] = await db
-      .select()
-      .from(clients)
-      .where(eq(clients.email, email))
+    const item = await db.query.clients.findFirst({
+      where: eq(clients.email, email)
+    })
 
     if (!item) {
       throw new NotFoundError(`Клиент с email ${email} не найден`)

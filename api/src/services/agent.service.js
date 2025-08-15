@@ -40,7 +40,9 @@ export const getAgents = async () => {
   try {
     logger.info("Получение всех агентов из БД")
 
-    const items = await db.select().from(agents).orderBy(desc(agents.createdAt))
+    const items = await db.query.agents.findMany({
+      orderBy: [desc(agents.createdAt)]
+    })
 
     logger.info("Запрос к БД выполнен успешно", {
       count: items.length
@@ -69,7 +71,9 @@ export const getAgentById = async (agentId, withHandler = false) => {
       agentId
     })
 
-    const [item] = await db.select().from(agents).where(eq(agents.id, agentId))
+    const item = await db.query.agents.findFirst({
+      where: eq(agents.id, agentId)
+    })
 
     if (!item) {
       throw new NotFoundError(`Агент с ID #${agentId} не найден`)
@@ -108,7 +112,9 @@ export const getAgentByAlias = async (alias, withHandler = false) => {
       alias
     })
 
-    const [item] = await db.select().from(agents).where(eq(agents.alias, alias))
+    const item = await db.query.agents.findFirst({
+      where: eq(agents.alias, alias)
+    })
 
     if (!item) {
       throw new NotFoundError(`Агент с алиасом ${alias} не найден`)

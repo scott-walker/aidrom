@@ -6,12 +6,9 @@
 import { eq, desc } from "drizzle-orm"
 import { db } from "#db/index.js"
 import { chats } from "#db/schema/chats.js"
-import { agents } from "#db/schema/agents.js"
-import { clients } from "#db/schema/clients.js"
 import { messagePairs } from "#db/schema/messagePairs.js"
 import { clientMessages } from "#db/schema/clientMessages.js"
 import { agentMessages } from "#db/schema/agentMessages.js"
-import { complexSelectors, selectors } from "#db/selectors.js"
 import { createServiceLogger } from "#utils/logger.js"
 import { NotFoundError } from "#utils/errors.js"
 import { sendRequest } from "#services/agent.service.js"
@@ -28,12 +25,9 @@ export const getChats = async () => {
   try {
     logger.info("Получение всех чатов из БД")
 
-    const items = await db
-      .select(selectors.chat)
-      .from(chats)
-      // .leftJoin(agents, eq(chats.agentId, agents.id))
-      // .leftJoin(clients, eq(chats.clientId, clients.id))
-      .orderBy(desc(chats.updatedAt))
+    const items = await db.query.chats.findMany({
+      orderBy: [desc(chats.updatedAt)]
+    })
 
     logger.info("Запрос к БД выполнен успешно", {
       count: items.length
@@ -72,35 +66,6 @@ export const getChatById = async chatId => {
         }
       }
     })
-
-    if (!item) {
-      throw new NotFoundError(`Чат с ID #${chatId} не найден`)
-    }
-
-    logger.info("Чат по ID успешно найден", {
-      chatId
-    })
-
-    return item
-  } catch (error) {
-    logger.error("Ошибка при получении чата по ID", {
-      error: error.message,
-      chatId
-    })
-
-    throw error
-  }
-}
-
-/**
- * Создает новый чат
-    const [item] = await db
-      .select(complexSelectors.chatWithMessagePairs)
-      .from(chats)
-      .leftJoin(agents, eq(chats.agentId, agents.id))
-      .leftJoin(clients, eq(chats.clientId, clients.id))
-      .leftJoin(messagePairs, eq(chats.id, messagePairs.chatId))
-      .where(eq(chats.id, chatId))
 
     if (!item) {
       throw new NotFoundError(`Чат с ID #${chatId} не найден`)
