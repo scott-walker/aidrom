@@ -14,7 +14,7 @@ import { agentMessages } from "#db/schema/agentMessages.js"
 import { complexSelectors } from "#db/selectors.js"
 import { createServiceLogger } from "#utils/logger.js"
 import { NotFoundError } from "#utils/errors.js"
-import agentService from "#services/agent.service.js"
+import { sendRequest } from "#services/agent.service.js"
 
 // Создаем логгер для сервиса чатов
 const logger = createServiceLogger("ChatService")
@@ -209,7 +209,7 @@ export const sendMessage = async (chatId, content) => {
     const chat = await getChatById(chatId)
 
     // Отправляем запрос к API
-    const request = await agentService.sendRequest(chat.agent.alias, content)
+    const request = await sendRequest(chat.agent.alias, content)
 
     // Создаем сообщение клиента
     logger.info("Создание сообщения клиента")
