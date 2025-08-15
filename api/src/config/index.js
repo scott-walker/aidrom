@@ -36,6 +36,4 @@ const getParam = key => {
   return config[key]
 }
 
-console.log(config)
-
 export default getParam
