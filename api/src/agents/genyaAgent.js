@@ -1,5 +1,5 @@
 import { createClientLogger } from "#utils/logger.js"
-import { sendPrompt, PromptResponse } from "#utils/api.js"
+import { sendPrompt, AgentResponse } from "#utils/api.js"
 
 // https://gen-api.ru/model/gemini-2-5-flash/api
 const NETWORK = "gemini-2-5-flash"
@@ -15,7 +15,7 @@ const logger = createClientLogger("GenyaClient")
  * @param {String} prompt текст запроса к AI
  * @returns {Object}
  */
-export const send = async (prompt) => {
+export const send = async prompt => {
   try {
     logger.info("Отправка запроса к AI", {
       prompt: prompt,
@@ -43,7 +43,14 @@ export const send = async (prompt) => {
 
     const { request_id, model, cost } = rawResponse
     const content = rawResponse.response[0].message.content
-    const response = new PromptResponse(request_id, model, cost, prompt, content, rawResponse)
+    const response = new AgentResponse(
+      request_id,
+      model,
+      cost,
+      prompt,
+      content,
+      rawResponse
+    )
 
     if (model !== MODEL) {
       logger.warn("Модель не соответствует ожидаемой", {
