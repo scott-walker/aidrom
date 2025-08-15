@@ -14,7 +14,7 @@ const client = axios.create({
 })
 
 // Логирование запросов к API
-client.interceptors.request.use((config) => {
+client.interceptors.request.use(config => {
   apiLogger.info("Отправка запроса к GenAPI", {
     method: config.method,
     url: config.url,
@@ -26,7 +26,7 @@ client.interceptors.request.use((config) => {
 
 // Логирование ответов от API
 client.interceptors.response.use(
-  (res) => {
+  res => {
     apiLogger.info("Успешный ответ от GenAPI", {
       status: res.status,
       url: res.config.url,
@@ -36,7 +36,7 @@ client.interceptors.response.use(
 
     return res.data
   },
-  (err) => {
+  err => {
     apiLogger.error("Ошибка GenAPI Client", {
       message: err.message,
       status: err.response?.status,
@@ -101,15 +101,15 @@ export const sendPrompt = async (network, params) => {
  * @param {String} content - ответ от API
  * @param {Object} rawResponse - raw ответ от API
  */
-export class PromptResponse {
-  constructor(requestId, model, cost, prompt, content, rawResponse) {
-    // this.requestId = requestId
+export class AgentResponse {
+  constructor(requestId, network, model, cost, prompt, content, rawResponse) {
+    this.requestId = requestId
+    this.network = network
     this.model = model
-    // this.cost = cost
+    this.cost = cost
     this.prompt = prompt
     this.content = content
     this.payload = {}
     this.response = {}
-    // this.response = rawResponse
   }
 }
