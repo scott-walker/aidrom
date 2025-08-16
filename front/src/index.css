@@ -100,7 +100,7 @@
   --header-accent-foreground: oklch(0.208 0.042 265.755);
   --header-border: oklch(0.929 0.013 255.508);
   --header-ring: oklch(0.704 0.04 256.788);
-  
+
   /* Sidebar */
   --sidebar: oklch(0.984 0.003 247.858);
   --sidebar-foreground: oklch(0.129 0.042 264.695);
