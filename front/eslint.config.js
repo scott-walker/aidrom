@@ -1,20 +1,23 @@
-import vue from "eslint-plugin-vue"
-import js from "@eslint/js"
-import prettier from "@vue/eslint-config-prettier"
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import tseslint from 'typescript-eslint'
+import { globalIgnores } from 'eslint/config'
 
-export default [
-  js.configs.recommended,
-  ...vue.configs["flat/recommended"],
-  prettier,
+export default tseslint.config([
+  globalIgnores(['dist']),
   {
-    files: ["**/*.vue", "**/*.js"],
+    files: ['**/*.{ts,tsx}'],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.recommended,
+      reactHooks.configs['recommended-latest'],
+      reactRefresh.configs.vite,
+    ],
     languageOptions: {
-      ecmaVersion: "latest",
-      sourceType: "module"
+      ecmaVersion: 2020,
+      globals: globals.browser,
     },
-    rules: {
-      "vue/multi-word-component-names": "off",
-      "vue/require-default-prop": "off"
-    }
-  }
-]
+  },
+])
