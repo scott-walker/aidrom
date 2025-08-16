@@ -1,4 +1,3 @@
 /docker/db/data
-/back
 node_modules
 .env*

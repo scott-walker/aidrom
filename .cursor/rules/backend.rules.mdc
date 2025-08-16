@@ -1,0 +1,20 @@
+---
+description: Правила для бекенда
+globs: ./api/*
+alwaysApply: true
+---
+
+# Структура бекенда:
+- ./api/src/config - конфигурация бекенда;
+- ./api/src/db - база данных;
+- ./api/src/db/schema - схема базы данных;
+- ./api/src/routes - роуты;
+- ./api/src/controllers - контроллеры;
+- ./api/src/middlewares - мидлвары;
+- ./api/src/services - сервисы;
+- ./api/src/clients - клиенты для работы с API AI ботов;
+- ./api/src/utils - утилиты;
+- ./api/logs - логи;
+- ./api/runtime - хранение временных данных;
+- ./api/package.json - конфигурация проекта;
+- ./api/drizzle.config.js - конфигурация базы данных;
