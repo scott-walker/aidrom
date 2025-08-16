@@ -16,6 +16,7 @@ const PROVIDER = "GenAPI"
 const NETWORK = "claude-4"
 const MODEL = "claude-sonnet-4-20250522"
 const TOKENS = 100
+const TEMPERATURE = 0.1
 
 // Создаем логгер для агента
 const logger = createAgentLogger("clavdiya")
@@ -33,6 +34,7 @@ export const send = async (clientMessage, clientParams = {}) => {
       network: NETWORK,
       model: MODEL,
       tokens: TOKENS,
+      temperature: TEMPERATURE,
       clientMessage,
       clientParams
     })
@@ -42,7 +44,7 @@ export const send = async (clientMessage, clientParams = {}) => {
       is_sync: true,
       model: MODEL,
       max_tokens: TOKENS,
-      temperature: 0.1,
+      temperature: TEMPERATURE,
       messages: [
         {
           role: "user",

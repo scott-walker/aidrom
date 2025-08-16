@@ -15,7 +15,8 @@ import {
 const PROVIDER = "GenAPI"
 const NETWORK = "gemini-2-5-flash"
 const MODEL = "gemini-2.5-flash-preview-04-17"
-const TOKENS = 10
+const TOKENS = 100
+const TEMPERATURE = 0.1
 
 // Создаем логгер для клиента
 const logger = createAgentLogger("genya")
@@ -33,6 +34,7 @@ export const send = async (clientMessage, clientParams = {}) => {
       network: NETWORK,
       model: MODEL,
       tokens: TOKENS,
+      temperature: TEMPERATURE,
       clientMessage,
       clientParams
     })
@@ -42,8 +44,8 @@ export const send = async (clientMessage, clientParams = {}) => {
       is_sync: true,
       model: MODEL,
       max_tokens: TOKENS,
-      messages: [{ role: "user", content: clientMessage }],
-      temperature: 0.1
+      temperature: TEMPERATURE,
+      messages: [{ role: "user", content: clientMessage }]
       // stream: false,
       // n: 1,
       // frequency_penalty: 0,
