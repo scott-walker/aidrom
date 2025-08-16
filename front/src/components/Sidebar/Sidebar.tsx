@@ -1,10 +1,20 @@
 import { type ComponentProps, type FC, type JSX } from "react"
-import { makeNotCollapsibleSidebarClass, makeSheetContentClass, makeSheetContentStyle } from "./assets"
+import {
+  makeNotCollapsibleSidebarClass,
+  makeSheetContentClass,
+  makeSheetContentInnerClass,
+  makeSheetContentStyle,
+  makeSheetHeaderClass,
+  makeSidebarRootClass,
+  makeSidebarGapClass,
+  makeSidebarContainerClass,
+  makeSidebarInnerClass
+} from "./assets"
 import { useSidebar } from "./hooks"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@ui/Sheet"
 
 /**
- * Пропсы 
+ * Пропсы
  * @namespace Sidebar.Sidebar.Props
  */
 type Props = ComponentProps<"div"> & {
@@ -59,7 +69,9 @@ const Sidebar: Constructor = ({
   // Если сайдбар схлопывается на мобильном устройстве
   if (isMobile) {
     const sheetContentClass = makeSheetContentClass(className || "")
-    const sheetContentStyle = makeSheetContentStyle(style || {})
+    const sheetContentStyle = makeSheetContentStyle()
+    const sheetContentInnerClass = makeSheetContentInnerClass()
+    const sheetHeaderClass = makeSheetHeaderClass()
 
     return (
       <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
@@ -71,59 +83,36 @@ const Sidebar: Constructor = ({
           style={sheetContentStyle}
           side={side}
         >
-          <SheetHeader className="sr-only">
+          <SheetHeader className={sheetHeaderClass}>
             <SheetTitle>Sidebar</SheetTitle>
             <SheetDescription>Displays the mobile sidebar.</SheetDescription>
           </SheetHeader>
-          
-          <div className="flex h-full w-full flex-col">{children}</div>
+
+          <div className={sheetContentInnerClass}>{children}</div>
         </SheetContent>
       </Sheet>
     )
   }
 
+  const sidebarRootClass = makeSidebarRootClass()
+  const sidebarGapClass = makeSidebarGapClass(variant)
+  const sidebarContainerClass = makeSidebarContainerClass(side, variant, className || "")
+  const sidebarInnerClass = makeSidebarInnerClass()
+
   // Если сайдбар схлопывается на десктопе
   return (
     <div
-      className="group peer text-sidebar-foreground hidden md:block"
+      className={sidebarRootClass}
       data-state={state}
       data-collapsible={state === "collapsed" ? collapsible : ""}
       data-variant={variant}
       data-side={side}
       data-slot="sidebar"
     >
-      {/* This is what handles the sidebar gap on desktop */}
-      <div
-        data-slot="sidebar-gap"
-        className={cn(
-          "relative w-(--sidebar-width) bg-transparent transition-[width] duration-200 ease-linear",
-          "group-data-[collapsible=offcanvas]:w-0",
-          "group-data-[side=right]:rotate-180",
-          variant === "floating" || variant === "inset"
-            ? "group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4)))]"
-            : "group-data-[collapsible=icon]:w-(--sidebar-width-icon)"
-        )}
-      />
-      <div
-        data-slot="sidebar-container"
-        className={cn(
-          "fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-linear md:flex",
-          side === "left"
-            ? "left-0 group-data-[collapsible=offcanvas]:left-[calc(var(--sidebar-width)*-1)]"
-            : "right-0 group-data-[collapsible=offcanvas]:right-[calc(var(--sidebar-width)*-1)]",
-          // Adjust the padding for floating and inset variants.
-          variant === "floating" || variant === "inset"
-            ? "p-2 group-data-[collapsible=icon]:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
-            : "group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-r group-data-[side=right]:border-l",
-          className
-        )}
-        {...props}
-      >
-        <div
-          data-sidebar="sidebar"
-          data-slot="sidebar-inner"
-          className="bg-sidebar group-data-[variant=floating]:border-sidebar-border flex h-full w-full flex-col group-data-[variant=floating]:rounded-lg group-data-[variant=floating]:border group-data-[variant=floating]:shadow-sm"
-        >
+      {/* Это чтобы был пробел на десктопе */}
+      <div data-slot="sidebar-gap" className={sidebarGapClass} />
+      <div data-slot="sidebar-container" className={sidebarContainerClass} {...props}>
+        <div data-sidebar="sidebar" data-slot="sidebar-inner" className={sidebarInnerClass}>
           {children}
         </div>
       </div>
