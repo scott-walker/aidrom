@@ -27,7 +27,7 @@ type Constructor = FC<Props>
 type Component = JSX.Element
 
 /**
- * UI компонент "Кнопка"
+ * UI компонент "Button"
  * @namespace Ui.Button
  * @type {Constructor}
  * @param Props.className - классы для компонента
@@ -44,5 +44,4 @@ const Button: Constructor = ({ className, variant, size, asChild = false, ...pro
   return <Component data-slot="button" className={classes} {...props} />
 }
 
-export { Button }
-export type { Props }
+export { Button, type Props }

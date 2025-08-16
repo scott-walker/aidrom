@@ -35,13 +35,13 @@ const baseClasses: string = mergeClasses([
  * @namespace Ui.Button.Assets.VariantClasses
  */
 const variantClasses: Record<string, string> = {
-  default: mergeClasses([
+  default: mergeClasses(
     "bg-primary",
     "text-primary-foreground",
     "shadow-xs",
     "hover:bg-primary/90"
-  ]),
-  destructive: mergeClasses([
+  ),
+  destructive: mergeClasses(
     "bg-destructive",
     "text-destructive-foreground",
     "shadow-xs",
@@ -49,8 +49,8 @@ const variantClasses: Record<string, string> = {
     "focus-visible:ring-destructive/20",
     "dark:focus-visible:ring-destructive/40",
     "dark:bg-destructive/60"
-  ]),
-  outline: mergeClasses([
+  ),
+  outline: mergeClasses(
     "border",
     "bg-background",
     "shadow-xs",
@@ -59,19 +59,19 @@ const variantClasses: Record<string, string> = {
     "dark:bg-input/30",
     "dark:border-input",
     "dark:hover:bg-input/50"
-  ]),
-  secondary: mergeClasses([
+  ),
+  secondary: mergeClasses(
     "bg-secondary",
     "text-secondary-foreground",
     "shadow-xs",
     "hover:bg-secondary/80"
-  ]),
-  ghost: mergeClasses([
+  ),
+  ghost: mergeClasses(
     "hover:bg-accent",
     "hover:text-accent-foreground",
     "dark:hover:bg-accent/50"
-  ]),
-  link: mergeClasses(["text-primary", "underline-offset-4", "hover:underline"])
+  ),
+  link: mergeClasses("text-primary", "underline-offset-4", "hover:underline")
 }
 
 /**
