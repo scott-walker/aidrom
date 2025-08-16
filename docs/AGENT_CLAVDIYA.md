@@ -45,18 +45,39 @@
 
 ```json
 {
-  "request_id": 22036123,
-  "cost": 2.374,
+  "request_id": 22057485,
+  "model": "claude-4",
+  "cost": 0.071,
   "response": [
     {
+      "id": "gen-1755290330-0oNZNHDTsCDu3flmEWGi",
+      "model": "anthropic/claude-sonnet-4",
+      "object": "chat.completion",
+      "created": 1755290332,
       "choices": [
         {
+          "index": 0,
           "message": {
             "role": "assistant",
-            "content": "Привет! У меня все хорошо, спасибо что спросил. Как дела у тебя?"
-          }
+            "content": "Привет! Нормально, спасибо что спросили. Как дела у тебя?"
+          },
+          "logprobs": null,
+          "finish_reason": "stop"
         }
-      ]
+      ],
+      "usage": {
+        "prompt_tokens": 10,
+        "completion_tokens": 21,
+        "total_tokens": 31,
+        "prompt_tokens_details": { "cached_tokens": 0, "audio_tokens": 0 },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      },
+      "system_fingerprint": null
     }
   ]
 }
