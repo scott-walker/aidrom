@@ -1,4 +1,4 @@
-import { useMemo, useCallback, useState, type FC, type JSX } from "react"
+import { useMemo, useCallback, useState, type FC, type JSX, type ComponentProps } from "react"
 import { useIsMobile } from "./hooks"
 import { SidebarContext, makeProviderClass, makeProviderStyle, type SidebarContextProps } from "./assets"
 import { TooltipProvider } from "@ui/Tooltip"
@@ -11,7 +11,7 @@ import { TooltipProvider } from "@ui/Tooltip"
  * Пропсы для компонента SidebarProvider
  * @namespace Sidebar.Provider.Props
  */
-type Props = React.ComponentProps<"div"> & {
+type Props = ComponentProps<"div"> & {
   defaultOpen?: boolean
   open?: boolean
   onOpenChange?: (open: boolean) => void

@@ -1,4 +1,4 @@
-import { type ComponentProps, type FC, type JSX } from "react"
+import type { ComponentProps, FC, JSX } from "react"
 import {
   makeNotCollapsibleSidebarClass,
   makeSheetContentClass,

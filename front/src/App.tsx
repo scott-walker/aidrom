@@ -16,6 +16,13 @@ import {
 } from "@ui/Sheet"
 
 export default function App() {
+  const button = <Button>Отправить</Button>
+  const skeletons = (
+    <div>
+      <strong>ЖМИ</strong> (но не нажимай) 🤪
+    </div>
+  )
+
   return (
     <MainLayout>
       <div className="bg-white rounded-lg shadow p-6 h-full">
@@ -29,13 +36,19 @@ export default function App() {
 
         <div className="flex gap-2 mt-4">
           <Input placeholder="Введите текст" />
+          {/* <Button>Отправить</Button> */}
 
           <Tooltip>
-            <TooltipTrigger>
-              <Button>Отправить</Button>
-            </TooltipTrigger>
-            <TooltipContent className="bg-slate-200 rounded-lg p-4">
-              <div className="flex gap-2 text-black">Идет отправка...</div>
+            <TooltipTrigger asChild>{button}</TooltipTrigger>
+            <TooltipContent side="left" align="center">
+              Tooltip-Tooltip
+            </TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger>фывфывфыв</TooltipTrigger>
+            <TooltipContent>
+              <div>Идет отправка...</div>
             </TooltipContent>
           </Tooltip>
         </div>
@@ -79,6 +92,12 @@ export default function App() {
               </SheetFooter>
             </SheetContent>
           </Sheet>
+        </div>
+
+        <div className="flex gap-4 mt-4">
+          <Button variant="outline" asChild>
+            {skeletons}
+          </Button>
         </div>
       </div>
     </MainLayout>

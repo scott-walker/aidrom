@@ -1,5 +1,5 @@
-import { type FC, type JSX, type ComponentProps } from "react"
-import { type VariantProps } from "class-variance-authority"
+import type { FC, JSX, ComponentProps } from "react"
+import type { VariantProps } from "class-variance-authority"
 import { Slot } from "@radix-ui/react-slot"
 
 import { mergeClasses } from "@utils/jsxtools"
@@ -38,10 +38,10 @@ type Component = JSX.Element
  * @returns {JSX.Element} элемент компонента кнопки
  */
 const Button: Constructor = ({ className, variant, size, asChild = false, ...props }: Props): Component => {
-  const Component = asChild ? Slot : "button"
+  const Comp = asChild ? Slot : "button"
   const classes = mergeClasses(variants({ variant, size, className }))
 
-  return <Component data-slot="button" className={classes} {...props} />
+  return <Comp data-slot="button" className={classes} {...props} />
 }
 
 export { Button, type Props }
