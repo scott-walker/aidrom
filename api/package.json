@@ -16,8 +16,8 @@
     "dev": "nodemon src/server.js",
     "db:gen": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
-    "clear:logs": "rm -rf ./logs/*.log ./logs/nginx",
-    "clear:runtime": "rm -rf ./runtime/*",
+    "clear:logs": "rm -rf /logs/*",
+    "clear:runtime": "rm -rf /runtime/*",
     "clear:all": "npm run clear:logs && npm run clear:runtime"
   },
   "dependencies": {

@@ -1,14 +1,14 @@
 import "dotenv/config"
 import { defineConfig } from "drizzle-kit"
-
-console.log(process.env.DATABASE_URL)
+import config from "#config/index.js"
+import { resolve } from "path"
 
 export default defineConfig({
   dialect: "postgresql",
   dbCredentials: {
-    url: process.env.DATABASE_URL
+    url: config("dbUrl")
   },
-  schema: "./src/db/schema",
-  out: "./runtime/migrations",
+  schema: resolve(config("dbDir"), "schema"),
+  out: resolve(config("runtimeDir"), "migrations"),
   verbose: true
 })

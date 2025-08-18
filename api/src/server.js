@@ -2,12 +2,12 @@ import app from "./app.js"
 import config from "#config/index.js"
 import logger from "#utils/logger.js"
 
+const HOST = config("host")
+const PORT = config("port")
+
 // Запуск сервера
-const server = app.listen(config("port"), () => {
-  logger.info("Сервер запущен", {
-    port: config("port"),
-    url: `http://localhost:${config("port")}`
-  })
+const server = app.listen(PORT, () => {
+  logger.info("Сервер запущен", { url: `http://${HOST}:${PORT}` })
 })
 
 /**
@@ -16,7 +16,7 @@ const server = app.listen(config("port"), () => {
  * @param {string} signal - Тип полученного сигнала
  * @returns {void}
  */
-const handleShutdown = (signal) => {
+const handleShutdown = signal => {
   logger.info(`Получен сигнал ${signal}, завершение работы сервера`)
   server.close(() => {
     logger.info("Сервер успешно остановлен")
