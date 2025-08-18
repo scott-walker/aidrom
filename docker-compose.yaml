@@ -9,9 +9,10 @@ services:
     ports:
       - "5410:5432"
     volumes:
+      - ./docker/db/entrypoint.sh:/entrypoint.sh
       - ./docker/db/data:/var/lib/postgresql/data
     networks:
-      - ai_helper_network
+      - aidrom_network
 
   api:
     build: ./docker/api
@@ -21,22 +22,37 @@ services:
     ports:
       - "4000:4000"
     volumes:
+      - ./docker/api/entrypoint.sh:/entrypoint.sh
       - ./api:/app
     networks:
-      - ai_helper_network
+      - aidrom_network
+
+  front:
+    build: ./docker/front
+    restart: always
+    depends_on:
+      - api
+    volumes:
+      - ./docker/front/entrypoint.sh:/entrypoint.sh
+      - ./front:/app
+    networks:
+      - aidrom_network
 
   nginx:
     build: ./docker/nginx
     restart: always
     depends_on:
       - api
+      - front
     ports:
-      - "8001:80"
+      - "5173:80" # Frontend
+      - "8001:81" # API
     volumes:
+      - ./docker/nginx/entrypoint.sh:/entrypoint.sh
       - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - ./api/logs/nginx:/var/log/nginx
     networks:
-      - ai_helper_network
+      - aidrom_network
 
 networks:
-  ai_helper_network:
+  aidrom_network:

@@ -5,4 +5,4 @@ set -e
 echo "alias ll='ls -lah'" >> ~/.bashrc
 
 npm i
-npm run dev
+npm run dev -- --host
