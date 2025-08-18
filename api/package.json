@@ -1,5 +1,5 @@
 {
-  "name": "AIDrom API",
+  "name": "aidrom-api",
   "type": "module",
   "imports": {
     "#config/*": "./src/config/*",
