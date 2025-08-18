@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react"
-import { SidebarContext, type SidebarContextProps } from "./assets"
+import { SidebarContext, type SidebarContextProps } from "./types"
 
 /**
  * Хук для получения контекста Sidebar

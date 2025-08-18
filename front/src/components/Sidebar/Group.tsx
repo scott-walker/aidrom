@@ -1,5 +1,5 @@
 import type { ComponentProps, FC, JSX } from "react"
-import { makeSidebarGroupClass } from "./assets"
+import { mergeClasses } from "@utils/jsxtools"
 
 /**
  * Пропсы
@@ -20,6 +20,24 @@ type Constructor = FC<Props>
 type Component = JSX.Element
 
 /**
+ * Функция для создания CSS класса для группы
+ * @namespace Sidebar.Group.makeClasses
+ * @param className - CSS классы
+ * @returns {string} классы для группы
+ */
+const makeClasses = (className: string = ""): string => {
+  return mergeClasses(
+    "relative",
+    "flex",
+    "w-full",
+    "min-w-0",
+    "flex-col",
+    "p-2",
+    className
+  )
+}
+
+/**
  * Компонент группа
  * @namespace Sidebar.Group
  * @type {Constructor}
@@ -28,7 +46,7 @@ type Component = JSX.Element
  * @returns {Component} компонент SidebarGroup
  */
 const SidebarGroup: Constructor = ({ className, ...props }: Props): Component => {
-  const sidebarGroupClass = makeSidebarGroupClass(className || "")
+  const sidebarGroupClass = makeClasses(className || "")
 
   return <div data-slot="sidebar-group" data-sidebar="group" className={sidebarGroupClass} {...props} />
 }

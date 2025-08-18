@@ -1,5 +1,5 @@
 import type { ComponentProps, FC, JSX } from "react"
-import { makeSidebarHeaderClass } from "./assets"
+import { mergeClasses } from "@utils/jsxtools"
 
 /**
  * Пропсы
@@ -20,6 +20,22 @@ type Constructor = FC<Props>
 type Component = JSX.Element
 
 /**
+ * Функция для создания CSS класса для хедера
+ * @namespace Sidebar.Header.makeClasses
+ * @param className - CSS классы
+ * @returns {string} классы для хедера
+ */
+const makeClasses = (className: string = ""): string => {
+  return mergeClasses(
+    "flex",
+    "flex-col",
+    "gap-2",
+    "p-2",
+    className
+  )
+}
+
+/**
  * Компонент хедер
  * @namespace Sidebar.Header
  * @type {Constructor}
@@ -28,7 +44,7 @@ type Component = JSX.Element
  * @returns {Component} компонент SidebarHeader
  */
 const SidebarHeader: Constructor = ({ className, ...props }: Props): Component => {
-  const sidebarHeaderClass = makeSidebarHeaderClass(className || "")
+  const sidebarHeaderClass = makeClasses(className || "")
 
   return <div data-slot="sidebar-header" data-sidebar="header" className={sidebarHeaderClass} {...props} />
 }

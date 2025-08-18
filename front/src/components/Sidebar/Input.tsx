@@ -1,6 +1,6 @@
 import type { ComponentProps, FC, JSX } from "react"
 import { Input } from "@ui/Input"
-import { makeSidebarInputClass } from "./assets"
+import { mergeClasses } from "@utils/jsxtools"
 
 /**
  * Пропсы
@@ -21,6 +21,21 @@ type Constructor = FC<Props>
 type Component = JSX.Element
 
 /**
+ * Функция для создания CSS класса для инпута
+ * @namespace Sidebar.Input.makeClasses
+ * @param className - CSS классы
+ * @returns {string} классы для инпута
+ */
+const makeClasses = (className: string = ""): string => {
+  return mergeClasses(
+    "bg-background",
+    "h-8",
+    "w-full",
+    "shadow-none",
+    className
+  )
+}
+/**
  * Компонент инпут
  * @namespace Sidebar.Input
  * @type {Constructor}
@@ -29,7 +44,7 @@ type Component = JSX.Element
  * @returns {Component} компонент SidebarInput
  */
 const SidebarInput: Constructor = ({ className, ...props }: Props): Component => {
-  const sidebarInputClass = makeSidebarInputClass(className || "")
+  const sidebarInputClass = makeClasses(className || "")
 
   return <Input data-slot="sidebar-input" data-sidebar="input" className={sidebarInputClass} {...props} />
 }

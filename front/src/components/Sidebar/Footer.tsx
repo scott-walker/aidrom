@@ -1,5 +1,5 @@
 import type { ComponentProps, FC, JSX } from "react"
-import { makeSidebarFooterClass } from "./assets"
+import { mergeClasses } from "@utils/jsxtools"
 
 /**
  * Пропсы
@@ -20,6 +20,22 @@ type Constructor = FC<Props>
 type Component = JSX.Element
 
 /**
+ * Функция для создания CSS класса для футера
+ * @namespace Sidebar.Footer.makeClasses
+ * @param className - CSS классы
+ * @returns {string} классы для футера
+ */
+const makeClasses = (className: string = ""): string => {
+  return mergeClasses(
+    "flex",
+    "flex-col",
+    "gap-2",
+    "p-2",
+    className
+  )
+}
+
+/**
  * Компонент футер
  * @namespace Sidebar.Footer
  * @type {Constructor}
@@ -28,7 +44,7 @@ type Component = JSX.Element
  * @returns {Component} компонент SidebarFooter
  */
 const SidebarFooter: Constructor = ({ className, ...props }: Props): Component => {
-  const sidebarFooterClass = makeSidebarFooterClass(className || "")
+  const sidebarFooterClass = makeClasses(className || "")
 
   return <div data-slot="sidebar-footer" data-sidebar="footer" className={sidebarFooterClass} {...props} />
 }

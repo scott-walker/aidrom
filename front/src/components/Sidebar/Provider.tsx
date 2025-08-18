@@ -1,8 +1,14 @@
-import { useMemo, useCallback, useState, type FC, type JSX, type ComponentProps } from "react"
+import { useMemo, useCallback, useState, type FC, type JSX, type ComponentProps, type CSSProperties } from "react"
 import { useIsMobile } from "./hooks"
-import { SidebarContext, makeProviderClass, makeProviderStyle, type SidebarContextProps } from "./assets"
+import { SidebarContext, type SidebarContextProps } from "./types"
 import { TooltipProvider } from "@ui/Tooltip"
+import { mergeClasses } from "@utils/jsxtools"
 
+// Размеры сайдбара для десктопа
+const SIDEBAR_WIDTH = "18rem"
+const SIDEBAR_WIDTH_ICON = "3rem"
+
+// TODO: SIDEBAR: Добавить хранение состояния и горячие клавиши
 // const SIDEBAR_COOKIE_NAME = "sidebar_state"
 // const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
 // const SIDEBAR_KEYBOARD_SHORTCUT = "b"
@@ -28,6 +34,37 @@ type Constructor = FC<Props>
  * @namespace Sidebar.Provider.Component
  */
 type Component = JSX.Element
+
+/**
+ * Функция для создания класса для контейнера
+ * @namespace Sidebar.Provider.makeClasses
+ * @param className - CSS классы
+ * @returns {string} классы для контейнера
+ */
+const makeClasses = (className: string = ""): string => {
+  return mergeClasses(
+    "group/sidebar-wrapper",
+    "has-data-[variant=inset]:bg-sidebar",
+    "flex",
+    "min-h-svh",
+    "w-full",
+    className
+  )
+}
+
+/**
+ * Функция для создания стилей для контейнера
+ * @namespace Sidebar.Provider.makeStyle
+ * @param style - внешние стили
+ * @returns {CSSProperties} стили для контейнера
+ */
+const makeStyle = (style: CSSProperties = {}): CSSProperties => {
+  return {
+    "--sidebar-width": SIDEBAR_WIDTH,
+    "--sidebar-width-icon": SIDEBAR_WIDTH_ICON,
+    ...style
+  } as CSSProperties
+}
 
 /**
  * Провайдер для сайдбара
@@ -109,8 +146,8 @@ const SidebarProvider: Constructor = ({
     [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
   )
 
-  const containerClass = makeProviderClass(className || "")
-  const containerStyle = makeProviderStyle(style || {})
+  const containerClass = makeClasses(className || "")
+  const containerStyle = makeStyle(style || {})
 
   return (
     <SidebarContext.Provider value={contextValue}>

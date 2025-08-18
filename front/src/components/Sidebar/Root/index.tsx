@@ -1,4 +1,6 @@
 import type { ComponentProps, FC, JSX } from "react"
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@ui/Sheet"
+import { useSidebar } from "../hooks"
 import {
   makeNotCollapsibleSidebarClass,
   makeSheetContentClass,
@@ -10,12 +12,10 @@ import {
   makeSidebarContainerClass,
   makeSidebarInnerClass
 } from "./assets"
-import { useSidebar } from "./hooks"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@ui/Sheet"
 
 /**
  * Пропсы
- * @namespace Sidebar.Sidebar.Props
+ * @namespace Sidebar.Root.Props
  */
 type Props = ComponentProps<"div"> & {
   side?: "left" | "right"
@@ -25,19 +25,19 @@ type Props = ComponentProps<"div"> & {
 
 /**
  * Конструктор
- * @namespace Sidebar.Sidebar.Constructor
+ * @namespace Sidebar.Root.Constructor
  */
 type Constructor = FC<Props>
 
 /**
  * Компонент
- * @namespace Sidebar.Sidebar.Component
+ * @namespace Sidebar.Root.Component
  */
 type Component = JSX.Element
 
 /**
  * Компонент Sidebar
- * @namespace Sidebar.Sidebar
+ * @namespace Sidebar.Root
  * @param Props.side - сторона сайдбара
  * @param Props.variant - вариант сайдбара
  * @param Props.collapsible - схлопывание сайдбара

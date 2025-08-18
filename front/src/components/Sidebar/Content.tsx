@@ -1,5 +1,5 @@
 import type { ComponentProps, FC, JSX } from "react"
-import { makeSidebarContentClass } from "./assets"
+import { mergeClasses } from "@utils/jsxtools"
 
 /**
  * Пропсы
@@ -20,6 +20,25 @@ type Constructor = FC<Props>
 type Component = JSX.Element
 
 /**
+ * Функция для создания CSS класса для контента
+ * @namespace Sidebar.Content.makeClasses
+ * @param className - CSS классы
+ * @returns {string} классы для контента
+ */
+const makeClasses = (className: string = ""): string => {
+  return mergeClasses(
+    "flex",
+    "min-h-0",
+    "flex-1",
+    "flex-col",
+    "gap-2",
+    "overflow-auto",
+    "group-data-[collapsible=icon]:overflow-hidden",
+    className
+  )
+}
+
+/**
  * Компонент контент
  * @namespace Sidebar.Content
  * @type {Constructor}
@@ -28,7 +47,7 @@ type Component = JSX.Element
  * @returns {Component} компонент SidebarContent
  */
 const SidebarContent: Constructor = ({ className, ...props }: Props): Component => {
-  const sidebarContentClass = makeSidebarContentClass(className || "")
+  const sidebarContentClass = makeClasses(className || "")
 
   return (
     <div

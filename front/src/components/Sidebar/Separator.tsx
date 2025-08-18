@@ -1,6 +1,6 @@
 import type { ComponentProps, FC, JSX } from "react"
 import { Separator } from "@ui/Separator"
-import { makeSidebarSeparatorClass } from "./assets"
+import { mergeClasses } from "@utils/jsxtools"
 
 /**
  * Пропсы
@@ -20,6 +20,23 @@ type Constructor = FC<Props>
  */
 type Component = JSX.Element
 
+
+/**
+ * Функция для создания CSS класса для разделителя
+ * @namespace Sidebar.Separator.makeClasses
+ * @param className - CSS классы
+ * @returns {string} классы для разделителя
+ */
+const makeClasses = (className: string = ""): string => {
+  return mergeClasses(
+    "bg-sidebar-border",
+    "mx-2",
+    "w-auto",
+    className
+  )
+}
+
+
 /**
  * Компонент разделитель
  * @namespace Sidebar.Separator
@@ -29,7 +46,7 @@ type Component = JSX.Element
  * @returns {Component} компонент SidebarSeparator
  */
 const SidebarSeparator: Constructor = ({ className, ...props }: Props): Component => {
-  const sidebarSeparatorClass = makeSidebarSeparatorClass(className || "")
+  const sidebarSeparatorClass = makeClasses(className || "")
 
   return (
     <Separator data-slot="sidebar-separator" data-sidebar="separator" className={sidebarSeparatorClass} {...props} />

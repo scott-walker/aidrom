@@ -1,5 +1,5 @@
 import type { ComponentProps, FC, JSX } from "react"
-import { makeSidebarMenuClass } from "./assets"
+import { mergeClasses } from "@utils/jsxtools"
 
 /**
  * Пропсы
@@ -20,6 +20,23 @@ type Constructor = FC<Props>
 type Component = JSX.Element
 
 /**
+ * Функция для создания CSS класса для меню
+ * @namespace Sidebar.Menu.makeClasses
+ * @param className - CSS классы
+ * @returns {string} классы для меню
+ */
+const makeClasses = (className: string = ""): string => {
+  return mergeClasses(
+    "flex",
+    "w-full",
+    "min-w-0",
+    "flex-col",
+    "gap-1",
+    className
+  )
+}
+
+/**
  * Компонент меню
  * @namespace Sidebar.Menu
  * @type {Constructor}
@@ -28,7 +45,7 @@ type Component = JSX.Element
  * @returns {Component} компонент SidebarMenu
  */
 const SidebarMenu: Constructor = ({ className, ...props }: Props): Component => {
-  const classes = makeSidebarMenuClass(className || "")
+  const classes = makeClasses(className || "")
 
   return <ul data-slot="sidebar-menu" data-sidebar="menu" className={classes} {...props} />
 }

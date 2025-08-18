@@ -1,5 +1,5 @@
 import type { ComponentProps, FC, JSX } from "react"
-import { makeSidebarMenuItemClass } from "./assets"
+import { mergeClasses } from "@utils/jsxtools"
 
 /**
  * Пропсы
@@ -20,6 +20,20 @@ type Constructor = FC<Props>
 type Component = JSX.Element
 
 /**
+ * Функция для создания CSS класса для пункта меню
+ * @namespace Sidebar.MenuItem.makeClasses
+ * @param className - CSS классы
+ * @returns {string} классы для пункта меню
+ */
+const makeClasses = (className: string = ""): string => {
+  return mergeClasses(
+    "group/menu-item",
+    "relative",
+    className
+  )
+}
+
+/**
  * Компонент пункт меню
  * @namespace Sidebar.MenuItem
  * @type {Constructor}
@@ -28,7 +42,7 @@ type Component = JSX.Element
  * @returns {Component} компонент SidebarMenuItem
  */
 const SidebarMenuItem: Constructor = ({ className, ...props }: Props): Component => {
-  const classes = makeSidebarMenuItemClass(className || "")
+  const classes = makeClasses(className || "")
 
   return <li data-slot="sidebar-menu-item" data-sidebar="menu-item" className={classes} {...props} />
 }

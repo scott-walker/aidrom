@@ -1,5 +1,5 @@
 import type { ComponentProps, FC, JSX } from "react"
-import { makeSidebarMenuBadgeClass } from "./assets"
+import { mergeClasses } from "@utils/jsxtools"
 
 /**
  * Пропсы
@@ -19,6 +19,39 @@ type Constructor = FC<Props>
 type Component = JSX.Element
 
 /**
+ * Функция для создания CSS класса для бейджа меню
+ * @namespace Sidebar.MenuBadge.makeClasses
+ * @param className - CSS классы
+ * @returns {string} классы для бейджа меню
+ */
+const makeClasses = (className: string = ""): string => {
+  return mergeClasses(
+    "text-sidebar-foreground",
+    "pointer-events-none",
+    "absolute",
+    "right-1",
+    "flex",
+    "h-5",
+    "min-w-5",
+    "items-center",
+    "justify-center",
+    "rounded-md",
+    "px-1",
+    "text-xs",
+    "font-medium",
+    "tabular-nums",
+    "select-none",
+    "peer-hover/menu-button:text-sidebar-accent-foreground",
+    "peer-data-[active=true]/menu-button:text-sidebar-accent-foreground",
+    "peer-data-[size=sm]/menu-button:top-1",
+    "peer-data-[size=default]/menu-button:top-1.5",
+    "peer-data-[size=lg]/menu-button:top-2.5",
+    "group-data-[collapsible=icon]:hidden",
+    className
+  )
+} 
+
+/**
  * Компонент бейджа меню
  * @namespace Sidebar.MenuBadge
  * @type {Constructor}
@@ -27,7 +60,7 @@ type Component = JSX.Element
  * @returns {Component} элемент компонента бейджа меню
  */
 const SidebarMenuBadge: Constructor = ({ className, ...props }: Props): Component => {
-  const classes = makeSidebarMenuBadgeClass(className || "")
+  const classes = makeClasses(className || "")
 
   return <div data-slot="sidebar-menu-badge" data-sidebar="menu-badge" className={classes} {...props} />
 }
