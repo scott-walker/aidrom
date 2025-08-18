@@ -2,7 +2,7 @@
 
 import type { ComponentProps, FC, JSX } from "react"
 import { Root } from "@radix-ui/react-separator"
-import { makeClass } from "./assets"
+import { makeClasses } from "./assets"
 
 /**
  * Пропсы
@@ -38,7 +38,7 @@ const Separator: Constructor = ({
   decorative = true,
   ...props
 }: Props): Component => {
-  const classes = makeClass(className)
+  const classes = makeClasses(className)
 
   return <Root data-slot="separator" decorative={decorative} orientation={orientation} className={classes} {...props} />
 }

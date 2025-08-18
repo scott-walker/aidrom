@@ -2,11 +2,11 @@ import { mergeClasses } from "@utils/jsxtools"
 
 /**
  * Создает классы
- * @namespace Ui.Input.Assets.MakeClass
+ * @namespace Ui.Input.Assets.makeClasses
  * @param {string} className - CSS класс
  * @returns {string} строковый класс
  */
-export const makeClass = (className: string = ""): string => {
+export const makeClasses = (className: string = ""): string => {
   return mergeClasses(
     // Базовые стили
     "flex",

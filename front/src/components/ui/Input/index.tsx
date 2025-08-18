@@ -1,5 +1,5 @@
 import type { ComponentProps, FC, JSX } from "react"
-import { makeClass } from "./assets"
+import { makeClasses } from "./assets"
 
 /**
  * Пропсы
@@ -29,7 +29,7 @@ type Component = JSX.Element
  * @returns {JSX.Element} элемент компонента Input
  */
 const Input: Constructor = ({ className, type, ...props }: Props): Component => {
-  const classes = makeClass(className)
+  const classes = makeClasses(className)
 
   return <input type={type} data-slot="input" className={classes} {...props} />
 }
