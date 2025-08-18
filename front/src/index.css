@@ -3,6 +3,11 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --font-sans: "Onest", sans-serif; /* для текста */
+  --font-display: "Unbounded", sans-serif; /* для заголовков */
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -58,8 +63,9 @@
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(13.114% 0.02139 270.888);
+  /* --background: oklch(95.218% 0.01081 291.751); */
+  --background: oklch(98.4% 0.003 247.858);
+  --foreground: oklch(0.21 0.07 281.76);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
@@ -92,7 +98,7 @@
   --chart-5: oklch(0.769 0.188 70.08);
 
   /* Header */
-  --header: oklch(0.984 0.003 247.858);
+  --header: var(--background);
   --header-foreground: oklch(0.129 0.042 264.695);
   --header-primary: oklch(0.208 0.042 265.755);
   --header-primary-foreground: oklch(0.984 0.003 247.858);
@@ -102,8 +108,8 @@
   --header-ring: oklch(0.704 0.04 256.788);
 
   /* Sidebar */
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
   --sidebar-primary: oklch(0.208 0.042 265.755);
   --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
   --sidebar-accent: oklch(0.968 0.007 247.896);
@@ -157,7 +163,7 @@
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
   }
- 
+
   .dark {
     --sidebar: oklch(0.205 0 0);
     --sidebar-foreground: oklch(0.985 0 0);
@@ -175,6 +181,50 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+  h1 {
+    @apply text-4xl font-display font-bold;
+  }
+  h2 {
+    @apply text-3xl font-display font-bold;
+  }
+  h3 {
+    @apply text-2xl font-display font-bold;
+  }
+  h4 {
+    @apply text-xl font-display font-bold;
+  }
+  h5 {
+    @apply text-lg font-display font-bold;
+  }
+  h6 {
+    @apply text-base font-display font-bold;
+  }
+
+  .content-format {
+    p {
+      @apply mb-5 text-lg leading-6.5 font-sans ;
+    }
+    ul {
+      @apply ml-4 mb-5 list-disc list-inside;
+    }
+    li {
+      @apply text-lg leading-6;
+    }
+  }
+}
+
+@theme {
+  --animate-skew: skew 2s ease-in-out infinite;
+
+  @keyframes skew {
+    0%,
+    100% {
+      transform: skew(-30deg);
+    }
+    50% {
+      transform: skew(-15deg);
+    }
   }
 }

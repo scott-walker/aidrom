@@ -12,8 +12,11 @@ const headerClasses: string = mergeClasses(
   "flex",
   "items-center",
   "justify-between",
-  "px-3",
-  "h-13",
+  "sticky",
+  "top-0",
+  "z-10",
+  "px-8",
+  "h-18",
   "bg-header",
   "text-header-foreground"
 )

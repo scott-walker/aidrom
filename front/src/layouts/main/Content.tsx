@@ -5,7 +5,7 @@ import { mergeClasses } from "@utils/jsxtools"
  * Классы для основного контента
  * @type {string}
  */
-const contentClasses: string = mergeClasses("flex", "flex-col", "p-6")
+const contentClasses: string = mergeClasses("flex", "flex-col", "p-8")
 
 /**
  * Основной контент

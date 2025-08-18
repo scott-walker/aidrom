@@ -1,5 +1,19 @@
 import type { PropsWithChildren, JSX } from "react"
-import { Home, Inbox, Calendar, Search, Settings, Plane } from "lucide-react"
+import {
+  Home,
+  Inbox,
+  Calendar,
+  Search,
+  Settings,
+  // Plane,
+  // Rocket,
+  // GalleryHorizontalEnd,
+  // Maximize,
+  // Minimize,
+  // GalleryVerticalEnd,
+  // AudioLines,
+  AudioWaveform
+} from "lucide-react"
 import { mergeClasses } from "@utils/jsxtools"
 import {
   Sidebar as SidebarRoot,
@@ -76,7 +90,7 @@ const secondaryItems: MenuItem[] = [
  * @namespace Layouts.Main.Sidebar.HeaderClasses
  * @type {string}
  */
-const headerClasses: string = mergeClasses("flex", "flex-row", "items-center", "gap-3", "h-13", "px-6")
+const headerClasses: string = mergeClasses("flex", "flex-row", "items-center", "justify-start", "gap-3", "h-18", "pl-8")
 
 /**
  * Основной компонент сайдбара
@@ -87,10 +101,10 @@ const headerClasses: string = mergeClasses("flex", "flex-row", "items-center", "
 export default function Sidebar({ children }: PropsWithChildren): JSX.Element {
   const primaryMenuItems = primaryItems.map(item => (
     <SidebarMenuItem key={item.title}>
-      <SidebarMenuButton asChild>
+      <SidebarMenuButton asChild size="default">
         <a href={item.url}>
           <item.icon />
-          <span>{item.title}</span>
+          <span className="text-md font-medium">{item.title}</span>
         </a>
       </SidebarMenuButton>
       {item.eventsNumber && <SidebarMenuBadge>{item.eventsNumber}</SidebarMenuBadge>}
@@ -111,12 +125,21 @@ export default function Sidebar({ children }: PropsWithChildren): JSX.Element {
 
   return (
     <SidebarProvider>
-      <SidebarRoot>
+      <SidebarRoot className="z-11 shadow-2xl shadow-foreground/17">
         <SidebarContent>
           <SidebarHeader className={headerClasses}>
-            <Plane className="w-6 h-6" />
-            <span className="text-xl text-primary font-bold">AiDrom</span>
+            {/* <Plane className="w-10 h-10" /> */}
+            {/* <Rocket className="w-10 h-10 text-primary animate-skew" /> */}
+            {/* <GalleryHorizontalEnd className="w-9 h-9 text-primary animate-skew" /> */}
+            {/* <GalleryVerticalEnd className="w-8 h-8" /> */}
+            {/* <Minimize className="w-12 h-12 text-primary animate-skew" /> */}
+            {/* <AudioLines className="w-11 h-11 text-primary animate-skew" /> */}
+            <AudioWaveform className="w-10 h-10 text-primary animate-skew" />
+            {/* <Maximize className="w-10 h-10 text-primary animate-target" /> */}
+            <h1 className="text-2xl ">AIDrom</h1>
           </SidebarHeader>
+
+          {/* <SidebarSeparator /> */}
 
           <SidebarGroup className="px-4">
             <SidebarGroupLabel className="mb-1 text-sm text-muted-foreground/50">Основное</SidebarGroupLabel>

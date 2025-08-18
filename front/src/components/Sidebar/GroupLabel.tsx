@@ -20,7 +20,6 @@ type Constructor = FC<Props>
  */
 type Component = JSX.Element
 
-
 /**
  * Функция для создания CSS класса для лейбла группы
  * @namespace Sidebar.GroupLabel.makeClasses
@@ -29,6 +28,7 @@ type Component = JSX.Element
  */
 const makeClasses = (className: string = ""): string => {
   return mergeClasses(
+    "font-display",
     "text-sidebar-foreground/70",
     "ring-sidebar-ring",
     "flex",
@@ -39,6 +39,7 @@ const makeClasses = (className: string = ""): string => {
     "px-2",
     "text-xs",
     "font-medium",
+    // "font-extrabold",
     "outline-hidden",
     "transition-[margin,opacity]",
     "duration-200",

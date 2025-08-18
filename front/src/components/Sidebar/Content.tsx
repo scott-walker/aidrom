@@ -31,7 +31,7 @@ const makeClasses = (className: string = ""): string => {
     "min-h-0",
     "flex-1",
     "flex-col",
-    "gap-2",
+    "gap-3",
     "overflow-auto",
     "group-data-[collapsible=icon]:overflow-hidden",
     className
@@ -49,14 +49,7 @@ const makeClasses = (className: string = ""): string => {
 const SidebarContent: Constructor = ({ className, ...props }: Props): Component => {
   const sidebarContentClass = makeClasses(className || "")
 
-  return (
-    <div
-      data-slot="sidebar-content"
-      data-sidebar="content"
-      className={sidebarContentClass}
-      {...props}
-    />
-  )
+  return <div data-slot="sidebar-content" data-sidebar="content" className={sidebarContentClass} {...props} />
 }
 
 export default SidebarContent
