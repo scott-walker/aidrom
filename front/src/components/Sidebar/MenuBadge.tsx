@@ -26,7 +26,8 @@ type Component = JSX.Element
  */
 const makeClasses = (className: string = ""): string => {
   return mergeClasses(
-    "text-sidebar-foreground",
+    "text-background",
+    "bg-primary",
     "pointer-events-none",
     "absolute",
     "right-1",
@@ -36,20 +37,20 @@ const makeClasses = (className: string = ""): string => {
     "items-center",
     "justify-center",
     "rounded-md",
-    "px-1",
-    "text-xs",
-    "font-medium",
+    "px-2",
+    "text-md",
+    "font-bold",
     "tabular-nums",
     "select-none",
-    "peer-hover/menu-button:text-sidebar-accent-foreground",
-    "peer-data-[active=true]/menu-button:text-sidebar-accent-foreground",
+    // "peer-hover/menu-button:text-sidebar-accent-foreground",
+    // "peer-data-[active=true]/menu-button:text-sidebar-accent-foreground",
     "peer-data-[size=sm]/menu-button:top-1",
     "peer-data-[size=default]/menu-button:top-1.5",
     "peer-data-[size=lg]/menu-button:top-2.5",
     "group-data-[collapsible=icon]:hidden",
     className
   )
-} 
+}
 
 /**
  * Компонент бейджа меню

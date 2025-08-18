@@ -16,7 +16,7 @@ const makeMenuButtonVariants = () => {
     "flex",
     "w-full",
     "items-center",
-    "gap-2",
+    "gap-4",
     "overflow-hidden",
     "rounded-md",
     "p-2",
@@ -44,7 +44,7 @@ const makeMenuButtonVariants = () => {
     "group-data-[collapsible=icon]:p-2!",
     "[&>span:last-child]:truncate",
     "[&>svg]:size-4",
-    "[&>svg]:shrink-0",
+    "[&>svg]:shrink-0"
   )
 
   return makeVariants(baseClasses, {
@@ -57,18 +57,18 @@ const makeMenuButtonVariants = () => {
           "hover:bg-sidebar-accent",
           "hover:text-sidebar-accent-foreground",
           "hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]"
-        ),
+        )
       },
       size: {
         default: mergeClasses("h-8", "text-sm"),
         sm: mergeClasses("h-7", "text-xs"),
-        lg: mergeClasses("h-12", "text-sm", "group-data-[collapsible=icon]:p-0!"),
-      },
+        lg: mergeClasses("h-12", "text-sm", "group-data-[collapsible=icon]:p-0!")
+      }
     },
     defaultVariants: {
       variant: "default",
-      size: "default",
-    },
+      size: "default"
+    }
   })
 }
 

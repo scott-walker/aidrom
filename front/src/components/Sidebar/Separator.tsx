@@ -20,7 +20,6 @@ type Constructor = FC<Props>
  */
 type Component = JSX.Element
 
-
 /**
  * Функция для создания CSS класса для разделителя
  * @namespace Sidebar.Separator.makeClasses
@@ -28,14 +27,8 @@ type Component = JSX.Element
  * @returns {string} классы для разделителя
  */
 const makeClasses = (className: string = ""): string => {
-  return mergeClasses(
-    "bg-sidebar-border",
-    "mx-2",
-    "w-auto",
-    className
-  )
+  return mergeClasses("bg-sidebar-border", "data-[orientation=horizontal]:w-[80%]", "mx-auto", className)
 }
-
 
 /**
  * Компонент разделитель
