@@ -1,5 +1,5 @@
 import type { PropsWithChildren, JSX } from "react"
-import { mergeClasses } from "@/utils/jsxtools"
+import { mergeClasses } from "@utils/jsxtools"
 import Sidebar from "./Sidebar"
 import Header from "./Header"
 import Content from "./Content"

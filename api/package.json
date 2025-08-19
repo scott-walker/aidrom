@@ -14,6 +14,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
+    "dump": "node dumpconfig.js",
     "db:gen": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
     "clear:logs": "rm -rf /logs/*",

@@ -1,6 +1,9 @@
 services:
+  # База данных
   db:
-    build: ./docker/db
+    build:
+      context: ./db
+      dockerfile: ./docker/Dockerfile
     restart: always
     environment:
       POSTGRES_PORT: ${DB_PORT}
@@ -10,13 +13,18 @@ services:
     ports:
       - "${EXTERNAL_DB_PORT}:${DB_PORT}"
     volumes:
-      - ./docker/db/entrypoint.sh:/entrypoint.sh
-      - ./docker/db/data:/var/lib/postgresql/data
+      - ./db/docker/entrypoint.sh:/entrypoint.sh
+      - ./db/docker/postgresql.conf:/var/lib/postgresql/data/postgresql.conf
+      - ./db/data:/var/lib/postgresql/data
+      - ${EXTERNAL_DB_LOGS}:/var/lib/postgresql/data/log
     networks:
-      - aidrom_network
+      - default
 
+  # API
   api:
-    build: ./docker/api
+    build:
+      context: ./api
+      dockerfile: ./docker/Dockerfile
     restart: always
     depends_on:
       - ${SERVICE_DB}
@@ -24,52 +32,65 @@ services:
       HOST: ${API_HOST}
       PORT: ${API_PORT}
       DB_CONNECTION_URL: ${API_DB_CONNECTION_URL}
+      INTEGRATION_GEN_API_BASE_URL: ${API_INTEGRATION_GEN_API_BASE_URL}
+      INTEGRATION_GEN_API_KEY: ${API_INTEGRATION_GEN_API_KEY}
     volumes:
-      - ./docker/api/entrypoint.sh:/entrypoint.sh
-      - ./docker/api/logs:/logs
-      - ./docker/api/runtime:/runtime
+      - ./api/docker/entrypoint.sh:/entrypoint.sh
       - ./api:/app
+      - ${EXTERNAL_API_LOGS}:/app/logs
+      - ${EXTERNAL_API_RUNTIME}:/app/runtime
     networks:
-      - aidrom_network
+      - default
 
+
+  # Фронтенд
   front:
-    build: ./docker/front
+    build:
+      context: ./front
+      dockerfile: ./docker/Dockerfile
     restart: always
     environment:
-      PROJECT_ROOT_PATH: ${PROJECT_ROOT_PATH}
       HOST: ${FRONTEND_HOST}
       PORT: ${FRONTEND_PORT}
+      FRONTEND_BASE_URL: ${FRONTEND_BASE_URL}
       API_BASE_URL: ${FRONTEND_API_BASE_URL}
     depends_on:
       - ${SERVICE_API}
     volumes:
-      - ./docker/front/entrypoint.sh:/entrypoint.sh
+      - ./front/docker/entrypoint.sh:/entrypoint.sh
       - ./front:/app
+      - ${EXTERNAL_FRONTEND_LOGS}:/app/logs
     networks:
-      - aidrom_network
+      - default
 
-  nginx:
-    build: ./docker/nginx
+  # Главные враты 🙄🤦‍♂️
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: ./docker/Dockerfile
     restart: always
     depends_on:
       - ${SERVICE_API}
       - ${SERVICE_FRONTEND}
     environment:
-      API_PUBLIC_HOST: ${NGINX_API_PUBLIC_HOST}
-      API_PUBLIC_PORT: ${NGINX_API_PUBLIC_PORT}
-      API_PROXY_PASS: ${NGINX_API_PROXY_PASS}
-      FRONTEND_PUBLIC_HOST: ${NGINX_FRONTEND_PUBLIC_HOST}
-      FRONTEND_PUBLIC_PORT: ${NGINX_FRONTEND_PUBLIC_PORT}
-      FRONTEND_PROXY_PASS: ${NGINX_FRONTEND_PROXY_PASS}
+      API_PUBLIC_HOST: ${GATEWAY_API_PUBLIC_HOST}
+      API_PUBLIC_PORT: ${GATEWAY_API_PUBLIC_PORT}
+      API_PROXY_PASS: ${GATEWAY_API_PROXY_PASS}
+      FRONTEND_PUBLIC_HOST: ${GATEWAY_FRONTEND_PUBLIC_HOST}
+      FRONTEND_PUBLIC_PORT: ${GATEWAY_FRONTEND_PUBLIC_PORT}
+      FRONTEND_PROXY_PASS: ${GATEWAY_FRONTEND_PROXY_PASS}
     ports:
-      - "${EXTERNAL_FRONTEND_PORT}:${NGINX_FRONTEND_PUBLIC_PORT}" # Frontend
-      - "${EXTERNAL_API_PORT}:${NGINX_API_PUBLIC_PORT}" # API
+      - "${EXTERNAL_FRONTEND_PORT}:${GATEWAY_FRONTEND_PUBLIC_PORT}" # Frontend
+      - "${EXTERNAL_API_PORT}:${GATEWAY_API_PUBLIC_PORT}" # API
     volumes:
-      - ./docker/nginx/entrypoint.sh:/entrypoint.sh
-      - ./docker/nginx/default.env.conf:/tmp/default.env.conf:ro
-      - ./docker/nginx/logs:/var/log/nginx
+      - ./gateway/docker/entrypoint.sh:/entrypoint.sh
+      - ./gateway/docker/default.env.conf:/tmp/default.env.conf:ro
+      - ./gateway/ssl:/etc/nginx/ssl:ro
+      - ${EXTERNAL_GATEWAY_LOGS}:/var/log/nginx
     networks:
-      - aidrom_network
+      - default
 
 networks:
-  aidrom_network:
+  default:
+    name: ${NETWORK}
+    driver: bridge

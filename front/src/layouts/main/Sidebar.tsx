@@ -136,13 +136,13 @@ export default function Sidebar({ children }: PropsWithChildren): JSX.Element {
             {/* <AudioLines className="w-11 h-11 text-primary animate-skew" /> */}
             <AudioWaveform className="w-10 h-10 text-primary animate-skew" />
             {/* <Maximize className="w-10 h-10 text-primary animate-target" /> */}
-            <h1 className="text-2xl ">AIDrom</h1>
+            <h1 className="text-2xl m-0">AIDrom</h1>
           </SidebarHeader>
 
           {/* <SidebarSeparator /> */}
 
           <SidebarGroup className="px-4">
-            <SidebarGroupLabel className="mb-1 text-sm text-muted-foreground/50">Основное</SidebarGroupLabel>
+            <SidebarGroupLabel>Основное</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>{primaryMenuItems}</SidebarMenu>
             </SidebarGroupContent>
@@ -151,7 +151,7 @@ export default function Sidebar({ children }: PropsWithChildren): JSX.Element {
           <SidebarSeparator />
 
           <SidebarGroup className="px-4">
-            <SidebarGroupLabel className="mb-1 text-sm text-muted-foreground/50">Управление</SidebarGroupLabel>
+            <SidebarGroupLabel>Управление</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>{secondaryMenuItems}</SidebarMenu>
             </SidebarGroupContent>

@@ -26,15 +26,7 @@ type Component = JSX.Element
  * @returns {string} классы для группы
  */
 const makeClasses = (className: string = ""): string => {
-  return mergeClasses(
-    "relative",
-    "flex",
-    "w-full",
-    "min-w-0",
-    "flex-col",
-    "p-2",
-    className
-  )
+  return mergeClasses("relative", "flex", "w-full", "min-w-0", "flex-col", "p-2", "mb-1", className)
 }
 
 /**

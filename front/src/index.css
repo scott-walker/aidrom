@@ -63,9 +63,8 @@
 
 :root {
   --radius: 0.625rem;
-  /* --background: oklch(95.218% 0.01081 291.751); */
   --background: oklch(98.4% 0.003 247.858);
-  --foreground: oklch(0.21 0.07 281.76);
+  --foreground: oklch(14.392% 0.09415 270.263);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
@@ -77,7 +76,7 @@
   --muted: oklch(0.968 0.007 247.896);
   --muted-foreground: oklch(0.554 0.046 257.417);
   --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
+  --accent-foreground: oklch(18.248% 0.12058 269.129);
 
   /* Color.destructive */
   --destructive: oklch(0.577 0.245 27.325);
@@ -183,23 +182,26 @@
   body {
     @apply bg-background text-foreground font-sans;
   }
+  h1, h2, h3, h4, h5, h6 {
+    @apply mb-5 font-display font-bold text-accent-foreground;
+  }
   h1 {
-    @apply text-4xl font-display font-bold;
+    @apply text-4xl;
   }
   h2 {
-    @apply text-3xl font-display font-bold;
+    @apply text-3xl;
   }
   h3 {
-    @apply text-2xl font-display font-bold;
+    @apply text-2xl;
   }
   h4 {
-    @apply text-xl font-display font-bold;
+    @apply text-xl;
   }
   h5 {
-    @apply text-lg font-display font-bold;
+    @apply text-lg;
   }
   h6 {
-    @apply text-base font-display font-bold;
+    @apply text-base;
   }
 
   .content-format {

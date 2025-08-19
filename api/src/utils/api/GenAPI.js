@@ -5,14 +5,17 @@ import { createApiLogger } from "#utils/logger.js"
 // Создаем логгер для API
 const logger = createApiLogger("GenAPI")
 
+// Получаем параметры для интеграции
+const { baseUrl, key } = config("integration").GenAPI
+
 // Создаем клиент для отправки запросов к API
 // https://gen-api.ru/docs/schema-work#generation
 const client = axios.create({
-  baseURL: config("genApiBaseUrl"),
+  baseURL: baseUrl,
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
-    Authorization: `Bearer ${config("genApiKey")}`
+    Authorization: `Bearer ${key}`
   }
 })
 

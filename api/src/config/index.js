@@ -11,13 +11,13 @@ const srcDir = resolve(import.meta.dirname, "..")
  * Каталог для хранения временных служебных файлов
  * @type {String}
  */
-const runtimeDir = resolve(process.env.RUNTIME_DIR || "/runtime")
+const runtimeDir = resolve(process.env.RUNTIME_DIR || "/app/runtime")
 
 /**
  * Каталог для хранения логов
  * @type {String}
  */
-const logDir = resolve(process.env.LOG_DIR || "/logs")
+const logDir = resolve(process.env.LOG_DIR || "/app/logs")
 
 /**
  * Каталог для работы с БД
@@ -46,13 +46,18 @@ const config = {
   corsOrigin: process.env.CORS_ORIGIN || "*",
 
   // Логирование
-  logFile: resolve(logDir, "app.log"),
+  logFile: resolve(logDir, "api.log"),
   logMetaDir: resolve(runtimeDir, "winston"),
   logLevel: process.env.LOG_LEVEL || "info",
 
-  // GenAPI
-  genApiBaseUrl: process.env.GEN_API_BASE_URL,
-  genApiKey: process.env.GEN_API_CLIENT_KEY
+  // Интеграции
+  integration: {
+    // https://gen-api.ru
+    GenAPI: {
+      baseUrl: process.env.INTEGRATION_GEN_API_BASE_URL,
+      key: process.env.INTEGRATION_GEN_API_KEY
+    }
+  }
 }
 
 /**
@@ -66,6 +71,15 @@ const getParam = key => {
   }
 
   return config[key]
+}
+
+/**
+ * Валить конфигурацию в консоль
+ */
+export const dumpConfig = () => {
+  console.group("CONFIG:")
+  console.log(config)
+  console.groupEnd()
 }
 
 export default getParam
