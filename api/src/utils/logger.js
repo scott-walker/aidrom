@@ -7,7 +7,7 @@ import config from "#config/index.js"
 /**
  * Создает директории для логов и метаданных если они не существуют
  */
-const ensureLogDirectories = async () => {
+const makeDirectories = async () => {
   try {
     const logDir = dirname(config("logFile"))
     const metaDir = config("logMetaDir")
@@ -52,17 +52,12 @@ const createLogFormat = () => {
  */
 const createTransports = fileMarker => {
   const transports = []
-  const logFile = fileMarker
-    ? config("logFile").replace(".log", `-${fileMarker}.log`)
-    : config("logFile")
+  const logFile = fileMarker ? config("logFile").replace(".log", `-${fileMarker}.log`) : config("logFile")
 
   // Консольный транспорт
   transports.push(
     new winston.transports.Console({
-      format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.simple()
-      )
+      format: winston.format.combine(winston.format.splat())
     })
   )
 
@@ -96,35 +91,101 @@ const getMethodName = defaultName => {
 }
 
 // Создаем директории при инициализации
-ensureLogDirectories()
+makeDirectories()
 
-// Создаем логгер приложения
-const logger = winston.createLogger({
-  level: config("logLevel"),
-  format: createLogFormat(),
-  transports: createTransports(),
-  exitOnError: false
-})
+/**
+ * Создает логгер для приложения
+ * @returns {Object} Логгер с методами info, warn, error
+ */
+const createAppLogger = () => {
+  const logger = winston.createLogger({
+    level: config("logLevel"),
+    format: createLogFormat(),
+    transports: createTransports(),
+    defaultMeta: { layer: "APP" },
+    exitOnError: false
+  })
+
+  return logger
+}
 
 /**
  * Логгер для HTTP запросов
+ * @returns {Object} Логгер с методами info, warn, error
  */
-export const httpLogger = winston.createLogger({
-  level: "info",
-  format: createLogFormat(),
-  transports: createTransports(),
-  defaultMeta: { layer: "HTTP" }
-})
+export const createHttpLogger = () => {
+  const logger = winston.createLogger({
+    level: "info",
+    format: createLogFormat(),
+    transports: createTransports("http"),
+    defaultMeta: { layer: "HTTP" }
+  })
+
+  /**
+   * Обертка для обработчиков логов
+   * @param {Function} handler - Обработчик логов
+   * @returns {Function} Обернутый обработчик
+   */
+  const wrap = handler => {
+    return (message, meta = {}) => {
+      const normalizedMeta = {}
+
+      const httpMethod = meta.method || null
+      const httpCode = meta.statusCode ? `[${meta.statusCode}]` : null
+      const httpIp = meta.ip || null
+      const httpHost = meta.host || null
+      const httpScheme = meta.scheme || null
+      const httpUrl = meta.url || null
+      const httpDuration = meta.duration ? `(${meta.duration})` : null
+      let httpFullUrl = null
+
+      if (httpScheme && httpHost && httpUrl) {
+        httpFullUrl = `${httpScheme}://${httpHost}${httpUrl}`
+      }
+
+      if (meta.params) normalizedMeta.params = meta.params
+      if (meta.query) normalizedMeta.query = meta.query
+      if (meta.headers) normalizedMeta.headers = meta.headers
+      if (meta.responseSize) normalizedMeta.responseSize = meta.responseSize
+
+      /**
+       * Получает информацию о запросе
+       * @returns {string}
+       */
+      const getInfo = () => {
+        const info = [httpDuration, httpIp, httpCode, httpMethod, httpFullUrl].filter(Boolean).join(" ")
+
+        return info || "<unknown>"
+      }
+
+      return handler(`${getInfo()} :: ${message}`, normalizedMeta)
+    }
+  }
+
+  return {
+    info: wrap(logger.info),
+    warn: wrap(logger.warn),
+    error: wrap(logger.error)
+  }
+}
 
 /**
  * Логгер для работы с базой данных
+ * @returns {Object} Логгер с методами info, warn, error, logQuery
  */
-export const dbLogger = winston.createLogger({
-  level: "info",
-  format: createLogFormat(),
-  transports: createTransports(),
-  defaultMeta: { layer: "DB" }
-})
+export const createDbLogger = () => {
+  const logger = winston.createLogger({
+    level: "info",
+    format: createLogFormat(),
+    transports: createTransports("database"),
+    defaultMeta: { layer: "DB" }
+  })
+
+  // Для drizzle
+  logger.logQuery = (query, params) => logger.info(`[QUERY] ${query}`, { params })
+
+  return logger
+}
 
 /**
  * Создает логгер для API
@@ -233,4 +294,4 @@ export const createAgentLogger = agentAlias => {
   }
 }
 
-export default logger
+export default createAppLogger()

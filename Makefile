@@ -70,11 +70,13 @@ db-up:
 		-e POSTGRES_PASSWORD=${DB_PASSWORD} \
 		--network ${NETWORK} \
 		-p ${EXTERNAL_DB_PORT}:${DB_PORT} \
+		-v ${EXTERNAL_DB_DATA}:/var/lib/postgresql/data \
 		-v ${EXTERNAL_DB_LOGS}:/var/lib/postgresql/data/log \
+		-v ${EXTERNAL_DB_BACKUPS}:/backups \
 		${REGISTRY_DB_IMAGE_TAG}
-	echo "Подожди, плиз, пока БД запустится и мы сможем дать права на просматр логов (4 сек.) 🙏"
-	sleep 4
-	sudo chmod -R 0777 ./db/logs/*.log
+	echo "Подожди, плиз, пока запустится БД, надобно дать права на просматр логов и тд (3 сек.) 🙏"
+	sleep 3
+	make -s db-perm
 
 # Запуск контейнера с API
 api-up:
@@ -96,7 +98,9 @@ front-up:
 		-e HOST=${FRONTEND_HOST} \
 		-e PORT=${FRONTEND_PORT} \
 		-e FRONTEND_BASE_URL=${FRONTEND_BASE_URL} \
+		-e FRONTEND_PUBLIC_HOST=${FRONTEND_PUBLIC_HOST} \
 		-e API_BASE_URL=${FRONTEND_API_BASE_URL} \
+		-e API_PUBLIC_HOST=${FRONTEND_API_PUBLIC_HOST} \
 		--network ${NETWORK} \
 		-p ${EXTERNAL_FRONTEND_PORT}:${FRONTEND_PORT} \
 		-v ${EXTERNAL_FRONTEND_LOGS}:/app/logs \
@@ -104,20 +108,18 @@ front-up:
 
 # Запуск контейнера со шлюзом (переопределяем порты чтобы не конфликтовать... ну типа ты понял 😎)
 gateway-up:
-	EXTERNAL_GATEWAY_FRONTEND_PORT=8012 \
-	EXTERNAL_GATEWAY_API_PORT=8011 \
-	\
 	docker run -d --rm --name gateway \
-		-e API_PUBLIC_HOST=${GATEWAY_API_PUBLIC_HOST} \
-		-e API_PUBLIC_PORT=${GATEWAY_API_PUBLIC_PORT} \
+		-e API_HOST=${GATEWAY_API_HOST} \
 		-e API_PROXY_PASS=${GATEWAY_API_PROXY_PASS} \
-		-e FRONTEND_PUBLIC_HOST=${GATEWAY_FRONTEND_PUBLIC_HOST} \
-		-e FRONTEND_PUBLIC_PORT=${GATEWAY_FRONTEND_PUBLIC_PORT} \
+		-e FRONTEND_HOST=${GATEWAY_FRONTEND_HOST} \
 		-e FRONTEND_PROXY_PASS=${GATEWAY_FRONTEND_PROXY_PASS} \
 		--network ${NETWORK} \
-		-p ${EXTERNAL_GATEWAY_FRONTEND_PORT}:${GATEWAY_FRONTEND_PUBLIC_PORT} \
-		-p ${EXTERNAL_GATEWAY_API_PORT}:${GATEWAY_API_PUBLIC_PORT} \
-		-v ./gateway/docker/default.env.conf:/tmp/default.env.conf:ro \
+		-p ${EXTERNAL_HTTP_PORT}:80 \
+		-p ${EXTERNAL_HTTPS_PORT}:443 \
+		-v ${GATEWAY_FRONTEND_SSL_CERT}:/etc/nginx/ssl/front.cert:ro \
+		-v ${GATEWAY_FRONTEND_SSL_KEY}:/etc/nginx/ssl/front.key:ro \
+		-v ${GATEWAY_API_SSL_CERT}:/etc/nginx/ssl/api.cert:ro \
+		-v ${GATEWAY_API_SSL_KEY}:/etc/nginx/ssl/api.key:ro \
 		-v ${EXTERNAL_GATEWAY_LOGS}:/var/log/nginx \
 		${REGISTRY_GATEWAY_IMAGE_TAG}
 
@@ -142,6 +144,45 @@ gateway-down:
 	docker rm -f gateway
 
 
+# ЧИСТКА ДАННЫХ
+
+
+# Очистить логи БД
+db-logs-clear:
+	sudo find ./db/logs -mindepth 1 -maxdepth 1 ! -name ".gitignore" -exec rm -rf {} \;
+
+# Очистить логи API
+api-logs-clear:
+	sudo find ./api/logs -mindepth 1 -maxdepth 1 ! -name ".gitignore" -exec rm -rf {} \;
+
+# Очистить runtime API
+api-runtime-clear:
+	sudo find ./api/runtime -mindepth 1 -maxdepth 1 ! -name ".gitignore" -exec rm -rf {} \;
+
+# Очистить логи фронта
+front-logs-clear:
+	sudo find ./front/logs -mindepth 1 -maxdepth 1 ! -name ".gitignore" -exec rm -rf {} \;
+
+# Очистить логи шлюза
+gateway-logs-clear:
+	sudo find ./gateway/logs -mindepth 1 -maxdepth 1 ! -name ".gitignore" -exec rm -rf {} \;
+
+# Очистить все логи
+logs-clear: db-logs-clear api-logs-clear front-logs-clear gateway-logs-clear
+
+# Добавить .gitignore во все рабочие директории
+ignore-add:
+	echo "*\n!*.gitignore" > ./gitignore.tmp
+	sudo su -c "cat ./gitignore.tmp > ./db/logs/.gitignore"
+	sudo su -c "cat ./gitignore.tmp > ./db/backups/.gitignore"
+	sudo su -c "cat ./gitignore.tmp > ./db/data/.gitignore"
+	sudo su -c "cat ./gitignore.tmp > ./api/logs/.gitignore"
+	sudo su -c "cat ./gitignore.tmp > ./api/runtime/.gitignore"
+	sudo su -c "cat ./gitignore.tmp > ./front/logs/.gitignore"
+	sudo su -c "cat ./gitignore.tmp > ./gateway/logs/.gitignore"
+	rm ./gitignore.tmp
+
+
 # РАБОТА С СЕТЬЮ
 
 
@@ -163,10 +204,44 @@ hand-up: net-up	db-up	api-up front-up gateway-up
 # Ручное убийство всей инфраструктуры (для прода)
 hand-down: db-down api-down	front-down gateway-down	net-down
 
-# Дать полные права на все служебные файлы
+# Очистить все блокировки
+# db-lock-clear:
+# 	sudo rm -rf \
+# 		./db/data/postmaster.pid \
+# 		./db/data/postgresql.lock \
+# 		./db/data/postgresql.log* \
+# 		./db/data/pg_logical/replorigin_checkpoint \
+# 		./db/data/pg_wal/000000010000000000000001 2>/dev/null || true
+
+# Полная очистка данных базы (ОСТОРОЖНО!)
+# db-drop:
+# 	@echo "⚠️ ВНИМАНИЕ: Это удалит ВСЕ данные базы данных! ⚠️"
+# 	@echo "Создание резервной копии..."
+# 	@cp -r ./db/data ./db/data_backup_$(date +%Y%m%d_%H%M%S) 2>/dev/null || true
+# 	@echo "Очистка данных..."
+# 	@rm -rf ./db/data/*
+# 	@echo "Данные очищены. Резервная копия сохранена."
+
+# Накатить миграции
+db-migrate:
+	docker exec -it -w /app api npm run db:gen
+
+# Сделать дамп БД
+db-dump:
+	./db/backuper.sh
+	make db-perm
+
+# Восстановить БД из дампа (make db-restore FILE=backup-20250810_120000)
+db-restore:
+	docker exec -it db pg_restore -U ${DB_USER} -d ${DB_NAME} -Fc /backups/${FILE}.dump
+
+# Дать права на служебные файлы БД
+db-perm:
+	sudo chmod 777 -R ./db/logs ./db/backups
+
+# Дать права на все служебные файлы
 perm:
 	sudo chmod -R 0777 \
-		./db/data \
 		./db/logs \
 		./api/logs \
 		./api/runtime \
@@ -189,3 +264,15 @@ networks:
 kill:
 	docker rm -f db api front gateway
 	docker network rm ${NETWORK}
+
+# Сгенерить SSL сертификаты для локальной разработки
+ssl-gen:
+	mkcert \
+		-cert-file ${GATEWAY_FRONTEND_SSL_CERT} \
+		-key-file ${GATEWAY_FRONTEND_SSL_KEY} \
+		${GATEWAY_FRONTEND_HOST}
+
+	mkcert \
+		-cert-file ${GATEWAY_API_SSL_CERT} \
+		-key-file ${GATEWAY_API_SSL_KEY} \
+		${GATEWAY_API_HOST}

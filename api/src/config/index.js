@@ -1,23 +1,33 @@
-import "dotenv/config"
+import dotenv from "dotenv"
+import dotenvExpand from "dotenv-expand"
 import { resolve } from "path"
+
+// Загружаем переменные окружения (для использования ${VAR} в .env)
+dotenvExpand.expand(dotenv.config())
+
+/**
+ * Корневой каталог проекта
+ * @type {String}
+ */
+const rootDir = process.env.ROOT_DIR || "/app"
 
 /**
  * Корневой каталог приложения
  * @type {String}
  */
-const srcDir = resolve(import.meta.dirname, "..")
+const srcDir = resolve(rootDir, "src")
 
 /**
  * Каталог для хранения временных служебных файлов
  * @type {String}
  */
-const runtimeDir = resolve(process.env.RUNTIME_DIR || "/app/runtime")
+const runtimeDir = process.env.RUNTIME_DIR || resolve(rootDir, "runtime")
 
 /**
  * Каталог для хранения логов
  * @type {String}
  */
-const logDir = resolve(process.env.LOG_DIR || "/app/logs")
+const logDir = process.env.LOG_DIR || resolve(rootDir, "logs")
 
 /**
  * Каталог для работы с БД
@@ -30,6 +40,7 @@ const dbDir = resolve(srcDir, "db")
  * @type {Object}
  */
 const config = {
+  rootDir,
   srcDir,
   runtimeDir,
   logDir,

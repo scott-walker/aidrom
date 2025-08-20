@@ -1,10 +1,11 @@
 services:
   # База данных
   db:
+    container_name: db
     build:
       context: ./db
       dockerfile: ./docker/Dockerfile
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_PORT: ${DB_PORT}
       POSTGRES_DB: ${DB_NAME}
@@ -14,14 +15,16 @@ services:
       - "${EXTERNAL_DB_PORT}:${DB_PORT}"
     volumes:
       - ./db/docker/entrypoint.sh:/entrypoint.sh
-      - ./db/docker/postgresql.conf:/var/lib/postgresql/data/postgresql.conf
-      - ./db/data:/var/lib/postgresql/data
+      - ./db/docker/postgresql.conf:/tmp/postgresql.conf
+      - ${EXTERNAL_DB_DATA}:/var/lib/postgresql/data
       - ${EXTERNAL_DB_LOGS}:/var/lib/postgresql/data/log
+      - ${EXTERNAL_DB_BACKUPS}:/backups
     networks:
       - default
 
   # API
   api:
+    container_name: api
     build:
       context: ./api
       dockerfile: ./docker/Dockerfile
@@ -45,6 +48,7 @@ services:
 
   # Фронтенд
   front:
+    container_name: front
     build:
       context: ./front
       dockerfile: ./docker/Dockerfile
@@ -53,7 +57,9 @@ services:
       HOST: ${FRONTEND_HOST}
       PORT: ${FRONTEND_PORT}
       FRONTEND_BASE_URL: ${FRONTEND_BASE_URL}
+      FRONTEND_PUBLIC_HOST: ${GATEWAY_FRONTEND_HOST}
       API_BASE_URL: ${FRONTEND_API_BASE_URL}
+      API_PUBLIC_HOST: ${GATEWAY_API_HOST}
     depends_on:
       - ${SERVICE_API}
     volumes:
@@ -65,6 +71,7 @@ services:
 
   # Главные враты 🙄🤦‍♂️
   gateway:
+    container_name: gateway
     build:
       context: ./gateway
       dockerfile: ./docker/Dockerfile
@@ -73,19 +80,20 @@ services:
       - ${SERVICE_API}
       - ${SERVICE_FRONTEND}
     environment:
-      API_PUBLIC_HOST: ${GATEWAY_API_PUBLIC_HOST}
-      API_PUBLIC_PORT: ${GATEWAY_API_PUBLIC_PORT}
+      API_HOST: ${GATEWAY_API_HOST}
       API_PROXY_PASS: ${GATEWAY_API_PROXY_PASS}
-      FRONTEND_PUBLIC_HOST: ${GATEWAY_FRONTEND_PUBLIC_HOST}
-      FRONTEND_PUBLIC_PORT: ${GATEWAY_FRONTEND_PUBLIC_PORT}
+      FRONTEND_HOST: ${GATEWAY_FRONTEND_HOST}
       FRONTEND_PROXY_PASS: ${GATEWAY_FRONTEND_PROXY_PASS}
     ports:
-      - "${EXTERNAL_FRONTEND_PORT}:${GATEWAY_FRONTEND_PUBLIC_PORT}" # Frontend
-      - "${EXTERNAL_API_PORT}:${GATEWAY_API_PUBLIC_PORT}" # API
+      - "${EXTERNAL_HTTP_PORT}:80"
+      - "${EXTERNAL_HTTPS_PORT}:443"
     volumes:
       - ./gateway/docker/entrypoint.sh:/entrypoint.sh
       - ./gateway/docker/default.env.conf:/tmp/default.env.conf:ro
-      - ./gateway/ssl:/etc/nginx/ssl:ro
+      - ${GATEWAY_API_SSL_CERT}:/etc/nginx/ssl/api.cert:ro
+      - ${GATEWAY_API_SSL_KEY}:/etc/nginx/ssl/api.key:ro
+      - ${GATEWAY_FRONTEND_SSL_CERT}:/etc/nginx/ssl/front.cert:ro
+      - ${GATEWAY_FRONTEND_SSL_KEY}:/etc/nginx/ssl/front.key:ro
       - ${EXTERNAL_GATEWAY_LOGS}:/var/log/nginx
     networks:
       - default

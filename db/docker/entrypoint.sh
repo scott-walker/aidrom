@@ -4,15 +4,8 @@ set -e
 # Чтобы было удобно 🙃😇
 echo "\n\nalias ll='ls -lah'" >> ~/.bashrc
 
-# USER=$(whoami)
-# GROUPS=$(groups)
-# echo "I AM '$USER' AND MY GROUPS IS '$GROUPS'"
-# find /var/lib/postgresql/data -maxdepth 1 -type f -exec chmod 0744 {} \;
+# Перезаписать стандартную конфигурацию
+cp -f /tmp/postgresql.conf /var/lib/postgresql/data/postgresql.conf
 
-chmod -R 0750 /var/lib/postgresql/data
-chmod -R 0777 /var/lib/postgresql/data/*
-
-POSTGRES_PATH=$(which postgres)
-POSTGRES_INIT="$POSTGRES_PATH -D /var/lib/postgresql/data"
-
-su - postgres -c "$POSTGRES_INIT"
+# Использовать стандартный entrypoint PostgreSQL
+exec docker-entrypoint.sh postgres

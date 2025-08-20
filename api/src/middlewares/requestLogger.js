@@ -1,4 +1,6 @@
-import { httpLogger } from "#utils/logger.js"
+import { createHttpLogger } from "#utils/logger.js"
+
+const logger = createHttpLogger()
 
 /**
  * Middleware для логгирования HTTP запросов
@@ -12,14 +14,14 @@ export default (req, res, next) => {
   const startTime = Date.now()
 
   // Логируем входящий запрос
-  httpLogger.info("Входящий HTTP запрос", {
+  logger.info("Входящий HTTP запрос", {
+    ip: req.get("x-real-ip") || req.ip,
+    host: req.get("host") || req.hostname,
+    scheme: req.get("x-forwarded-proto") || req.protocol,
     method: req.method,
     url: req.url,
-    ip: req.ip,
-    userAgent: req.get("User-Agent"),
-    body: req.body,
     query: req.query,
-    params: req.params
+    headers: req.headers
   })
 
   // Перехватываем ответ для логгирования
@@ -28,11 +30,10 @@ export default (req, res, next) => {
   res.send = function (data) {
     const duration = Date.now() - startTime
 
-    httpLogger.info("Исходящий HTTP ответ", {
-      method: req.method,
-      url: req.url,
+    logger.info("Исходящий HTTP ответ", {
       statusCode: res.statusCode,
       duration: `${duration}ms`,
+      params: req.params,
       responseSize: data ? data.length : 0
     })
 
