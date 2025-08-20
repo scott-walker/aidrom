@@ -25,12 +25,15 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[css]": {
+  "[tailwindcss]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "bradlc.vscode-tailwindcss"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "files.associations": {
     "*.css": "tailwindcss",
     "*.tsx": "typescriptreact"
-  }
+  },
+  // "search.exclude": {
+  //   "**/node_modules": false
+  // }
 }
