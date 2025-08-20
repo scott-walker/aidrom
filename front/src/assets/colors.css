@@ -1,0 +1,32 @@
+@theme {
+  --color-background: var(--color-background);
+  --color-background-accent: var(--color-background-accent);
+  --color-foreground: var(--color-foreground);
+  --color-foreground-accent: var(--color-foreground-accent);
+
+  --color-brand: var(--color-brand);
+  --color-primary: var(--color-primary);
+
+  --font-size-base: var(--font-size-base);
+}
+
+@layer base {
+  :root {
+    --color-background: oklch(97.069% 0.00513 229.654);
+    --color-background-accent: oklch(100% 0.00011 271.152);
+    --color-foreground: oklch(19.003% 0.09472 270.489);
+    --color-foreground-accent: oklch(23.887% 0.13675 267.895);
+
+    --color-brand: oklch(50% 0.4 282.98);
+    --color-primary: oklch(58.123% 0.29876 307.024);
+
+    --text-base: 1.105rem;
+  }
+
+  .dark {
+    --color-background: oklch(22.787% 0.03589 207.512);
+    --color-background-accent: oklch(22.787% 0.03589 207.512);
+    --color-foreground: oklch(93.377% 0.04949 217.329);
+    --color-foreground-accent: oklch(93.377% 0.04949 217.329);
+  }
+}

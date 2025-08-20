@@ -1,0 +1,11 @@
+@theme {
+  --sidebar-width: var(--sidebar-width);
+  --sidebar-collapsed-width: var(--sidebar-collapsed-width);
+}
+
+@layer base {
+  :root {
+    --sidebar-width: 320px;
+    --sidebar-collapsed-width: 80px;
+  }
+}

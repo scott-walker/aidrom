@@ -22,7 +22,7 @@ export default defineConfig({
       "@utils": resolve(srcPath, "utils"),
       "@hooks": resolve(srcPath, "hooks"),
       "@components": resolve(srcPath, "components"),
-      "@ui": resolve(srcPath, "components/ui"),
+      "@ui": resolve(srcPath, "ui"),
       "@layouts": resolve(srcPath, "layouts"),
       "@pages": resolve(srcPath, "pages")
     }

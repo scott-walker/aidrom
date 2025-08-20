@@ -1,0 +1,8 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "./colors.css";
+@import "./sizes.css";
+@import "./common.css";
+
+/* Тема "Lucent" */
+@import "./lucent.css";

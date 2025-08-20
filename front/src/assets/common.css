@@ -1,0 +1,50 @@
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: "Onest", sans-serif; /* для текста */
+  --font-display: "Unbounded", sans-serif; /* для заголовков */
+}
+
+@layer base {
+  body {
+    @apply text-base text-foreground font-sans;
+  }
+
+  /* .typography {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      @apply mb-5 font-display font-bold text-accent-foreground;
+    }
+    h1 {
+      @apply text-4xl;
+    }
+    h2 {
+      @apply text-3xl;
+    }
+    h3 {
+      @apply text-2xl;
+    }
+    h4 {
+      @apply text-xl;
+    }
+    h5 {
+      @apply text-lg;
+    }
+    h6 {
+      @apply text-base;
+    }
+    p {
+      @apply mb-5 text-lg leading-6.5 font-sans;
+    }
+    ul {
+      @apply ml-4 mb-5 list-disc list-inside;
+    }
+    li {
+      @apply text-lg leading-6;
+    }
+  } */
+}
