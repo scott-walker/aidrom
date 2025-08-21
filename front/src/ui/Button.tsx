@@ -1,26 +1,29 @@
-import type { ComponentProps, FC, JSX, ReactNode } from "react"
+import type { ComponentProps, FC, ReactNode } from "react"
 import { cn, cva } from "@utils/jsxtools"
 
 /**
- * Пропсы
+ * Пропсы кнопки
  * @namespace Ui.Button.Props
  */
 type Props = ComponentProps<"button"> & {
   children: ReactNode
   variant?: "default" | "primary" | "secondary" | "danger"
-  className?: string
 }
 
 /**
  * Кнопка
  * @namespace Ui.Button
- * @param {Props} props
- * @returns {JSX.Element}
+ * @param {Props} props.children - контент
+ * @param {Props} props.variant - вариант
+ * @param {Props} props.className - CSS-классы
+ * @returns {ReactNode}
  */
-export const Button: FC<Props> = ({ children, variant, className, ...props }: Props): JSX.Element => {
+export const Button: FC<Props> = ({ children, variant = "default", className = "", ...props }: Props): ReactNode => {
   const baseClasses = cn(
     "rounded-md",
     "px-2.5 py-1.5",
+    "w-fit",
+    "h-fit",
     "transition-colors",
     "transition-transform",
     "duration-100",
@@ -28,7 +31,8 @@ export const Button: FC<Props> = ({ children, variant, className, ...props }: Pr
     "font-medium",
     "border-none",
     "hover:scale-105",
-    "active:scale-95"
+    "active:scale-95",
+    className
   )
   const variants = cva(baseClasses, {
     variants: {

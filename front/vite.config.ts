@@ -21,6 +21,7 @@ export default defineConfig({
       "@": srcPath,
       "@utils": resolve(srcPath, "utils"),
       "@hooks": resolve(srcPath, "hooks"),
+      "@store": resolve(srcPath, "store"),
       "@components": resolve(srcPath, "components"),
       "@ui": resolve(srcPath, "ui"),
       "@layouts": resolve(srcPath, "layouts"),

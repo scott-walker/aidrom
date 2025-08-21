@@ -1,0 +1,5 @@
+export { Root as Sidebar } from "./Root"
+export { Header as SidebarHeader } from "./Header"
+export { Footer as SidebarFooter } from "./Footer"
+export { Body as SidebarBody } from "./Body"
+export { Section as SidebarSection } from "./Section"

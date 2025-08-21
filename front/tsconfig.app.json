@@ -5,6 +5,7 @@
       "@/*": ["./src/*"],
       "@utils/*": ["./src/utils/*"],
       "@hooks/*": ["./src/hooks/*"],
+      "@store/*": ["./src/store/*"],
       "@components/*": ["./src/components/*"],
       "@ui/*": ["./src/ui/*"],
       "@layouts/*": ["./src/layouts/*"],

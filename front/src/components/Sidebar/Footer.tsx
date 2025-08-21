@@ -3,17 +3,17 @@ import { cn } from "@utils/jsxtools"
 
 /**
  * Пропсы футера
- * @namespace Layouts.Lucent.Footer.Props
+ * @namespace Components.Sidebar.Footer.Props
  */
 type Props = ComponentProps<"footer">
 
 /**
- * Футер макета
- * @namespace Layouts.Lucent.Footer
+ * Футер сайдбара
+ * @namespace Components.Sidebar.Footer
  * @returns {ReactNode}
  */
 export const Footer: FC<Props> = ({ children, className = "", ...props }: Props): ReactNode => {
-  const classes = cn("flex", "items-center", "gap-6", "px-10", "py-6", className)
+  const classes = cn("flex", "items-center", "justify-center", className)
 
   return (
     <footer className={classes} {...props}>

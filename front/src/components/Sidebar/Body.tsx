@@ -2,18 +2,20 @@ import type { ComponentProps, FC, ReactNode } from "react"
 import { cn } from "@utils/jsxtools"
 
 /**
- * Пропсы тела макета
- * @namespace Layouts.Lucent.Body.Props
+ * Пропсы тела сайдбара
+ * @namespace Components.Sidebar.Body.Props
  */
 type Props = ComponentProps<"div">
 
 /**
- * Тело макета
- * @namespace Layouts.Lucent.Body
+ * Тело сайдбара
+ * @namespace Components.Sidebar.Body
+ * @param {Props} props.children - контент
+ * @param {Props} props.className - CSS-классы
  * @returns {ReactNode}
  */
 export const Body: FC<Props> = ({ children, className = "", ...props }: Props): ReactNode => {
-  const classes = cn("flex", className)
+  const classes = cn("flex", "flex-col", "flex-1", className)
 
   return (
     <div className={classes} {...props}>

@@ -1,19 +1,20 @@
-import type { ComponentProps, FC, JSX } from "react"
+import type { ComponentProps, FC, ReactNode } from "react"
 import { cn } from "@utils/jsxtools"
 
 /**
- * Пропсы
+ * Пропсы компонента для отображения кода
  * @namespace Ui.Code.Props
  */
-type Props = ComponentProps<"code">
+type Props = ComponentProps<"pre">
 
 /**
  * Компонент для отображения кода
  * @namespace Ui.Code
- * @param {Props} props
- * @returns {JSX.Element}
+ * @param {Props} props.children - контент
+ * @param {Props} props.className - CSS-классы
+ * @returns {ReactNode}
  */
-export const Code: FC<Props> = ({ children, className, ...props }: Props): JSX.Element => {
+export const Code: FC<Props> = ({ children, className = "", ...props }: Props): ReactNode => {
   const classes = cn(
     "p-6",
     "bg-foreground-accent/2",
@@ -23,11 +24,10 @@ export const Code: FC<Props> = ({ children, className, ...props }: Props): JSX.E
     "rounded-2xl",
     className
   )
+
   return (
-    <pre className={classes}>
-      <code className="block" {...props}>
-        {children}
-      </code>
+    <pre className={classes} {...props}>
+      <code>{children}</code>
     </pre>
   )
 }

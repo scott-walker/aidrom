@@ -1,20 +1,22 @@
-import type { ComponentProps, FC, JSX } from "react"
+import type { ComponentProps, FC, ReactNode } from "react"
 import { cn } from "@utils/jsxtools"
 
 /**
- * Пропсы
+ * Пропсы контента
  * @namespace Layouts.Lucent.Content.Props
  */
 type Props = ComponentProps<"div">
 
 /**
- * Тело (основной компонент)
+ * Контент макета
  * @namespace Layouts.Lucent.Content
- * @returns {JSX.Element}
+ * @returns {ReactNode}
  */
-export const Content: FC<Props> = ({ children, className, ...props }: Props): JSX.Element => {
+export const Content: FC<Props> = ({ children, className = "", ...props }: Props): ReactNode => {
+  const classes = cn("p-10", className)
+
   return (
-    <main className={cn("p-10", className)} {...props}>
+    <main className={classes} {...props}>
       {children}
     </main>
   )
