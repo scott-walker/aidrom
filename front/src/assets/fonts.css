@@ -1,0 +1,29 @@
+@theme {
+  /* Sizes */
+  --text-base: var(--text-base);
+
+  /* Fonts */
+  --font-family-base: var(--font-family-base);
+  --font-family-display: var(--font-family-display);
+  --font-family-mono: var(--font-family-mono);
+}
+
+@layer base {
+  :root {
+    /* Sizes */
+    --text-xs: 0.75rem; /* 12px */
+    --text-sm: 0.8rem; /* 12.8px */
+    --text-base: 1.11rem; /* 17.76px */
+    --text-lg: 1.25rem; /* 20px */
+    --text-xl: 1.36rem; /* 21.76px */
+    --text-2xl: 1.6rem; /* 25.6px */
+    --text-3xl: 1.8rem; /* 28.8px */
+    --text-4xl: 2rem; /* 32px */
+    --text-5xl: 3rem; /* 48px */
+
+    /* Fonts */
+    --font-family-base: "Onest", sans-serif;
+    --font-family-display: "Unbounded", sans-serif;
+    --font-family-mono: "JetBrains Mono", monospace;
+  }
+}

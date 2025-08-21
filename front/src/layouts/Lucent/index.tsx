@@ -1,5 +1,6 @@
-import type { FC, JSX } from "react"
+import { useState, type FC, type JSX } from "react"
 import { Sidebar } from "./Sidebar"
+import { Trigger as SidebarTrigger } from "./Sidebar/Trigger"
 import { Header } from "./Header"
 import { Body } from "./Body"
 import { Footer } from "./Footer"
@@ -30,25 +31,29 @@ type Props = {
  * @returns {JSX.Element}
  */
 export const Lucent: FC<Props> = ({ content, header, sidebar, infobar, footer }: Props): JSX.Element => {
-  const collapsed = true
-  const firstSideVariants = cva("w-[var(--sidebar-width)]", {
-    defaultVariants: {
-      collapsed: false
-    },
+  const [collapsed, setCollapsed] = useState(false)
+  const toggleSidebar = () => setCollapsed(!collapsed)
+
+  const firstSideVariants = cva("transition-width duration-200", {
     variants: {
       collapsed: {
+        false: "w-[var(--sidebar-width)]",
         true: "w-[var(--sidebar-collapsed-width)]"
       }
-    }
-  })
-  const secondSideVariants = cva("flex flex-col w-[calc(100%-var(--sidebar-width))]", {
+    },
     defaultVariants: {
       collapsed: false
-    },
+    }
+  })
+  const secondSideVariants = cva("flex flex-col", {
     variants: {
       collapsed: {
+        false: "w-[calc(100%-var(--sidebar-width))]",
         true: "w-[calc(100%-var(--sidebar-collapsed-width))]"
       }
+    },
+    defaultVariants: {
+      collapsed: false
     }
   })
 
@@ -58,7 +63,10 @@ export const Lucent: FC<Props> = ({ content, header, sidebar, infobar, footer }:
         <Sidebar>{sidebar}</Sidebar>
       </div>
       <div className={secondSideVariants({ collapsed })}>
-        <Header>{header}</Header>
+        <Header>
+          <SidebarTrigger onClick={toggleSidebar} />
+          {header}
+        </Header>
         <Body className="flex-1 flex">
           <Content className="flex-1">{content}</Content>
           <Infobar className="w-1/4">{infobar}</Infobar>

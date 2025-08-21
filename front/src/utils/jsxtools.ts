@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { cva } from "class-variance-authority"
 
 /**
  * Объединяет классы в один строковый класс
@@ -7,3 +8,11 @@ import { twMerge } from "tailwind-merge"
  * @returns строковый класс
  */
 export const cn = (...inputs: ClassValue[]): string => twMerge(clsx(inputs))
+
+/**
+ * Создает классы на основе вариантов
+ * @param baseClasses - базовые классы
+ * @param variants - варианты
+ * @returns строковый класс
+ */
+export { cva }

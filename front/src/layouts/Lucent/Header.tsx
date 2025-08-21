@@ -14,8 +14,8 @@ type Props = ComponentProps<"header">
  */
 export const Header: FC<Props> = ({ children, className, ...props }: Props): JSX.Element => {
   return (
-    <header className={cn("flex items-center justify-between px-10 py-6", className)} {...props}>
-      {children}
+    <header className={cn("px-10 py-6 h-20 w-full", className)} {...props}>
+      <div className="flex items-center gap-4">{children}</div>
     </header>
   )
 }

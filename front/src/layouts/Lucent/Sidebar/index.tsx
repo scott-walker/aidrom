@@ -18,7 +18,10 @@ type Props = ComponentProps<"aside">
  */
 export const Sidebar: FC<Props> = ({ children, ...props }: Props): JSX.Element => {
   return (
-    <aside className="flex flex-col relative z-10 h-full shadow-2xl shadow-foreground/15" {...props}>
+    <aside
+      className="flex flex-col relative z-10 w-full h-full overflow-hidden shadow-2xl shadow-foreground/15"
+      {...props}
+    >
       <Header>
         <Brand size="md" />
       </Header>

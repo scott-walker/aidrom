@@ -8,7 +8,7 @@ import { Dashboard as DashboardPage } from "@pages/Dashboard"
  * @returns {JSX.Element}
  */
 export const App: FC = (): JSX.Element => {
-  const header = <h1>Header</h1>
+  const header = <h1 className="text-2xl font-family-display">Dashboard</h1>
   const sidebar = <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</div>
   const content = <DashboardPage />
   const infobar = <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</div>
