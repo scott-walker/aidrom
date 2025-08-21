@@ -7,14 +7,17 @@
   --color-brand: var(--color-brand);
   --color-brand-accent: var(--color-brand-accent);
   --color-brand-foreground: var(--color-brand-foreground);
+  --color-brand-foreground-accent: var(--color-brand-foreground-accent);
 
   --color-primary: var(--color-primary);
   --color-primary-accent: var(--color-primary-accent);
   --color-primary-foreground: var(--color-primary-foreground);
+  --color-primary-foreground-accent: var(--color-primary-foreground-accent);
 
   --color-danger: var(--color-danger);
   --color-danger-accent: var(--color-danger-accent);
   --color-danger-foreground: var(--color-danger-foreground);
+  --color-danger-foreground-accent: var(--color-danger-foreground-accent);
 }
 
 @layer base {
@@ -23,14 +26,12 @@
     --color-background: oklch(95.476% 0.00847 236.984);
     --color-background-accent: oklch(100% 0 0);
     --color-foreground: oklch(28.011% 0.10304 322.111);
-    /* --color-foreground-accent: var(--color-brand); */
-    /* --color-foreground-accent: color-mix(in oklch, var(--color-foreground) 100%, var(--color-brand) 20%); */
     --color-foreground-accent: var(--color-brand);
 
     /* Brand */
     --color-brand: oklch(53.492% 0.29346 295.245);
-    --color-brand-accent: color-mix(in oklch, var(--color-brand) 70%, var(--color-foreground) 30%);
-    --color-brand-foreground: var(--color-foreground);
+    --color-brand-accent: oklch(45.191% 0.24722 295.738);
+    --color-brand-foreground: var(--color-background);
     --color-brand-foreground-accent: var(--color-brand-foreground);
 
     /* Primary */
@@ -44,13 +45,18 @@
     --color-danger-accent: color-mix(in oklch, var(--color-danger) 70%, var(--color-foreground) 30%);
     --color-danger-foreground: var(--color-background);
     --color-danger-foreground-accent: var(--color-danger-foreground);
+
+    --color-ghost-base: oklch(24.75% 0.16565 267.716 / 0.122);
+    --color-ghost-nice: oklch(28.011% 0.10304 322.111 / 0.2);
   }
 
-  /* .dark {
-    --color-background: oklch(22.787% 0.03589 207.512);
-    --color-background-accent: oklch(22.787% 0.03589 207.512);
-    
-    --color-foreground: oklch(93.377% 0.04949 217.329);
-    --color-foreground-accent: oklch(93.377% 0.04949 217.329);
-  } */
+  .dark {
+    /* Base */
+    --color-background: oklch(0.21 0.02 267.71);
+    --color-background-accent: oklch(0.35 0.04 267.39);
+    --color-foreground: oklch(0.98 0.02 267.71);
+    --color-foreground-accent: oklch(0.98 0.02 267.71);
+
+    --color-ghost-base: oklch(0% 0 0 / 0.5);
+  }
 }

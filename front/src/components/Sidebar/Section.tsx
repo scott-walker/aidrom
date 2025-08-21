@@ -13,7 +13,7 @@ type Props = ComponentProps<"section">
  * @returns {ReactNode}
  */
 export const Section: FC<Props> = ({ children, className = "", ...props }: Props): ReactNode => {
-  const classes = cn("flex", className)
+  const classes = cn("flex", "flex-col", className)
 
   return (
     <section className={classes} {...props}>

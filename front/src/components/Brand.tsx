@@ -24,7 +24,7 @@ export const Brand: FC<Props> = ({ compact = false, inverted = false, size = "md
   const iconClasses = cva("", {
     variants: {
       inverted: {
-        true: "text-background",
+        true: "text-brand-foreground",
         false: "text-brand"
       },
       size: {
@@ -38,15 +38,15 @@ export const Brand: FC<Props> = ({ compact = false, inverted = false, size = "md
       size: "md"
     }
   })
-  const textClasses = cva("font-bold font-family-display", {
+  const textClasses = cva("font-family-display font-mega-bold", {
     variants: {
       inverted: {
-        true: "text-background",
+        true: "text-brand-foreground",
         false: "text-foreground"
       },
       size: {
         sm: "text-lg ml-2.5",
-        md: "text-2xl ml-3.5",
+        md: "text-2xl ml-3",
         lg: "text-5xl ml-5.5"
       }
     },
@@ -57,7 +57,7 @@ export const Brand: FC<Props> = ({ compact = false, inverted = false, size = "md
   })
 
   return (
-    <div className="flex items-center justify-center w-fit h-fit">
+    <div className="flex items-center justify-center w-fit h-fit select-none">
       <Icon name="bot-message-square" className={iconClasses({ size, inverted })} />
 
       {compact || <span className={textClasses({ size, inverted })}>AIDrom</span>}

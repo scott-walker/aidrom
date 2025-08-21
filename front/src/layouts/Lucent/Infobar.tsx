@@ -31,8 +31,8 @@ export const Infobar: FC<Props> = ({ children, shown = false, className = "", ..
   const infobarVariants = cva(infobarClasses, {
     variants: {
       shown: {
-        false: "m-0 w-0",
-        true: "m-5 w-1/4"
+        false: "w-0",
+        true: "w-1/4"
       }
     },
     defaultVariants: {

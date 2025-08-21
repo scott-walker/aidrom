@@ -20,7 +20,7 @@ type Props = ComponentProps<"button"> & {
  */
 export const Button: FC<Props> = ({ children, variant = "default", className = "", ...props }: Props): ReactNode => {
   const baseClasses = cn(
-    "rounded-md",
+    "rounded-lg",
     "px-2.5 py-1.5",
     "w-fit",
     "h-fit",
@@ -29,15 +29,18 @@ export const Button: FC<Props> = ({ children, variant = "default", className = "
     "duration-100",
     "cursor-pointer",
     "font-medium",
-    "border-none",
+    "border-2",
+    "border-transparent",
+    "shadow-sm",
     "hover:scale-105",
     "active:scale-95",
+    "select-none",
     className
   )
   const variants = cva(baseClasses, {
     variants: {
       variant: {
-        default: "bg-background text-foreground",
+        default: "bg-background-accent text-foreground hover:bg-primary hover:text-primary-foreground",
         primary: "bg-primary text-primary-foreground hover:bg-primary-accent",
         secondary: "bg-secondary text-secondary-foreground",
         danger: "bg-danger text-danger-foreground"

@@ -1,20 +1,25 @@
-@theme {
+@theme inline {
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-xl);
+  --shadow-2xl: var(--shadow-2xl);
+
   --shadow-epic: var(--shadow-epic);
+  --shadow-boom: var(--shadow-boom);
 }
 
 @layer base {
   :root {
-    --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    --shadow-xs: 0 1px 2px 0 var(--color-ghost-base);
+    --shadow-sm: 0 1px 3px 0 var(--color-ghost-base), 0 1px 2px -1px var(--color-ghost-base);
+    --shadow-md: 0 4px 6px -1px var(--color-ghost-base), 0 2px 4px -2px var(--color-ghost-base);
+    --shadow-lg: 0 10px 15px -3px var(--color-ghost-base), 0 4px 6px -4px var(--color-ghost-base);
+    --shadow-xl: 0 20px 25px -5px var(--color-ghost-base), 0 8px 10px -6px var(--color-ghost-base);
+    --shadow-2xl: 0 25px 50px -12px var(--color-ghost-base);
 
-    /* --shadow-epic: 0 0px 10px -10px var(--color-brand), 0 -5px 100px 0px var(--color-brand); */
-    --shadow-epic: 0 0px 8px -3px var(--color-foreground);
-    /* Кастомные тени для вашего дизайна */
-    /* --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --shadow-dropdown: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1); */
+    --shadow-boom: 0 80px 100px -10px var(--color-ghost-base);
+    --shadow-epic: 0 0px 8px -3px var(--color-ghost-nice), 0 0px 100px 0px var(--color-ghost-nice);
   }
 }

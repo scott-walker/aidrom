@@ -1,18 +1,32 @@
 import { createContext } from "react"
 
+// Темы макета
+export const THEME_LIGHT = "light"
+export const THEME_DARK = "dark"
+
+/**
+ * Тип темы макета
+ * @namespace Layouts.Lucent.Context.Theme
+ */
+export type Theme = typeof THEME_LIGHT | typeof THEME_DARK
+
 /**
  * Интерфейс контекста макета
- * @namespace Layouts.Lucent.Context.Interface
+ * @namespace Layouts.Lucent.Context.ILayoutContext
  * @property {boolean} sidebarCollapsed - состояние свернутости сайдбара
  * @property {boolean} infobarShown - состояние видимости инфобара
+ * @property {Theme} theme - текущая тема макета
  * @property {function} setSidebarCollapsed - установщик состояния свернутости сайдбара
  * @property {function} setInfobarShown - установщик состояния видимости инфобара
+ * @property {function} setTheme - установщик темы макета
  */
 export interface ILayoutContext {
   sidebarCollapsed: boolean
   infobarShown: boolean
+  theme: Theme
   setSidebarCollapsed: (sidebarCollapsed: boolean) => void
   setInfobarShown: (infobarShown: boolean) => void
+  setTheme: (theme: Theme) => void
 }
 
 /**

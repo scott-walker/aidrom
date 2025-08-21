@@ -23,7 +23,7 @@ export const Root: FC<Props> = ({ children, collapsed = false, className = "", .
     "h-full",
     "overflow-hidden",
     "shadow-2xl",
-    "shadow-foreground/15",
+    "shadow-boom",
     "transition-width",
     "duration-110",
     className
@@ -31,8 +31,8 @@ export const Root: FC<Props> = ({ children, collapsed = false, className = "", .
   const sidebarVariants = cva(baseClasses, {
     variants: {
       collapsed: {
-        false: "w-[var(--sidebar-width)] bg-background",
-        true: "w-[var(--sidebar-collapsed-width)] bg-brand text-background"
+        false: "w-[var(--sidebar-width)] bg-background text-foreground",
+        true: "w-[var(--sidebar-collapsed-width)] bg-brand text-brand-foreground"
       }
     },
     defaultVariants: {

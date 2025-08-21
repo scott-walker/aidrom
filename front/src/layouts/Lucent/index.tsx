@@ -1,6 +1,6 @@
 import { useState, type FC, type ReactNode } from "react"
 import { Root } from "./Root"
-import { LayoutContext } from "./context"
+import { LayoutContext, THEME_LIGHT, type Theme } from "./context"
 
 /**
  * Пропсы макета "Lucent"
@@ -20,9 +20,12 @@ type Props = {
 export const Lucent: FC<Props> = ({ children }: Props): ReactNode => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(false)
   const [infobarShown, setInfobarShown] = useState<boolean>(false)
+  const [theme, setTheme] = useState<Theme>(THEME_LIGHT)
+
+  const context = { sidebarCollapsed, infobarShown, theme, setSidebarCollapsed, setInfobarShown, setTheme }
 
   return (
-    <LayoutContext.Provider value={{ sidebarCollapsed, infobarShown, setSidebarCollapsed, setInfobarShown }}>
+    <LayoutContext.Provider value={context}>
       <Root>{children}</Root>
     </LayoutContext.Provider>
   )

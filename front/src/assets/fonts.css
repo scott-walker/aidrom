@@ -1,6 +1,25 @@
 @theme {
   /* Sizes */
+  --text-xs: var(--text-xs);
+  --text-sm: var(--text-sm);
   --text-base: var(--text-base);
+  --text-lg: var(--text-lg);
+  --text-xl: var(--text-xl);
+  --text-2xl: var(--text-2xl);
+  --text-3xl: var(--text-3xl);
+  --text-4xl: var(--text-4xl);
+  --text-5xl: var(--text-5xl);
+
+  /* Font weights */
+  --font-weight-mega-light: var(--font-weight-mega-light);
+  --font-weight-extra-light: var(--font-weight-extra-light);
+  --font-weight-light: var(--font-weight-light);
+  --font-weight-normal: var(--font-weight-normal);
+  --font-weight-medium: var(--font-weight-medium);
+  --font-weight-semibold: var(--font-weight-semibold);
+  --font-weight-bold: var(--font-weight-bold);
+  --font-weight-extra-bold: var(--font-weight-extra-bold);
+  --font-weight-mega-bold: var(--font-weight-mega-bold);
 
   /* Fonts */
   --font-family-base: var(--font-family-base);
@@ -15,11 +34,22 @@
     --text-sm: 0.8rem; /* 12.8px */
     --text-base: 1.11rem; /* 17.76px */
     --text-lg: 1.25rem; /* 20px */
-    --text-xl: 1.36rem; /* 21.76px */
-    --text-2xl: 1.6rem; /* 25.6px */
-    --text-3xl: 1.8rem; /* 28.8px */
-    --text-4xl: 2rem; /* 32px */
+    --text-xl: 1.45rem; /* 23.2px */
+    --text-2xl: 1.75rem; /* 28px */
+    --text-3xl: 2rem; /* 32px */
+    --text-4xl: 2.4rem; /* 38.4px */
     --text-5xl: 3rem; /* 48px */
+
+    /* Font weights */
+    --font-weight-mega-light: 100;
+    --font-weight-extra-light: 200;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extra-bold: 800;
+    --font-weight-mega-bold: 900;
 
     /* Fonts */
     --font-family-base: "Onest", sans-serif;

@@ -1,5 +1,5 @@
 import type { ComponentProps, FC, ReactNode } from "react"
-import { DynamicIcon } from "lucide-react/dynamic"
+import { DynamicIcon, type IconName } from "lucide-react/dynamic"
 
 /**
  * Пропсы иконки
@@ -16,3 +16,5 @@ type Props = ComponentProps<typeof DynamicIcon>
 export const Icon: FC<Props> = ({ name, ...props }: Props): ReactNode => {
   return <DynamicIcon name={name} {...props} />
 }
+
+export type { IconName }

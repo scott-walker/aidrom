@@ -1,12 +1,13 @@
 import { useContext, type FC, type ReactNode } from "react"
 import { Sidebar } from "./Sidebar"
 import { SidebarTrigger } from "./SidebarTrigger"
+import { LayoutContext, type ILayoutContext } from "./context"
 import { Header } from "./Header"
 import { Body } from "./Body"
-import { Footer } from "./Footer"
 import { Content } from "./Content"
 import { Infobar } from "./Infobar"
-import { LayoutContext, type ILayoutContext } from "./context"
+import { ThemeTrigger } from "./ThemeTrigger"
+// import { Footer } from "./Footer"
 
 /**
  * Пропсы корневого компонента макета
@@ -31,7 +32,8 @@ export const Root: FC<Props> = ({ children }: Props): ReactNode => {
       <div className="flex flex-col flex-1">
         <Header>
           <SidebarTrigger />
-          <h1 className="text-2xl font-family-display">Dashboard</h1>
+          <h1 className="text-2xl font-family-display">Панель</h1>
+          <ThemeTrigger className="ml-auto" />
         </Header>
 
         <Body className="flex-1">
