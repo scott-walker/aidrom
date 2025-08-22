@@ -1,62 +1,124 @@
 @theme {
+  /* Base */
   --color-background: var(--color-background);
-  --color-background-accent: var(--color-background-accent);
+  --color-background-closer: var(--color-background-closer);
+  --color-background-farther: var(--color-background-farther);
   --color-foreground: var(--color-foreground);
-  --color-foreground-accent: var(--color-foreground-accent);
+  --color-foreground-closer: var(--color-foreground-closer);
+  --color-foreground-farther: var(--color-foreground-farther);
 
+  /* Brand */
   --color-brand: var(--color-brand);
   --color-brand-accent: var(--color-brand-accent);
   --color-brand-foreground: var(--color-brand-foreground);
   --color-brand-foreground-accent: var(--color-brand-foreground-accent);
 
+  /* Primary */
   --color-primary: var(--color-primary);
   --color-primary-accent: var(--color-primary-accent);
   --color-primary-foreground: var(--color-primary-foreground);
   --color-primary-foreground-accent: var(--color-primary-foreground-accent);
 
+  /* Warning */
+  --color-warning: var(--color-warning);
+  --color-warning-accent: var(--color-warning-accent);
+  --color-warning-foreground: var(--color-warning-foreground);
+  --color-warning-foreground-accent: var(--color-warning-foreground-accent);
+
+  /* Danger */
   --color-danger: var(--color-danger);
   --color-danger-accent: var(--color-danger-accent);
   --color-danger-foreground: var(--color-danger-foreground);
   --color-danger-foreground-accent: var(--color-danger-foreground-accent);
+
+  /* Ghost (прозрачные цвета, например для теней или глэсс-элементов) */
+  --color-ghost-base: var(--color-ghost-base);
+  --color-ghost-nice: var(--color-ghost-nice);
+
+  /* Градиенты */
+  --color-gradient-brand: var(--color-gradient-brand);
+  --gradient-primary: var(--gradient-primary);
+  --gradient-glass: var(--gradient-glass);
+
+  /* Градиенты */
+  --gradient-brand: var(--gradient-brand);
 }
 
 @layer base {
   :root {
     /* Base */
+    --color-background-closer: oklch(100% 0 0);
     --color-background: oklch(95.476% 0.00847 236.984);
-    --color-background-accent: oklch(100% 0 0);
-    --color-foreground: oklch(28.011% 0.10304 322.111);
-    --color-foreground-accent: var(--color-brand);
+    --color-background-farther: oklch(92% 0.01403 258.447);
+
+    --color-foreground-closer: oklch(28.011% 0.10304 322.111);
+    --color-foreground: oklch(18.929% 0.08391 301.227);
+    --color-foreground-farther: oklch(28.011% 0.10304 322.111);
 
     /* Brand */
-    --color-brand: oklch(53.492% 0.29346 295.245);
-    --color-brand-accent: oklch(45.191% 0.24722 295.738);
-    --color-brand-foreground: var(--color-background);
+    --color-brand: oklch(46.125% 0.24288 302.555);
+    --color-brand-accent: oklch(64.532% 0.26038 2.454);
+    --color-brand-foreground: oklch(100% 0 0);
     --color-brand-foreground-accent: var(--color-brand-foreground);
 
     /* Primary */
     --color-primary: var(--color-foreground);
-    --color-primary-accent: var(--color-foreground-accent);
+    --color-primary-accent: color-mix(in oklch, var(--color-foreground) 87%, var(--color-background) 13%);
     --color-primary-foreground: var(--color-background);
     --color-primary-foreground-accent: var(--color-primary-foreground);
 
+    /* Warning */
+    --color-warning: oklch(85.746% 0.17517 88.493);
+    --color-warning-accent: oklch(79.589% 0.16259 88.542);
+    --color-warning-foreground: var(--color-foreground);
+    --color-warning-foreground-accent: var(--color-warning-foreground);
+
     /* Danger */
     --color-danger: oklch(64.284% 0.25824 5.264);
-    --color-danger-accent: color-mix(in oklch, var(--color-danger) 70%, var(--color-foreground) 30%);
+    --color-danger-accent: oklch(54.456% 0.21688 5.361);
     --color-danger-foreground: var(--color-background);
     --color-danger-foreground-accent: var(--color-danger-foreground);
 
+    /* Ghost */
     --color-ghost-base: oklch(24.75% 0.16565 267.716 / 0.122);
-    --color-ghost-nice: oklch(28.011% 0.10304 322.111 / 0.2);
+
+    /* Градиенты */
+    --color-gradient-brand: linear-gradient(135deg, oklch(64.284% 0.25824 5.264), oklch(44.733% 0.23486 275.043));
+    --gradient-primary: linear-gradient(to right, var(--color-primary), var(--color-primary-accent));
+    --gradient-glass: linear-gradient(135deg, oklch(95.476% 0.00847 236.984 / 0.8), oklch(100% 0 0 / 0.6));
+
+    /* Градиенты */
+    --gradient-brand: linear-gradient(135deg, var(--color-brand), var(--color-brand-accent));
   }
 
   .dark {
     /* Base */
-    --color-background: oklch(0.21 0.02 267.71);
-    --color-background-accent: oklch(0.35 0.04 267.39);
-    --color-foreground: oklch(0.98 0.02 267.71);
-    --color-foreground-accent: oklch(0.98 0.02 267.71);
+    --color-background-closer: oklch(0.29 0.03 267.33);
 
+    --color-background: oklch(0.29 0.03 267.33);
+    --color-background-farther: oklch(0.29 0.03 267.33);
+    --color-foreground: oklch(0.98 0.02 267.71);
+    --color-foreground-closer: oklch(0.98 0.02 267.71);
+    --color-foreground-farther: oklch(0.98 0.02 267.71);
+
+    /* Warning */
+    --color-warning: oklch(85.746% 0.17517 88.493);
+    --color-warning-accent: oklch(87.585% 0.17083 91.709);
+    --color-warning-foreground: var(--color-background);
+
+    /* Danger */
+    --color-danger: oklch(54.456% 0.21688 5.361);
+    --color-danger-accent: oklch(61.126% 0.24524 6.285);
+    --color-danger-foreground: var(--color-foreground);
+
+    /* Ghost */
+    --color-ghost-extra-light: oklch(0% 0 0 / 0.15);
+    --color-ghost-light: oklch(0% 0 0 / 0.3);
     --color-ghost-base: oklch(0% 0 0 / 0.5);
+    --color-ghost-dark: oklch(0% 0 0 / 0.7);
+    --color-ghost-extra-dark: oklch(0% 0 0 / 0.85);
+
+    /* Градиенты */
+    --gradient-brand: linear-gradient(135deg, var(--color-brand-accent), var(--color-brand));
   }
 }

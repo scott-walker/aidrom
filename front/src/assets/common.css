@@ -5,3 +5,28 @@
     @apply text-base text-foreground bg-background font-family-base;
   }
 }
+
+@layer utilities {
+  .text-gradient-brand {
+    color: transparent;
+    background: var(--gradient-brand);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .bg-gradient-brand {
+    background: var(--gradient-brand);
+  }
+  .text-foreground-closer {
+    color: var(--color-foreground-closer);
+  }
+  .text-foreground-farther {
+    color: var(--color-foreground-farther);
+  }
+  .bg-foreground-closer {
+    background-color: var(--color-foreground-closer);
+  }
+  .bg-foreground-farther {
+    background-color: var(--color-foreground-farther);
+  }
+}
