@@ -20,6 +20,8 @@ export interface IItem {
  * @returns {ReactNode}
  */
 export const Item: FC<IItem> = ({ label, href, icon = null, active = false, compact = false }: IItem): ReactNode => {
+  compact = false
+
   const linkClasses = cn("flex", "items-center", "gap-4", "py-2", "rounded-xl", "select-none")
   const linkVariants = cva(linkClasses, {
     variants: {
@@ -36,22 +38,32 @@ export const Item: FC<IItem> = ({ label, href, icon = null, active = false, comp
       {
         compact: true,
         active: true,
-        class: "bg-foreground text-background cursor-default"
+        class: cn("bg-background-closer", "text-foreground")
       },
       {
         compact: true,
         active: false,
-        class: "hover:bg-foreground/30 hover:text-background"
+        class: cn(
+          "text-foreground/60",
+          "hover:text-foreground",
+          "dark:text-foreground/50",
+          "dark:hover:text-foreground"
+        )
       },
       {
         compact: false,
         active: true,
-        class: "bg-brand text-brand-foreground hover:bg-brand-accent hover:text-brand-foreground-accent"
+        class: cn("bg-background-closer text-foreground")
       },
       {
         compact: false,
         active: false,
-        class: "hover:text-brand"
+        class: cn(
+          "text-foreground/60",
+          "hover:text-foreground",
+          "dark:text-foreground/50",
+          "dark:hover:text-foreground"
+        )
       }
     ],
     defaultVariants: {
@@ -59,7 +71,7 @@ export const Item: FC<IItem> = ({ label, href, icon = null, active = false, comp
       active: false
     }
   })
-  const labelClasses = cn("text-md")
+  const labelClasses = cn("text-sm")
   const labelVariants = cva(labelClasses, {
     variants: {
       compact: {
@@ -71,7 +83,7 @@ export const Item: FC<IItem> = ({ label, href, icon = null, active = false, comp
       compact: false
     }
   })
-  const iconClasses = cn("w-6", "h-6")
+  const iconClasses = cn("")
   const iconWeight = 3
 
   return (
