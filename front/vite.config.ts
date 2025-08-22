@@ -18,7 +18,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@": srcPath,
+      "@assets": resolve(srcPath, "assets"),
       "@utils": resolve(srcPath, "utils"),
       "@hooks": resolve(srcPath, "hooks"),
       "@store": resolve(srcPath, "store"),
