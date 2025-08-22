@@ -1,0 +1,97 @@
+/** Lucent layout */
+@import "tailwindcss";
+
+@theme {
+  --layout-page-width: 100vw;
+  --layout-header-height: 4rem;
+
+  --sidebar-width: 20rem;
+  --sidebar-collapsed-width: 5rem;
+  --sidebar-header-height: var(--layout-header-height);
+  --sidebar-footer-height: 5rem;
+
+  --infobar-width: 15rem;
+}
+
+.layout {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: var(--colors-background);
+
+  & .page {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: calc(100vw - var(--sidebar-width));
+
+    &.expanded {
+      width: calc(100vw - var(--sidebar-collapsed-width));
+    }
+
+    & .header {
+      display: flex;
+      height: var(--layout-header-height);
+    }
+
+    & .body {
+      flex: 1;
+      display: flex;
+      height: calc(100vh - var(--layout-header-height));
+      overflow-y: auto;
+
+      & .content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      & .infobar {
+        display: none;
+        width: 0;
+
+        &.shown {
+          display: flex;
+          flex-direction: column;
+          width: var(--infobar-width);
+        }
+      }
+    }
+  }
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  background-color: var(--colors-primary-5);
+  overflow: hidden;
+  transition: width 0.12s ease-in-out;
+
+  &.collapsed {
+    width: var(--sidebar-collapsed-width);
+  }
+
+  & .header {
+    height: var(--sidebar-header-height);
+  }
+
+  & .body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100vh - var(--sidebar-header-height) - var(--sidebar-footer-height));
+    overflow-y: auto;
+
+    & .section {
+      padding-block: calc(var(--spacing) * 3);
+      padding-inline: calc(var(--spacing) * 4);
+    }
+  }
+
+  & .footer {
+    height: var(--sidebar-footer-height);
+  }
+}

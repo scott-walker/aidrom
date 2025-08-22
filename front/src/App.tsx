@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from "react"
-import { Lucent as LucentLayout } from "@layouts/Lucent"
+import { Layout } from "@layouts"
 import { Dashboard as DashboardPage } from "@pages/Dashboard"
 
 /**
@@ -9,9 +9,9 @@ import { Dashboard as DashboardPage } from "@pages/Dashboard"
  */
 export const App: FC = (): ReactNode => {
   return (
-    <LucentLayout>
+    <Layout>
       <DashboardPage />
-    </LucentLayout>
+    </Layout>
   )
 }
 

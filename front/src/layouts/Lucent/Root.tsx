@@ -1,4 +1,6 @@
 import { useContext, type FC, type ReactNode } from "react"
+import { cn } from "@utils/jsxtools"
+import { Code } from "@ui/Code"
 import { Sidebar } from "./Sidebar"
 import { SidebarTrigger } from "./SidebarTrigger"
 import { LayoutContext, type ILayoutContext } from "./context"
@@ -7,7 +9,8 @@ import { Body } from "./Body"
 import { Content } from "./Content"
 import { Infobar } from "./Infobar"
 import { ThemeTrigger } from "./ThemeTrigger"
-// import { Footer } from "./Footer"
+import styles from "./Lucent.module.css"
+import { Page } from "./Page"
 
 /**
  * Пропсы корневого компонента макета
@@ -26,23 +29,24 @@ export const Root: FC<Props> = ({ children }: Props): ReactNode => {
   const { sidebarCollapsed, infobarShown } = useContext(LayoutContext) as ILayoutContext
 
   return (
-    <div className="fixed inset-0 flex bg-background">
+    <div className={styles.layout}>
       <Sidebar collapsed={sidebarCollapsed} />
 
-      <div className="flex flex-col flex-1">
-        <Header>
+      <Page className={cn(styles.page, sidebarCollapsed && styles.expanded)}>
+        <Header className={styles.header}>
           <SidebarTrigger />
           <h1 className="text-2xl font-family-display">Панель</h1>
           <ThemeTrigger className="ml-auto" />
         </Header>
 
-        <Body className="flex-1">
-          <Content className="flex-1">{children}</Content>
-          <Infobar shown={infobarShown}>Это инфобар</Infobar>
+        <Body className={styles.body}>
+          <Content className={styles.content}>{children}</Content>
+          <Infobar shown={infobarShown}>
+            <h2>Это инфобар</h2>
+            <Code className="mt-10">console.log("Hello, world!")</Code>
+          </Infobar>
         </Body>
-
-        {/* <Footer>Это футер</Footer> */}
-      </div>
+      </Page>
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import type { ComponentProps, FC, ReactNode } from "react"
-import { cn, cva } from "@utils/jsxtools"
+import styles from "./Lucent.module.css"
 
 /**
  * Пропсы инфобара
@@ -17,45 +17,10 @@ type Props = ComponentProps<"aside"> & {
  * @param {Props} props.className - классы инфобара
  * @returns {ReactNode}
  */
-export const Infobar: FC<Props> = ({ children, shown = false, className = "", ...props }: Props): ReactNode => {
-  const infobarClasses = cn(
-    "bg-background-accent",
-    "rounded-sm",
-    "shadow-2xl",
-    "shadow-foreground-accent/10",
-    "transition-width",
-    "transition-margin",
-    "duration-100",
-    className
-  )
-  const infobarVariants = cva(infobarClasses, {
-    variants: {
-      shown: {
-        false: "w-0",
-        true: "w-1/4"
-      }
-    },
-    defaultVariants: {
-      shown: false
-    }
-  })
-
-  const innerClasses = cn("flex", "flex-col", "gap-4", "p-7", "transition-opacity", className)
-  const innerVariants = cva(innerClasses, {
-    variants: {
-      shown: {
-        false: "opacity-0 duration-20",
-        true: "opacity-100 duration-800"
-      }
-    },
-    defaultVariants: {
-      shown: false
-    }
-  })
-
+export const Infobar: FC<Props> = ({ children, ...props }: Props): ReactNode => {
   return (
-    <aside className={infobarVariants({ shown })} {...props}>
-      <div className={innerVariants({ shown })}>{children}</div>
+    <aside {...props}>
+      <div className={styles.inner}>{children}</div>
     </aside>
   )
 }

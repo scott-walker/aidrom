@@ -1,5 +1,4 @@
 import type { ComponentProps, FC, ReactNode } from "react"
-import { cn } from "@utils/jsxtools"
 
 /**
  * Пропсы контента
@@ -12,12 +11,6 @@ type Props = ComponentProps<"div">
  * @namespace Layouts.Lucent.Content
  * @returns {ReactNode}
  */
-export const Content: FC<Props> = ({ children, className = "", ...props }: Props): ReactNode => {
-  const classes = cn("p-10", className)
-
-  return (
-    <main className={classes} {...props}>
-      {children}
-    </main>
-  )
+export const Content: FC<Props> = ({ children, ...props }: Props): ReactNode => {
+  return <main {...props}>{children}</main>
 }
