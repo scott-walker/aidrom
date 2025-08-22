@@ -7,7 +7,7 @@ import { cn, cva } from "@utils/jsxtools"
  */
 type Props = ComponentProps<"button"> & {
   children: ReactNode
-  variant?: "default" | "primary" | "secondary" | "danger"
+  variant?: "default" | "brand" | "primary" | "warning" | "danger"
 }
 
 /**
@@ -40,10 +40,16 @@ export const Button: FC<Props> = ({ children, variant = "default", className = "
   const variants = cva(baseClasses, {
     variants: {
       variant: {
-        default: "bg-background-accent text-foreground hover:bg-primary hover:text-primary-foreground",
-        primary: "bg-primary text-primary-foreground hover:bg-primary-accent",
-        secondary: "bg-secondary text-secondary-foreground",
-        danger: "bg-danger text-danger-foreground"
+        default: cn(
+          "bg-background-closer",
+          "text-foreground",
+          "hover:bg-background-closer/80",
+          "dark:hover:bg-background-closer"
+        ),
+        brand: "bg-brand text-brand-foreground hover:bg-brand-accent hover:text-brand-foreground-accent",
+        primary: "bg-primary text-primary-foreground hover:bg-primary-accent hover:text-primary-foreground-accent",
+        warning: "bg-warning text-warning-foreground hover:bg-warning-accent hover:text-warning-foreground-accent",
+        danger: "bg-danger text-danger-foreground hover:bg-danger-accent hover:text-danger-foreground-accent"
       }
     },
     defaultVariants: {

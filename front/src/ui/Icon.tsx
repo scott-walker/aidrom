@@ -14,7 +14,7 @@ type Props = ComponentProps<typeof DynamicIcon>
  * @returns {ReactNode}
  */
 export const Icon: FC<Props> = ({ name, ...props }: Props): ReactNode => {
-  return <DynamicIcon name={name} {...props} />
+  return <DynamicIcon color="currentColor" name={name} {...props} />
 }
 
 export type { IconName }
