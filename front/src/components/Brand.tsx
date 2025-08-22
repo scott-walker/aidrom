@@ -21,21 +21,26 @@ type Props = {
  * @returns {ReactNode}
  */
 export const Brand: FC<Props> = ({ compact = false, inverted = false, size = "md" }: Props): ReactNode => {
-  const iconClasses = cva("", {
+  const iconStroke = 2.5
+  const iconSizes = (size: "sm" | "md" | "lg"): number => {
+    const map = {
+      sm: 8,
+      md: 38,
+      lg: 22
+    }
+
+    return map[size] || map.md
+  }
+
+  const iconClasses = cva("w-fit h-fit", {
     variants: {
       inverted: {
         true: "text-brand-foreground",
-        false: "text-brand"
-      },
-      size: {
-        sm: "w-8 h-8",
-        md: "w-12 h-12",
-        lg: "w-22 h-22"
+        false: "text-brand-foreground bg-gradient-brand rounded-xl p-2"
       }
     },
     defaultVariants: {
-      inverted: false,
-      size: "md"
+      inverted: false
     }
   })
   const textClasses = cva("font-family-display font-mega-bold", {
@@ -58,7 +63,12 @@ export const Brand: FC<Props> = ({ compact = false, inverted = false, size = "md
 
   return (
     <div className="flex items-center justify-center w-fit h-fit select-none">
-      <Icon name="bot-message-square" className={iconClasses({ size, inverted })} />
+      <Icon
+        name="bot-message-square"
+        className={iconClasses({ inverted })}
+        strokeWidth={iconStroke}
+        size={iconSizes(size)}
+      />
 
       {compact || <span className={textClasses({ size, inverted })}>AIDrom</span>}
     </div>

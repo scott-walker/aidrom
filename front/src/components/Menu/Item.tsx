@@ -20,8 +20,6 @@ export interface IItem {
  * @returns {ReactNode}
  */
 export const Item: FC<IItem> = ({ label, href, icon = null, active = false, compact = false }: IItem): ReactNode => {
-  compact = false
-
   const linkClasses = cn("flex", "items-center", "gap-4", "py-2", "rounded-xl", "select-none")
   const linkVariants = cva(linkClasses, {
     variants: {

@@ -1,5 +1,4 @@
 import type { ComponentProps, FC, ReactNode } from "react"
-import { cn } from "@utils/jsxtools"
 
 /**
  * Пропсы секции
@@ -10,14 +9,9 @@ type Props = ComponentProps<"section">
 /**
  * Секция сайдбара
  * @namespace Components.Sidebar.Section
+ * @param {Props} props.children - контент
  * @returns {ReactNode}
  */
-export const Section: FC<Props> = ({ children, className = "", ...props }: Props): ReactNode => {
-  const classes = cn("flex", "flex-col", className)
-
-  return (
-    <section className={classes} {...props}>
-      {children}
-    </section>
-  )
+export const Section: FC<Props> = ({ children, ...props }: Props): ReactNode => {
+  return <section {...props}>{children}</section>
 }

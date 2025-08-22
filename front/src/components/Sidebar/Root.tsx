@@ -1,48 +1,17 @@
 import type { ComponentProps, FC, ReactNode } from "react"
-import { cn, cva } from "@utils/jsxtools"
 
 /**
  * Пропсы корневого компонента сайдбара
  * @namespace Components.Sidebar.Root.Props
  */
-type Props = ComponentProps<"aside"> & {
-  collapsed?: boolean
-}
+type Props = ComponentProps<"aside">
 
 /**
  * Корневой компонент сайдбара
  * @namespace Components.Sidebar.Root
+ * @param {Props} props.children - контент
  * @returns {ReactNode}
  */
-export const Root: FC<Props> = ({ children, collapsed = false, className = "", ...props }: Props): ReactNode => {
-  const baseClasses = cn(
-    "flex",
-    "flex-col",
-    "relative",
-    "z-10",
-    "h-full",
-    "overflow-hidden",
-    "shadow-2xl",
-    "shadow-boom",
-    "transition-width",
-    "duration-110",
-    className
-  )
-  const sidebarVariants = cva(baseClasses, {
-    variants: {
-      collapsed: {
-        false: "w-[var(--sidebar-width)] bg-background text-foreground",
-        true: "w-[var(--sidebar-collapsed-width)] bg-brand text-brand-foreground"
-      }
-    },
-    defaultVariants: {
-      collapsed: false
-    }
-  })
-
-  return (
-    <aside className={sidebarVariants({ collapsed })} {...props}>
-      {children}
-    </aside>
-  )
+export const Root: FC<Props> = ({ children, ...props }: Props): ReactNode => {
+  return <aside {...props}>{children}</aside>
 }

@@ -1,5 +1,4 @@
 import type { ComponentProps, FC, ReactNode } from "react"
-import { cn } from "@utils/jsxtools"
 
 /**
  * Пропсы футера
@@ -10,14 +9,9 @@ type Props = ComponentProps<"footer">
 /**
  * Футер сайдбара
  * @namespace Components.Sidebar.Footer
+ * @param {Props} props.children - контент
  * @returns {ReactNode}
  */
-export const Footer: FC<Props> = ({ children, className = "", ...props }: Props): ReactNode => {
-  const classes = cn("flex", "items-center", "justify-center", className)
-
-  return (
-    <footer className={classes} {...props}>
-      {children}
-    </footer>
-  )
+export const Footer: FC<Props> = ({ children, ...props }: Props): ReactNode => {
+  return <footer {...props}>{children}</footer>
 }
