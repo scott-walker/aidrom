@@ -14,18 +14,18 @@ export type Theme = typeof THEME_LIGHT | typeof THEME_DARK
  * Интерфейс контекста макета
  * @namespace Layouts.Lucent.Context.ILayoutContext
  * @property {boolean} sidebarCollapsed - состояние свернутости сайдбара
- * @property {boolean} infobarShown - состояние видимости инфобара
+ * @property {boolean} infobarCollapsed - состояние свернутости инфобара
  * @property {Theme} theme - текущая тема макета
  * @property {function} setSidebarCollapsed - установщик состояния свернутости сайдбара
- * @property {function} setInfobarShown - установщик состояния видимости инфобара
+ * @property {function} setInfobarCollapsed - установщик состояния свернутости инфобара
  * @property {function} setTheme - установщик темы макета
  */
 export interface ILayoutContext {
   sidebarCollapsed: boolean
-  infobarShown: boolean
+  infobarCollapsed: boolean
   theme: Theme
   setSidebarCollapsed: (sidebarCollapsed: boolean) => void
-  setInfobarShown: (infobarShown: boolean) => void
+  setInfobarCollapsed: (infobarCollapsed: boolean) => void
   setTheme: (theme: Theme) => void
 }
 

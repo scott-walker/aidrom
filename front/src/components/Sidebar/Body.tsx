@@ -1,4 +1,5 @@
 import type { ComponentProps, FC, ReactNode } from "react"
+import { Scrollbar } from "@ui/Scrollbar"
 
 /**
  * Пропсы тела сайдбара
@@ -13,5 +14,9 @@ type Props = ComponentProps<"div">
  * @returns {ReactNode}
  */
 export const Body: FC<Props> = ({ children, ...props }: Props): ReactNode => {
-  return <div {...props}>{children}</div>
+  return (
+    <div {...props}>
+      <Scrollbar>{children}</Scrollbar>
+    </div>
+  )
 }

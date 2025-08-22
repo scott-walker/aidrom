@@ -9,13 +9,14 @@ import { LayoutContext, type ILayoutContext } from "./context"
  * @returns {ReactNode}
  */
 export const InfobarTrigger: FC = (): ReactNode => {
-  const { infobarShown, setInfobarShown } = useContext(LayoutContext) as ILayoutContext
+  const { infobarCollapsed, setInfobarCollapsed } = useContext(LayoutContext) as ILayoutContext
 
-  const toggleInfobarShown = (): void => setInfobarShown(!infobarShown)
+  const toggleInfobarCollapsed = (): void => setInfobarCollapsed(!infobarCollapsed)
 
   return (
-    <Button variant="danger" onClick={toggleInfobarShown}>
+    <Button variant="danger" onClick={toggleInfobarCollapsed}>
       <Icon name="info" size={24} strokeWidth={3} />
+      {infobarCollapsed ? "Развернуть" : "Свернуть"}
     </Button>
   )
 }

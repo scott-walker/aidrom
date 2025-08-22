@@ -1,4 +1,6 @@
 import type { ComponentProps, FC, ReactNode } from "react"
+import { Scrollbar } from "@ui/Scrollbar"
+import styles from "./Lucent.module.css"
 
 /**
  * Пропсы контента
@@ -12,5 +14,9 @@ type Props = ComponentProps<"div">
  * @returns {ReactNode}
  */
 export const Content: FC<Props> = ({ children, ...props }: Props): ReactNode => {
-  return <main {...props}>{children}</main>
+  return (
+    <main className={styles.layoutContent} {...props}>
+      <Scrollbar>{children}</Scrollbar>
+    </main>
+  )
 }

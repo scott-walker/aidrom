@@ -18,14 +18,19 @@ type Props = ComponentProps<"pre"> & {
  * @returns {ReactNode}
  */
 export const Code: FC<Props> = ({ children, accent = false, className = "", ...props }: Props): ReactNode => {
+  /**
+   * Классы для компонента Code, чтобы строки переносились и не появлялся скролл
+   */
   const classes = cn(
-    "overflow-x-auto",
     "px-8",
     "py-6",
     "text-base",
     "font-family-mono",
     "font-semibold",
     "rounded-2xl",
+    "break-words", // перенос длинных слов
+    "whitespace-pre-wrap", // сохраняет пробелы и переносит строки
+    "overflow-hidden", // скрывает скролл
     className
   )
   const variants = cva(classes, {

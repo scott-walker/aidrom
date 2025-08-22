@@ -1,5 +1,5 @@
 import type { ComponentProps, FC, ReactNode } from "react"
-import { cn } from "@utils/jsxtools"
+import styles from "./Lucent.module.css"
 
 /**
  * Пропсы тела макета
@@ -10,13 +10,12 @@ type Props = ComponentProps<"div">
 /**
  * Тело макета
  * @namespace Layouts.Lucent.Body
+ * @param {Props} props.children - контент
  * @returns {ReactNode}
  */
-export const Body: FC<Props> = ({ children, className = "", ...props }: Props): ReactNode => {
-  const classes = cn("flex", className)
-
+export const Body: FC<Props> = ({ children, ...props }: Props): ReactNode => {
   return (
-    <div className={classes} {...props}>
+    <div className={styles.layoutBody} {...props}>
       {children}
     </div>
   )

@@ -1,26 +1,34 @@
-import type { ComponentProps, FC, ReactNode } from "react"
+import { useContext, type ComponentProps, type FC, type ReactNode } from "react"
+import { cn } from "@utils/jsxtools"
+import { Code } from "@ui/Code"
 import styles from "./Lucent.module.css"
+import { LayoutContext, type ILayoutContext } from "./context"
 
 /**
  * Пропсы инфобара
  * @namespace Layouts.Lucent.Infobar.Props
  */
 type Props = ComponentProps<"aside"> & {
-  shown?: boolean
+  collapsed?: boolean
 }
 
 /**
  * Инфобар макета
  * @namespace Layouts.Lucent.Infobar
  * @param {Props} props.children - контент
- * @param {Props} props.shown - состояние видимости
- * @param {Props} props.className - классы инфобара
  * @returns {ReactNode}
  */
 export const Infobar: FC<Props> = ({ children, ...props }: Props): ReactNode => {
+  const { infobarCollapsed } = useContext(LayoutContext) as ILayoutContext
+  const infobarClasses = cn(styles.layoutInfobar, infobarCollapsed && styles.collapsed)
+
   return (
-    <aside {...props}>
-      <div className={styles.inner}>{children}</div>
+    <aside {...props} className={infobarClasses}>
+      <div className={styles.inner}>
+        <h2>Это инфобар</h2>
+        <Code className="mt-10">console.log("Hello, world!")</Code>
+        {children}
+      </div>
     </aside>
   )
 }

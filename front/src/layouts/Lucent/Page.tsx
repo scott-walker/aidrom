@@ -1,4 +1,8 @@
 import type { ComponentProps, FC, ReactNode } from "react"
+import { useContext } from "react"
+import { LayoutContext, type ILayoutContext } from "./context"
+import { cn } from "@utils/jsxtools"
+import styles from "./Lucent.module.css"
 
 /**
  * Пропсы страницы макета
@@ -13,5 +17,12 @@ type Props = ComponentProps<"div">
  * @returns {ReactNode}
  */
 export const Page: FC<Props> = ({ children, ...props }: Props): ReactNode => {
-  return <div {...props}>{children}</div>
+  const { sidebarCollapsed } = useContext(LayoutContext) as ILayoutContext
+  const pageClasses = cn(styles.layoutPage, sidebarCollapsed && styles.expanded)
+
+  return (
+    <div className={pageClasses} {...props}>
+      {children}
+    </div>
+  )
 }

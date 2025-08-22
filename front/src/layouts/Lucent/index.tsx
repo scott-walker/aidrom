@@ -19,10 +19,10 @@ type Props = {
  */
 export const Lucent: FC<Props> = ({ children }: Props): ReactNode => {
   const [sidebarCollapsed, setSidebarCollapsed] = useState<boolean>(false)
-  const [infobarShown, setInfobarShown] = useState<boolean>(false)
+  const [infobarCollapsed, setInfobarCollapsed] = useState<boolean>(false)
   const [theme, setTheme] = useState<Theme>(THEME_LIGHT)
 
-  const context = { sidebarCollapsed, infobarShown, theme, setSidebarCollapsed, setInfobarShown, setTheme }
+  const context = { sidebarCollapsed, infobarCollapsed, theme, setSidebarCollapsed, setInfobarCollapsed, setTheme }
 
   return (
     <LayoutContext.Provider value={context}>
