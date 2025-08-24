@@ -5,6 +5,7 @@ import { Header } from "./Header"
 import { Body } from "./Body"
 import { Content } from "./Content"
 import { Infobar } from "./Infobar"
+import { Footer } from "./Footer"
 import styles from "./Lucent.module.css"
 
 /**
@@ -30,6 +31,7 @@ export const Root: FC<Props> = ({ children }: Props): ReactNode => {
           <Content>{children}</Content>
           <Infobar />
         </Body>
+        <Footer />
       </Page>
     </div>
   )

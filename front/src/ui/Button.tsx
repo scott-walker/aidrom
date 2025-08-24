@@ -2,13 +2,25 @@ import type { ComponentProps, FC, ReactNode } from "react"
 import { cn, cva } from "@utils/jsxtools"
 
 /**
+ * Варианты кнопки
+ * @namespace Ui.Button.Variant
+ */
+export type Variant = "ghost" | "soft" | "hard" | "primary" | "secondary" | "warning" | "danger"
+
+/**
+ * Размеры кнопки
+ * @namespace Ui.Button.Size
+ */
+export type Size = "xs" | "sm" | "md" | "lg" | "xl"
+
+/**
  * Пропсы кнопки
  * @namespace Ui.Button.Props
  */
-type Props = ComponentProps<"button"> & {
+export type Props = ComponentProps<"button"> & {
   children: ReactNode
-  variant?: "soft" | "hard" | "primary" | "secondary" | "warning" | "danger"
-  size?: "xs" | "sm" | "md" | "lg" | "xl"
+  variant?: Variant
+  size?: Size
 }
 
 /**
@@ -21,7 +33,7 @@ type Props = ComponentProps<"button"> & {
  */
 export const Button: FC<Props> = ({
   children,
-  variant = "hard",
+  variant = "ghost",
   size = "md",
   className = "",
   ...props
@@ -45,6 +57,7 @@ export const Button: FC<Props> = ({
   const buttonVariants = cva(buttonBaseClasses, {
     variants: {
       variant: {
+        ghost: cn("bg-transparent", "text-foreground", "dark:shadow-none"),
         soft: cn("bg-background-soft", "text-foreground", "shadow-ghost-xs"),
         hard: cn("bg-foreground", "text-background", "dark:bg-foreground-hard"),
         primary: cn(

@@ -4,6 +4,7 @@ import { SidebarTrigger } from "./SidebarTrigger"
 import { InfobarTrigger } from "./InfobarTrigger"
 import { ThemeTrigger } from "./ThemeTrigger"
 import styles from "./Lucent.module.css"
+import { FooterTrigger } from "./FooterTrigger"
 
 /**
  * Пропсы шапки макета
@@ -28,6 +29,7 @@ export const Header: FC<Props> = ({ children, ...props }: Props): ReactNode => {
         <h1 className="text-2xl font-family-display">Панель</h1>
         {children}
         <InfobarTrigger className="ml-auto" />
+        <FooterTrigger />
         <ThemeTrigger />
       </div>
     </header>

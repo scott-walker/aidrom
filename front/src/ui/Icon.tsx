@@ -5,7 +5,13 @@ import { DynamicIcon, type IconName } from "lucide-react/dynamic"
  * Пропсы иконки
  * @namespace Ui.Icon.Props
  */
-type Props = ComponentProps<typeof DynamicIcon>
+export type Props = ComponentProps<typeof DynamicIcon>
+
+/**
+ * Название иконки
+ * @namespace Ui.Icon.IconName
+ */
+export type { IconName }
 
 /**
  * Иконка (https://lucide.dev/icons)
@@ -14,7 +20,5 @@ type Props = ComponentProps<typeof DynamicIcon>
  * @returns {ReactNode}
  */
 export const Icon: FC<Props> = ({ name, ...props }: Props): ReactNode => {
-  return <DynamicIcon color="currentColor" name={name} {...props} />
+  return <DynamicIcon className="inline-block" color="currentColor" name={name} {...props} />
 }
-
-export type { IconName }

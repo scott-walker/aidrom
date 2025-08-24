@@ -1,7 +1,7 @@
 import { useContext, type ComponentProps, type FC, type ReactNode } from "react"
 import { Button } from "@ui/Button"
 import { Icon } from "@ui/Icon"
-import { LayoutContext, type ILayoutContext, THEME_LIGHT, THEME_DARK } from "./context"
+import { LayoutContext, type ILayoutContext } from "./context"
 
 /**
  * Пропсы для триггера переключения темы
@@ -17,17 +17,8 @@ type Props = ComponentProps<"button">
  * @returns {ReactNode}
  */
 export const ThemeTrigger: FC<Props> = ({ className, ...props }: Props): ReactNode => {
-  const { theme, setTheme } = useContext(LayoutContext) as ILayoutContext
-  const icon = theme === THEME_LIGHT ? "moon" : "sun"
-
-  const toggleTheme = (): void => {
-    const newTheme = theme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT
-
-    setTheme(newTheme)
-
-    document.body.removeAttribute("data-theme")
-    document.body.setAttribute("data-theme", newTheme)
-  }
+  const { isDarkTheme, toggleTheme } = useContext(LayoutContext) as ILayoutContext
+  const icon = isDarkTheme() ? "moon" : "sun"
 
   return (
     <Button variant="soft" onClick={toggleTheme} className={className} {...props}>

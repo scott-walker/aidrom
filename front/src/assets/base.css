@@ -1,5 +1,8 @@
 @custom-variant dark (&:is([data-theme="dark"] *));
-@custom-variant expanded (&:is([data-layout-mode="expanded"] *));
+@custom-variant page-expanded (&:is([data-page-expanded="expanded"] *));
+@custom-variant sidebar-collapsed (&:is([data-sidebar-collapsed="collapsed"] *));
+@custom-variant footer-visible (&:is([data-footer-visible="visible"] *));
+@custom-variant infobar-visible (&:is([data-infobar-visible="visible"] *));
 
 @layer base {
   body {

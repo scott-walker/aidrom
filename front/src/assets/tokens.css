@@ -48,7 +48,7 @@
   /* Base */
   --color-background: var(--color-slate-100);
   --color-background-soft: var(--color-white);
-  --color-background-hard: var(--color-slate-200);
+  --color-background-hard: oklch(92% 0.02 266.42);
   --color-foreground: var(--color-slate-700);
   --color-foreground-soft: var(--color-slate-500);
   --color-foreground-hard: var(--color-slate-900);
@@ -79,7 +79,7 @@
   --color-danger-foreground-accent: var(--color-background);
 
   /* Призрачные цвета */
-  --color-ghost-base: color-mix(in oklch, var(--color-neutral-14) 15%, transparent);
+  --color-ghost-base: color-mix(in oklch, var(--color-neutral-15) 18%, transparent);
   --color-ghost-epic: color-mix(in oklch, var(--color-secondary) 50%, transparent);
 
   /* Градиенты */
@@ -157,7 +157,7 @@
   --color-border: color-mix(in oklch, var(--color-gray-500) 10%, transparent);
 
   /* Призрачные цвета */
-  --color-ghost-base: color-mix(in oklch, var(--color-neutral-0) 20%, transparent);
+  --color-ghost-base: color-mix(in oklch, var(--color-neutral-0) 30%, transparent);
 
   /* Тениииии (ууу 👻) */
   --shadow-ghost-xs: 0px 1px 5px 0px var(--color-ghost-base);

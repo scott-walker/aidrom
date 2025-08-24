@@ -2,32 +2,41 @@
 @import "tailwindcss";
 
 @theme {
+  --layout-offset-x: 3rem;
+  --layout-offset-y: 1.5rem;
+  --layout-separator-color: var(--color-border);
   --layout-page-width: 100vw;
   --layout-header-height: 5rem;
   --layout-header-gap: 1.5rem;
-  --layout-offset-x: 3rem;
-  --layout-offset-y: 1.5rem;
+  --layout-header-background-color: var(--color-background-soft);
+  --layout-footer-height: 5rem;
+  --layout-footer-gap: 1.5rem;
+  --layout-footer-background-color: var(--color-background-hard);
 
   --sidebar-width: 16.875rem;
-  --sidebar-header-height: 5rem;
-  --sidebar-background-color: var(--color-background-hard);
-  --sidebar-separator-color: var(--color-border);
-  --sidebar-footer-height: 5rem;
   --sidebar-offset-x: 1rem;
   --sidebar-offset-y: 1rem;
-
+  --sidebar-background-color: var(--color-background-hard);
+  --sidebar-header-height: var(--layout-header-height);
+  --sidebar-footer-height: var(--layout-footer-height);
+  --sidebar-footer-background-color: var(--color-gradient-brand);
+  --sidebar-footer-text-color: var(--color-primary-foreground);
   --sidebar-collapsed-width: 5rem;
-  --sidebar-collapsed-background-color: var(--color-background-soft);
+  --sidebar-collapsed-background-color: var(--color-background);
 
   --infobar-width: 25rem;
   --infobar-offset-x: 2rem;
   --infobar-offset-y: 2rem;
+  --infobar-background-color: var(--color-background-soft);
 }
 
 /* Темная движуха */
 
 [data-theme="dark"] {
   --sidebar-collapsed-background-color: var(--color-background-soft);
+  --layout-header-background-color: var(--color-background-soft);
+  --layout-footer-background-color: var(--color-background-hard);
+  --infobar-background-color: var(--color-background-soft);
 }
 
 /* Режим оттопыренности лейаута 🤪 */
@@ -65,7 +74,8 @@
 
 .layoutHeader {
   height: var(--layout-header-height);
-  border-block-end: 0.0625rem solid var(--sidebar-separator-color);
+  border-block-end: 0.0625rem solid var(--layout-separator-color);
+  background-color: var(--layout-header-background-color);
 }
 
 .layoutHeaderInner {
@@ -82,13 +92,16 @@
 .layoutBody {
   flex: 1;
   display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  height: calc(100vh - var(--layout-header-height) - var(--layout-footer-height));
 }
 
 /* Content */
 
 .layoutContent {
   flex: 1;
-  height: calc(100vh - var(--layout-header-height));
+  height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -100,15 +113,52 @@
   padding-block: var(--layout-offset-y);
 }
 
+/* Footer */
+
+.layoutFooter {
+  height: var(--layout-footer-height);
+  border-block-start: 0.0625rem solid var(--layout-separator-color);
+  background-color: var(--layout-footer-background-color);
+  transition: height 0.2s ease-in-out;
+
+  &:focus {
+    border: 1px solid red;
+  }
+
+  &.footerHidden {
+    height: 0;
+  }
+}
+
+.layoutFooterInner {
+  display: flex;
+  align-items: center;
+  gap: var(--layout-footer-gap);
+  padding-inline: var(--layout-offset-x);
+  padding-block: var(--layout-offset-y);
+  height: 100%;
+  opacity: 1;
+  transition: opacity 0.8s ease-in-out;
+
+  &:focus {
+    border: 1px solid violet;
+  }
+
+  &.footerHidden {
+    transition: none;
+    opacity: 0;
+  }
+}
+
 /* Infobar */
 
 .layoutInfobar {
   width: var(--infobar-width);
-  background-color: var(--color-background-soft);
-  transition: width 0.25s ease-in-out;
+  background-color: var(--infobar-background-color);
   box-shadow: var(--shadow-ghost-md);
+  transition: width 0.1s ease-in-out;
 
-  &.collapsed {
+  &.infobarHidden {
     width: 0;
   }
 }
@@ -120,10 +170,10 @@
   padding-inline: var(--infobar-offset-x);
   height: 100%;
   opacity: 1;
-  transition: opacity 1s ease-in-out;
+  transition: opacity 0.8s ease-in-out;
 
-  &.collapsed {
-    transition: opacity 0.02s ease-in-out;
+  &.infobarHidden {
+    transition: none;
     opacity: 0;
   }
 }
@@ -135,12 +185,13 @@
   z-index: 10;
   width: var(--sidebar-width);
   overflow: hidden;
-  transition: width 0.12s ease-in-out;
+  transition: width 0.08s ease-in-out;
   box-shadow: var(--shadow-ghost-xl);
 
   &.collapsed {
     width: var(--sidebar-collapsed-width);
-    background-color: var(--sidebar-collapsed-background-color);
+    /* background-color: var(--sidebar-collapsed-background-color); */
+    /* box-shadow: var(--shadow-ghost-md); */
   }
 }
 
@@ -149,7 +200,8 @@
   align-items: center;
   justify-content: center;
   height: var(--sidebar-header-height);
-  border-block-end: 0.0625rem solid var(--sidebar-separator-color);
+  border-block-end: 0.0625rem solid var(--layout-separator-color);
+  background-color: var(--color-background-soft);
 }
 
 .layoutSidebarBody {
@@ -167,8 +219,18 @@
 
 .layoutSidebarFooter {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: var(--sidebar-footer-height);
-  border-block-start: 0.0625rem solid var(--sidebar-separator-color);
+  font-weight: var(--font-weight-bold);
+  /* border-block-start: 0.0625rem solid var(--layout-separator-color); */
+
+  background: var(--sidebar-footer-background-color);
+  color: var(--sidebar-footer-text-color);
+
+  /* &.collapsed {
+    background: var(--sidebar-collapsed-footer-background-color);
+    color: var(--sidebar-collapsed-footer-text-color);
+  } */
 }

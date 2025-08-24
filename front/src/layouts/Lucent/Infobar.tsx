@@ -1,15 +1,15 @@
 import { useContext, type ComponentProps, type FC, type ReactNode } from "react"
 import { cn } from "@utils/jsxtools"
 import { Code } from "@ui/Code"
-import styles from "./Lucent.module.css"
 import { LayoutContext, type ILayoutContext } from "./context"
+import styles from "./Lucent.module.css"
 
 /**
  * Пропсы инфобара
  * @namespace Layouts.Lucent.Infobar.Props
  */
 type Props = ComponentProps<"aside"> & {
-  collapsed?: boolean
+  visible?: boolean
 }
 
 /**
@@ -19,9 +19,10 @@ type Props = ComponentProps<"aside"> & {
  * @returns {ReactNode}
  */
 export const Infobar: FC<Props> = ({ children, ...props }: Props): ReactNode => {
-  const { infobarCollapsed } = useContext(LayoutContext) as ILayoutContext
-  const infobarClasses = cn(styles.layoutInfobar, infobarCollapsed && styles.collapsed)
-  const infobarInnerClasses = cn(styles.layoutInfobarInner, infobarCollapsed && styles.collapsed)
+  const { isInfobarVisible } = useContext(LayoutContext) as ILayoutContext
+  const hidden = !isInfobarVisible()
+  const infobarClasses = cn(styles.layoutInfobar, hidden && styles.infobarHidden)
+  const infobarInnerClasses = cn(styles.layoutInfobarInner, hidden && styles.infobarHidden)
 
   return (
     <aside {...props} className={infobarClasses}>

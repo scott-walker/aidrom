@@ -1,5 +1,5 @@
 import type { ComponentProps, FC, ReactNode } from "react"
-import { cn, cva } from "@utils/jsxtools"
+import { cn } from "@utils/jsxtools"
 import { Icon } from "@ui/Icon"
 
 /**
@@ -29,22 +29,10 @@ export const Brand: FC<Props> = ({ compact = false, size = "md", className = "",
     compact && "rounded-xl bg-gradient-brand",
     className
   )
-  const iconClasses = cn("p-2", "w-fit", "h-fit", "text-primary-foreground", compact || "rounded-xl bg-gradient-brand")
-  const labelVariants = cva("font-family-display font-mega-bold text-foreground-hard", {
-    variants: {
-      size: {
-        sm: "text-lg ml-2.5",
-        md: "text-2xl ml-3.5",
-        lg: "text-5xl ml-5.5"
-      }
-    },
-    defaultVariants: {
-      size: "md"
-    }
-  })
 
   const iconName = "bot-message-square"
   const iconStroke = 2.5
+  const iconClasses = cn("p-2", "w-fit", "h-fit", "text-primary-foreground", compact || "rounded-xl bg-gradient-brand")
   const iconSizeVariants = (size: "sm" | "md" | "lg"): number => {
     const map = {
       sm: 8,
@@ -55,11 +43,30 @@ export const Brand: FC<Props> = ({ compact = false, size = "md", className = "",
     return map[size] || map.md
   }
 
+  const labelClasses = cn(
+    "flex",
+    "flex-col",
+    "items-start",
+    "justify-center",
+    "ml-3.5",
+    "font-family-display",
+    compact && "hidden"
+  )
+  const titleClasses = cn("font-mega-bold", "text-foreground-hard", {
+    "text-lg": size === "sm",
+    "text-2xl": size === "md",
+    "text-5xl": size === "lg"
+  })
+  const subtitleClasses = cn("relative text-foreground -top-1 text-xs")
+
   return (
     <div className={containerClasses} {...props}>
       <Icon name={iconName} className={iconClasses} strokeWidth={iconStroke} size={iconSizeVariants(size)} />
 
-      {compact || <span className={labelVariants({ size })}>AIDrom</span>}
+      <div className={labelClasses}>
+        <span className={titleClasses}>AIDrom</span>
+        <span className={subtitleClasses}>version 0.1</span>
+      </div>
     </div>
   )
 }

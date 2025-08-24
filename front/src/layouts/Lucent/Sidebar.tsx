@@ -12,6 +12,7 @@ import { Brand } from "@components/Brand"
 import { Menu, type MenuItems } from "@components/Menu"
 import { LayoutContext, type ILayoutContext } from "./context"
 import styles from "./Lucent.module.css"
+import { Icon } from "@ui/Icon"
 
 /**
  * Пропсы сайдбара макета
@@ -44,7 +45,8 @@ const items: MenuItems = [
  * @returns {ReactNode}
  */
 export const Sidebar: FC<Props> = ({ ...props }: Props): ReactNode => {
-  const { sidebarCollapsed: collapsed } = useContext(LayoutContext) as ILayoutContext
+  const { isSidebarCollapsed } = useContext(LayoutContext) as ILayoutContext
+  const collapsed = isSidebarCollapsed()
 
   const sidebarClasses = cn(styles.layoutSidebar, collapsed && styles.collapsed)
   const sidebarHeaderClasses = cn(styles.layoutSidebarHeader, collapsed && styles.collapsed)
@@ -89,7 +91,25 @@ export const Sidebar: FC<Props> = ({ ...props }: Props): ReactNode => {
       </SidebarBody>
 
       <SidebarFooter className={sidebarFooterClasses}>
-        <p>&copy; {collapsed || "Не всё так просто 2025"}</p>
+        <div className="flex items-center justify-center gap-3.5">
+          {/* <span className="text-3xl">🐣</span>
+          {collapsed || (
+            <>
+              <span className="flex items-center text-primary-foreground">
+                Я_РОДИЛСЯ <Icon name="copyright" size={25} strokeWidth={3} /> 2025
+              </span>
+            </>
+          )} */}
+          <Icon name="audio-lines" size={35} strokeWidth={3} />
+          {collapsed || (
+            <>
+              <span className="flex items-center text-primary-foreground">
+                PROTO
+                <Icon name="copyright" size={25} strokeWidth={3} /> AI
+              </span>
+            </>
+          )}
+        </div>
       </SidebarFooter>
     </SidebarComponent>
   )
