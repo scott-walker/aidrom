@@ -35,7 +35,7 @@ mkcert aidrom.lc api.aidrom.lc
 ## Frontend
 
 Иконки: https://lucide.dev/icons/plane
-
+Подбор цветов: https://hihayk.github.io
 
 ## WORKFLOW
 

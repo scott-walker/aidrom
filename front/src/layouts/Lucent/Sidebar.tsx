@@ -47,15 +47,17 @@ export const Sidebar: FC<Props> = ({ ...props }: Props): ReactNode => {
   const { sidebarCollapsed: collapsed } = useContext(LayoutContext) as ILayoutContext
 
   const sidebarClasses = cn(styles.layoutSidebar, collapsed && styles.collapsed)
-  const sidebarHeaderClasses = cn(styles.layoutSidebarHeader)
-  const sidebarBodyClasses = cn(styles.layoutSidebarBody)
-  const sidebarSectionClasses = cn(styles.layoutSidebarSection)
-  const sidebarFooterClasses = cn(styles.layoutSidebarFooter)
+  const sidebarHeaderClasses = cn(styles.layoutSidebarHeader, collapsed && styles.collapsed)
+  const sidebarBodyClasses = cn(styles.layoutSidebarBody, collapsed && styles.collapsed)
+  const sidebarSectionClasses = cn(styles.layoutSidebarSection, collapsed && styles.collapsed)
+  const sidebarFooterClasses = cn(styles.layoutSidebarFooter, collapsed && styles.collapsed)
+
+  const filteredItems = items.filter((item, index) => item && index)
 
   return (
     <SidebarComponent className={sidebarClasses} {...props}>
       <SidebarHeader className={sidebarHeaderClasses}>
-        <Brand size="md" compact={collapsed} inverted={collapsed} />
+        <Brand size="md" compact={collapsed} />
       </SidebarHeader>
 
       <SidebarBody className={sidebarBodyClasses}>
@@ -64,38 +66,30 @@ export const Sidebar: FC<Props> = ({ ...props }: Props): ReactNode => {
         </SidebarSection>
         <Separator />
         <SidebarSection className={sidebarSectionClasses}>
-          <Menu items={items.filter((item, index) => item && index)} compact={collapsed} />
+          <Menu items={filteredItems} compact={collapsed} />
+          <Menu items={filteredItems} compact={collapsed} />
+          <Menu items={filteredItems} compact={collapsed} />
         </SidebarSection>
         <Separator />
         <SidebarSection className={sidebarSectionClasses}>
-          <Menu items={items.filter((item, index) => item && index)} compact={collapsed} />
-        </SidebarSection>
-        <SidebarSection className={sidebarSectionClasses}>
-          <Menu items={items} compact={collapsed} />
+          <Menu items={filteredItems} compact={collapsed} />
         </SidebarSection>
         <Separator />
         <SidebarSection className={sidebarSectionClasses}>
-          <Menu items={items.filter((item, index) => item && index)} compact={collapsed} />
+          <Menu items={filteredItems} compact={collapsed} />
         </SidebarSection>
         <Separator />
         <SidebarSection className={sidebarSectionClasses}>
-          <Menu items={items.filter((item, index) => item && index)} compact={collapsed} />
-        </SidebarSection>
-        <SidebarSection className={sidebarSectionClasses}>
-          <Menu items={items} compact={collapsed} />
+          <Menu items={filteredItems} compact={collapsed} />
         </SidebarSection>
         <Separator />
         <SidebarSection className={sidebarSectionClasses}>
-          <Menu items={items.filter((item, index) => item && index)} compact={collapsed} />
-        </SidebarSection>
-        <Separator />
-        <SidebarSection className={sidebarSectionClasses}>
-          <Menu items={items.filter((item, index) => item && index)} compact={collapsed} />
+          <Menu items={filteredItems} compact={collapsed} />
         </SidebarSection>
       </SidebarBody>
 
       <SidebarFooter className={sidebarFooterClasses}>
-        <p>AI</p>
+        <p>&copy; {collapsed || "Не всё так просто 2025"}</p>
       </SidebarFooter>
     </SidebarComponent>
   )

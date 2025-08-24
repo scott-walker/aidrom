@@ -1,0 +1,26 @@
+@custom-variant dark (&:is([data-theme="dark"] *));
+@custom-variant expanded (&:is([data-layout-mode="expanded"] *));
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-family-base);
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-normal);
+    line-height: var(--leading-normal);
+  }
+}
+
+@layer utilities {
+  .text-gradient-brand {
+    color: transparent;
+    background: var(--color-gradient-brand);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .bg-gradient-brand {
+    background: var(--color-gradient-brand);
+  }
+}

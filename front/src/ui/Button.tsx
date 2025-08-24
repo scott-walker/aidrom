@@ -7,7 +7,8 @@ import { cn, cva } from "@utils/jsxtools"
  */
 type Props = ComponentProps<"button"> & {
   children: ReactNode
-  variant?: "default" | "brand" | "primary" | "warning" | "danger"
+  variant?: "soft" | "hard" | "primary" | "warning" | "danger"
+  size?: "xs" | "sm" | "md" | "lg" | "xl"
 }
 
 /**
@@ -18,12 +19,17 @@ type Props = ComponentProps<"button"> & {
  * @param {Props} props.className - CSS-классы
  * @returns {ReactNode}
  */
-export const Button: FC<Props> = ({ children, variant = "default", className = "", ...props }: Props): ReactNode => {
-  const baseClasses = cn(
-    "rounded-lg",
-    "px-2.5 py-1.5",
+export const Button: FC<Props> = ({
+  children,
+  variant = "hard",
+  size = "md",
+  className = "",
+  ...props
+}: Props): ReactNode => {
+  const buttonBaseClasses = cn(
     "w-fit",
     "h-fit",
+    "rounded-lg",
     "transition-colors",
     "transition-transform",
     "duration-100",
@@ -31,35 +37,55 @@ export const Button: FC<Props> = ({ children, variant = "default", className = "
     "font-medium",
     "border-2",
     "border-transparent",
-    "shadow-sm",
     "hover:scale-105",
     "active:scale-95",
     "select-none",
-    className
+    "dark:shadow-ghost-xs"
   )
-  const variants = cva(baseClasses, {
+  const buttonVariants = cva(buttonBaseClasses, {
     variants: {
       variant: {
-        default: cn(
-          "bg-background-closer",
-          "text-foreground",
-          "hover:bg-background-closer/80",
-          "dark:hover:bg-background-closer"
+        soft: cn("bg-background-soft", "text-foreground", "shadow-ghost-xs"),
+        hard: cn("bg-foreground", "text-background", "dark:bg-foreground-hard"),
+        primary: cn(
+          "bg-primary",
+          "text-primary-foreground",
+          "shadow-ghost-2xl",
+          "shadow-color-danger",
+          "hover:bg-primary-accent",
+          "hover:text-primary-foreground-accent"
         ),
-        brand: "bg-brand text-brand-foreground hover:bg-brand-accent hover:text-brand-foreground-accent",
-        primary: "bg-primary text-primary-foreground hover:bg-primary-accent hover:text-primary-foreground-accent",
-        warning: "bg-warning text-warning-foreground hover:bg-warning-accent hover:text-warning-foreground-accent",
-        danger: "bg-danger text-danger-foreground hover:bg-danger-accent hover:text-danger-foreground-accent"
+        warning: cn(
+          "bg-warning",
+          "text-warning-foreground",
+          "hover:bg-warning-accent",
+          "hover:text-warning-foreground-accent"
+        ),
+        danger: cn(
+          "bg-danger",
+          "text-danger-foreground",
+          "hover:bg-danger-accent",
+          "hover:text-danger-foreground-accent"
+        )
+      },
+      size: {
+        xs: "px-3 py-1 text-xs",
+        sm: "px-4 py-1 text-sm",
+        md: "px-5 py-1.5 text-base",
+        lg: "px-6 py-2 text-lg",
+        xl: "px-8 py-3.5 text-xl"
       }
     },
     defaultVariants: {
-      variant: "default"
+      variant: "hard",
+      size: "md"
     }
   })
+  const innerClasses = cn("flex items-center justify-center")
 
   return (
-    <button className={cn(variants({ variant }), className)} {...props}>
-      {children}
+    <button className={cn(buttonVariants({ variant, size }), className)} {...props}>
+      <span className={innerClasses}>{children}</span>
     </button>
   )
 }

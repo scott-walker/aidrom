@@ -25,12 +25,12 @@ export const ThemeTrigger: FC<Props> = ({ className, ...props }: Props): ReactNo
 
     setTheme(newTheme)
 
-    document.documentElement.classList.remove(theme)
-    document.documentElement.classList.add(newTheme)
+    document.body.removeAttribute("data-theme")
+    document.body.setAttribute("data-theme", newTheme)
   }
 
   return (
-    <Button variant="default" onClick={toggleTheme} className={className} {...props}>
+    <Button variant="soft" onClick={toggleTheme} className={className} {...props}>
       <Icon name={icon} size={24} strokeWidth={3} />
     </Button>
   )

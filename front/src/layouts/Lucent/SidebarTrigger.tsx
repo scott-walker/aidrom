@@ -27,14 +27,24 @@ export const SidebarTrigger: FC<Props> = ({ ...props }: Props): ReactNode => {
   const { sidebarCollapsed, setSidebarCollapsed } = useContext(LayoutContext) as ILayoutContext
   const { isHovered, handlers } = useHover()
 
-  const toggleCollapsed = (): void => setSidebarCollapsed(!sidebarCollapsed)
+  const toggleSidebarCollapsed = (): void => {
+    const newSidebarCollapsed = !sidebarCollapsed
+    const layoutMode = newSidebarCollapsed ? "expanded" : "default"
 
-  const iconName: IconName = isHovered ? "chevron-left" : "menu"
-  const classes = cn("transition-transform duration-200 ease-in-out", isHovered && "rotate-360")
+    setSidebarCollapsed(newSidebarCollapsed)
+
+    document.body.removeAttribute("data-layout-mode")
+    document.body.setAttribute("data-layout-mode", layoutMode)
+  }
+
+  const actionIconName = sidebarCollapsed ? "chevron-right" : "chevron-left"
+  const iconName: IconName = isHovered ? actionIconName : "menu"
+  const buttonClasses = cn("p-0 w-10 h-10")
+  const iconClasses = cn("transition-transform duration-200 ease-in-out", isHovered && "rotate-360")
 
   return (
-    <Button variant="primary" {...props} {...handlers} onClick={toggleCollapsed}>
-      <Icon name={iconName} size={24} strokeWidth={3} className={classes} />
+    <Button variant="hard" className={buttonClasses} {...props} {...handlers} onClick={toggleSidebarCollapsed}>
+      <Icon name={iconName} size={24} strokeWidth={3} className={iconClasses} />
     </Button>
   )
 }

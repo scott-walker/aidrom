@@ -36,7 +36,7 @@ export const Code: FC<Props> = ({ children, accent = false, className = "", ...p
   const variants = cva(classes, {
     variants: {
       accent: {
-        true: "bg-background-closer text-foreground",
+        true: "bg-background-soft text-foreground",
         false: "bg-background text-foreground"
       }
     },

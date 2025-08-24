@@ -15,7 +15,7 @@ type Props = {
  * @returns {ReactNode}
  */
 export const Separator: FC<Props> = ({ className }: Props): ReactNode => {
-  const classes = cn("w-full", "h-px", "bg-foreground/8", "dark:bg-foreground/6", className)
+  const classes = cn("w-full", "h-px", "bg-border", className)
 
   return <div className={classes} />
 }

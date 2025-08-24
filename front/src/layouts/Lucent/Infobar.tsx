@@ -24,7 +24,7 @@ export const Infobar: FC<Props> = ({ children, ...props }: Props): ReactNode => 
 
   return (
     <aside {...props} className={infobarClasses}>
-      <div className={styles.inner}>
+      <div className={styles.layoutInfobarInner}>
         <h2>Это инфобар</h2>
         <Code className="mt-10">console.log("Hello, world!")</Code>
         {children}

@@ -20,7 +20,7 @@ export interface IItem {
  * @returns {ReactNode}
  */
 export const Item: FC<IItem> = ({ label, href, icon = null, active = false, compact = false }: IItem): ReactNode => {
-  const linkClasses = cn("flex", "items-center", "gap-4", "py-2", "rounded-xl", "select-none")
+  const linkClasses = cn("flex", "items-center", "gap-4", "py-2", "select-none")
   const linkVariants = cva(linkClasses, {
     variants: {
       compact: {
@@ -28,7 +28,7 @@ export const Item: FC<IItem> = ({ label, href, icon = null, active = false, comp
         false: "px-5"
       },
       active: {
-        true: "font-bold cursor-default",
+        true: "font-bold cursor-default rounded-xl",
         false: "font-semibold"
       }
     },
@@ -36,32 +36,22 @@ export const Item: FC<IItem> = ({ label, href, icon = null, active = false, comp
       {
         compact: true,
         active: true,
-        class: cn("bg-background-closer", "text-foreground")
+        class: cn("bg-background-hard", "text-foreground-hard", "dark:bg-primary", "dark:text-foreground-hard")
       },
       {
         compact: true,
         active: false,
-        class: cn(
-          "text-foreground/60",
-          "hover:text-foreground",
-          "dark:text-foreground/50",
-          "dark:hover:text-foreground"
-        )
+        class: cn("text-foreground", "hover:text-primary")
       },
       {
         compact: false,
         active: true,
-        class: cn("bg-background-closer text-foreground")
+        class: cn("bg-background-hard", "text-foreground-hard", "dark:bg-primary")
       },
       {
         compact: false,
         active: false,
-        class: cn(
-          "text-foreground/60",
-          "hover:text-foreground",
-          "dark:text-foreground/50",
-          "dark:hover:text-foreground"
-        )
+        class: cn("text-foreground-soft", "hover:text-primary", "dark:text-foreground-soft", "dark:hover:text-primary")
       }
     ],
     defaultVariants: {
@@ -69,7 +59,7 @@ export const Item: FC<IItem> = ({ label, href, icon = null, active = false, comp
       active: false
     }
   })
-  const labelClasses = cn("text-sm")
+  const labelClasses = cn("text-base")
   const labelVariants = cva(labelClasses, {
     variants: {
       compact: {

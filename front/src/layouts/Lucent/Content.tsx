@@ -16,7 +16,9 @@ type Props = ComponentProps<"div">
 export const Content: FC<Props> = ({ children, ...props }: Props): ReactNode => {
   return (
     <main className={styles.layoutContent} {...props}>
-      <Scrollbar>{children}</Scrollbar>
+      <Scrollbar>
+        <div className={styles.layoutContentInner}>{children}</div>
+      </Scrollbar>
     </main>
   )
 }

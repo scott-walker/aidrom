@@ -4,14 +4,33 @@
 @theme {
   --layout-page-width: 100vw;
   --layout-header-height: 5rem;
+  --layout-header-gap: 1.5rem;
+  --layout-offset-x: 3rem;
+  --layout-offset-y: 1.5rem;
 
-  --sidebar-width: 20rem;
-  --sidebar-collapsed-width: 5rem;
+  --sidebar-width: 270px;
   --sidebar-header-height: 5rem;
+  --sidebar-background-color: var(--color-background-hard);
+  --sidebar-separator-color: var(--color-border);
   --sidebar-footer-height: 5rem;
+
+  --sidebar-collapsed-width: 5rem;
+  --sidebar-collapsed-background-color: var(--color-background-soft);
 
   --infobar-width: 15rem;
 }
+
+/* Темная движуха */
+
+[data-theme="dark"] {
+  --sidebar-collapsed-background-color: var(--color-background-soft);
+}
+
+/* Режим оттопыренности лейаута 🤪 */
+
+/* [data-layout-mode="expanded"] {
+  --layout-offset-x: 3rem;
+} */
 
 /* Layout */
 
@@ -41,13 +60,16 @@
 /* Header */
 
 .layoutHeader {
-  display: flex;
   height: var(--layout-header-height);
+  border-block-end: 0.0625rem solid var(--sidebar-separator-color);
 }
 
 .layoutHeaderInner {
   display: flex;
   align-items: center;
+  gap: var(--layout-header-gap);
+  padding-inline: var(--layout-offset-x);
+  padding-block: var(--layout-offset-y);
   height: 100%;
 }
 
@@ -62,17 +84,21 @@
 
 .layoutContent {
   flex: 1;
+  height: calc(100vh - var(--layout-header-height));
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.layoutContentInner {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - var(--layout-header-height));
-  overflow-y: auto;
+  padding-inline: var(--layout-offset-x);
+  padding-block: var(--layout-offset-y);
 }
 
 /* Infobar */
 
 .layoutInfobar {
-  display: flex;
-  flex-direction: column;
   width: var(--infobar-width);
 
   &.collapsed {
@@ -81,21 +107,35 @@
   }
 }
 
+.layoutInfobarInner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--color-background-soft);
+}
+
 /* Sidebar */
 
 .layoutSidebar {
+  position: relative;
+  z-index: 10;
   width: var(--sidebar-width);
-  background-color: var(--colors-primary-5);
   overflow: hidden;
   transition: width 0.12s ease-in-out;
+  box-shadow: var(--shadow-ghost-xl);
 
   &.collapsed {
     width: var(--sidebar-collapsed-width);
+    background-color: var(--sidebar-collapsed-background-color);
   }
 }
 
 .layoutSidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: var(--sidebar-header-height);
+  border-block-end: 0.0625rem solid var(--sidebar-separator-color);
 }
 
 .layoutSidebarBody {
@@ -112,6 +152,9 @@
 }
 
 .layoutSidebarFooter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: var(--sidebar-footer-height);
-  background-color: aqua;
+  border-block-start: 0.0625rem solid var(--sidebar-separator-color);
 }

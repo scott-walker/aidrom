@@ -33,6 +33,12 @@
     "*.css": "tailwindcss",
     "*.tsx": "typescriptreact"
   },
+  "cssrem.languages": [
+    "css",
+    "typescriptreact",
+    "typescript"
+  ],
+  "cssrem.hover": "always",
   // "search.exclude": {
   //   "**/node_modules": false
   // }
