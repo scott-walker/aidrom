@@ -8,16 +8,20 @@
   --layout-offset-x: 3rem;
   --layout-offset-y: 1.5rem;
 
-  --sidebar-width: 270px;
+  --sidebar-width: 16.875rem;
   --sidebar-header-height: 5rem;
   --sidebar-background-color: var(--color-background-hard);
   --sidebar-separator-color: var(--color-border);
   --sidebar-footer-height: 5rem;
+  --sidebar-offset-x: 1rem;
+  --sidebar-offset-y: 1rem;
 
   --sidebar-collapsed-width: 5rem;
   --sidebar-collapsed-background-color: var(--color-background-soft);
 
-  --infobar-width: 15rem;
+  --infobar-width: 25rem;
+  --infobar-offset-x: 2rem;
+  --infobar-offset-y: 2rem;
 }
 
 /* Темная движуха */
@@ -100,9 +104,11 @@
 
 .layoutInfobar {
   width: var(--infobar-width);
+  background-color: var(--color-background-soft);
+  transition: width 0.25s ease-in-out;
+  box-shadow: var(--shadow-ghost-md);
 
   &.collapsed {
-    display: none;
     width: 0;
   }
 }
@@ -110,8 +116,16 @@
 .layoutInfobarInner {
   display: flex;
   flex-direction: column;
+  padding-block: var(--infobar-offset-y);
+  padding-inline: var(--infobar-offset-x);
   height: 100%;
-  background-color: var(--color-background-soft);
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+
+  &.collapsed {
+    transition: opacity 0.02s ease-in-out;
+    opacity: 0;
+  }
 }
 
 /* Sidebar */
@@ -147,8 +161,8 @@
 }
 
 .layoutSidebarSection {
-  padding-block: calc(var(--spacing) * 3);
-  padding-inline: calc(var(--spacing) * 4);
+  padding-inline: var(--sidebar-offset-x);
+  padding-block: var(--sidebar-offset-y);
 }
 
 .layoutSidebarFooter {

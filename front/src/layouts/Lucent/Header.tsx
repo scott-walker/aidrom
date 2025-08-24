@@ -1,6 +1,7 @@
 import type { ComponentProps, FC, ReactNode } from "react"
 import { cn } from "@utils/jsxtools"
 import { SidebarTrigger } from "./SidebarTrigger"
+import { InfobarTrigger } from "./InfobarTrigger"
 import { ThemeTrigger } from "./ThemeTrigger"
 import styles from "./Lucent.module.css"
 
@@ -26,7 +27,8 @@ export const Header: FC<Props> = ({ children, ...props }: Props): ReactNode => {
         <SidebarTrigger />
         <h1 className="text-2xl font-family-display">Панель</h1>
         {children}
-        <ThemeTrigger className="ml-auto" />
+        <InfobarTrigger className="ml-auto" />
+        <ThemeTrigger />
       </div>
     </header>
   )

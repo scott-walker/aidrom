@@ -21,10 +21,11 @@ type Props = ComponentProps<"aside"> & {
 export const Infobar: FC<Props> = ({ children, ...props }: Props): ReactNode => {
   const { infobarCollapsed } = useContext(LayoutContext) as ILayoutContext
   const infobarClasses = cn(styles.layoutInfobar, infobarCollapsed && styles.collapsed)
+  const infobarInnerClasses = cn(styles.layoutInfobarInner, infobarCollapsed && styles.collapsed)
 
   return (
     <aside {...props} className={infobarClasses}>
-      <div className={styles.layoutInfobarInner}>
+      <div className={infobarInnerClasses}>
         <h2>Это инфобар</h2>
         <Code className="mt-10">console.log("Hello, world!")</Code>
         {children}

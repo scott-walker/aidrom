@@ -81,7 +81,7 @@ export const Button: FC<Props> = ({
       size: "md"
     }
   })
-  const innerClasses = cn("flex items-center justify-center")
+  const innerClasses = cn("flex items-center justify-center gap-4")
 
   return (
     <button className={cn(buttonVariants({ variant, size }), className)} {...props}>
