@@ -1,12 +1,12 @@
 import type { ComponentProps, FC, ReactNode } from "react"
-import { Scrollbar as ScrollbarComponent } from "react-scrollbars-custom"
+import { Scrollbar as ScrollbarCustom } from "react-scrollbars-custom"
 import { useAutoHide } from "./useAutoHide"
 
 /**
  * Пропсы скроллбара
  * @namespace UI.Scrollbar.Props
  */
-type Props = ComponentProps<typeof ScrollbarComponent>
+type Props = ComponentProps<typeof ScrollbarCustom>
 
 /**
  * Скроллбар
@@ -15,10 +15,10 @@ type Props = ComponentProps<typeof ScrollbarComponent>
  * @returns {ReactNode}
  */
 export const Scrollbar: FC<Props> = ({ children, ...props }: Props): ReactNode => {
-  const { visible, wrapperStyle, onScrollStart, onScrollStop } = useAutoHide()
+  const { visible, onScrollStart, onScrollStop } = useAutoHide()
   const SCROLLBAR_SIZE = ".35rem"
 
-  const wrapperProps = { style: wrapperStyle }
+  const wrapperProps = { className: "!inset-0" }
   const contentProps = { style: {} }
   const trackProps = {
     style: {
@@ -40,7 +40,7 @@ export const Scrollbar: FC<Props> = ({ children, ...props }: Props): ReactNode =
   const thumbYProps = { style: thumbProps.style }
 
   return (
-    <ScrollbarComponent
+    <ScrollbarCustom
       contentProps={contentProps}
       wrapperProps={wrapperProps}
       trackYProps={trackYProps}
@@ -52,7 +52,6 @@ export const Scrollbar: FC<Props> = ({ children, ...props }: Props): ReactNode =
       {...props}
     >
       {children}
-      {/* <div style={{ overflowX: "hidden" }}>{children}</div> */}
-    </ScrollbarComponent>
+    </ScrollbarCustom>
   )
 }

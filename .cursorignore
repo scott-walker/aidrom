@@ -1,4 +1,4 @@
-/docker/db/data/*
-!/docker/db/data/.gitignore
-node_modules
+# /docker/db/data/*
+# !/docker/db/data/.gitignore
+# node_modules
 .env*

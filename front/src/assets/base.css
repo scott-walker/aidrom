@@ -12,15 +12,14 @@
   }
 }
 
-@layer utilities {
-  .text-gradient-brand {
-    color: transparent;
-    background: var(--color-gradient-brand);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-  .bg-gradient-brand {
-    background: var(--color-gradient-brand);
-  }
+/* Градиенты */
+@utility text-gradient-brand {
+  color: transparent;
+  background: var(--color-gradient-brand);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@utility bg-gradient-brand {
+  background: var(--color-gradient-brand);
 }
