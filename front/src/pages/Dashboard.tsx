@@ -71,7 +71,23 @@ export const Dashboard: FC = (): ReactNode => {
             Primary XL
           </Button>
         </div>
-
+        <div className="flex items-center gap-4 flex-wrap">
+          <Button variant="secondary" size="xs">
+            Secondary XS
+          </Button>
+          <Button variant="secondary" size="sm">
+            Secondary SM
+          </Button>
+          <Button variant="secondary" size="md">
+            Secondary MD
+          </Button>
+          <Button variant="secondary" size="lg">
+            Secondary LG
+          </Button>
+          <Button variant="secondary" size="xl">
+            Secondary XL
+          </Button>
+        </div>
         <div className="flex items-center gap-4 flex-wrap">
           <Button variant="warning" size="xs">
             Warning XS

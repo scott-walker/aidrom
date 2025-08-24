@@ -7,7 +7,7 @@ import { cn, cva } from "@utils/jsxtools"
  */
 type Props = ComponentProps<"button"> & {
   children: ReactNode
-  variant?: "soft" | "hard" | "primary" | "warning" | "danger"
+  variant?: "soft" | "hard" | "primary" | "secondary" | "warning" | "danger"
   size?: "xs" | "sm" | "md" | "lg" | "xl"
 }
 
@@ -54,6 +54,14 @@ export const Button: FC<Props> = ({
           "shadow-color-danger",
           "hover:bg-primary-accent",
           "hover:text-primary-foreground-accent"
+        ),
+        secondary: cn(
+          "bg-secondary",
+          "text-secondary-foreground",
+          "shadow-ghost-2xl",
+          "shadow-color-danger",
+          "hover:bg-secondary-accent",
+          "hover:text-secondary-foreground-accent"
         ),
         warning: cn(
           "bg-warning",

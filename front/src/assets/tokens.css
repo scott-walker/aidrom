@@ -54,14 +54,15 @@
   --color-foreground-hard: var(--color-slate-900);
 
   /* Primary */
-  --color-primary: var(--color-violet-600);
-  --color-primary-accent: var(--color-violet-500);
+  --color-primary: var(--color-fuchsia-600);
+  --color-primary-accent: var(--color-fuchsia-700);
   --color-primary-foreground: var(--color-white);
   --color-primary-foreground-accent: var(--color-white);
 
   /* Secondary */
-  --color-secondary: var(--color-pink-600);
-  --color-secondary-accent: var(--color-pink-500);
+
+  --color-secondary: var(--color-violet-600);
+  --color-secondary-accent: var(--color-violet-700);
   --color-secondary-foreground: var(--color-white);
   --color-secondary-foreground-accent: var(--color-white);
 
@@ -138,7 +139,7 @@
   --color-background: var(--color-neutral-4);
   --color-background-hard: var(--color-neutral-3);
   --color-foreground: var(--color-slate-100);
-  --color-foreground-soft: var(--color-gray-400);
+  --color-foreground-soft: var(--color-gray-300);
   --color-foreground-hard: var(--color-white);
 
   /* Warning */
@@ -148,9 +149,6 @@
   /* Danger */
   --color-danger-foreground: var(--color-foreground);
   --color-danger-foreground-accent: var(--color-foreground);
-
-  /* Градиенты */
-  --color-gradient-brand: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
 
   /* Скроллбар */
   --color-scrollbar-thumb: var(--color-neutral-6);
