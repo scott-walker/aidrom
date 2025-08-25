@@ -21,6 +21,7 @@ type Props = ComponentProps<"div"> & {
  */
 export const Brand: FC<Props> = ({ compact = false, size = "md", className = "", ...props }: Props): ReactNode => {
   const containerClasses = cn(
+    "relative",
     "flex",
     "items-center",
     "justify-center",
@@ -32,7 +33,11 @@ export const Brand: FC<Props> = ({ compact = false, size = "md", className = "",
 
   const iconName = "bot-message-square"
   const iconStroke = 2.5
-  const iconClasses = cn("p-2", "w-fit", "h-fit", "text-primary-foreground", compact || "rounded-xl bg-gradient-brand")
+  const iconClasses = cn("p-2", "w-fit", "h-fit", "text-primary-foreground", "rounded-xl", {
+    "bg-gradient-brand": !compact,
+    "bg-none": compact
+  })
+
   const iconSizeVariants = (size: "sm" | "md" | "lg"): number => {
     const map = {
       sm: 8,
