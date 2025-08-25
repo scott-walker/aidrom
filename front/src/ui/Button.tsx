@@ -14,6 +14,12 @@ export type Variant = "ghost" | "soft" | "hard" | "primary" | "secondary" | "war
 export type Size = "xs" | "sm" | "md" | "lg" | "xl"
 
 /**
+ * Скругление кнопки
+ * @namespace Ui.Button.Rounded
+ */
+export type Rounded = "none" | "xs" | "sm" | "md" | "lg" | "xl" | "full"
+
+/**
  * Пропсы кнопки
  * @namespace Ui.Button.Props
  */
@@ -21,6 +27,7 @@ export type Props = ComponentProps<"button"> & {
   children: ReactNode
   variant?: Variant
   size?: Size
+  rounded?: Rounded
 }
 
 /**
@@ -35,13 +42,13 @@ export const Button: FC<Props> = ({
   children,
   variant = "ghost",
   size = "md",
+  rounded = "sm",
   className = "",
   ...props
 }: Props): ReactNode => {
   const buttonBaseClasses = cn(
     "w-fit",
     "h-fit",
-    "rounded-lg",
     "transition-colors",
     "transition-transform",
     "duration-100",
@@ -95,17 +102,27 @@ export const Button: FC<Props> = ({
         md: "px-5 py-1.5 text-base",
         lg: "px-6 py-2 text-lg",
         xl: "px-8 py-3.5 text-xl"
+      },
+      rounded: {
+        none: "rounded-none",
+        xs: "rounded-sm",
+        sm: "rounded-lg",
+        md: "rounded-2xl",
+        lg: "rounded-3xl",
+        xl: "rounded-4xl",
+        full: "rounded-full"
       }
     },
     defaultVariants: {
       variant: "hard",
-      size: "md"
+      size: "md",
+      rounded: "md"
     }
   })
   const innerClasses = cn("flex items-center justify-center gap-4")
 
   return (
-    <button className={cn(buttonVariants({ variant, size }), className)} {...props}>
+    <button className={cn(buttonVariants({ variant, size, rounded }), className)} {...props}>
       <span className={innerClasses}>{children}</span>
     </button>
   )
