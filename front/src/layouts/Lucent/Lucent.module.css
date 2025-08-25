@@ -1,27 +1,32 @@
-/** Lucent layout */
+/** Макет "Lucent" */
 @import "tailwindcss";
 
 @theme {
-  --layout-offset-x: 3rem;
-  --layout-offset-y: 1.5rem;
   --layout-separator-color: var(--color-border);
-  --layout-page-width: 100vw;
-  --layout-header-height: 5rem;
-  --layout-header-gap: 1.5rem;
-  --layout-header-background-color: var(--color-background-soft);
-  --layout-footer-height: 5rem;
-  --layout-footer-gap: 1.5rem;
-  --layout-footer-background-color: var(--color-background-hard);
-
   --layout-animation-change-duration: 0.15s;
   --layout-animation-inner-change-duration: 0.5s;
+
+  --header-height: 5rem;
+  --header-gap: 1.5rem;
+  --header-background-color: var(--color-background-soft);
+  --header-offset-x: 3rem;
+  --header-offset-y: 0;
+
+  --content-offset-x: 5rem;
+  --content-offset-y: 3.5rem;
+
+  --footer-height: 5rem;
+  --footer-gap: 1.5rem;
+  --footer-background-color: var(--color-background-hard);
+  --footer-offset-x: var(--header-offset-x);
+  --footer-offset-y: 0;
 
   --sidebar-width: 16.875rem;
   --sidebar-offset-x: 1rem;
   --sidebar-offset-y: 1rem;
   --sidebar-background-color: var(--color-background-hard);
-  --sidebar-header-height: var(--layout-header-height);
-  --sidebar-footer-height: var(--layout-footer-height);
+  --sidebar-header-height: var(--header-height);
+  --sidebar-footer-height: var(--footer-height);
   --sidebar-footer-background-color: var(--color-gradient-brand);
   --sidebar-footer-text-color: var(--color-primary-foreground);
   --sidebar-collapsed-width: 5rem;
@@ -37,8 +42,8 @@
 
 [data-theme="dark"] {
   --sidebar-collapsed-background-color: var(--color-background-soft);
-  --layout-header-background-color: var(--color-background-soft);
-  --layout-footer-background-color: var(--color-background-hard);
+  --header-background-color: var(--color-background-soft);
+  --footer-background-color: var(--color-background-hard);
   --infobar-background-color: var(--color-background-soft);
 }
 
@@ -77,17 +82,17 @@
 /* Header */
 
 .layoutHeader {
-  height: var(--layout-header-height);
+  height: var(--header-height);
   border-block-end: 0.0625rem solid var(--layout-separator-color);
-  background-color: var(--layout-header-background-color);
+  background-color: var(--header-background-color);
 }
 
 .layoutHeaderInner {
   display: flex;
   align-items: center;
-  gap: var(--layout-header-gap);
-  padding-inline: var(--layout-offset-x);
-  /* padding-block: var(--layout-offset-y); */
+  gap: var(--header-gap);
+  padding-inline: var(--header-offset-x);
+  padding-block: var(--header-offset-y);
   height: 100%;
 }
 
@@ -98,7 +103,7 @@
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  height: calc(100vh - var(--layout-header-height) - var(--layout-footer-height));
+  height: calc(100vh - var(--header-height) - var(--footer-height));
   transition: height var(--layout-animation-change-duration) ease-in-out;
 }
 
@@ -114,16 +119,16 @@
 .layoutContentInner {
   display: flex;
   flex-direction: column;
-  padding-inline: var(--layout-offset-x);
-  padding-block: var(--layout-offset-y);
+  padding-inline: var(--content-offset-x);
+  padding-block: var(--content-offset-y);
 }
 
 /* Footer */
 
 .layoutFooter {
-  height: var(--layout-footer-height);
+  height: var(--footer-height);
   border-block-start: 0.0625rem solid var(--layout-separator-color);
-  background-color: var(--layout-footer-background-color);
+  background-color: var(--footer-background-color);
   transition: height var(--layout-animation-change-duration) ease-in-out;
 
   &.footerHidden {
@@ -134,9 +139,9 @@
 .layoutFooterInner {
   display: flex;
   align-items: center;
-  gap: var(--layout-footer-gap);
-  padding-inline: var(--layout-offset-x);
-  padding-block: var(--layout-offset-y);
+  gap: var(--footer-gap);
+  padding-inline: var(--footer-offset-x);
+  padding-block: var(--footer-offset-y);
   height: 100%;
   opacity: 1;
   transition: opacity var(--layout-animation-inner-change-duration) ease-in-out;
