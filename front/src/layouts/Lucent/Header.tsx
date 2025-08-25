@@ -3,8 +3,8 @@ import { cn } from "@utils/jsxtools"
 import { SidebarTrigger } from "./SidebarTrigger"
 import { InfobarTrigger } from "./InfobarTrigger"
 import { ThemeTrigger } from "./ThemeTrigger"
-import styles from "./Lucent.module.css"
 import { FooterTrigger } from "./FooterTrigger"
+import styles from "./Lucent.module.css"
 
 /**
  * Пропсы шапки макета

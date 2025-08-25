@@ -13,6 +13,9 @@
   --layout-footer-gap: 1.5rem;
   --layout-footer-background-color: var(--color-background-hard);
 
+  --layout-animation-change-duration: 0.15s;
+  --layout-animation-inner-change-duration: 0.5s;
+
   --sidebar-width: 16.875rem;
   --sidebar-offset-x: 1rem;
   --sidebar-offset-y: 1rem;
@@ -64,6 +67,7 @@
   display: flex;
   flex-direction: column;
   width: calc(100vw - var(--sidebar-width));
+  transition: width var(--layout-animation-change-duration) ease-in-out;
 
   &.expanded {
     width: calc(100vw - var(--sidebar-collapsed-width));
@@ -83,7 +87,7 @@
   align-items: center;
   gap: var(--layout-header-gap);
   padding-inline: var(--layout-offset-x);
-  padding-block: var(--layout-offset-y);
+  /* padding-block: var(--layout-offset-y); */
   height: 100%;
 }
 
@@ -95,6 +99,7 @@
   justify-content: space-between;
   align-items: stretch;
   height: calc(100vh - var(--layout-header-height) - var(--layout-footer-height));
+  transition: height var(--layout-animation-change-duration) ease-in-out;
 }
 
 /* Content */
@@ -119,11 +124,7 @@
   height: var(--layout-footer-height);
   border-block-start: 0.0625rem solid var(--layout-separator-color);
   background-color: var(--layout-footer-background-color);
-  transition: height 0.2s ease-in-out;
-
-  &:focus {
-    border: 1px solid red;
-  }
+  transition: height var(--layout-animation-change-duration) ease-in-out;
 
   &.footerHidden {
     height: 0;
@@ -138,15 +139,11 @@
   padding-block: var(--layout-offset-y);
   height: 100%;
   opacity: 1;
-  transition: opacity 0.8s ease-in-out;
-
-  &:focus {
-    border: 1px solid violet;
-  }
+  transition: opacity var(--layout-animation-inner-change-duration) ease-in-out;
 
   &.footerHidden {
-    transition: none;
     opacity: 0;
+    transition: none;
   }
 }
 
@@ -156,7 +153,7 @@
   width: var(--infobar-width);
   background-color: var(--infobar-background-color);
   box-shadow: var(--shadow-ghost-md);
-  transition: width 0.1s ease-in-out;
+  transition: width var(--layout-animation-change-duration) ease-in-out;
 
   &.infobarHidden {
     width: 0;
@@ -170,11 +167,11 @@
   padding-inline: var(--infobar-offset-x);
   height: 100%;
   opacity: 1;
-  transition: opacity 0.8s ease-in-out;
+  transition: opacity var(--layout-animation-inner-change-duration) ease-in-out;
 
   &.infobarHidden {
-    transition: none;
     opacity: 0;
+    transition: none;
   }
 }
 
@@ -183,33 +180,51 @@
 .layoutSidebar {
   position: relative;
   z-index: 10;
-  width: var(--sidebar-width);
   overflow: hidden;
-  transition: width 0.08s ease-in-out;
   box-shadow: var(--shadow-ghost-xl);
+  animation: sidebarExpand var(--layout-animation-change-duration) ease-in-out forwards;
+  /* width: var(--sidebar-width); */
+  /* transition: width 0.1 ease-in-out; */
 
   &.collapsed {
-    width: var(--sidebar-collapsed-width);
-    /* background-color: var(--sidebar-collapsed-background-color); */
-    /* box-shadow: var(--shadow-ghost-md); */
+    /* width: var(--sidebar-collapsed-width); */
+    animation: sidebarCollapse var(--layout-animation-change-duration) ease-in-out forwards;
   }
 }
 
 .layoutSidebarHeader {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   height: var(--sidebar-header-height);
   border-block-end: 0.0625rem solid var(--layout-separator-color);
   background-color: var(--color-background-soft);
 }
 
+.layoutSidebarHeaderInner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  animation: innerShow var(--layout-animation-inner-change-duration) ease-in-out forwards;
+
+  &.collapsed {
+    animation: innerHide var(--layout-animation-inner-change-duration) ease-in-out forwards;
+  }
+}
+
 .layoutSidebarBody {
   flex: 1;
+  height: calc(100vh - var(--sidebar-header-height) - var(--sidebar-footer-height));
+}
+
+.layoutSidebarBodyInner {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - var(--sidebar-header-height) - var(--sidebar-footer-height));
   overflow-y: auto;
+  height: 100%;
+  animation: innerShow var(--layout-animation-inner-change-duration) ease-in-out forwards;
+
+  &.collapsed {
+    animation: innerHide var(--layout-animation-inner-change-duration) ease-in-out forwards;
+  }
 }
 
 .layoutSidebarSection {
@@ -218,19 +233,53 @@
 }
 
 .layoutSidebarFooter {
+  height: var(--sidebar-footer-height);
+  background: var(--sidebar-footer-background-color);
+  color: var(--sidebar-footer-text-color);
+}
+
+.layoutSidebarFooterInner {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: var(--sidebar-footer-height);
-  font-weight: var(--font-weight-bold);
-  /* border-block-start: 0.0625rem solid var(--layout-separator-color); */
+  height: 100%;
+  animation: innerShow var(--layout-animation-inner-change-duration) ease-in-out forwards;
 
-  background: var(--sidebar-footer-background-color);
-  color: var(--sidebar-footer-text-color);
+  &.collapsed {
+    animation: innerHide var(--layout-animation-inner-change-duration) ease-in-out forwards;
+  }
+}
 
-  /* &.collapsed {
-    background: var(--sidebar-collapsed-footer-background-color);
-    color: var(--sidebar-collapsed-footer-text-color);
-  } */
+@keyframes sidebarExpand {
+  0% {
+    width: var(--sidebar-collapsed-width);
+  }
+  100% {
+    width: var(--sidebar-width);
+  }
+}
+@keyframes sidebarCollapse {
+  0% {
+    width: var(--sidebar-width);
+  }
+  100% {
+    width: var(--sidebar-collapsed-width);
+  }
+}
+@keyframes innerShow {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes innerHide {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

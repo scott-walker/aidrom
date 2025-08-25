@@ -1,6 +1,5 @@
 import { useContext, type ComponentProps, type FC, type ReactNode } from "react"
-import { Button } from "@ui/Button"
-import { Icon } from "@ui/Icon"
+import { IconButton } from "@ui/IconButton"
 import { LayoutContext, type ILayoutContext } from "./context"
 
 /**
@@ -18,11 +17,7 @@ type Props = ComponentProps<"button">
  */
 export const ThemeTrigger: FC<Props> = ({ className, ...props }: Props): ReactNode => {
   const { isDarkTheme, toggleTheme } = useContext(LayoutContext) as ILayoutContext
-  const icon = isDarkTheme() ? "moon" : "sun"
+  const icon = isDarkTheme() ? "sun" : "moon"
 
-  return (
-    <Button variant="soft" onClick={toggleTheme} className={className} {...props}>
-      <Icon name={icon} size={24} strokeWidth={3} />
-    </Button>
-  )
+  return <IconButton variant="hard" icon={icon} onClick={toggleTheme} className={className} {...props} />
 }

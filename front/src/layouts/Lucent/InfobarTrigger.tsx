@@ -20,9 +20,5 @@ export const InfobarTrigger: FC<Props> = ({ ...props }: Props): ReactNode => {
   // Поскольку инфобар находится справа, то sidebar-open - это закрытие, а sidebar-close - это открытие
   const iconName = isInfobarVisible() ? "sidebar-open" : "sidebar-close"
 
-  return (
-    <div className="flex items-center justify-center">
-      <IconButton icon={iconName} onClick={toggleInfobarVisible} {...props} />
-    </div>
-  )
+  return <IconButton circle icon={iconName} onClick={toggleInfobarVisible} {...props} />
 }

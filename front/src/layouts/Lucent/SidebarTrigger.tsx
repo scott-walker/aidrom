@@ -25,11 +25,14 @@ type IconName = "menu" | "chevron-left" | "chevron-right"
 export const SidebarTrigger: FC<Props> = ({ ...props }: Props): ReactNode => {
   const { isHovered, handlers } = useHover()
   const { isSidebarCollapsed, toggleSidebarCollapsed } = useContext(LayoutContext) as ILayoutContext
+  // const isCollapsed = isSidebarCollapsed()
 
   const actionIconName = isSidebarCollapsed() ? "chevron-right" : "chevron-left"
   const iconName: IconName = isHovered ? actionIconName : "menu"
+  // const iconName = "panel-right"
   const buttonClasses = cn("p-0 w-10 h-10")
-  const iconClasses = cn("transition-transform duration-200 ease-in-out", isHovered && "rotate-360")
+  const iconClasses = cn("transition-transform", "duration-200", "ease-in-out", isHovered && "rotate-360")
+  // const iconClasses = cn("rotate-180")
 
   return (
     <IconButton

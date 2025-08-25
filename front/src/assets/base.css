@@ -13,6 +13,9 @@
     font-weight: var(--font-weight-normal);
     line-height: var(--leading-normal);
   }
+  * {
+    transition: background-color 0.1s ease-in-out;
+  }
 }
 
 /* Градиенты */
