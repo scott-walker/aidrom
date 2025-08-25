@@ -5,15 +5,16 @@ import { Brand } from "@components/Brand"
 import { InfobarTrigger } from "@layouts/Lucent/InfobarTrigger"
 
 /**
- * Главная страница
- * @namespace Pages.Dashboard
+ * Страница тестирования компонентов
+ * @namespace Pages.Test.Components
  * @returns {ReactNode}
  */
-export const Dashboard: FC = (): ReactNode => {
+export const Components: FC = (): ReactNode => {
   return (
     <div className="flex flex-col">
-      <h1 className="text-5xl font-bold text-foreground-hard font-family-display">Страница "Dashboard"</h1>
-      <p className="text-2xl text-foreground font-family-base">Прямо сейчас ты находишься на главной странице</p>
+      <p className="text-2xl text-foreground font-family-base">
+        Прямо сейчас ты находишься на странице тестирования компонентов
+      </p>
       <Code accent className="mt-10">
         console.log("Hello, world!")
       </Code>
@@ -146,10 +147,6 @@ export const Dashboard: FC = (): ReactNode => {
         <div className="p-10 w-50 bg-foreground text-pink-500 font-bold">Foreground</div>
         <div className="p-10 w-50 bg-foreground-hard text-pink-500 font-bold">Foreground Hard</div>
       </div>
-
-      {/* <div className="flex justify-end gap-4 mt-10 w-full">
-        {genBgColors(40, ["foreground-soft", "foreground", "foreground-hard"])}
-      </div> */}
 
       <div className="mt-10 w-full h-40 bg-gradient-brand rounded-2xl" />
     </div>

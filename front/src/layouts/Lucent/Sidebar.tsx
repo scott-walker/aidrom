@@ -17,19 +17,26 @@ type Props = ComponentProps<"aside">
 const items: MenuItems = [
   {
     label: "Панель",
-    href: "#",
-    icon: "gauge",
-    active: true
+    href: "/",
+    icon: "gauge"
   },
   {
     label: "Чаты",
-    href: "#chats",
+    href: "/chats",
     icon: "message-circle"
   },
   {
-    label: "Настройки",
-    href: "#settings",
-    icon: "bolt"
+    label: "Инструменты",
+    href: "/tools",
+    icon: "code"
+  }
+]
+
+const debugItems: MenuItems = [
+  {
+    label: "Тест",
+    href: "/test",
+    icon: "amphora"
   }
 ]
 
@@ -51,8 +58,6 @@ export const Sidebar: FC<Props> = ({ ...props }: Props): ReactNode => {
   const sidebarFooterClasses = cn(styles.layoutSidebarFooter, collapsed && styles.collapsed)
   const sidebarFooterInnerClasses = cn(styles.layoutSidebarFooterInner, collapsed && styles.collapsed)
 
-  const filteredItems = items.filter((item, index) => item && index)
-
   return (
     <aside className={sidebarClasses} {...props}>
       <header className={sidebarHeaderClasses}>
@@ -68,26 +73,9 @@ export const Sidebar: FC<Props> = ({ ...props }: Props): ReactNode => {
           </section>
           <Separator />
           <section className={sidebarSectionClasses}>
-            <Menu items={filteredItems} compact={collapsed} />
-            <Menu items={filteredItems} compact={collapsed} />
-            <Menu items={filteredItems} compact={collapsed} />
+            <Menu items={debugItems} compact={collapsed} />
           </section>
           <Separator />
-          <section className={sidebarSectionClasses}>
-            <Menu items={filteredItems} compact={collapsed} />
-          </section>
-          <Separator />
-          <section className={sidebarSectionClasses}>
-            <Menu items={filteredItems} compact={collapsed} />
-          </section>
-          <Separator />
-          <section className={sidebarSectionClasses}>
-            <Menu items={filteredItems} compact={collapsed} />
-          </section>
-          <Separator />
-          <section className={sidebarSectionClasses}>
-            <Menu items={filteredItems} compact={collapsed} />
-          </section>
         </Scrollbar>
       </div>
 

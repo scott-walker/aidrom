@@ -92,6 +92,15 @@
   /* Границы */
   --color-border: color-mix(in oklch, var(--color-gray-500) 10%, transparent);
 
+  /* Тениииии (ууу 👻) */
+  --shadow-ghost-xs: 0px 1px 5px 0px var(--color-ghost-base);
+  --shadow-ghost-sm: 0px 5px 10px 0px var(--color-ghost-base);
+  --shadow-ghost-md: 0px 10px 20px 0px var(--color-ghost-base);
+  --shadow-ghost-lg: 0px 0px 45px 0px var(--color-ghost-base);
+  --shadow-ghost-xl: 0px 0px 60px 0px var(--color-ghost-base);
+  --shadow-ghost-2xl: 0px 0px 100px 0px var(--color-ghost-base);
+  --shadow-ghost-epic: 0px 0px 400px -80px var(--color-ghost-epic);
+
   /* Размеры текста */
   --text-xs: 0.75rem; /* 12px */
   --text-sm: 0.875rem; /* 14px */
@@ -121,15 +130,6 @@
   --font-family-base: "Onest", sans-serif;
   --font-family-display: "Unbounded", sans-serif;
   --font-family-mono: "JetBrains Mono", monospace;
-
-  /* Тениииии (ууу 👻) */
-  --shadow-ghost-xs: 0px 1px 5px 0px var(--color-ghost-base);
-  --shadow-ghost-sm: 0px 5px 10px 0px var(--color-ghost-base);
-  --shadow-ghost-md: 0px 10px 20px 0px var(--color-ghost-base);
-  --shadow-ghost-lg: 0px 0px 45px 0px var(--color-ghost-base);
-  --shadow-ghost-xl: 0px 0px 60px 0px var(--color-ghost-base);
-  --shadow-ghost-2xl: 0px 0px 100px 0px var(--color-ghost-base);
-  --shadow-ghost-epic: 0px 0px 400px -80px var(--color-ghost-epic);
 }
 
 /* 🌙  */
