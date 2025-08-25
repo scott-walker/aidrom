@@ -5,6 +5,8 @@ import tailwindcss from "@tailwindcss/vite"
 
 // Эсорсишечка 🤗😊
 const srcPath = resolve(import.meta.dirname, "./src")
+// const appPath = resolve(srcPath, "app")
+const sharedPath = resolve(srcPath, "shared")
 
 // Публичные хосты приложения
 const apiPublicHost: string = process.env.API_PUBLIC_HOST || "localhost"
@@ -19,13 +21,14 @@ export default defineConfig({
   resolve: {
     alias: {
       "@assets": resolve(srcPath, "assets"),
-      "@utils": resolve(srcPath, "utils"),
-      "@hooks": resolve(srcPath, "hooks"),
-      "@store": resolve(srcPath, "store"),
       "@components": resolve(srcPath, "components"),
-      "@ui": resolve(srcPath, "ui"),
       "@layouts": resolve(srcPath, "layouts"),
-      "@pages": resolve(srcPath, "pages")
+      "@pages": resolve(srcPath, "pages"),
+
+      // Shared
+      "@utils": resolve(sharedPath, "utils"),
+      "@hooks": resolve(sharedPath, "hooks"),
+      "@ui": resolve(sharedPath, "ui")
     }
   }
 })

@@ -42,4 +42,8 @@
   // "search.exclude": {
   //   "**/node_modules": false
   // }
+
+  // Автоматическое изменение пути до файла
+  "typescript.updateImportsOnFileMove.enabled": "never",
+  "javascript.updateImportsOnFileMove.enabled": "never"
 }
