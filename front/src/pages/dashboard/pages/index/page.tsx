@@ -1,12 +1,26 @@
-import type { FC, ReactNode } from "react"
+import type { ReactNode } from "react"
+import { createPage, type PageConfig } from "@lib/page-api"
 import { Icon } from "@ui/Icon"
 
 /**
- * Страница "Dashboard"
- * @namespace Pages.Dashboard
- * @returns {ReactNode}
+ * Конфигурация страницы
  */
-export const Dashboard: FC = (): ReactNode => {
+const config: PageConfig = {
+  meta: {
+    title: "Dashboard Index"
+  },
+  slots: {
+    header: <h2>Dashboard Header</h2>,
+    sidebar: <h2>Dashboard Sidebar</h2>,
+    infobar: <h2>Dashboard Infobar</h2>,
+    footer: <h2>Dashboard Footer</h2>
+  }
+}
+
+/**
+ * Компонент страницы
+ */
+export const DashboardIndex = createPage(config, (): ReactNode => {
   return (
     <div className="flex flex-col">
       <h1>Страница "Dashboard"</h1>
@@ -26,4 +40,4 @@ export const Dashboard: FC = (): ReactNode => {
       </div>
     </div>
   )
-}
+})

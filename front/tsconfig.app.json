@@ -2,27 +2,35 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      // Assets
-      "@assets/*": ["./src/assets/*"],
-      "@assets": ["./src/assets/index.ts"],
+      // App
+      "@app/*": ["./src/app/*"],
+      "@app": ["./src/app/index.ts"],
+      "@assets/*": ["./src/app/assets/*"],
+      "@assets": ["./src/app/assets/index.ts"],
+      "@layouts/*": ["./src/app/layouts/*"],
+      "@layouts": ["./src/app/layouts/index.ts"],
 
       // Components
       "@components/*": ["./src/components/*"],
       "@components": ["./src/components/index.ts"],
 
-      // Layouts
-      "@layouts/*": ["./src/layouts/*"],
-      "@layouts": ["./src/layouts/index.ts"],
-
       // Pages
       "@pages/*": ["./src/pages/*"],
-      "@pages": ["./src/pages/index.tsx"],
+      "@pages": ["./src/pages/index.ts"],
 
       // Shared
+      "@shared/*": ["./src/shared/*"],
+      "@shared": ["./src/shared/index.ts"],
+      
       "@utils/*": ["./src/shared/utils/*"],
       "@utils": ["./src/shared/utils/index.ts"],
+
       "@hooks/*": ["./src/shared/hooks/*"],
       "@hooks": ["./src/shared/hooks/index.ts"],
+
+      "@lib/*": ["./src/shared/lib/*"],
+      "@lib": ["./src/shared/lib/index.ts"],
+
       "@ui/*": ["./src/shared/ui/*"],
       "@ui": ["./src/shared/ui/index.ts"]
     },

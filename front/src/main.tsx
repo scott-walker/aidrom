@@ -8,7 +8,7 @@ import { createRoot } from "react-dom/client"
 import { RouterProvider } from "react-router"
 
 // App
-import { router } from "@pages"
+import { router } from "@app"
 
 const root = document.getElementById("root")
 const app = createRoot(root!)

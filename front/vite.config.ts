@@ -5,7 +5,11 @@ import tailwindcss from "@tailwindcss/vite"
 
 // Эсорсишечка 🤗😊
 const srcPath = resolve(import.meta.dirname, "./src")
-// const appPath = resolve(srcPath, "app")
+
+// Уровень приложения
+const appPath = resolve(srcPath, "app")
+
+// Уровень общего кода
 const sharedPath = resolve(srcPath, "shared")
 
 // Публичные хосты приложения
@@ -20,14 +24,22 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      "@assets": resolve(srcPath, "assets"),
+      // App
+      "@app": appPath,
+      "@assets": resolve(appPath, "assets"),
+      "@layouts": resolve(appPath, "layouts"),
+
+      // Components
       "@components": resolve(srcPath, "components"),
-      "@layouts": resolve(srcPath, "layouts"),
+
+      // Pages
       "@pages": resolve(srcPath, "pages"),
 
       // Shared
+      "@shared": sharedPath,
       "@utils": resolve(sharedPath, "utils"),
       "@hooks": resolve(sharedPath, "hooks"),
+      "@lib": resolve(sharedPath, "lib"),
       "@ui": resolve(sharedPath, "ui")
     }
   }
