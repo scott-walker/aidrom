@@ -18,7 +18,7 @@ const config: PageConfig = {
 }
 
 /**
- * Компонент страницы
+ * Страница Dashboard
  */
 export const DashboardIndex = createPage(config, (): ReactNode => {
   return (

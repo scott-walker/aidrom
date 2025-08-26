@@ -1,13 +1,11 @@
-import { Icon } from "@ui/Icon"
-import type { FC, ReactNode } from "react"
 import { NavLink, Outlet } from "react-router"
+import { Icon } from "@ui/Icon"
 
 /**
- * Макет для страниц тестирования
+ * Макет страницы
  * @namespace Pages.Test.Layout
- * @returns {ReactNode}
  */
-export const Layout: FC = (): ReactNode => {
+export const TestLayout = () => {
   const makeActiveClass = ({ isActive }: { isActive: boolean }) => (isActive ? "text-gradient-brand" : "")
 
   return (
@@ -19,7 +17,7 @@ export const Layout: FC = (): ReactNode => {
         </div>
       </h1>
       <div className="flex items-center gap-6 mt-12 py-2 px-6 bg-background-soft rounded-2xl shadow-ghost-xs">
-        <NavLink to="/test" end className={makeActiveClass}>
+        <NavLink to="/test/ui" end className={makeActiveClass}>
           Компоненты
         </NavLink>
         <NavLink to="/test/typography" className={makeActiveClass}>

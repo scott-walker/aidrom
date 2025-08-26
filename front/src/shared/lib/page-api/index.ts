@@ -10,5 +10,5 @@ export type {
 } from "./types"
 
 export { usePage } from "./context"
-export { createPage, createLayout, registerPages } from "./utils"
+export { createPage, createLayout, registerPages, normalizeConfig } from "./utils"
 export { PageProvider } from "./provider"

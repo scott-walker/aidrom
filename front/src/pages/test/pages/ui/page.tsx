@@ -1,15 +1,29 @@
-import type { FC, ReactNode } from "react"
+import type { ReactNode } from "react"
+import { createPage, type PageConfig } from "@lib/page-api"
 import { Code } from "@ui/Code"
 import { Button } from "@ui/Button"
 import { Brand } from "@components/Brand"
-import { InfobarTrigger } from "@layouts/Lucent/InfobarTrigger"
+// import { InfobarTrigger } from "@layouts/Lucent/InfobarTrigger"
 
 /**
- * Страница тестирования компонентов
- * @namespace Pages.Test.Components
- * @returns {ReactNode}
+ * Конфигурация страницы
  */
-export const Components: FC = (): ReactNode => {
+const config: PageConfig = {
+  meta: {
+    title: "UI"
+  }
+  // slots: {
+  //   // header: <h2>Dashboard Header</h2>
+  //   // sidebar: <h2>Dashboard Sidebar</h2>,
+  //   // infobar: <h2>Dashboard Infobar</h2>,
+  //   // footer: <h2>Dashboard Footer</h2>
+  // }
+}
+
+/**
+ * Страница тестирования UI
+ */
+export const UiPage = createPage(config, (): ReactNode => {
   return (
     <div className="flex flex-col">
       <p className="text-2xl text-foreground font-family-base">
@@ -127,7 +141,7 @@ export const Components: FC = (): ReactNode => {
       </div>
 
       <div className="flex justify-between mt-10 flex-wrap">
-        <InfobarTrigger />
+        {/* <InfobarTrigger /> */}
 
         <div className="flex flex-col gap-4 flex-wrap">
           <Brand size="sm" />
@@ -151,4 +165,4 @@ export const Components: FC = (): ReactNode => {
       <div className="mt-10 w-full h-40 bg-gradient-brand rounded-2xl" />
     </div>
   )
-}
+})

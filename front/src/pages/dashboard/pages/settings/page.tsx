@@ -17,7 +17,7 @@ const config: PageConfig = {
 }
 
 /**
- * Компонент страницы
+ * Страница настроек
  */
 export const DashboardSettings = createPage(config, (): ReactNode => {
   return (

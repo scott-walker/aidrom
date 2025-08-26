@@ -30,11 +30,21 @@ export type PageConfig = {
 }
 
 /**
+ * Тип нормализованной конфигурации страницы
+ * @namespace Shared.Lib.PageApi.NormalizedPageConfig
+ */
+export type NormalizedPageConfig = {
+  meta: PageMeta
+  slots: PageSlots
+}
+
+/**
  * Тип API страницы
  * @namespace Shared.Lib.PageApi.PageContextApi
  */
 export type PageContextApi = {
   setConfig: (config: PageConfig) => void
+  unsetConfig: () => void
   setTitle: (title: string) => void
   getTitle: () => string
   setSlot: (slot: keyof PageSlots, node: ReactNode) => void

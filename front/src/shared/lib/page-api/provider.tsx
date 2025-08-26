@@ -1,6 +1,7 @@
 import { useState, type FC, type ReactNode } from "react"
 import type { PageContextApi, PageProviderProps, PageMeta, PageSlots, PageConfig } from "./types"
 import { PageContext } from "./context"
+import { normalizeConfig } from "./utils"
 
 /**
  * Провайдер страницы
@@ -10,8 +11,10 @@ import { PageContext } from "./context"
  * @param {PageConfig} props.config конфигурация страницы
  */
 export const PageProvider: FC<PageProviderProps> = ({ children, config }: PageProviderProps): ReactNode => {
-  const [meta, setMeta] = useState<PageMeta>(config.meta ?? {})
-  const [slots, setSlots] = useState<PageSlots>(config.slots ?? {})
+  const defaultConfig = normalizeConfig(config)
+
+  const [meta, setMeta] = useState<PageMeta>(defaultConfig.meta)
+  const [slots, setSlots] = useState<PageSlots>(defaultConfig.slots)
 
   /**
    * Установить конфигурацию страницы
@@ -22,6 +25,14 @@ export const PageProvider: FC<PageProviderProps> = ({ children, config }: PagePr
 
     if (config.meta) setMeta(config.meta)
     if (config.slots) setSlots(config.slots)
+  }
+
+  /**
+   * Сбросить конфигурацию страницы
+   */
+  const unsetConfig = () => {
+    setMeta(defaultConfig.meta)
+    setSlots(defaultConfig.slots)
   }
 
   /**
@@ -53,6 +64,7 @@ export const PageProvider: FC<PageProviderProps> = ({ children, config }: PagePr
   // API контекста страницы
   const api: PageContextApi = {
     setConfig,
+    unsetConfig,
     setTitle,
     getTitle,
     setSlot,

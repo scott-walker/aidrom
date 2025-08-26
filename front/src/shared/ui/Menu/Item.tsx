@@ -1,26 +1,15 @@
-import type { FC, ReactNode } from "react"
+import { NavLink } from "react-router"
 import { cn, cva } from "@utils/jsxtools"
-import { Icon, type IconName } from "@ui/Icon"
-
-/**
- * Интерфейс элемента меню
- * @namespace Components.Menu.Item.IItem
- */
-export interface IItem {
-  label: string
-  href: string
-  icon?: IconName | null
-  active?: boolean
-  compact?: boolean
-}
+import { Icon } from "@ui/Icon"
+import type { MenuItem } from "./types"
 
 /**
  * Элемент меню
- * @namespace Components.Menu.Item
- * @returns {ReactNode}
+ * @namespace Shared.UI.Menu.MenuItem
  */
-export const Item: FC<IItem> = ({ label, href, icon = null, active = false, compact = false }: IItem): ReactNode => {
-  const linkClasses = cn("flex", "items-center", "gap-4", "py-2", "select-none")
+export const Item = ({ label, path, icon = null, compact = false }: MenuItem) => {
+  // Link
+  const linkClasses = cn("flex", "items-center", "gap-4", "py-2", "select-none", "rounded-xl")
   const linkVariants = cva(linkClasses, {
     variants: {
       compact: {
@@ -28,7 +17,7 @@ export const Item: FC<IItem> = ({ label, href, icon = null, active = false, comp
         false: "px-5"
       },
       active: {
-        true: cn("font-bold", "cursor-default", "rounded-xl", "bg-background-hard", "text-foreground-hard"),
+        true: cn("font-bold", "cursor-default", "bg-background-hard", "text-foreground-hard"),
         false: cn("font-semibold", "text-foreground-soft", "hover:text-primary")
       }
     },
@@ -59,6 +48,13 @@ export const Item: FC<IItem> = ({ label, href, icon = null, active = false, comp
       active: false
     }
   })
+  const linkClassHandler = ({ isActive }: { isActive: boolean }) => linkVariants({ active: isActive, compact })
+
+  // Icon
+  const iconClasses = cn("")
+  const iconWeight = 3
+
+  // Label
   const labelClasses = cn("text-base")
   const labelVariants = cva(labelClasses, {
     variants: {
@@ -71,16 +67,14 @@ export const Item: FC<IItem> = ({ label, href, icon = null, active = false, comp
       compact: false
     }
   })
-  const iconClasses = cn("")
-  const iconWeight = 3
 
   return (
     <li>
-      <a className={linkVariants({ active, compact })} href={active ? undefined : href}>
+      <NavLink className={linkClassHandler} to={path}>
         {icon && <Icon strokeWidth={iconWeight} name={icon} className={iconClasses} />}
 
         <span className={labelVariants({ compact })}>{label}</span>
-      </a>
+      </NavLink>
     </li>
   )
 }

@@ -3,7 +3,7 @@ import { DashboardLayout } from "./layout"
 import { DashboardIndex, DashboardSettings } from "./pages"
 
 /**
- * Маршруты страницы Dashboard
+ * Маршруты
  * @namespace Pages.Dashboard.Routes
  */
 export const routes: PageRoutes = {

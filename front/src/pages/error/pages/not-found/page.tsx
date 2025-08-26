@@ -18,7 +18,7 @@ const config: PageConfig = {
 }
 
 /**
- * Компонент страницы
+ * Страница 404
  */
 export const NotFound = createPage(config, (): ReactNode => {
   return (

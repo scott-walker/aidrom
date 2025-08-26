@@ -1,12 +1,20 @@
-import type { FC, ReactNode } from "react"
+import type { ReactNode } from "react"
 import { Typography as TypographyComponent } from "@ui/Typography"
+import { createPage, type PageConfig } from "@lib/page-api"
+
+/**
+ * Конфигурация страницы
+ */
+const config: PageConfig = {
+  meta: {
+    title: "Типографика"
+  }
+}
 
 /**
  * Страница тестирования типографики
- * @namespace Pages.Test.Typography
- * @returns {ReactNode}
  */
-export const Typography: FC = (): ReactNode => {
+export const TypographyPage = createPage(config, (): ReactNode => {
   return (
     <TypographyComponent>
       <h1>Заголовок первого уровня</h1>
@@ -58,4 +66,4 @@ export const Typography: FC = (): ReactNode => {
       </a>
     </TypographyComponent>
   )
-}
+})

@@ -1,7 +1,10 @@
 import type { ReactNode } from "react"
-import { NavLink } from "react-router"
 import { createLayout, type PageLayoutConfig, type PageLayoutProps, usePage } from "@lib/page-api"
+import { Menu, type MenuItems } from "@ui/Menu"
 
+/**
+ * Конфигурация макета панели управления
+ */
 const config: PageLayoutConfig = {
   meta: {
     title: "Panel Layout"
@@ -12,8 +15,28 @@ const config: PageLayoutConfig = {
 }
 
 /**
+ * Элементы меню
+ */
+const menuItems: MenuItems = [
+  {
+    label: "Dashboard",
+    icon: "home",
+    path: "/"
+  },
+  {
+    label: "Settings",
+    icon: "settings",
+    path: "/settings"
+  },
+  {
+    label: "Test",
+    icon: "activity",
+    path: "/test"
+  }
+]
+
+/**
  * Основной макет панели управления
- * @namespace App.Layouts.Panel
  */
 export const PanelLayout = createLayout(config, ({ children }: PageLayoutProps): ReactNode => {
   const { getTitle, getSlot } = usePage()
@@ -22,13 +45,7 @@ export const PanelLayout = createLayout(config, ({ children }: PageLayoutProps):
   const sidebar = getSlot("sidebar")
   const infobar = getSlot("infobar")
   const footer = getSlot("footer")
-
   const title = getTitle()
-  const linkClassName = ({ isActive }: { isActive: boolean }) => (isActive ? "text-primary" : "hover:text-primary")
-
-  // const { slots, appendToHeader } = useLayout()
-  // const meta = useMeta()
-  // const title = meta.title ?? "Default"
 
   return (
     <div className="flex flex-col h-screen">
@@ -39,20 +56,8 @@ export const PanelLayout = createLayout(config, ({ children }: PageLayoutProps):
       <div className="flex-1 flex justify-between bg-background">
         <aside className="p-10 bg-background-hard text-foreground">
           <h1>SIDEBAR</h1>
-          <nav className="mt-6">
-            <ul>
-              <li>
-                <NavLink className={linkClassName} to="/" end>
-                  Dashboard index
-                </NavLink>
-              </li>
-              <li>
-                <NavLink className={linkClassName} to="/settings">
-                  Dashboard settings
-                </NavLink>
-              </li>
-            </ul>
-          </nav>
+          <Menu items={menuItems} />
+
           {sidebar}
         </aside>
 
