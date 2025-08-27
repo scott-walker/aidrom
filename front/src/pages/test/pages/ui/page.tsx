@@ -2,7 +2,7 @@ import type { ReactNode } from "react"
 import { createPage, type PageConfig } from "@lib/page-api"
 import { Code } from "@ui/Code"
 import { Button } from "@ui/Button"
-import { Brand } from "@components/Brand"
+import { Brand } from "@ui/Brand"
 // import { InfobarTrigger } from "@layouts/Lucent/InfobarTrigger"
 
 /**

@@ -1,6 +1,12 @@
 /** Макет "Lucent" */
 @import "tailwindcss";
 
+/* @custom-variant dark (&:is([data-theme="dark"] *));
+@custom-variant page-expanded (&:is([data-page-expanded="expanded"] *));
+@custom-variant sidebar-collapsed (&:is([data-sidebar-collapsed="collapsed"] *));
+@custom-variant footer-visible (&:is([data-footer-visible="visible"] *));
+@custom-variant infobar-visible (&:is([data-infobar-visible="visible"] *)); */
+
 @theme {
   --layout-separator-color: var(--color-border);
   --layout-animation-change-duration: 0.15s;
@@ -62,7 +68,13 @@
   height: 100vh;
   width: 100vw;
   overflow: hidden;
-  background-color: var(--colors-background);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-family-base);
+  font-size: var(--text-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  letter-spacing: var(--letter-spacing-normal);
 }
 
 /* Page */
@@ -223,18 +235,13 @@
 .layoutSidebarBodyInner {
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  overflow: hidden;
   height: 100%;
   animation: innerShow var(--layout-animation-inner-change-duration) ease-in-out forwards;
 
   &.collapsed {
     animation: innerHide var(--layout-animation-inner-change-duration) ease-in-out forwards;
   }
-}
-
-.layoutSidebarSection {
-  padding-inline: var(--sidebar-offset-x);
-  padding-block: var(--sidebar-offset-y);
 }
 
 .layoutSidebarFooter {

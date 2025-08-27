@@ -32,7 +32,11 @@
       "@lib": ["./src/shared/lib/index.ts"],
 
       "@ui/*": ["./src/shared/ui/*"],
-      "@ui": ["./src/shared/ui/index.ts"]
+      "@ui": ["./src/shared/ui/index.ts"],
+
+      // Packages (компоненты, которые притендуют на npm пакет)
+      "@packages/*": ["./src/packages/*"],
+      "@packages": ["./src/packages/index.(ts|tsx)"]
     },
 
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",

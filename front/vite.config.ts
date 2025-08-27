@@ -40,7 +40,10 @@ export default defineConfig({
       "@utils": resolve(sharedPath, "utils"),
       "@hooks": resolve(sharedPath, "hooks"),
       "@lib": resolve(sharedPath, "lib"),
-      "@ui": resolve(sharedPath, "ui")
+      "@ui": resolve(sharedPath, "ui"),
+
+      // Packages
+      "@packages": resolve(srcPath, "packages")
     }
   }
 })

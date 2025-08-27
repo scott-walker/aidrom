@@ -54,16 +54,16 @@ export const PanelLayout = createLayout(config, ({ children }: PageLayoutProps):
         {header}
       </header>
       <div className="flex-1 flex justify-between bg-background">
-        <aside className="p-10 bg-background-hard text-foreground">
+        <aside className="p-10 w-2/12 bg-background-hard text-foreground">
           <h1>SIDEBAR</h1>
           <Menu items={menuItems} />
 
           {sidebar}
         </aside>
 
-        <main className="flex-1 p-20">{children}</main>
+        <main className="flex-1 p-20 w-8/12">{children}</main>
 
-        <aside className="p-10 bg-background-hard text-foreground">
+        <aside className="p-10 w-2/12 bg-background-hard text-foreground">
           <h1>INFOBAR</h1>
           {infobar}
         </aside>

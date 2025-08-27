@@ -1,12 +1,64 @@
 import type { ComponentProps, FC, ReactNode } from "react"
+import { useState, useRef, useCallback } from "react"
 import { Scrollbar as ScrollbarCustom } from "react-scrollbars-custom"
-import { useAutoHide } from "./useAutoHide"
 
 /**
  * Пропсы скроллбара
  * @namespace UI.Scrollbar.Props
  */
 type Props = ComponentProps<typeof ScrollbarCustom>
+
+/**
+ * Пропсы для хука
+ * @namespace UI.Scrollbar.useAutoHide.Props
+ * @property {number} delay - задержка в миллисекундах
+ */
+type Config = Partial<{
+  delay: number
+}>
+
+/**
+ * API для скроллбара
+ * @namespace UI.Scrollbar.useAutoHide.API
+ * @property {boolean} visible - видимость скроллбара
+ * @property {() => void} onScrollStart - обработчик начала скролла
+ * @property {() => void} onScrollStop - обработчик окончания скролла
+ */
+type API = {
+  visible: boolean
+  onScrollStart: () => void
+  onScrollStop: () => void
+}
+
+/**
+ * Хук для автоматического скрытия скроллбара
+ * @namespace UI.Scrollbar.useAutoHide
+ * @param {Config} config - конфигурация хука
+ * @returns {API}
+ */
+function useAutoHide(config: Config = {}): API {
+  const DEFAULT_DELAY = 150
+
+  const { delay = DEFAULT_DELAY } = config
+  const [visible, setVisible] = useState(false)
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
+
+  const onScrollStart = useCallback(() => {
+    if (timerRef.current) clearTimeout(timerRef.current)
+
+    setVisible(true)
+  }, [])
+
+  const onScrollStop = useCallback(() => {
+    timerRef.current = setTimeout(() => setVisible(false), delay)
+  }, [delay])
+
+  return {
+    visible,
+    onScrollStart,
+    onScrollStop
+  }
+}
 
 /**
  * Скроллбар

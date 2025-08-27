@@ -1,24 +1,24 @@
-import { useContext, type ComponentProps, type FC, type ReactNode } from "react"
+import type { ComponentProps, FC, ReactNode } from "react"
 import { IconButton } from "@ui/IconButton"
-import { LayoutContext, type ILayoutContext } from "./context"
+import { useLayout } from "@packages/Lucent"
 
 /**
  * Пропсы триггера инфобара
- * @namespace Layouts.Lucent.InfobarTrigger.Props
+ * @namespace Lucent.InfobarTrigger.Props
  */
 type Props = ComponentProps<"button">
 
 /**
  * Триггер для инфобара
- * @namespace Layouts.Lucent.InfobarTrigger
+ * @namespace Lucent.InfobarTrigger
  * @param {Props} props
  * @returns {ReactNode}
  */
 export const InfobarTrigger: FC<Props> = ({ ...props }: Props): ReactNode => {
-  const { isInfobarVisible, toggleInfobarVisible } = useContext(LayoutContext) as ILayoutContext
+  const { isInfobarVisible, toggleInfobarMode } = useLayout()
 
   // Поскольку инфобар находится справа, то sidebar-open - это закрытие, а sidebar-close - это открытие
   const iconName = isInfobarVisible() ? "sidebar-open" : "sidebar-close"
 
-  return <IconButton circle icon={iconName} onClick={toggleInfobarVisible} {...props} />
+  return <IconButton circle icon={iconName} onClick={toggleInfobarMode} {...props} />
 }

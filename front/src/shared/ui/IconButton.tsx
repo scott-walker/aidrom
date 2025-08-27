@@ -16,7 +16,7 @@ export type Props = ComponentProps<"button"> & {
   iconClassName?: string
   rounded?: Rounded
   circle?: boolean
-  hoverVariant?: "text" | "outline" | "filled"
+  hoverVariant?: "text" | "outline" | "filled" | null
 }
 
 /**
@@ -32,7 +32,7 @@ export const IconButton: FC<Props> = ({
   variant = "ghost",
   size = "md",
   rounded = "sm",
-  hoverVariant = "outline",
+  hoverVariant = null,
   circle = false,
   className = "",
   iconSize = 24,
@@ -54,28 +54,12 @@ export const IconButton: FC<Props> = ({
       }
     },
     defaultVariants: {
-      hoverVariant: "text",
+      hoverVariant: null,
       circle: false
     }
   })
   const buttonClasses = cn(buttonVariants({ hoverVariant, circle }), className)
   const iconClasses = cn(iconClassName)
-
-  // "ghost-filled": cn(
-  //   "bg-transparent",
-  //   "text-foreground",
-  //   "dark:shadow-none",
-  //   "hover:text-primary-foreground",
-  //   "hover:text-primary"
-  // ),
-  // "ghost-outline": cn(
-  //   "bg-transparent",
-  //   "text-foreground",
-  //   "dark:shadow-none",
-  //   "hover:text-primary-foreground",
-  //   "hover:text-primary",
-  //   "hover:border-primary"
-  // ),
 
   return (
     <Button variant={variant} size={size} rounded={rounded} className={buttonClasses} {...props}>
