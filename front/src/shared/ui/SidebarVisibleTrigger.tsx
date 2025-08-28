@@ -2,29 +2,29 @@ import type { ComponentProps, FC, ReactNode } from "react"
 import { useHover } from "@hooks/useHover"
 import { cn } from "@utils/jsxtools"
 import { IconButton } from "@ui/IconButton"
-import { useLayout } from "@packages/Lucent/context"
+import { useLayout } from "@packages/Lucent"
 
 /**
  * Пропсы триггера сайдбара
- * @namespace Shared.UI.SidebarTrigger.Props
+ * @namespace Shared.UI.SidebarVisibleTrigger.Props
  */
 type Props = ComponentProps<"button">
 
 /**
  * Названия иконок триггера сайдбара
- * @namespace Shared.UI.SidebarTrigger.IconName
+ * @namespace Shared.UI.SidebarVisibleTrigger.IconName
  */
 type IconName = "menu" | "chevron-left" | "chevron-right"
 
 /**
  * Триггер для сайдбара
- * @namespace Shared.UI.SidebarTrigger
+ * @namespace Shared.UI.SidebarVisibleTrigger
  */
-export const SidebarTrigger: FC<Props> = ({ ...props }): ReactNode => {
+export const SidebarVisibleTrigger: FC<Props> = ({ ...props }): ReactNode => {
   const { isHovered, handlers } = useHover()
-  const { isSidebarCollapsed, toggleSidebarMode } = useLayout()
+  const { isSidebarHidden, toggleSidebarVisibleMode } = useLayout()
 
-  const actionIconName = isSidebarCollapsed() ? "chevron-right" : "chevron-left"
+  const actionIconName = isSidebarHidden() ? "chevron-right" : "chevron-left"
   const iconName: IconName = isHovered ? actionIconName : "menu"
   const buttonClasses = cn("p-0 w-10 h-10")
   const iconClasses = cn("transition-transform", "duration-200", "ease-in-out", isHovered && "rotate-360")
@@ -34,7 +34,7 @@ export const SidebarTrigger: FC<Props> = ({ ...props }): ReactNode => {
       icon={iconName}
       iconClassName={iconClasses}
       className={buttonClasses}
-      onClick={toggleSidebarMode}
+      onClick={toggleSidebarVisibleMode}
       {...props}
       {...handlers}
     />

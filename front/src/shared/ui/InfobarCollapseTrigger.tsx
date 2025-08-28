@@ -4,21 +4,21 @@ import { useLayout } from "@packages/Lucent"
 
 /**
  * Пропсы триггера инфобара
- * @namespace Lucent.InfobarTrigger.Props
+ * @namespace Shared.UI.InfobarCollapseTrigger.Props
  */
 type Props = ComponentProps<"button">
 
 /**
  * Триггер для инфобара
- * @namespace Lucent.InfobarTrigger
+ * @namespace Shared.UI.InfobarCollapseTrigger
  * @param {Props} props
  * @returns {ReactNode}
  */
-export const InfobarTrigger: FC<Props> = ({ ...props }: Props): ReactNode => {
-  const { isInfobarVisible, toggleInfobarMode } = useLayout()
+export const InfobarCollapseTrigger: FC<Props> = ({ ...props }: Props): ReactNode => {
+  const { isInfobarCollapsed, toggleInfobarCollapsedMode } = useLayout()
 
   // Поскольку инфобар находится справа, то sidebar-open - это закрытие, а sidebar-close - это открытие
-  const iconName = isInfobarVisible() ? "sidebar-open" : "sidebar-close"
+  const iconName = isInfobarCollapsed() ? "sidebar-close" : "sidebar-open"
 
-  return <IconButton circle icon={iconName} onClick={toggleInfobarMode} {...props} />
+  return <IconButton icon={iconName} onClick={toggleInfobarCollapsedMode} {...props} />
 }
