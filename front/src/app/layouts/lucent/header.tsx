@@ -1,9 +1,11 @@
 import type { ReactNode } from "react"
 import { usePage } from "@lib/page-api"
-import { SidebarTrigger } from "@shared/ui/SidebarTrigger"
 import { ThemeTrigger } from "@shared/ui/ThemeTrigger"
-import { InfobarTrigger } from "@shared/ui/InfobarTrigger"
-import { FooterTrigger } from "@shared/ui/FooterTrigger"
+import { FooterVisibleTrigger } from "@shared/ui/FooterVisibleTrigger"
+import { SidebarVisibleTrigger } from "@shared/ui/SidebarVisibleTrigger"
+import { SidebarCollapseTrigger } from "@shared/ui/SidebarCollapseTrigger"
+import { InfobarVisibleTrigger } from "@shared/ui/InfobarVisibleTrigger"
+import { InfobarCollapseTrigger } from "@shared/ui/InfobarCollapseTrigger"
 
 /**
  * Заголовок макета
@@ -18,12 +20,14 @@ export const Header = (): ReactNode => {
 
   return (
     <>
-      <SidebarTrigger />
+      <SidebarVisibleTrigger />
+      <SidebarCollapseTrigger />
       <h1>HEADER: {title}</h1>
       {header}
       <div className="ml-auto flex items-center gap-4">
-        <InfobarTrigger />
-        <FooterTrigger />
+        <InfobarVisibleTrigger />
+        <InfobarCollapseTrigger />
+        <FooterVisibleTrigger />
         <ThemeTrigger />
       </div>
     </>

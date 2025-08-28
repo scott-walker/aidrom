@@ -133,7 +133,7 @@
 }
 
 /* 🌙  */
-& [data-theme="dark"] {
+& [data-theme-mode="dark"] {
   /* Base */
   --color-background-soft: var(--color-neutral-5);
   --color-background: var(--color-neutral-4);

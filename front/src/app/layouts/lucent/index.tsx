@@ -29,11 +29,13 @@ export const LucentLayout = createLayout(config, ({ children }: PageLayoutProps)
   const infobar = getSlot("infobar")
   const config: LayoutConfig = normalizeConfig({
     modes: {
-      theme: "light",
-      page: "default",
-      sidebar: "expanded",
-      footer: "visible",
-      infobar: "visible"
+      theme: "dark",
+      headerVisible: "visible",
+      footerVisible: "visible",
+      sidebarVisible: "visible",
+      sidebarCollapsed: "collapsed",
+      infobarVisible: "visible",
+      infobarCollapsed: "collapsed"
     },
     slots: {
       header: <Header />,

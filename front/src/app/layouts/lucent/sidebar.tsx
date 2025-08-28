@@ -41,9 +41,8 @@ export const SidebarHeader = (): ReactNode => {
  * @returns {ReactNode}
  */
 export const SidebarBody = (): ReactNode => {
-  const { getSlot } = usePage()
+  const sidebar = usePage().getSlot("sidebar")
   const collapsed = useLayout().isSidebarCollapsed()
-  const sidebar = getSlot("sidebar")
 
   return (
     <>

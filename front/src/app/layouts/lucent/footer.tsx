@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 import { usePage } from "@lib/page-api"
+import { HeaderVisibleTrigger } from "@shared/ui/HeaderVisibleTrigger"
 
 /**
  * Футер макета
@@ -13,6 +14,7 @@ export const Footer = (): ReactNode => {
   return (
     <>
       <h1>FOOTER</h1>
+      <HeaderVisibleTrigger />
       {footer}
     </>
   )
