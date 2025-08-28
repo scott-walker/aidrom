@@ -4,27 +4,27 @@ import { Scrollbar as ScrollbarCustom } from "react-scrollbars-custom"
 
 /**
  * Пропсы скроллбара
- * @namespace UI.Scrollbar.Props
+ * @namespace Lucent.UI.Scrollbar.Props
  */
 type Props = ComponentProps<typeof ScrollbarCustom>
 
 /**
  * Пропсы для хука
- * @namespace UI.Scrollbar.useAutoHide.Props
+ * @namespace Lucent.UI.Scrollbar.useAutoHide.Props
  * @property {number} delay - задержка в миллисекундах
  */
-type Config = Partial<{
+type AutoHideConfig = Partial<{
   delay: number
 }>
 
 /**
  * API для скроллбара
- * @namespace UI.Scrollbar.useAutoHide.API
+ * @namespace Lucent.UI.Scrollbar.useAutoHide.API
  * @property {boolean} visible - видимость скроллбара
  * @property {() => void} onScrollStart - обработчик начала скролла
  * @property {() => void} onScrollStop - обработчик окончания скролла
  */
-type API = {
+type AutoHideAPI = {
   visible: boolean
   onScrollStart: () => void
   onScrollStop: () => void
@@ -32,11 +32,9 @@ type API = {
 
 /**
  * Хук для автоматического скрытия скроллбара
- * @namespace UI.Scrollbar.useAutoHide
- * @param {Config} config - конфигурация хука
- * @returns {API}
+ * @namespace Lucent.UI.Scrollbar.useAutoHide
  */
-function useAutoHide(config: Config = {}): API {
+const useAutoHide = (config: AutoHideConfig = {}): AutoHideAPI => {
   const DEFAULT_DELAY = 150
 
   const { delay = DEFAULT_DELAY } = config
@@ -62,11 +60,9 @@ function useAutoHide(config: Config = {}): API {
 
 /**
  * Скроллбар
- * @namespace UI.Scrollbar
- * @param {Props} props.children - контент
- * @returns {ReactNode}
+ * @namespace Lucent.UI.Scrollbar
  */
-export const Scrollbar: FC<Props> = ({ children, ...props }: Props): ReactNode => {
+export const Scrollbar: FC<Props> = ({ children, ...props }): ReactNode => {
   const { visible, onScrollStart, onScrollStop } = useAutoHide()
   const SCROLLBAR_SIZE = ".35rem"
 

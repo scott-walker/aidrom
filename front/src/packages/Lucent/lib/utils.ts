@@ -1,13 +1,13 @@
 import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
-import { cva } from "class-variance-authority"
 import type { LayoutConfig } from "./types"
 import {
   THEME_MODE_LIGHT,
-  PAGE_MODE_DEFAULT,
-  SIDEBAR_MODE_EXPANDED,
+  HEADER_MODE_VISIBLE,
   FOOTER_MODE_VISIBLE,
-  INFOBAR_MODE_HIDDEN
+  SIDEBAR_MODE_VISIBLE,
+  SIDEBAR_MODE_COLLAPSED,
+  INFOBAR_MODE_VISIBLE,
+  INFOBAR_MODE_COLLAPSED
 } from "./constants"
 
 /**
@@ -15,15 +15,7 @@ import {
  * @param inputs - массив классов
  * @returns строковый класс
  */
-export const cn = (...inputs: ClassValue[]): string => twMerge(clsx(inputs))
-
-/**
- * Создает классы на основе вариантов
- * @param baseClasses - базовые классы
- * @param variants - варианты
- * @returns строковый класс
- */
-export { cva }
+export const cn = (...inputs: ClassValue[]): string => clsx(inputs)
 
 /**
  * Нормализовать конфигурацию макета
@@ -40,10 +32,12 @@ export const normalizeConfig = (config: LayoutConfig): LayoutConfig => {
   return {
     modes: {
       theme: modes.theme ?? THEME_MODE_LIGHT,
-      page: modes.page ?? PAGE_MODE_DEFAULT,
-      sidebar: modes.sidebar ?? SIDEBAR_MODE_EXPANDED,
-      footer: modes.footer ?? FOOTER_MODE_VISIBLE,
-      infobar: modes.infobar ?? INFOBAR_MODE_HIDDEN
+      headerVisible: modes.headerVisible ?? HEADER_MODE_VISIBLE,
+      footerVisible: modes.footerVisible ?? FOOTER_MODE_VISIBLE,
+      sidebarVisible: modes.sidebarVisible ?? SIDEBAR_MODE_VISIBLE,
+      sidebarCollapsed: modes.sidebarCollapsed ?? SIDEBAR_MODE_COLLAPSED,
+      infobarVisible: modes.infobarVisible ?? INFOBAR_MODE_VISIBLE,
+      infobarCollapsed: modes.infobarCollapsed ?? INFOBAR_MODE_COLLAPSED
     },
     slots: {
       header: slots.header ?? null,

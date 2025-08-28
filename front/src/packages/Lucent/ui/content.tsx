@@ -1,13 +1,11 @@
 import type { ReactNode } from "react"
-import type { ContentProps } from "./types"
-import { Scrollbar } from "./Scrollbar"
-import styles from "./Lucent.module.css"
+import type { ContentProps } from "../lib/types"
+import { Scrollbar } from "./scrollbar"
+import styles from "../style/lucent.module.css"
 
 /**
- * Контент макета
- * @namespace Lucent.Content
- * @param {ContentProps} props.children - контент
- * @returns {ReactNode}
+ * Основной контент в макете
+ * @namespace Lucent.UI.Content
  */
 export const Content = ({ children }: ContentProps): ReactNode => {
   return (

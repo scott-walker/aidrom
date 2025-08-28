@@ -1,16 +1,9 @@
 /** Макет "Lucent" */
-@import "tailwindcss";
 
-/* @custom-variant dark (&:is([data-theme="dark"] *));
-@custom-variant page-expanded (&:is([data-page-expanded="expanded"] *));
-@custom-variant sidebar-collapsed (&:is([data-sidebar-collapsed="collapsed"] *));
-@custom-variant footer-visible (&:is([data-footer-visible="visible"] *));
-@custom-variant infobar-visible (&:is([data-infobar-visible="visible"] *)); */
-
-@theme {
+:root {
   --layout-separator-color: var(--color-border);
   --layout-animation-change-duration: 0.15s;
-  --layout-animation-inner-change-duration: 0.5s;
+  --layout-animation-inner-change-duration: 1s;
 
   --header-height: 5rem;
   --header-gap: 1.5rem;
@@ -42,22 +35,18 @@
   --infobar-offset-x: 2rem;
   --infobar-offset-y: 2rem;
   --infobar-background-color: var(--color-background-soft);
+  --infobar-collapsed-width: 5rem;
+  --infobar-collapsed-background-color: var(--color-background-soft);
 }
 
 /* Темная движуха */
 
-[data-theme="dark"] {
+[data-theme-mode="dark"] {
   --sidebar-collapsed-background-color: var(--color-background-soft);
   --header-background-color: var(--color-background-soft);
   --footer-background-color: var(--color-background-hard);
   --infobar-background-color: var(--color-background-soft);
 }
-
-/* Режим оттопыренности лейаута 🤪 */
-
-/* [data-layout-mode="expanded"] {
-  --layout-offset-x: 3rem;
-} */
 
 /* Layout */
 
@@ -83,20 +72,22 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  width: calc(100vw - var(--sidebar-width));
-  transition: width var(--layout-animation-change-duration) ease-in-out;
-
-  &.expanded {
-    width: calc(100vw - var(--sidebar-collapsed-width));
-  }
 }
 
 /* Header */
 
 .layoutHeader {
+  position: relative;
+  z-index: 10;
   height: var(--header-height);
+  overflow: hidden;
   border-block-end: 0.0625rem solid var(--layout-separator-color);
   background-color: var(--header-background-color);
+  transition: height var(--layout-animation-change-duration) ease-in-out;
+
+  &.hidden {
+    height: 0;
+  }
 }
 
 .layoutHeaderInner {
@@ -106,6 +97,13 @@
   padding-inline: var(--header-offset-x);
   padding-block: var(--header-offset-y);
   height: 100%;
+  opacity: 1;
+  transition: opacity var(--layout-animation-inner-change-duration) ease-in-out;
+
+  &.hidden {
+    opacity: 0;
+    transition: none;
+  }
 }
 
 /* Body */
@@ -115,8 +113,6 @@
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  height: calc(100vh - var(--header-height) - var(--footer-height));
-  transition: height var(--layout-animation-change-duration) ease-in-out;
 }
 
 /* Content */
@@ -139,11 +135,12 @@
 
 .layoutFooter {
   height: var(--footer-height);
+  overflow: hidden;
   border-block-start: 0.0625rem solid var(--layout-separator-color);
   background-color: var(--footer-background-color);
   transition: height var(--layout-animation-change-duration) ease-in-out;
 
-  &.footerHidden {
+  &.hidden {
     height: 0;
   }
 }
@@ -158,7 +155,7 @@
   opacity: 1;
   transition: opacity var(--layout-animation-inner-change-duration) ease-in-out;
 
-  &.footerHidden {
+  &.hidden {
     opacity: 0;
     transition: none;
   }
@@ -172,8 +169,11 @@
   box-shadow: var(--shadow-ghost-md);
   transition: width var(--layout-animation-change-duration) ease-in-out;
 
-  &.infobarHidden {
-    width: 0;
+  &.hidden {
+    display: none;
+  }
+  &.collapsed {
+    width: var(--infobar-collapsed-width);
   }
 }
 
@@ -184,28 +184,35 @@
   padding-inline: var(--infobar-offset-x);
   height: 100%;
   opacity: 1;
-  transition: opacity var(--layout-animation-inner-change-duration) ease-in-out;
+  animation: innerShow var(--layout-animation-inner-change-duration) ease-in-out forwards;
 
-  &.infobarHidden {
-    opacity: 0;
-    transition: none;
+  /* &.hidden {} */
+  &.collapsed {
+    animation: innerHide var(--layout-animation-inner-change-duration) ease-in-out forwards;
   }
 }
 
 /* Sidebar */
 
 .layoutSidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   position: relative;
   z-index: 10;
+  width: var(--sidebar-width);
+  height: 100%;
   overflow: hidden;
   box-shadow: var(--shadow-ghost-xl);
-  animation: sidebarExpand var(--layout-animation-change-duration) ease-in-out forwards;
-  /* width: var(--sidebar-width); */
-  /* transition: width 0.1 ease-in-out; */
+  transition: width var(--layout-animation-change-duration) ease-in-out;
+  /* animation: sidebarExpand var(--layout-animation-change-duration) ease-in-out forwards; */
 
+  &.hidden {
+    display: none;
+  }
   &.collapsed {
-    /* width: var(--sidebar-collapsed-width); */
-    animation: sidebarCollapse var(--layout-animation-change-duration) ease-in-out forwards;
+    width: var(--sidebar-collapsed-width);
+    /* animation: sidebarCollapse var(--layout-animation-change-duration) ease-in-out forwards; */
   }
 }
 
@@ -213,6 +220,9 @@
   height: var(--sidebar-header-height);
   border-block-end: 0.0625rem solid var(--layout-separator-color);
   background-color: var(--color-background-soft);
+
+  /* &.hidden {} */
+  /* &.collapsed {} */
 }
 
 .layoutSidebarHeaderInner {
@@ -222,14 +232,17 @@
   height: 100%;
   animation: innerShow var(--layout-animation-inner-change-duration) ease-in-out forwards;
 
+  /* &.hidden {} */
   &.collapsed {
     animation: innerHide var(--layout-animation-inner-change-duration) ease-in-out forwards;
   }
 }
 
 .layoutSidebarBody {
-  flex: 1;
-  height: calc(100vh - var(--sidebar-header-height) - var(--sidebar-footer-height));
+  flex-grow: 1;
+
+  /* &.hidden {} */
+  /* &.collapsed {} */
 }
 
 .layoutSidebarBodyInner {
@@ -239,15 +252,20 @@
   height: 100%;
   animation: innerShow var(--layout-animation-inner-change-duration) ease-in-out forwards;
 
+  /* &.hidden {} */
   &.collapsed {
     animation: innerHide var(--layout-animation-inner-change-duration) ease-in-out forwards;
   }
 }
 
 .layoutSidebarFooter {
+  margin-top: auto;
   height: var(--sidebar-footer-height);
   background: var(--sidebar-footer-background-color);
   color: var(--sidebar-footer-text-color);
+
+  /* &.hidden {} */
+  /* &.collapsed {} */
 }
 
 .layoutSidebarFooterInner {
@@ -258,11 +276,13 @@
   height: 100%;
   animation: innerShow var(--layout-animation-inner-change-duration) ease-in-out forwards;
 
+  /* &.hidden {} */
   &.collapsed {
     animation: innerHide var(--layout-animation-inner-change-duration) ease-in-out forwards;
   }
 }
 
+/* Анимашки */
 @keyframes sidebarExpand {
   0% {
     width: var(--sidebar-collapsed-width);

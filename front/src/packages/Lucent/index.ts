@@ -1,4 +1,4 @@
-export type { ProviderProps, LayoutConfig } from "./types"
-export { Lucent } from "./Lucent"
-export { useLayout } from "./context"
-export { normalizeConfig } from "./utils"
+export type { LayoutConfig } from "./lib/types"
+export { useLayout } from "./lib/context"
+export { normalizeConfig } from "./lib/utils"
+export { Lucent } from "./lucent"

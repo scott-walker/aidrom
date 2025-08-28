@@ -10,21 +10,25 @@ import type {
   LayoutSlotValue,
   SidebarSlots,
   SidebarSlot
-} from "./types"
+} from "./lib/types"
 import {
+  THEME_MODE_LIGHT,
+  THEME_MODE_DARK,
+  HEADER_MODE_HIDDEN,
+  HEADER_MODE_VISIBLE,
   FOOTER_MODE_HIDDEN,
   FOOTER_MODE_VISIBLE,
+  SIDEBAR_MODE_COLLAPSED,
+  SIDEBAR_MODE_HIDDEN,
+  SIDEBAR_MODE_VISIBLE,
+  SIDEBAR_MODE_EXPANDED,
   INFOBAR_MODE_HIDDEN,
   INFOBAR_MODE_VISIBLE,
-  PAGE_MODE_DEFAULT,
-  PAGE_MODE_EXPANDED,
-  SIDEBAR_MODE_COLLAPSED,
-  SIDEBAR_MODE_EXPANDED,
-  THEME_MODE_LIGHT,
-  THEME_MODE_DARK
-} from "./constants"
-import { LayoutContext } from "./context"
-import { normalizeConfig } from "./utils"
+  INFOBAR_MODE_COLLAPSED,
+  INFOBAR_MODE_EXPANDED
+} from "./lib/constants"
+import { LayoutContext } from "./lib/context"
+import { normalizeConfig } from "./lib/utils"
 
 /**
  * Провайдер макета
@@ -96,54 +100,79 @@ export const Provider: FC<ProviderProps> = ({ children, config }: ProviderProps)
   const getSidebarSlot = (slot: SidebarSlot): ReactNode => slots.sidebar?.[slot] ?? null
 
   // Проверки режимов макета
-  const isThemeLight = () => modes.theme === THEME_MODE_LIGHT
   const isThemeDark = () => modes.theme === THEME_MODE_DARK
-  const isSidebarCollapsed = () => modes.sidebar === SIDEBAR_MODE_COLLAPSED
-  const isSidebarExpanded = () => modes.sidebar === SIDEBAR_MODE_EXPANDED
-  const isPageDefault = () => modes.page === PAGE_MODE_DEFAULT
-  const isPageExpanded = () => modes.page === PAGE_MODE_EXPANDED
-  const isFooterVisible = () => modes.footer === FOOTER_MODE_VISIBLE
-  const isFooterHidden = () => modes.footer === FOOTER_MODE_HIDDEN
-  const isInfobarVisible = () => modes.infobar === INFOBAR_MODE_VISIBLE
-  const isInfobarHidden = () => modes.infobar === INFOBAR_MODE_HIDDEN
+  const isHeaderHidden = () => modes.headerVisible === HEADER_MODE_HIDDEN
+  const isFooterHidden = () => modes.footerVisible === FOOTER_MODE_HIDDEN
+  const isSidebarCollapsed = () => modes.sidebarCollapsed === SIDEBAR_MODE_COLLAPSED
+  const isSidebarHidden = () => modes.sidebarVisible === SIDEBAR_MODE_HIDDEN
+  const isInfobarCollapsed = () => modes.infobarCollapsed === INFOBAR_MODE_COLLAPSED
+  const isInfobarHidden = () => modes.infobarVisible === INFOBAR_MODE_HIDDEN
+
+  // Проверки наличия слотов макета
+  const hasSidebar = () => !!slots.sidebar && Object.values(slots.sidebar).some(Boolean)
+  const hasHeader = () => !!slots.header
+  const hasContent = () => !!slots.content
+  const hasInfobar = () => !!slots.infobar
+  const hasFooter = () => !!slots.footer
 
   // Переключатели режимов макета
-  const toggleThemeMode = () => setMode("theme", isThemeLight() ? THEME_MODE_DARK : THEME_MODE_LIGHT)
-  const toggleSidebarMode = () => {
-    setMode("sidebar", isSidebarCollapsed() ? SIDEBAR_MODE_EXPANDED : SIDEBAR_MODE_COLLAPSED)
+  const toggleThemeMode = () => setMode("theme", isThemeDark() ? THEME_MODE_LIGHT : THEME_MODE_DARK)
+  const toggleHeaderVisibleMode = () => {
+    setMode("headerVisible", isHeaderHidden() ? HEADER_MODE_VISIBLE : HEADER_MODE_HIDDEN)
   }
-  const togglePageMode = () => setMode("page", isPageDefault() ? PAGE_MODE_EXPANDED : PAGE_MODE_DEFAULT)
-  const toggleFooterMode = () => setMode("footer", isFooterVisible() ? FOOTER_MODE_HIDDEN : FOOTER_MODE_VISIBLE)
-  const toggleInfobarMode = () => setMode("infobar", isInfobarVisible() ? INFOBAR_MODE_HIDDEN : INFOBAR_MODE_VISIBLE)
+  const toggleFooterVisibleMode = () => {
+    setMode("footerVisible", isFooterHidden() ? FOOTER_MODE_VISIBLE : FOOTER_MODE_HIDDEN)
+  }
+  const toggleSidebarVisibleMode = () => {
+    setMode("sidebarVisible", isSidebarHidden() ? SIDEBAR_MODE_VISIBLE : SIDEBAR_MODE_HIDDEN)
+  }
+  const toggleSidebarCollapsedMode = () => {
+    setMode("sidebarCollapsed", isSidebarCollapsed() ? SIDEBAR_MODE_EXPANDED : SIDEBAR_MODE_COLLAPSED)
+  }
+  const toggleInfobarVisibleMode = () => {
+    setMode("infobarVisible", isInfobarHidden() ? INFOBAR_MODE_VISIBLE : INFOBAR_MODE_HIDDEN)
+  }
+  const toggleInfobarCollapsedMode = () => {
+    setMode("infobarCollapsed", isInfobarCollapsed() ? INFOBAR_MODE_EXPANDED : INFOBAR_MODE_COLLAPSED)
+  }
 
   // API макета
   const api: LayoutApi = {
     modes,
     slots,
+
     setModes,
     setMode,
     setSlots,
     setSlot,
     setSidebarSlots,
     setSidebarSlot,
+
     getMode,
     getSlot,
     getSidebarSlot,
-    isThemeLight,
+
+    hasSidebar,
+    hasHeader,
+    hasContent,
+    hasInfobar,
+    hasFooter,
+
     isThemeDark,
-    isSidebarCollapsed,
-    isSidebarExpanded,
-    isPageDefault,
-    isPageExpanded,
-    isFooterVisible,
+    isHeaderHidden,
     isFooterHidden,
-    isInfobarVisible,
+    isSidebarCollapsed,
+    isSidebarHidden,
+    isInfobarCollapsed,
     isInfobarHidden,
+
     toggleThemeMode,
-    toggleSidebarMode,
-    togglePageMode,
-    toggleFooterMode,
-    toggleInfobarMode
+    toggleHeaderVisibleMode,
+    toggleFooterVisibleMode,
+    toggleSidebarVisibleMode,
+    toggleSidebarCollapsedMode,
+    toggleInfobarVisibleMode,
+    toggleInfobarCollapsedMode
   }
 
   return <LayoutContext.Provider value={api}>{children}</LayoutContext.Provider>

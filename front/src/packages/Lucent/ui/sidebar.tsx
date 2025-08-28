@@ -1,14 +1,13 @@
 import type { FC, ReactNode } from "react"
-import type { SidebarSlots, SidebarSlotProps } from "./types"
-import { cn } from "./utils"
-import { useLayout } from "./context"
-import { Scrollbar } from "./Scrollbar"
-import styles from "./Lucent.module.css"
+import type { SidebarSlots, SidebarSlotProps } from "../lib/types"
+import { cn } from "../lib/utils"
+import { useLayout } from "../lib/context"
+import { Scrollbar } from "./scrollbar"
+import styles from "../style/lucent.module.css"
 
 /**
  * Шапка боковой панели макета
- * @namespace Lucent.SidebarHeader
- * @returns {ReactNode}
+ * @namespace Lucent.UI.Sidebar.Header
  */
 const SidebarHeader: FC<SidebarSlotProps> = ({ children, collapsed }): ReactNode => {
   const classes = cn(styles.layoutSidebarHeader, collapsed && styles.collapsed)
@@ -23,8 +22,7 @@ const SidebarHeader: FC<SidebarSlotProps> = ({ children, collapsed }): ReactNode
 
 /**
  * Тело боковой панели макета
- * @namespace Lucent.SidebarBody
- * @returns {ReactNode}
+ * @namespace Lucent.UI.Sidebar.Body
  */
 const SidebarBody: FC<SidebarSlotProps> = ({ children, collapsed }): ReactNode => {
   const classes = cn(styles.layoutSidebarBody, collapsed && styles.collapsed)
@@ -41,8 +39,7 @@ const SidebarBody: FC<SidebarSlotProps> = ({ children, collapsed }): ReactNode =
 
 /**
  * Футер боковой панели макета
- * @namespace Lucent.SidebarFooter
- * @returns {ReactNode}
+ * @namespace Lucent.UI.Sidebar.Footer
  */
 const SidebarFooter: FC<SidebarSlotProps> = ({ children, collapsed }): ReactNode => {
   const classes = cn(styles.layoutSidebarFooter, collapsed && styles.collapsed)
@@ -57,12 +54,18 @@ const SidebarFooter: FC<SidebarSlotProps> = ({ children, collapsed }): ReactNode
 
 /**
  * Сайдбар макета
- * @namespace Lucent.Sidebar
- * @returns {ReactNode}
+ * @namespace Lucent.UI.Sidebar
  */
-export const Sidebar: FC<SidebarSlots> = ({ header, body, footer }: SidebarSlots): ReactNode => {
-  const collapsed = useLayout().isSidebarCollapsed()
-  const classes = cn(styles.layoutSidebar, collapsed && styles.collapsed)
+export const Sidebar: FC<SidebarSlots> = ({ header, body, footer }): ReactNode => {
+  const { isSidebarCollapsed, isSidebarHidden } = useLayout()
+  const collapsed = isSidebarCollapsed()
+  const hidden = isSidebarHidden()
+
+  const classes = cn({
+    [styles.layoutSidebar]: true,
+    [styles.collapsed]: collapsed,
+    [styles.hidden]: hidden
+  })
 
   return (
     <aside className={classes}>

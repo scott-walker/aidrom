@@ -2,14 +2,18 @@ import type { ComponentProps, ReactNode } from "react"
 import {
   THEME_MODE_LIGHT,
   THEME_MODE_DARK,
-  PAGE_MODE_DEFAULT,
-  PAGE_MODE_EXPANDED,
-  SIDEBAR_MODE_EXPANDED,
-  SIDEBAR_MODE_COLLAPSED,
+  HEADER_MODE_VISIBLE,
+  HEADER_MODE_HIDDEN,
   FOOTER_MODE_VISIBLE,
   FOOTER_MODE_HIDDEN,
+  SIDEBAR_MODE_VISIBLE,
+  SIDEBAR_MODE_HIDDEN,
+  SIDEBAR_MODE_COLLAPSED,
+  SIDEBAR_MODE_EXPANDED,
   INFOBAR_MODE_VISIBLE,
-  INFOBAR_MODE_HIDDEN
+  INFOBAR_MODE_HIDDEN,
+  INFOBAR_MODE_COLLAPSED,
+  INFOBAR_MODE_EXPANDED
 } from "./constants"
 
 /**
@@ -61,28 +65,40 @@ export type InfobarProps = ComponentProps<"div">
 export type ThemeMode = typeof THEME_MODE_LIGHT | typeof THEME_MODE_DARK
 
 /**
- * Тип для состояния страницы
- * @namespace Lucent.PageExpanded
+ * Тип для состояния шапки
+ * @namespace Lucent.HeaderVisible
  */
-export type PageMode = typeof PAGE_MODE_DEFAULT | typeof PAGE_MODE_EXPANDED
-
-/**
- * Тип для состояния боковой панели
- * @namespace Lucent.SidebarCollapsed
- */
-export type SidebarMode = typeof SIDEBAR_MODE_COLLAPSED | typeof SIDEBAR_MODE_EXPANDED
+export type HeaderVisibleMode = typeof HEADER_MODE_VISIBLE | typeof HEADER_MODE_HIDDEN
 
 /**
  * Тип для состояния футера
  * @namespace Lucent.FooterVisible
  */
-export type FooterMode = typeof FOOTER_MODE_VISIBLE | typeof FOOTER_MODE_HIDDEN
+export type FooterVisibleMode = typeof FOOTER_MODE_VISIBLE | typeof FOOTER_MODE_HIDDEN
+
+/**
+ * Тип для состояния сайдбара
+ * @namespace Lucent.SidebarVisible
+ */
+export type SidebarVisibleMode = typeof SIDEBAR_MODE_VISIBLE | typeof SIDEBAR_MODE_HIDDEN
+
+/**
+ * Тип для состояния боковой панели
+ * @namespace Lucent.SidebarCollapsed
+ */
+export type SidebarCollapsedMode = typeof SIDEBAR_MODE_COLLAPSED | typeof SIDEBAR_MODE_EXPANDED
 
 /**
  * Тип для состояния информационной панели
  * @namespace Lucent.InfobarVisible
  */
-export type InfobarMode = typeof INFOBAR_MODE_VISIBLE | typeof INFOBAR_MODE_HIDDEN
+export type InfobarVisibleMode = typeof INFOBAR_MODE_VISIBLE | typeof INFOBAR_MODE_HIDDEN
+
+/**
+ * Тип для состояния инфобара
+ * @namespace Lucent.InfobarCollapsed
+ */
+export type InfobarCollapsedMode = typeof INFOBAR_MODE_COLLAPSED | typeof INFOBAR_MODE_EXPANDED
 
 /**
  * Режимы макета
@@ -90,10 +106,12 @@ export type InfobarMode = typeof INFOBAR_MODE_VISIBLE | typeof INFOBAR_MODE_HIDD
  */
 export type LayoutModes = {
   theme?: ThemeMode
-  page?: PageMode
-  sidebar?: SidebarMode
-  footer?: FooterMode
-  infobar?: InfobarMode
+  headerVisible?: HeaderVisibleMode
+  footerVisible?: FooterVisibleMode
+  sidebarVisible?: SidebarVisibleMode
+  sidebarCollapsed?: SidebarCollapsedMode
+  infobarVisible?: InfobarVisibleMode
+  infobarCollapsed?: InfobarCollapsedMode
 }
 
 /**
@@ -178,6 +196,8 @@ export type ProviderProps = {
 /**
  * API макета
  * @namespace Lucent.LayoutApi
+ * @see Lucent.Provider
+ *
  * @property {LayoutModes} modes - режимы макета
  * @property {LayoutSlots} slots - слоты макета
  *
@@ -192,22 +212,27 @@ export type ProviderProps = {
  * @property {function} getSlot - получить слот
  * @property {function} getSidebarSlot - получить слот боковой панели
  *
- * @property {function} isThemeLight - проверить, является ли тема светлой
  * @property {function} isThemeDark - проверить, является ли тема темной
- * @property {function} isSidebarCollapsed - проверить, является ли боковая панель свернутой
- * @property {function} isSidebarExpanded - проверить, является ли боковая панели развернутой
- * @property {function} isPageDefault - проверить, является ли страница по умолчанию
- * @property {function} isPageExpanded - проверить, является ли страница развернутой
- * @property {function} isFooterVisible - проверить, является ли футер видимым
+ * @property {function} isHeaderHidden - проверить, является ли шапка скрытой
  * @property {function} isFooterHidden - проверить, является ли футер скрытым
- * @property {function} isInfobarVisible - проверить, является ли информационная панель видимой
- * @property {function} isInfobarHidden - проверить, является ли информационная панель скрытой
+ * @property {function} isSidebarCollapsed - проверить, является ли сайдбар свернутой
+ * @property {function} isSidebarHidden - проверить, является ли сайдбар скрытым
+ * @property {function} isInfobarCollapsed - проверить, является ли инфобар свернутым
+ * @property {function} isInfobarHidden - проверить, является ли инфобар скрытым
+ *
+ * @property {function} hasSidebar - проверить, есть ли сайдбар
+ * @property {function} hasHeader - проверить, есть ли шапка
+ * @property {function} hasContent - проверить, есть ли контент
+ * @property {function} hasInfobar - проверить, есть ли инфобар
+ * @property {function} hasFooter - проверить, есть ли футер
  *
  * @property {function} toggleThemeMode - переключить режим темы
- * @property {function} toggleSidebarMode - переключить режим боковой панели
- * @property {function} togglePageMode - переключить режим страницы
- * @property {function} toggleFooterMode - переключить режим футера
- * @property {function} toggleInfobarMode - переключить режим информационной панели
+ * @property {function} toggleHeaderVisibleMode - переключить режим шапки
+ * @property {function} toggleFooterVisibleMode - переключить режим футера
+ * @property {function} toggleSidebarVisibleMode - переключить режим сайдбара
+ * @property {function} toggleSidebarCollapsedMode - переключить режим сайдбара
+ * @property {function} toggleInfobarVisibleMode - переключить режим инфобара
+ * @property {function} toggleInfobarCollapsedMode - переключить режим инфобара
  */
 export type LayoutApi = {
   modes: LayoutModes
@@ -227,21 +252,35 @@ export type LayoutApi = {
   getSidebarSlot: (slot: SidebarSlot) => ReactNode
 
   // Проверки режимов
-  isThemeLight: () => boolean
   isThemeDark: () => boolean
-  isSidebarCollapsed: () => boolean
-  isSidebarExpanded: () => boolean
-  isPageDefault: () => boolean
-  isPageExpanded: () => boolean
-  isFooterVisible: () => boolean
+  isHeaderHidden: () => boolean
   isFooterHidden: () => boolean
-  isInfobarVisible: () => boolean
+  isSidebarCollapsed: () => boolean
+  isSidebarHidden: () => boolean
+  isInfobarCollapsed: () => boolean
   isInfobarHidden: () => boolean
+
+  // Проверки наличия слотов
+  hasSidebar: () => boolean
+  hasHeader: () => boolean
+  hasContent: () => boolean
+  hasInfobar: () => boolean
+  hasFooter: () => boolean
 
   // Переключатели режимов
   toggleThemeMode: () => void
-  toggleSidebarMode: () => void
-  togglePageMode: () => void
-  toggleFooterMode: () => void
-  toggleInfobarMode: () => void
+  toggleHeaderVisibleMode: () => void
+  toggleFooterVisibleMode: () => void
+  toggleSidebarVisibleMode: () => void
+  toggleSidebarCollapsedMode: () => void
+  toggleInfobarVisibleMode: () => void
+  toggleInfobarCollapsedMode: () => void
+}
+
+/**
+ * Пропсы для макета "Lucent"
+ * @namespace Lucent.LucentProps
+ */
+export type LucentProps = {
+  config: LayoutConfig
 }
