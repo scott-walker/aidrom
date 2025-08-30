@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from "react-router"
-import { Icon } from "@ui/Icon"
+import { Icon } from "@shared/ui/icon"
 
 /**
  * Макет страницы

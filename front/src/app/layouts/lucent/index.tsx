@@ -1,9 +1,18 @@
 import type { ReactNode } from "react"
+import {
+  type LayoutConfig,
+  Lucent,
+  LucentHeader,
+  LucentBody,
+  LucentFooter,
+  LucentInfobar,
+  LucentSidebar
+} from "@scottwalker/lucent"
 import { createLayout, type PageLayoutConfig, type PageLayoutProps, usePage } from "@lib/page-api"
-import { Lucent, type LayoutConfig, normalizeConfig } from "@packages/Lucent"
+import { cn } from "@utils/jsxtools"
 import { Header } from "./header"
+import { Sidebar } from "./sidebar"
 import { Footer } from "./footer"
-import { SidebarBody, SidebarFooter, SidebarHeader } from "./sidebar"
 
 /**
  * Конфигурация макета панели управления
@@ -27,28 +36,38 @@ export const LucentLayout = createLayout(config, ({ children }: PageLayoutProps)
   const { getSlot } = usePage()
 
   const infobar = getSlot("infobar")
-  const config: LayoutConfig = normalizeConfig({
+  const config: LayoutConfig = {
     modes: {
-      theme: "dark",
-      headerVisible: "visible",
-      footerVisible: "visible",
-      sidebarVisible: "visible",
-      sidebarCollapsed: "collapsed",
-      infobarVisible: "visible",
-      infobarCollapsed: "collapsed"
+      theme: "light",
+      sidebar: "collapsed"
     },
-    slots: {
-      header: <Header />,
-      sidebar: {
-        header: <SidebarHeader />,
-        body: <SidebarBody />,
-        footer: <SidebarFooter />
-      },
-      content: children,
-      infobar: infobar ?? null,
-      footer: <Footer />
+    params: {
+      headerHeight: "var(--layout-header-height)",
+      footerHeight: "var(--layout-footer-height)",
+      sidebarWidth: "var(--layout-sidebar-width)",
+      sidebarCollapsedWidth: "var(--layout-sidebar-collapsed-width)",
+      infobarWidth: "var(--layout-infobar-width)",
+      infobarCollapsedWidth: "var(--layout-infobar-collapsed-width)",
+      transitionDuration: "var(--layout-transition-duration)"
     }
-  })
+  }
+  const classes = cn("h-screen", "w-screen", "bg-background", "text-foreground")
 
-  return <Lucent config={config} />
+  return (
+    <Lucent config={config} className={classes}>
+      <LucentHeader>
+        <Header />
+      </LucentHeader>
+
+      <LucentSidebar>
+        <Sidebar />
+      </LucentSidebar>
+      <LucentBody>{children}</LucentBody>
+      <LucentInfobar>{infobar}</LucentInfobar>
+
+      <LucentFooter>
+        <Footer />
+      </LucentFooter>
+    </Lucent>
+  )
 })

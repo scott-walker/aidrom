@@ -1,6 +1,6 @@
 import type { ComponentProps, FC, ReactNode } from "react"
-import { IconButton } from "@ui/IconButton"
-import { useLayout } from "@packages/Lucent"
+import { useLayout } from "@scottwalker/lucent"
+import { IconButton } from "@shared/ui/icon-button"
 
 /**
  * Пропсы для триггера переключения темы
@@ -14,7 +14,7 @@ type Props = ComponentProps<"button">
  */
 export const ThemeTrigger: FC<Props> = ({ ...props }): ReactNode => {
   const { isThemeDark, toggleThemeMode } = useLayout()
-  const iconName = isThemeDark() ? "sun" : "moon"
+  const iconName = isThemeDark ? "sun" : "moon"
 
   return <IconButton variant="hard" icon={iconName} onClick={toggleThemeMode} {...props} />
 }

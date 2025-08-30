@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 import { usePage } from "@lib/page-api"
-import { HeaderVisibleTrigger } from "@shared/ui/HeaderVisibleTrigger"
+import { HeaderVisibleTrigger } from "@shared/ui/header-visible-trigger"
 
 /**
  * Футер макета

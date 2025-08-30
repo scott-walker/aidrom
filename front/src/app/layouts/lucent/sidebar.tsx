@@ -1,10 +1,11 @@
 import type { ReactNode } from "react"
+import { useLayout } from "@scottwalker/lucent"
 import { usePage } from "@lib/page-api"
-import { Menu, type MenuItems } from "@ui/Menu"
-import { Brand } from "@ui/Brand"
-import { Separator } from "@ui/Separator"
-import { Icon } from "@shared/ui/Icon"
-import { useLayout } from "@packages/Lucent"
+import { Menu, type MenuItems } from "@shared/ui/menu"
+import { Brand } from "@shared/ui/brand"
+import { Separator } from "@shared/ui/separator"
+import { Icon } from "@shared/ui/icon"
+import { cn } from "@utils/jsxtools"
 
 const menuItems: MenuItems = [
   {
@@ -30,9 +31,21 @@ const menuItems: MenuItems = [
  * @returns {ReactNode}
  */
 export const SidebarHeader = (): ReactNode => {
-  const collapsed = useLayout().isSidebarCollapsed()
+  const collapsed = useLayout().isSidebarCollapsed
+  const classes = cn(
+    "flex",
+    "items-center",
+    "justify-center",
+    "h-[var(--layout-header-height)]",
+    "border-b",
+    "border-border"
+  )
 
-  return <Brand size="md" compact={collapsed} />
+  return (
+    <div className={classes}>
+      <Brand size="md" compact={collapsed} />
+    </div>
+  )
 }
 
 /**
@@ -42,16 +55,23 @@ export const SidebarHeader = (): ReactNode => {
  */
 export const SidebarBody = (): ReactNode => {
   const sidebar = usePage().getSlot("sidebar")
-  const collapsed = useLayout().isSidebarCollapsed()
+  const collapsed = useLayout().isSidebarCollapsed
+  const classes = cn(
+    "flex-1",
+    "h-[calc(100vh-var(--layout-header-height)-var(--layout-footer-height))]",
+    "w-full",
+    "overflow-x-hidden",
+    "overflow-y-auto"
+  )
 
   return (
-    <>
+    <div className={classes}>
       <section className="p-4">
         <Menu items={menuItems} compact={collapsed} />
       </section>
       <Separator />
       {sidebar}
-    </>
+    </div>
   )
 }
 
@@ -61,19 +81,43 @@ export const SidebarBody = (): ReactNode => {
  * @returns {ReactNode}
  */
 export const SidebarFooter = (): ReactNode => {
-  const collapsed = useLayout().isSidebarCollapsed()
+  const collapsed = useLayout().isSidebarCollapsed
+  const classes = cn(
+    "flex",
+    "items-center",
+    "justify-center",
+    "h-[var(--layout-footer-height)]",
+    "gap-4",
+    "bg-gradient-brand",
+    "text-primary-foreground"
+  )
 
   return (
-    <div className="flex items-center justify-center gap-4">
+    <div className={classes}>
       <Icon name="audio-lines" size={35} strokeWidth={3} />
       {collapsed || (
         <>
-          <span className="flex items-center text-primary-foreground">
+          <span className="flex items-cente">
             PROTO
             <Icon name="copyright" size={25} strokeWidth={3} /> AI
           </span>
         </>
       )}
     </div>
+  )
+}
+
+/**
+ * Сайдбар
+ * @namespace App.Layouts.Lucent.Sidebar
+ * @returns {ReactNode}
+ */
+export const Sidebar = (): ReactNode => {
+  return (
+    <>
+      <SidebarHeader />
+      <SidebarBody />
+      <SidebarFooter />
+    </>
   )
 }

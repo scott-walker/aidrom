@@ -1,6 +1,6 @@
 import type { ComponentProps, FC, ReactNode } from "react"
-import { useLayout } from "@packages/Lucent"
-import { IconButton } from "@ui/IconButton"
+import { useLayout } from "@scottwalker/lucent"
+import { IconButton } from "@shared/ui/icon-button"
 import { cn } from "@utils/jsxtools"
 
 /**
@@ -17,7 +17,7 @@ type Props = ComponentProps<"button">
 export const FooterVisibleTrigger: FC<Props> = ({ ...props }: Props): ReactNode => {
   const { isFooterHidden, toggleFooterVisibleMode } = useLayout()
   const iconClasses = cn("rotate-270")
-  const iconName = isFooterHidden() ? "sidebar-open" : "sidebar-close"
+  const iconName = isFooterHidden ? "sidebar-open" : "sidebar-close"
 
   return <IconButton icon={iconName} iconClassName={iconClasses} onClick={toggleFooterVisibleMode} {...props} />
 }

@@ -1,11 +1,12 @@
 import type { ReactNode } from "react"
 import { usePage } from "@lib/page-api"
-import { ThemeTrigger } from "@shared/ui/ThemeTrigger"
-import { FooterVisibleTrigger } from "@shared/ui/FooterVisibleTrigger"
-import { SidebarVisibleTrigger } from "@shared/ui/SidebarVisibleTrigger"
-import { SidebarCollapseTrigger } from "@shared/ui/SidebarCollapseTrigger"
-import { InfobarVisibleTrigger } from "@shared/ui/InfobarVisibleTrigger"
-import { InfobarCollapseTrigger } from "@shared/ui/InfobarCollapseTrigger"
+import { ThemeTrigger } from "@shared/ui/theme-trigger"
+import { FooterVisibleTrigger } from "@shared/ui/footer-visible-trigger"
+import { SidebarVisibleTrigger } from "@shared/ui/sidebar-visible-trigger"
+import { SidebarCollapseTrigger } from "@shared/ui/sidebar-collapse-trigger"
+import { InfobarVisibleTrigger } from "@shared/ui/infobar-visible-trigger"
+import { InfobarCollapseTrigger } from "@shared/ui/infobar-collapse-trigger"
+import { cn } from "@utils/jsxtools"
 
 /**
  * Заголовок макета
@@ -17,9 +18,10 @@ export const Header = (): ReactNode => {
   const { getTitle, getSlot } = usePage()
   const title = getTitle()
   const header = getSlot("header")
+  const classes = cn("flex", "items-center", "justify-between", "h-full", "border-b", "border-border")
 
   return (
-    <>
+    <div className={classes}>
       <SidebarVisibleTrigger />
       <SidebarCollapseTrigger />
       <h1>HEADER: {title}</h1>
@@ -30,6 +32,6 @@ export const Header = (): ReactNode => {
         <FooterVisibleTrigger />
         <ThemeTrigger />
       </div>
-    </>
+    </div>
   )
 }

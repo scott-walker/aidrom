@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 import { createPage, type PageConfig } from "@lib/page-api"
-import { Icon } from "@ui/Icon"
+import { Icon } from "@shared/ui/icon"
 
 /**
  * Конфигурация страницы

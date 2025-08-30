@@ -1,6 +1,6 @@
 import { NavLink } from "react-router"
 import { cn, cva } from "@utils/jsxtools"
-import { Icon } from "@ui/Icon"
+import { Icon } from "@ui/icon"
 import type { MenuItem } from "./types"
 
 /**

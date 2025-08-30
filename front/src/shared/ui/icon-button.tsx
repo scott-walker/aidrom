@@ -1,7 +1,7 @@
 import type { ComponentProps, FC, ReactNode } from "react"
 import { cn, cva } from "@utils/jsxtools"
-import { Button, type Size, type Variant, type Rounded } from "@ui/Button"
-import { Icon, type IconName } from "@ui/Icon"
+import { Button, type Size, type Variant, type Rounded } from "@shared/ui/button"
+import { Icon, type IconName } from "@shared/ui/icon"
 
 /**
  * Пропсы кнопки с иконкой

@@ -130,6 +130,14 @@
   --font-family-base: "Onest", sans-serif;
   --font-family-display: "Unbounded", sans-serif;
   --font-family-mono: "JetBrains Mono", monospace;
+
+  --layout-header-height: 6.25rem;
+  --layout-footer-height: 4rem;
+  --layout-sidebar-width: 16rem;
+  --layout-sidebar-collapsed-width: 4.5rem;
+  --layout-infobar-width: 16rem;
+  --layout-infobar-collapsed-width: 4.5rem;
+  --layout-transition-duration: 125ms;
 }
 
 /* 🌙  */

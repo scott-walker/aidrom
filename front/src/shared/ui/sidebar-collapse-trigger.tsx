@@ -1,8 +1,8 @@
 import type { ComponentProps, FC, ReactNode } from "react"
-import { useHover } from "@hooks/useHover"
+import { useLayout } from "@scottwalker/lucent"
+import { useHover } from "@shared/hooks/use-hover"
 import { cn } from "@utils/jsxtools"
-import { IconButton } from "@ui/IconButton"
-import { useLayout } from "@packages/Lucent"
+import { IconButton } from "@shared/ui/icon-button"
 
 /**
  * Пропсы триггера схлопывания сайдбара
@@ -24,7 +24,7 @@ export const SidebarCollapseTrigger: FC<Props> = ({ ...props }): ReactNode => {
   const { isHovered, handlers } = useHover()
   const { isSidebarCollapsed, toggleSidebarCollapsedMode } = useLayout()
 
-  const actionIconName = isSidebarCollapsed() ? "chevron-right" : "chevron-left"
+  const actionIconName = isSidebarCollapsed ? "chevron-right" : "chevron-left"
   const iconName: IconName = actionIconName
   const buttonClasses = cn("p-0 w-10 h-10")
   const iconClasses = cn("transition-transform", "duration-200", "ease-in-out", isHovered && "rotate-360")

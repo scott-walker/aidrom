@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 import { createLayout, type PageLayoutConfig, type PageLayoutProps, usePage } from "@lib/page-api"
-import { Menu, type MenuItems } from "@ui/Menu"
+import { Menu, type MenuItems } from "@shared/ui/menu"
 
 /**
  * Конфигурация макета панели управления

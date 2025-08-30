@@ -1,6 +1,6 @@
 import type { ComponentProps, FC, ReactNode } from "react"
 import { cn } from "@utils/jsxtools"
-import styles from "./Typography.module.css"
+import styles from "./typography.module.css"
 
 /**
  * Пропсы компонента

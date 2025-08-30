@@ -1,6 +1,6 @@
 import type { ComponentProps, FC, ReactNode } from "react"
 import { cn } from "@utils/jsxtools"
-import { Icon } from "@ui/Icon"
+import { Icon } from "@shared/ui/icon"
 
 /**
  * Пропсы бренда

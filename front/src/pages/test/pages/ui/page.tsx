@@ -1,8 +1,8 @@
 import type { ReactNode } from "react"
 import { createPage, type PageConfig } from "@lib/page-api"
-import { Code } from "@ui/Code"
-import { Button } from "@ui/Button"
-import { Brand } from "@ui/Brand"
+import { Code } from "@shared/ui/code"
+import { Button } from "@shared/ui/button"
+import { Brand } from "@shared/ui/brand"
 
 /**
  * Конфигурация страницы

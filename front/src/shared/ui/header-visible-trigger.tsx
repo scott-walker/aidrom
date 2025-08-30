@@ -1,6 +1,6 @@
 import type { ComponentProps, FC, ReactNode } from "react"
-import { useLayout } from "@packages/Lucent"
-import { IconButton } from "@ui/IconButton"
+import { useLayout } from "@scottwalker/lucent"
+import { IconButton } from "@shared/ui/icon-button"
 import { cn } from "@utils/jsxtools"
 
 /**
@@ -17,7 +17,7 @@ type Props = ComponentProps<"button">
 export const HeaderVisibleTrigger: FC<Props> = ({ ...props }: Props): ReactNode => {
   const { isHeaderHidden, toggleHeaderVisibleMode } = useLayout()
   const iconClasses = cn("rotate-90")
-  const iconName = isHeaderHidden() ? "sidebar-open" : "sidebar-close"
+  const iconName = isHeaderHidden ? "sidebar-open" : "sidebar-close"
 
   return <IconButton icon={iconName} iconClassName={iconClasses} onClick={toggleHeaderVisibleMode} {...props} />
 }
