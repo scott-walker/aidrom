@@ -12,6 +12,7 @@ import { createLayout, type PageLayoutConfig, type PageLayoutProps, usePage } fr
 import { cn } from "@utils/jsxtools"
 import { Header } from "./header"
 import { Sidebar } from "./sidebar"
+import { Body } from "./body"
 import { Footer } from "./footer"
 
 /**
@@ -62,7 +63,9 @@ export const LucentLayout = createLayout(config, ({ children }: PageLayoutProps)
       <LucentSidebar>
         <Sidebar />
       </LucentSidebar>
-      <LucentBody>{children}</LucentBody>
+      <LucentBody>
+        <Body>{children}</Body>
+      </LucentBody>
       <LucentInfobar>{infobar}</LucentInfobar>
 
       <LucentFooter>
