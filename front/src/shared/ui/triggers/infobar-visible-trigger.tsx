@@ -16,9 +16,7 @@ type Props = ComponentProps<"button">
  */
 export const InfobarVisibleTrigger: FC<Props> = ({ ...props }: Props): ReactNode => {
   const { isInfobarHidden, toggleInfobarVisibleMode } = useLayout()
-
-  // Поскольку инфобар находится справа, то sidebar-open - это закрытие, а sidebar-close - это открытие
-  const iconName = isInfobarHidden ? "sidebar-close" : "sidebar-open"
+  const iconName = isInfobarHidden ? "panel-right-open" : "panel-right-close"
 
   return <IconButton icon={iconName} onClick={toggleInfobarVisibleMode} {...props} />
 }

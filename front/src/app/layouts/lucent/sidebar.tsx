@@ -1,11 +1,12 @@
 import type { ReactNode } from "react"
 import { useLayout } from "@scottwalker/lucent"
 import { usePage } from "@lib/page-api"
+import { cn } from "@utils/jsxtools"
 import { Menu, type MenuItems } from "@shared/ui/menu"
 import { Brand } from "@shared/ui/brand"
 import { Separator } from "@shared/ui/separator"
 import { Icon } from "@shared/ui/icon"
-import { cn } from "@utils/jsxtools"
+import { Scrollbar } from "@shared/ui/scrollbar"
 
 const menuItems: MenuItems = [
   {
@@ -66,11 +67,13 @@ export const SidebarBody = (): ReactNode => {
 
   return (
     <div className={classes}>
-      <section className="p-4">
-        <Menu items={menuItems} compact={collapsed} />
-      </section>
-      <Separator />
-      {sidebar}
+      <Scrollbar xAxis={false}>
+        <section className="p-4">
+          <Menu items={menuItems} compact={collapsed} />
+        </section>
+        <Separator />
+        {sidebar}
+      </Scrollbar>
     </div>
   )
 }
@@ -113,11 +116,13 @@ export const SidebarFooter = (): ReactNode => {
  * @returns {ReactNode}
  */
 export const Sidebar = (): ReactNode => {
+  const classes = cn("h-full", "w-full", "shadow-ghost-2xl")
+
   return (
-    <>
+    <div className={classes}>
       <SidebarHeader />
       <SidebarBody />
       <SidebarFooter />
-    </>
+    </div>
   )
 }

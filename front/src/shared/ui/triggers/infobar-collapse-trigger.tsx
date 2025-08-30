@@ -16,9 +16,7 @@ type Props = ComponentProps<"button">
  */
 export const InfobarCollapseTrigger: FC<Props> = ({ ...props }: Props): ReactNode => {
   const { isInfobarCollapsed, toggleInfobarCollapsedMode } = useLayout()
-
-  // Поскольку инфобар находится справа, то sidebar-open - это закрытие, а sidebar-close - это открытие
-  const iconName = isInfobarCollapsed ? "sidebar-close" : "sidebar-open"
+  const iconName = isInfobarCollapsed ? "arrow-left-to-line" : "arrow-right-to-line"
 
   return <IconButton icon={iconName} onClick={toggleInfobarCollapsedMode} {...props} />
 }
