@@ -1,10 +1,10 @@
 import type { ReactNode } from "react"
-import { cn } from "@shared/utils/jsxtools"
-import { Scrollbar } from "@shared/ui/scrollbar"
+import { cn } from "@utils/jsxtools"
+import { Scrollbar } from "@ui/scrollbar"
 
 /**
- * Тело макета
- * @namespace App.Layouts.Lucent.Body
+ * Тело для макета
+ * @namespace Widgets.UI.LayoutBody
  */
 export const Body = ({ children }: { children: ReactNode }): ReactNode => {
   const classes = cn("h-full", "w-full", "p-[var(--layout-inner-offset)]")

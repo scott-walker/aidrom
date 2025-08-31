@@ -24,26 +24,20 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      // App
+      // FSD движуха
       "@app": appPath,
-      "@assets": resolve(appPath, "assets"),
-      "@layouts": resolve(appPath, "layouts"),
-
-      // Components
-      "@components": resolve(srcPath, "components"),
-
-      // Pages
       "@pages": resolve(srcPath, "pages"),
-
-      // Shared
+      "@widgets": resolve(srcPath, "widgets"),
+      "@features": resolve(srcPath, "features"),
+      "@entities": resolve(srcPath, "entities"),
       "@shared": sharedPath,
+
+      // Детализированные уровни shared (удобно жеже... ведь...? 😇)
       "@utils": resolve(sharedPath, "utils"),
-      "@hooks": resolve(sharedPath, "hooks"),
       "@lib": resolve(sharedPath, "lib"),
       "@ui": resolve(sharedPath, "ui"),
-
-      // Packages
-      "@packages": resolve(srcPath, "packages")
+      "@api": resolve(sharedPath, "api"),
+      "@styles": resolve(sharedPath, "styles")
     }
   }
 })

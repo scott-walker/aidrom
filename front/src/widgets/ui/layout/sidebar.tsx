@@ -2,11 +2,11 @@ import type { ReactNode } from "react"
 import { useLayout } from "@scottwalker/lucent"
 import { usePage } from "@lib/page-api"
 import { cn } from "@utils/jsxtools"
-import { Menu, type MenuItems } from "@shared/ui/menu"
-import { Brand } from "@shared/ui/brand"
-import { Separator } from "@shared/ui/separator"
-import { Icon } from "@shared/ui/icon"
-import { Scrollbar } from "@shared/ui/scrollbar"
+import { Menu, type MenuItems } from "@ui/menu"
+import { Brand } from "@ui/brand"
+import { Separator } from "@ui/separator"
+import { Icon } from "@ui/icon"
+import { Scrollbar } from "@ui/scrollbar"
 
 // Основное меню
 const menuItems: MenuItems = [

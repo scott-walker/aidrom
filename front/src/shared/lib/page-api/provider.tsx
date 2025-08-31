@@ -29,8 +29,6 @@ export const PageProvider: FC<PageProviderProps> = ({ children, config }: PagePr
   const setConfig = (config: PageConfig) => {
     config = mergeConfig(defaultConfig, config)
 
-    console.log("setConfig", config)
-
     setMeta(config.meta ?? {})
     setSlots(config.slots ?? {})
   }

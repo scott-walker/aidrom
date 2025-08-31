@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 import { usePage } from "@lib/page-api"
-import { HeaderVisibleTrigger } from "@shared/ui/triggers"
-import { cn } from "@shared/utils/jsxtools"
+import { HeaderVisibleTrigger } from "@ui/triggers"
+import { cn } from "@utils/jsxtools"
 
 /**
  * Футер макета

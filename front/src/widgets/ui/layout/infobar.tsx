@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 import { useLayout } from "@scottwalker/lucent"
 import { cn } from "@utils/jsxtools"
-import { InfobarCollapseTrigger } from "@shared/ui/triggers"
+import { InfobarCollapseTrigger } from "@ui/triggers"
 
 /**
  * Инфобар макета

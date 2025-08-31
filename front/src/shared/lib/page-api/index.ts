@@ -5,13 +5,11 @@ export type {
   PageConfig,
   PageContextApi,
   PageRegistry,
-  PageLayoutProps,
-  PageLayoutConfig,
   NormalizedPageMeta,
   NormalizedPageSlots,
   NormalizedPageConfig
 } from "./types"
 
 export { usePage } from "./context"
-export { createPage, createLayout, registerPages, normalizeConfig, mergeConfig } from "./utils"
+export { createPage, registerPages, normalizeConfig, mergeConfig } from "./utils"
 export { PageProvider } from "./provider"

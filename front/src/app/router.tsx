@@ -1,5 +1,5 @@
 import { createBrowserRouter, Outlet } from "react-router"
-import { LucentLayout } from "@layouts"
+import { MainLayout } from "@widgets/layouts"
 import { pageRegistry } from "@pages"
 
 /**
@@ -9,9 +9,9 @@ import { pageRegistry } from "@pages"
 export const router = createBrowserRouter([
   {
     element: (
-      <LucentLayout>
+      <MainLayout>
         <Outlet />
-      </LucentLayout>
+      </MainLayout>
     ),
     children: pageRegistry.getRoutes()
   }

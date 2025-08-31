@@ -1,11 +1,10 @@
 import { createElement, useEffect, type ComponentType, type FC, type ReactNode } from "react"
-import merge from "lodash.merge"
 import type { RouteObject } from "react-router"
+import merge from "lodash.merge"
+
 import type {
   Page,
   PageConfig,
-  PageLayoutConfig,
-  PageLayoutProps,
   PageRegistry,
   NormalizedPageConfig,
   PageMeta,
@@ -14,23 +13,6 @@ import type {
   NormalizedPageSlots
 } from "./types"
 import { usePage } from "./context"
-import { PageProvider } from "./provider"
-
-/**
- * Создать макет
- * @namespace Shared.Lib.LayoutApi.createLayout
- */
-export const createLayout = (config: PageLayoutConfig, Component: FC<PageLayoutProps>): FC<PageLayoutProps> => {
-  // Обернуть компонент в провайдер макета
-  return function Layout({ children }: PageLayoutProps) {
-    console.log("createLayout:mount")
-
-    return createElement(PageProvider, {
-      children: createElement(Component, { children }),
-      config
-    })
-  }
-}
 
 /**
  * Создать страницу
@@ -39,19 +21,13 @@ export const createLayout = (config: PageLayoutConfig, Component: FC<PageLayoutP
 export const createPage = (config: PageConfig, Component: ComponentType): FC => {
   // Вернуть компонент страницы с настроенным контекстом
   return function Page(): ReactNode {
-    console.log("createPage:mount", config.meta?.title)
-
     const { setConfig, unsetConfig } = usePage()
 
     // Установить конфигурацию страницы
     useEffect(() => {
-      console.log("createPage:effect", config)
       setConfig(config)
-      // console.log("createPage:effect")
 
-      return () => {
-        unsetConfig()
-      }
+      return () => unsetConfig()
     }, [])
 
     return createElement(Component)

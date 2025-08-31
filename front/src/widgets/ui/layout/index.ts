@@ -1,0 +1,5 @@
+export { Body as LayoutBody } from "./body"
+export { Footer as LayoutFooter } from "./footer"
+export { Header as LayoutHeader } from "./header"
+export { Infobar as LayoutInfobar } from "./infobar"
+export { Sidebar as LayoutSidebar } from "./sidebar"

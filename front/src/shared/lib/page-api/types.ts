@@ -95,20 +95,6 @@ export type PageProviderProps = {
 }
 
 /**
- * Конфигурация макета страницы
- * @namespace Shared.Lib.PageApi.PageLayoutConfig
- */
-export type PageLayoutConfig = PageConfig
-
-/**
- * Пропсы макета страницы
- * @namespace Shared.Lib.PageApi.PageLayoutProps
- */
-export type PageLayoutProps = {
-  children?: ReactNode
-}
-
-/**
  * Маршруты страницы
  * @namespace Shared.Lib.PageApi.PageRoutes
  */

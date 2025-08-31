@@ -1,10 +1,10 @@
 import type { ReactNode } from "react"
 import { usePage } from "@lib/page-api"
 import { cn } from "@utils/jsxtools"
-import { ThemeTrigger } from "@shared/ui/triggers"
-import { FooterVisibleTrigger } from "@shared/ui/triggers"
-import { SidebarCollapseTrigger } from "@shared/ui/triggers"
-import { Heading } from "@shared/ui/heading"
+import { ThemeTrigger } from "@ui/triggers"
+import { FooterVisibleTrigger } from "@ui/triggers"
+import { SidebarCollapseTrigger } from "@ui/triggers"
+import { Heading } from "@ui/heading"
 
 /**
  * Заголовок макета

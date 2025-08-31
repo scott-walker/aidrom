@@ -1,13 +1,9 @@
-import "@assets"
-
-// React
 import { StrictMode } from "react"
 import { createRoot } from "react-dom/client"
-
-// Router
 import { RouterProvider } from "react-router"
 
 // App
+import "@styles"
 import { router } from "@app"
 
 const root = document.getElementById("root")
