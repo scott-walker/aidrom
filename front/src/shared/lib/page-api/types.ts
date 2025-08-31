@@ -2,26 +2,55 @@ import type { ReactNode } from "react"
 import type { RouteObject } from "react-router"
 
 /**
- * Тип метаданных страницы
+ * Метаданные страницы
  * @namespace Shared.Lib.PageApi.PageMeta
  */
 export type PageMeta = {
   title?: string
+  subtitle?: string
+  description?: string
 }
 
 /**
- * Тип слоты страницы
+ * Нормализованные метаданные страницы
+ * @namespace Shared.Lib.PageApi.NormalizedPageMeta
+ */
+export type NormalizedPageMeta = {
+  title: string
+  subtitle: string
+  description: string
+}
+
+/**
+ * Слот страницы
+ * @namespace Shared.Lib.PageApi.PageSlot
+ */
+export type PageSlot = ReactNode | null
+
+/**
+ * Слоты страницы
  * @namespace Shared.Lib.PageApi.PageSlots
  */
 export type PageSlots = {
-  header?: ReactNode
-  sidebar?: ReactNode
-  infobar?: ReactNode
-  footer?: ReactNode
+  header?: PageSlot
+  sidebar?: PageSlot
+  infobar?: PageSlot
+  footer?: PageSlot
 }
 
 /**
- * Тип данные страницы
+ * Нормализованные слоты страницы
+ * @namespace Shared.Lib.PageApi.NormalizedPageSlots
+ */
+export type NormalizedPageSlots = {
+  header: PageSlot
+  sidebar: PageSlot
+  infobar: PageSlot
+  footer: PageSlot
+}
+
+/**
+ * Конфигурация страницы
  * @namespace Shared.Lib.PageApi.PageConfig
  */
 export type PageConfig = {
@@ -30,7 +59,7 @@ export type PageConfig = {
 }
 
 /**
- * Тип нормализованной конфигурации страницы
+ * Нормализованная конфигурация страницы
  * @namespace Shared.Lib.PageApi.NormalizedPageConfig
  */
 export type NormalizedPageConfig = {
@@ -39,20 +68,25 @@ export type NormalizedPageConfig = {
 }
 
 /**
- * Тип API страницы
+ * API страницы
  * @namespace Shared.Lib.PageApi.PageContextApi
  */
 export type PageContextApi = {
   setConfig: (config: PageConfig) => void
   unsetConfig: () => void
+  getConfig: () => PageConfig
   setTitle: (title: string) => void
+  setSubtitle: (subtitle: string) => void
+  setDescription: (description: string) => void
+  setSlot: (slot: keyof PageSlots, node: PageSlot) => void
   getTitle: () => string
-  setSlot: (slot: keyof PageSlots, node: ReactNode) => void
-  getSlot: (slot: keyof PageSlots) => ReactNode
+  getSubtitle: () => string
+  getDescription: () => string
+  getSlot: (slot: keyof PageSlots) => PageSlot
 }
 
 /**
- * Тип пропсов провайдера
+ * Пропсы провайдера
  * @namespace Shared.Lib.PageApi.PageProviderProps
  */
 export type PageProviderProps = {
@@ -61,27 +95,27 @@ export type PageProviderProps = {
 }
 
 /**
- * Тип конфигурации макета страницы
+ * Конфигурация макета страницы
  * @namespace Shared.Lib.PageApi.PageLayoutConfig
  */
 export type PageLayoutConfig = PageConfig
 
 /**
- * Тип пропсов макета страницы
+ * Пропсы макета страницы
  * @namespace Shared.Lib.PageApi.PageLayoutProps
  */
 export type PageLayoutProps = {
-  children: ReactNode
+  children?: ReactNode
 }
 
 /**
- * Тип маршрута страницы
+ * Маршруты страницы
  * @namespace Shared.Lib.PageApi.PageRoutes
  */
 export type PageRoutes = RouteObject
 
 /**
- * Тип страницы
+ * Страница
  * @namespace Shared.Lib.PageApi.Page
  */
 export type Page = {
@@ -89,7 +123,7 @@ export type Page = {
 }
 
 /**
- * Тип реестр страниц
+ * Реестр страниц
  * @namespace Shared.Lib.PageApi.PageRegistry
  */
 export type PageRegistry = {

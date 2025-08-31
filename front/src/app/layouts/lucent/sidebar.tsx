@@ -8,20 +8,25 @@ import { Separator } from "@shared/ui/separator"
 import { Icon } from "@shared/ui/icon"
 import { Scrollbar } from "@shared/ui/scrollbar"
 
+// Основное меню
 const menuItems: MenuItems = [
   {
-    label: "Dashboard",
-    icon: "home",
+    label: "Панель",
+    icon: "gauge",
     path: "/"
   },
   {
-    label: "Settings",
-    icon: "settings",
-    path: "/settings"
-  },
+    label: "Инструменты",
+    icon: "code",
+    path: "/tools"
+  }
+]
+
+// Меню для разработки
+const developmentMenuItems: MenuItems = [
   {
-    label: "Test",
-    icon: "activity",
+    label: "Тесты",
+    icon: "amphora",
     path: "/test"
   }
 ]
@@ -72,6 +77,9 @@ export const SidebarBody = (): ReactNode => {
           <Menu items={menuItems} compact={collapsed} />
         </section>
         <Separator />
+        <section className="p-4">
+          <Menu items={developmentMenuItems} compact={collapsed} />
+        </section>
         {sidebar}
       </Scrollbar>
     </div>
@@ -116,7 +124,7 @@ export const SidebarFooter = (): ReactNode => {
  * @returns {ReactNode}
  */
 export const Sidebar = (): ReactNode => {
-  const classes = cn("h-full", "w-full", "shadow-ghost-2xl")
+  const classes = cn("h-full", "w-full", "shadow-ghost-2xl", "overflow-hidden")
 
   return (
     <div className={classes}>

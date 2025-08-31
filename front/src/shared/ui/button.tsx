@@ -11,7 +11,7 @@ export type Variant = "ghost" | "soft" | "hard" | "primary" | "secondary" | "war
  * Размеры кнопки
  * @namespace Ui.Button.Size
  */
-export type Size = "xs" | "sm" | "md" | "lg" | "xl"
+export type Size = "xs" | "sm" | "md" | "lg" | "xl" | "none"
 
 /**
  * Скругление кнопки
@@ -97,6 +97,7 @@ export const Button: FC<Props> = ({
         )
       },
       size: {
+        none: "px-0 py-0",
         xs: "px-3 py-1 text-xs",
         sm: "px-4 py-1 text-sm",
         md: "px-5 py-1.5 text-base",

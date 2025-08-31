@@ -16,7 +16,8 @@ export type Props = ComponentProps<"button"> & {
   iconClassName?: string
   rounded?: Rounded
   circle?: boolean
-  hoverVariant?: "text" | "outline" | "filled" | null
+  full?: boolean
+  hoverVariant?: "content" | "outline" | "filled" | null
 }
 
 /**
@@ -32,33 +33,40 @@ export const IconButton: FC<Props> = ({
   variant = "ghost",
   size = "md",
   rounded = "sm",
-  hoverVariant = null,
+  hoverVariant = "content",
   circle = false,
+  full = false,
   className = "",
   iconSize = 24,
-  iconStrokeWidth = 3,
+  iconStrokeWidth = 2,
   iconClassName = "",
   ...props
 }: Props): ReactNode => {
   if (circle) rounded = "full"
+  if (full) size = "none"
 
   const buttonVariants = cva("p-0 w-10 h-10 transition-colors duration-200", {
     variants: {
       hoverVariant: {
-        text: cn("hover:text-primary"),
+        content: cn("hover:text-primary"),
         outline: cn("hover:text-primary", "hover:border-primary"),
         filled: cn("hover:text-primary-foreground", "hover:bg-primary")
       },
       circle: {
         true: "w-12 h-12"
+      },
+      full: {
+        false: "w-10 h-10",
+        true: "w-fit h-fit"
       }
     },
     defaultVariants: {
       hoverVariant: null,
-      circle: false
+      circle: false,
+      full: false
     }
   })
-  const buttonClasses = cn(buttonVariants({ hoverVariant, circle }), className)
+  const buttonClasses = cn(buttonVariants({ hoverVariant, circle, full }), className)
   const iconClasses = cn(iconClassName)
 
   return (

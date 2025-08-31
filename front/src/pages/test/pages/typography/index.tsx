@@ -8,6 +8,9 @@ import { createPage, type PageConfig } from "@lib/page-api"
 const config: PageConfig = {
   meta: {
     title: "Типографика"
+  },
+  slots: {
+    infobar: "Ну давай тестить"
   }
 }
 

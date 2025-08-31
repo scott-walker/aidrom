@@ -3,6 +3,7 @@ import { createPage, type PageConfig } from "@lib/page-api"
 import { Code } from "@shared/ui/code"
 import { Button } from "@shared/ui/button"
 import { Brand } from "@shared/ui/brand"
+import { Heading } from "@shared/ui/heading"
 
 /**
  * Конфигурация страницы
@@ -28,6 +29,14 @@ export const UiPage = createPage(config, (): ReactNode => {
       <p className="text-2xl text-foreground font-family-base">
         Прямо сейчас ты находишься на странице тестирования компонентов
       </p>
+
+      <Heading level={1}>Heading 1</Heading>
+      <Heading level={2}>Heading 2</Heading>
+      <Heading level={3}>Heading 3</Heading>
+      <Heading level={4}>Heading 4</Heading>
+      <Heading level={5}>Heading 5</Heading>
+      <Heading level={6}>Heading 6</Heading>
+
       <Code accent className="mt-10">
         console.log("Hello, world!")
       </Code>

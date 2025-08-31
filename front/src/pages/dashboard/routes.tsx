@@ -1,17 +1,22 @@
+import { Outlet } from "react-router"
 import type { PageRoutes } from "@lib/page-api/types"
 import { DashboardLayout } from "./layout"
-import { DashboardIndex, DashboardSettings } from "./pages"
+import { DashboardMain, DashboardSettings } from "./pages"
 
 /**
  * Маршруты
  * @namespace Pages.Dashboard.Routes
  */
 export const routes: PageRoutes = {
-  element: <DashboardLayout />,
+  element: (
+    <DashboardLayout>
+      <Outlet />
+    </DashboardLayout>
+  ),
   children: [
     {
       index: true,
-      element: <DashboardIndex />
+      element: <DashboardMain />
     },
     {
       path: "settings",

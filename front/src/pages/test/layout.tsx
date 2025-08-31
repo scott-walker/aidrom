@@ -1,12 +1,34 @@
 import { NavLink, Outlet } from "react-router"
 import { Icon } from "@shared/ui/icon"
+import { cn } from "@shared/utils/jsxtools"
 
 /**
  * Макет страницы
  * @namespace Pages.Test.Layout
  */
 export const TestLayout = () => {
-  const makeActiveClass = ({ isActive }: { isActive: boolean }) => (isActive ? "text-gradient-brand" : "")
+  const makeLinkClass = ({ isActive }: { isActive: boolean }) => {
+    const activeClasses = cn(
+      "bg-background-soft",
+      "text-foreground-hard",
+      "font-bold",
+      "hover:text-foreground-hard",
+      "cursor-default"
+    )
+
+    return cn([
+      "block",
+      "h-full",
+      "px-6",
+      "py-4",
+      "rounded-tl-lg",
+      "rounded-tr-lg",
+      "transition-colors",
+      "duration-250",
+      "hover:text-primary",
+      isActive && activeClasses
+    ])
+  }
 
   return (
     <div className="flex flex-col">
@@ -16,15 +38,18 @@ export const TestLayout = () => {
           Тестирование <span className="text-gradient-brand">всего и вся</span>
         </div>
       </h1>
-      <div className="flex items-center gap-6 mt-12 py-2 px-6 bg-background-soft rounded-2xl shadow-ghost-xs">
-        <NavLink to="/test/ui" end className={makeActiveClass}>
+      <div className="flex items-center mt-10 bg-background">
+        <NavLink to="/test" end className={makeLinkClass}>
+          Главная
+        </NavLink>
+        <NavLink to="/test/ui" end className={makeLinkClass}>
           Компоненты
         </NavLink>
-        <NavLink to="/test/typography" className={makeActiveClass}>
+        <NavLink to="/test/typography" className={makeLinkClass}>
           Типографика
         </NavLink>
       </div>
-      <div className="flex flex-col mt-12 p-6 bg-background-soft rounded-lg shadow-ghost-xs">
+      <div className="flex flex-col p-6 bg-background-soft rounded-bl-lg rounded-br-lg">
         <Outlet />
       </div>
     </div>

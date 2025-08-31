@@ -11,12 +11,23 @@ import { cn } from "@shared/utils/jsxtools"
 export const Footer = (): ReactNode => {
   const { getSlot } = usePage()
   const footer = getSlot("footer")
+  const classes = cn(
+    "flex",
+    "items-center",
+    "h-full",
+    "px-[var(--layout-inner-offset)]",
+    "border-t",
+    "border-border",
+    "bg-background-hard"
+  )
 
   return (
-    <div className={cn("flex", "items-center", "h-full", "px-6", "border-t", "border-border")}>
+    <div className={classes}>
       <h1>FOOTER</h1>
-      <HeaderVisibleTrigger />
       {footer}
+      <div className="ml-auto">
+        <HeaderVisibleTrigger />
+      </div>
     </div>
   )
 }

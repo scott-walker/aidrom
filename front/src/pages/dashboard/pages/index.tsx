@@ -1,2 +1,2 @@
-export { DashboardIndex } from "./index/page"
-export { DashboardSettings } from "./settings/page"
+export { DashboardMain } from "./main"
+export { DashboardSettings } from "./settings"

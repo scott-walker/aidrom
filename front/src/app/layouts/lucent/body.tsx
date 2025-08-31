@@ -7,11 +7,11 @@ import { Scrollbar } from "@shared/ui/scrollbar"
  * @namespace App.Layouts.Lucent.Body
  */
 export const Body = ({ children }: { children: ReactNode }): ReactNode => {
-  const classes = cn("h-full", "w-full")
+  const classes = cn("h-full", "w-full", "p-[var(--layout-inner-offset)]")
 
   return (
-    <div className={classes}>
-      <Scrollbar xAxis={false}>{children}</Scrollbar>
-    </div>
+    <Scrollbar xAxis={false}>
+      <div className={classes}>{children}</div>
+    </Scrollbar>
   )
 }

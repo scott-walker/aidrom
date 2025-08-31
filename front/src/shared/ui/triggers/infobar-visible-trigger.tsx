@@ -18,5 +18,14 @@ export const InfobarVisibleTrigger: FC<Props> = ({ ...props }: Props): ReactNode
   const { isInfobarHidden, toggleInfobarVisibleMode } = useLayout()
   const iconName = isInfobarHidden ? "panel-right-open" : "panel-right-close"
 
-  return <IconButton icon={iconName} onClick={toggleInfobarVisibleMode} {...props} />
+  return (
+    <IconButton
+      icon={iconName}
+      iconSize={36}
+      iconStrokeWidth={2}
+      full={true}
+      onClick={toggleInfobarVisibleMode}
+      {...props}
+    />
+  )
 }

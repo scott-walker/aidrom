@@ -3,7 +3,7 @@
 @theme {
   --typography-spacing: 1.125rem; /* 18px */
   --line-height-normal: 1.7em;
-  --letter-spacing-normal: 0.05em;
+  --letter-spacing-normal: 0;
 }
 
 @layer components {

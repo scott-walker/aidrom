@@ -7,20 +7,21 @@ import { Icon } from "@shared/ui/icon"
  */
 const config: PageConfig = {
   meta: {
-    title: "Dashboard Index"
+    // title: "Dashboard Main",
+    subtitle: "Dashboard Main Subtitle"
   },
   slots: {
-    header: <h2>Dashboard Header</h2>,
-    sidebar: <h2>Dashboard Sidebar</h2>,
-    infobar: <h2>Dashboard Infobar</h2>,
-    footer: <h2>Dashboard Footer</h2>
+    // header: <h2>Dashboard Header</h2>
+    // sidebar: <h2>Dashboard Sidebar</h2>,
+    // infobar: <h2>Dashboard Infobar</h2>,
+    // footer: <h2>Dashboard Footer</h2>
   }
 }
 
 /**
  * Страница Dashboard
  */
-export const DashboardIndex = createPage(config, (): ReactNode => {
+export const DashboardMain = createPage(config, (): ReactNode => {
   return (
     <div className="flex flex-col">
       <h1>Страница "Dashboard"</h1>

@@ -8,11 +8,12 @@ import {
   LucentInfobar,
   LucentSidebar
 } from "@scottwalker/lucent"
-import { createLayout, type PageLayoutConfig, type PageLayoutProps, usePage } from "@lib/page-api"
+import { createLayout, usePage, type PageLayoutConfig, type PageLayoutProps } from "@lib/page-api"
 import { cn } from "@utils/jsxtools"
 import { Header } from "./header"
 import { Sidebar } from "./sidebar"
 import { Body } from "./body"
+import { Infobar } from "./infobar"
 import { Footer } from "./footer"
 
 /**
@@ -20,13 +21,8 @@ import { Footer } from "./footer"
  */
 const config: PageLayoutConfig = {
   meta: {
-    title: "Default Page Title"
-  },
-  slots: {
-    header: "Default Page Header",
-    sidebar: "Default Page Sidebar",
-    infobar: "Default Page Infobar",
-    footer: "Default Page Footer"
+    title: "AIDrom",
+    subtitle: "AIDrom Subtitle"
   }
 }
 
@@ -34,9 +30,7 @@ const config: PageLayoutConfig = {
  * Основной макет панели управления
  */
 export const LucentLayout = createLayout(config, ({ children }: PageLayoutProps): ReactNode => {
-  const { getSlot } = usePage()
-
-  const infobar = getSlot("infobar")
+  const infobar = usePage().getSlot("infobar")
   const config: LayoutConfig = {
     modes: {
       theme: "light",
@@ -63,10 +57,16 @@ export const LucentLayout = createLayout(config, ({ children }: PageLayoutProps)
       <LucentSidebar>
         <Sidebar />
       </LucentSidebar>
+
       <LucentBody>
         <Body>{children}</Body>
       </LucentBody>
-      <LucentInfobar>{infobar}</LucentInfobar>
+
+      {infobar && (
+        <LucentInfobar>
+          <Infobar>{infobar}</Infobar>
+        </LucentInfobar>
+      )}
 
       <LucentFooter>
         <Footer />

@@ -1,18 +1,19 @@
 import type { ReactNode } from "react"
 import { createPage, type PageConfig } from "@lib/page-api"
+// import { Heading } from "@shared/ui/heading"
 
 /**
  * Конфигурация страницы
  */
 const config: PageConfig = {
   meta: {
-    title: "Общие настройки"
+    title: "Dashboard: Настройки"
   },
   slots: {
-    header: <h2>Dashboard Settings Header</h2>,
-    sidebar: <h2>Dashboard Settings Sidebar</h2>,
-    infobar: <h2>Dashboard Settings Infobar</h2>,
-    footer: <h2>Dashboard Settings Footer</h2>
+    // header: <Heading level={2}>Настройки</Heading>
+    // sidebar: <h2>Dashboard Settings Sidebar</h2>,
+    // infobar: <h2>Dashboard Settings Infobar</h2>,
+    // footer: <h2>Dashboard Settings Footer</h2>
   }
 }
 
