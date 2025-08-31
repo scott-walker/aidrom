@@ -12,12 +12,6 @@ const config: PageConfig = {
   meta: {
     title: "UI"
   }
-  // slots: {
-  //   // header: <h2>Dashboard Header</h2>
-  //   // sidebar: <h2>Dashboard Sidebar</h2>,
-  //   // infobar: <h2>Dashboard Infobar</h2>,
-  //   // footer: <h2>Dashboard Footer</h2>
-  // }
 }
 
 /**

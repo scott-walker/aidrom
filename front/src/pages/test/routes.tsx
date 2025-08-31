@@ -1,6 +1,6 @@
 import type { PageRoutes } from "@lib/page-api/types"
 import { TestLayout } from "./layout"
-import { UiPage, TypographyPage } from "./pages"
+import { UiPage, TypographyPage, MainPage } from "./pages"
 
 /**
  * Маршруты страницы Test
@@ -12,7 +12,7 @@ export const routes: PageRoutes = {
   children: [
     {
       index: true,
-      element: <p>Test</p>
+      element: <MainPage />
     },
     {
       path: "ui",
