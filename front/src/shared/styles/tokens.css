@@ -47,8 +47,8 @@
 
   /* Base */
   --color-background: var(--color-slate-100);
-  --color-background-soft: var(--color-white);
-  --color-background-hard: oklch(92% 0.02 266.42);
+  --color-background-soft: var(--color-slate-50);
+  --color-background-hard: oklch(0.91 0.02 262.43);
   --color-foreground: var(--color-slate-700);
   --color-foreground-soft: var(--color-slate-500);
   --color-foreground-hard: var(--color-slate-900);
@@ -143,7 +143,7 @@
 }
 
 /* 🌙  */
-& [data-theme-mode="dark"] {
+body.theme-dark {
   /* Base */
   --color-background-soft: var(--color-neutral-5);
   --color-background: var(--color-neutral-4);

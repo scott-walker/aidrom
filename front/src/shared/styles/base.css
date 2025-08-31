@@ -1,8 +1,12 @@
-@custom-variant dark (&:is([data-theme-mode="dark"] *));
+@custom-variant dark (&:is(body.theme-dark *));
 
 @layer base {
   * {
     transition: background-color 0.1s ease-in-out;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
   }
 }
 

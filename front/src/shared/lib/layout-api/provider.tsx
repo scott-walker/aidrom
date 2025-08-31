@@ -1,6 +1,7 @@
 import { useEffect, type FC, type ReactNode } from "react"
+import { useLayout } from "@scottwalker/lucent"
 import type { LayoutContextApi, LayoutProviderProps } from "./types"
-import { LayoutContext, useLayout } from "./context"
+import { LayoutContext } from "./context"
 
 /**
  * Провайдер макета
