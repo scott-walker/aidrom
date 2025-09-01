@@ -6,6 +6,7 @@ import type { ClassValue } from "@utils/jsxtools"
  */
 export type BaseVariants = {
   none: string
+  default: string
 }
 
 /**
@@ -118,15 +119,14 @@ export type CompositeVariant = {
 }
 
 /**
- * Пропсы для композиции вариантов
- * @namespace Shared.Lib.StyleApi.ComposeVariantsProps
+ * Пропсы для сборки варианта
+ * @namespace Shared.Lib.StyleApi.BuildVariantProps
  */
-export type ComposeVariantsProps = {
+export type BuildVariantProps = {
   beforeClasses?: string
   afterClasses?: string
   outlined?: boolean
-  variants?: Partial<CompositeVariants>
-  defaultVariants?: Partial<CompositeVariant>
+  variant?: Partial<CompositeVariant>
 }
 
 /**

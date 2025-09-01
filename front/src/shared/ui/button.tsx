@@ -1,6 +1,6 @@
 import type { ComponentProps, ReactNode } from "react"
 import {
-  composeVariants,
+  buildVariant,
   makeUiBaseClasses,
   makeUiClickableClasses,
   type ColorSchemeVariant,
@@ -31,35 +31,26 @@ export type ButtonProps = ComponentProps<"button"> & {
  */
 export const Button = ({
   children,
-  scheme = "ghost",
-  size = "md",
-  rounded = "sm",
+  scheme = "default",
+  size = "default",
+  rounded = "default",
   className = "",
   ...props
 }: ButtonProps): ReactNode => {
-  const useVariant = composeVariants({
+  const classes = buildVariant({
     beforeClasses: makeUiBaseClasses(makeUiClickableClasses()),
     afterClasses: className,
-    defaultVariants: {
-      scheme: "ghost",
-      schemeHover: "ghost",
-      padding: "md",
-      textSize: "md",
-      rounded: "sm"
+    variant: {
+      scheme,
+      schemeHover: scheme,
+      padding: size,
+      textSize: size,
+      rounded
     }
   })
 
   return (
-    <button
-      {...props}
-      className={useVariant({
-        scheme,
-        schemeHover: scheme,
-        padding: size,
-        textSize: size,
-        rounded
-      })}
-    >
+    <button {...props} className={classes}>
       {children}
     </button>
   )

@@ -48,6 +48,9 @@ export const TestLayout = () => {
         <NavLink to="/test/typography" className={makeLinkClass}>
           Типографика
         </NavLink>
+        <NavLink to="/test/form" className={makeLinkClass}>
+          Формы
+        </NavLink>
       </div>
       <div className="flex flex-col p-6 bg-background-soft rounded-bl-lg rounded-br-lg">
         <Outlet />

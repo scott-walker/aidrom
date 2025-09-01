@@ -1,6 +1,6 @@
 import type { PageRoutes } from "@lib/page-api/types"
 import { TestLayout } from "./layout"
-import { UiPage, TypographyPage, MainPage } from "./pages"
+import { UiPage, TypographyPage, MainPage, FormPage } from "./pages"
 
 /**
  * Маршруты страницы Test
@@ -21,6 +21,10 @@ export const routes: PageRoutes = {
     {
       path: "typography",
       element: <TypographyPage />
+    },
+    {
+      path: "form",
+      element: <FormPage />
     }
   ]
 }

@@ -1,7 +1,7 @@
 import type { ComponentProps, FC, ReactNode } from "react"
 import { Icon, type IconName } from "@shared/ui/icon"
 import {
-  composeVariants,
+  buildVariant,
   makeUiBaseClasses,
   makeUiClickableClasses,
   makeClasses,
@@ -49,12 +49,12 @@ export const IconButton: FC<Props> = ({
     "m-1.5": circle
   })
 
-  const useVariant = composeVariants({
-    beforeClasses: makeUiBaseClasses(makeUiClickableClasses()),
+  const classes = buildVariant({
+    beforeClasses: makeClasses(makeUiBaseClasses(), makeUiClickableClasses()),
     afterClasses: className,
-    defaultVariants: {
-      scheme: "ghost",
-      schemeHover: "none",
+    variant: {
+      scheme,
+      schemeHover,
       padding: "none",
       textSize: "none",
       rounded: circle ? "full" : "sm"
@@ -62,7 +62,7 @@ export const IconButton: FC<Props> = ({
   })
 
   return (
-    <button className={useVariant({ scheme, schemeHover })} {...props}>
+    <button className={classes} {...props}>
       <Icon name={icon} size={iconSize} strokeWidth={iconStrokeWidth} className={iconClassName} />
     </button>
   )

@@ -22,32 +22,13 @@ export const MainPage = createPage(config, (): ReactNode => {
   const [outlined, setOutlined] = useState(false)
   const [selectedValue1, setSelectedValue1] = useState("apple")
   const [selectedValue2, setSelectedValue2] = useState("banana")
-
   const selectItems = [
-    {
-      label: "Банан",
-      value: "banana"
-    },
-    {
-      label: "Яблоко",
-      value: "apple"
-    },
-    {
-      label: "Апельсин",
-      value: "orange"
-    },
-    {
-      label: "Киви",
-      value: "kiwi"
-    },
-    {
-      label: "Груша",
-      value: "pear"
-    },
-    {
-      label: "Персик",
-      value: "peach"
-    }
+    { label: "Банан", value: "banana" },
+    { label: "Яблоко", value: "apple" },
+    { label: "Апельсин", value: "orange" },
+    { label: "Киви", value: "kiwi" },
+    { label: "Груша", value: "pear" },
+    { label: "Персик", value: "peach" }
   ]
 
   const button = (
@@ -69,20 +50,8 @@ export const MainPage = createPage(config, (): ReactNode => {
         <Tooltip target={button}>Ну вот и вы тут</Tooltip>
 
         {/* <Select scheme="hard" outlined={outlined} items={selectItems} value="apple" /> */}
-        <Select
-          scheme="soft"
-          outlined={outlined}
-          items={selectItems}
-          value={selectedValue1}
-          onChangeValue={setSelectedValue1}
-        />
-        <Select
-          scheme="primary"
-          outlined={outlined}
-          items={selectItems}
-          value={selectedValue2}
-          onChangeValue={setSelectedValue2}
-        />
+        <Select scheme="soft" items={selectItems} value={selectedValue1} onChangeValue={setSelectedValue1} />
+        <Select scheme="primary" items={selectItems} value={selectedValue2} onChangeValue={setSelectedValue2} />
         {/* <Select scheme="ghost" outlined={outlined} items={selectItems} value="apple" />
         <Select scheme="warning" outlined={outlined} items={selectItems} value="apple" />
         <Select scheme="danger" outlined={outlined} items={selectItems} value="apple" />

@@ -22,7 +22,9 @@ export {
   makeTextSizeVariants,
   makeRoundedVariants,
   makeUiBaseClasses,
+  makeUiHoverableClasses,
   makeUiClickableClasses,
-  composeVariants,
+  makeUiFocusableClasses,
+  buildVariant,
   extractVariant
 } from "./utils"

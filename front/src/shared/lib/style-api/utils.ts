@@ -1,21 +1,20 @@
-import { cn, cva } from "@utils/jsxtools"
+import { cn } from "@utils/jsxtools"
 import type {
   ColorSchemeVariants,
   PaddingVariants,
   TextSizeVariants,
   RoundedVariants,
-  ComposeVariantsProps,
+  BuildVariantProps,
   MakerClassesProps,
   BaseVariants
 } from "./types"
-import type { VariantProps } from "class-variance-authority"
 
 /**
  * Сделать базовые варианты
  * @namespace Shared.Lib.StyleApi.makeBaseVariants
  */
 export const makeBaseVariants = (): BaseVariants => {
-  return { none: "" }
+  return { none: "", default: "" }
 }
 
 /**
@@ -25,6 +24,7 @@ export const makeBaseVariants = (): BaseVariants => {
 export const makeColorSchemeVariants = (): ColorSchemeVariants => {
   return {
     ...makeBaseVariants(),
+    default: cn("bg-soft", "text-soft-foreground", "fill-soft"),
     ghost: cn("bg-ghost", "text-ghost-foreground", "fill-ghost"),
     soft: cn("bg-soft", "text-soft-foreground", "fill-soft"),
     hard: cn("bg-hard", "text-hard-foreground", "fill-hard"),
@@ -42,9 +42,10 @@ export const makeColorSchemeVariants = (): ColorSchemeVariants => {
 export const makeColorSchemeOutlinedVariants = (): ColorSchemeVariants => {
   return {
     ...makeBaseVariants(),
-    ghost: cn("bg-ghost", "text-ghost-foreground", "fill-ghost", "border-foreground"),
-    soft: cn("bg-background", "text-soft-foreground", "fill-background", "border-soft-foreground"),
-    hard: cn("bg-background", "text-hard", "fill-background", "border-hard"),
+    default: cn("bg-background", "text-soft-foreground", "fill-background", "border-background"),
+    ghost: cn("bg-ghost", "text-ghost-foreground", "fill-ghost", "border-background"),
+    soft: cn("bg-background", "text-soft-foreground", "fill-background", "border-background"),
+    hard: cn("bg-background", "text-hard", "fill-background", "border-foreground"),
     primary: cn("bg-background", "text-primary", "fill-background", "border-primary"),
     secondary: cn("bg-background", "text-secondary", "fill-background", "border-secondary"),
     warning: cn("bg-absolute-white", "text-warning", "fill-background", "border-warning"),
@@ -59,8 +60,9 @@ export const makeColorSchemeOutlinedVariants = (): ColorSchemeVariants => {
 export const makeColorSchemeHoverVariants = (): ColorSchemeVariants => {
   return {
     ...makeBaseVariants(),
+    default: cn("hover:bg-background", "hover:text-soft-foreground-accent"),
     ghost: cn("hover:bg-ghost-accent", "hover:text-ghost-foreground-accent"),
-    soft: cn("hover:bg-soft-accent", "hover:text-soft-foreground-accent"),
+    soft: cn("hover:soft-background-accent", "hover:text-soft-foreground-accent"),
     hard: cn("hover:bg-hard-accent", "hover:text-hard-foreground-accent"),
     primary: cn("hover:bg-primary-accent", "hover:text-primary-foreground-accent"),
     secondary: cn("hover:bg-secondary-accent", "hover:text-secondary-foreground-accent"),
@@ -76,13 +78,22 @@ export const makeColorSchemeHoverVariants = (): ColorSchemeVariants => {
 export const makeColorSchemeOutlinedHoverVariants = (): ColorSchemeVariants => {
   return {
     ...makeBaseVariants(),
-    ghost: cn("hover:border-ghost-accent"),
-    soft: cn("hover:border-soft-accent"),
-    hard: cn("hover:border-hard-accent"),
-    primary: cn("hover:border-primary-accent"),
-    secondary: cn("hover:border-secondary-accent"),
-    warning: cn("hover:border-warning-accent"),
-    danger: cn("hover:border-danger-accent")
+    default: "",
+    ghost: "",
+    soft: "",
+    hard: "",
+    primary: "",
+    secondary: "",
+    warning: "",
+    danger: ""
+    // default: cn("hover:border-background"),
+    // ghost: cn("hover:border-ghost-accent"),
+    // soft: cn("hover:bg-background", "hover:border-soft-accent"),
+    // hard: cn("hover:border-hard-accent"),
+    // primary: cn("hover:border-primary-accent"),
+    // secondary: cn("hover:border-secondary-accent"),
+    // warning: cn("hover:border-warning-accent"),
+    // danger: cn("hover:border-danger-accent")
   }
 }
 
@@ -93,6 +104,7 @@ export const makeColorSchemeOutlinedHoverVariants = (): ColorSchemeVariants => {
 export const makePaddingVariants = (): PaddingVariants => {
   return {
     ...makeBaseVariants(),
+    default: "px-5 py-1.5 text-base",
     xs: "px-3 py-1 text-xs",
     sm: "px-4 py-1 text-sm",
     md: "px-5 py-1.5 text-base",
@@ -108,6 +120,7 @@ export const makePaddingVariants = (): PaddingVariants => {
 export const makeTextSizeVariants = (): TextSizeVariants => {
   return {
     ...makeBaseVariants(),
+    default: "text-base",
     xs: "text-xs",
     sm: "text-sm",
     md: "text-base",
@@ -123,6 +136,7 @@ export const makeTextSizeVariants = (): TextSizeVariants => {
 export const makeRoundedVariants = (): RoundedVariants => {
   return {
     ...makeBaseVariants(),
+    default: "rounded-md",
     none: "rounded-0",
     xs: "rounded-xs",
     sm: "rounded-lg",
@@ -162,6 +176,10 @@ export const makeUiBaseClasses = (...classes: MakerClassesProps) => {
   )
 }
 
+export const makeUiHoverableClasses = (...classes: MakerClassesProps) => {
+  return makeClasses("hover:border-primary", "disabled:opacity-50", "disabled:cursor-not-allowed", ...classes)
+}
+
 /**
  * Сделать классы для кликабельных элементов
  * @namespace Shared.Lib.StyleApi.makeClickableClasses
@@ -170,9 +188,22 @@ export const makeUiClickableClasses = (...classes: MakerClassesProps) => {
   return makeClasses(
     "cursor-pointer",
     "select-none",
-    // "active:scale-95",
+    "active:scale-90",
+    "transition-transform",
+    "duration-(--duration-default)",
+    ...classes
+  )
+}
+export const makeUiFocusableClasses = (...classes: MakerClassesProps) => {
+  return makeClasses(
+    "focus:outline-none",
+    "focus:border-primary",
+    // "focus:-rotate-3",
     // "transition-transform",
     // "duration-(--duration-default)",
+    // "hover:border-primary",
+    // "disabled:opacity-50",
+    // "disabled:cursor-not-allowed",
     ...classes
   )
 }
@@ -182,37 +213,35 @@ export const makeUiClickableClasses = (...classes: MakerClassesProps) => {
  * @namespace Shared.Lib.StyleApi.extractVariant
  */
 export const extractVariant = (variants: Record<string, string>, variant: string) => {
-  return variants[variant] ?? variants.none ?? ""
+  return variants[variant] ?? variants.default ?? ""
 }
 
 /**
- * Компоновать варианты
- * @namespace Shared.Lib.StyleApi.composeVariants
+ * Собрать CSS классы варианта
+ * @namespace Shared.Lib.StyleApi.buildVariant
  */
-export const composeVariants = ({
+export const buildVariant = ({
   beforeClasses = "",
   afterClasses = "",
   outlined = false,
-  variants = {},
-  defaultVariants = {}
-}: ComposeVariantsProps) => {
-  const useVariants = cva(beforeClasses, {
-    variants: {
-      scheme: outlined ? makeColorSchemeOutlinedVariants() : makeColorSchemeVariants(),
-      schemeHover: outlined ? makeColorSchemeOutlinedHoverVariants() : makeColorSchemeHoverVariants(),
-      padding: makePaddingVariants(),
-      textSize: makeTextSizeVariants(),
-      rounded: makeRoundedVariants(),
-      ...variants
-    },
-    defaultVariants: {
-      scheme: defaultVariants.scheme ?? "none",
-      schemeHover: defaultVariants.schemeHover ?? "none",
-      padding: defaultVariants.padding ?? "none",
-      textSize: defaultVariants.textSize ?? "none",
-      rounded: defaultVariants.rounded ?? "none"
-    }
+  variant = {}
+}: BuildVariantProps): string => {
+  const classes: string[] = []
+  const variantsMap = {
+    scheme: outlined ? makeColorSchemeOutlinedVariants() : makeColorSchemeVariants(),
+    schemeHover: outlined ? makeColorSchemeOutlinedHoverVariants() : makeColorSchemeHoverVariants(),
+    padding: makePaddingVariants(),
+    textSize: makeTextSizeVariants(),
+    rounded: makeRoundedVariants()
+  }
+
+  Object.entries(variantsMap).forEach(([key, variants]) => {
+    const variantKey = key as keyof typeof variantsMap
+    const variantValue = (variant as Record<string, string>)[variantKey] ?? "default"
+    const className = extractVariant(variants, variantValue)
+
+    classes.push(className)
   })
 
-  return (options: Partial<VariantProps<typeof useVariants>>): string => cn(useVariants(options), afterClasses)
+  return cn(beforeClasses, classes, afterClasses)
 }
