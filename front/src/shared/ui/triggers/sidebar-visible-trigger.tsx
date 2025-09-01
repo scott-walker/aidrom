@@ -16,14 +16,5 @@ export const SidebarVisibleTrigger: FC<Props> = ({ ...props }): ReactNode => {
   const { isSidebarHidden, toggleSidebarVisibleMode } = useLayout()
   const iconName = isSidebarHidden ? "panel-left-open" : "panel-left-close"
 
-  return (
-    <IconButton
-      icon={iconName}
-      iconSize={36}
-      iconStrokeWidth={2}
-      full={true}
-      onClick={toggleSidebarVisibleMode}
-      {...props}
-    />
-  )
+  return <IconButton icon={iconName} onClick={toggleSidebarVisibleMode} {...props} />
 }

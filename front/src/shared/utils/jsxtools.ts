@@ -1,6 +1,8 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { cva } from "class-variance-authority"
+import { cva, type VariantProps } from "class-variance-authority"
+
+export type { VariantProps, ClassValue }
 
 /**
  * Объединяет классы в один строковый класс

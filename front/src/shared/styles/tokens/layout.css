@@ -1,0 +1,12 @@
+/* Токены макета */
+
+@theme {
+  --layout-header-height: 6.25rem;
+  --layout-footer-height: 4rem;
+  --layout-sidebar-width: 16rem;
+  --layout-sidebar-collapsed-width: 4.5rem;
+  --layout-infobar-width: 25rem;
+  --layout-infobar-collapsed-width: 4.5rem;
+  --layout-transition-duration: 125ms;
+  --layout-inner-offset: 1.875rem;
+}

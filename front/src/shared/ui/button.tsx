@@ -1,130 +1,66 @@
-import type { ComponentProps, FC, ReactNode } from "react"
-import { cn, cva } from "@utils/jsxtools"
-
-/**
- * Варианты кнопки
- * @namespace Ui.Button.Variant
- */
-export type Variant = "ghost" | "soft" | "hard" | "primary" | "secondary" | "warning" | "danger"
-
-/**
- * Размеры кнопки
- * @namespace Ui.Button.Size
- */
-export type Size = "xs" | "sm" | "md" | "lg" | "xl" | "none"
-
-/**
- * Скругление кнопки
- * @namespace Ui.Button.Rounded
- */
-export type Rounded = "none" | "xs" | "sm" | "md" | "lg" | "xl" | "full"
+import type { ComponentProps, ReactNode } from "react"
+import {
+  composeVariants,
+  makeUiBaseClasses,
+  makeUiClickableClasses,
+  type ColorSchemeVariant,
+  type RoundedVariant,
+  type SizeVariant
+} from "@lib/style-api"
 
 /**
  * Пропсы кнопки
  * @namespace Ui.Button.Props
  */
-export type Props = ComponentProps<"button"> & {
+export type ButtonProps = ComponentProps<"button"> & {
   children: ReactNode
-  variant?: Variant
-  size?: Size
-  rounded?: Rounded
+  scheme?: ColorSchemeVariant
+  size?: SizeVariant
+  rounded?: RoundedVariant
 }
 
 /**
  * Кнопка
  * @namespace Ui.Button
  * @param {Props} props.children - контент
- * @param {Props} props.variant - вариант
+ * @param {Props} props.scheme - цветовое решение
+ * @param {Props} props.size - размер
+ * @param {Props} props.rounded - скругление
  * @param {Props} props.className - CSS-классы
  * @returns {ReactNode}
  */
-export const Button: FC<Props> = ({
+export const Button = ({
   children,
-  variant = "ghost",
+  scheme = "ghost",
   size = "md",
   rounded = "sm",
   className = "",
   ...props
-}: Props): ReactNode => {
-  const buttonBaseClasses = cn(
-    "w-fit",
-    "h-fit",
-    "transition-colors",
-    "transition-transform",
-    "duration-100",
-    "cursor-pointer",
-    "font-medium",
-    "border-2",
-    "border-transparent",
-    "hover:scale-105",
-    "active:scale-95",
-    "select-none",
-    "dark:shadow-ghost-xs"
-  )
-  const buttonVariants = cva(buttonBaseClasses, {
-    variants: {
-      variant: {
-        ghost: cn("bg-transparent", "text-foreground", "dark:shadow-none"),
-        soft: cn("bg-background-soft", "text-foreground", "shadow-ghost-xs"),
-        hard: cn("bg-foreground", "text-background", "dark:bg-foreground-hard"),
-        primary: cn(
-          "bg-primary",
-          "text-primary-foreground",
-          "shadow-ghost-2xl",
-          "shadow-color-danger",
-          "hover:bg-primary-accent",
-          "hover:text-primary-foreground-accent"
-        ),
-        secondary: cn(
-          "bg-secondary",
-          "text-secondary-foreground",
-          "shadow-ghost-2xl",
-          "shadow-color-danger",
-          "hover:bg-secondary-accent",
-          "hover:text-secondary-foreground-accent"
-        ),
-        warning: cn(
-          "bg-warning",
-          "text-warning-foreground",
-          "hover:bg-warning-accent",
-          "hover:text-warning-foreground-accent"
-        ),
-        danger: cn(
-          "bg-danger",
-          "text-danger-foreground",
-          "hover:bg-danger-accent",
-          "hover:text-danger-foreground-accent"
-        )
-      },
-      size: {
-        none: "px-0 py-0",
-        xs: "px-3 py-1 text-xs",
-        sm: "px-4 py-1 text-sm",
-        md: "px-5 py-1.5 text-base",
-        lg: "px-6 py-2 text-lg",
-        xl: "px-8 py-3.5 text-xl"
-      },
-      rounded: {
-        none: "rounded-none",
-        xs: "rounded-sm",
-        sm: "rounded-lg",
-        md: "rounded-2xl",
-        lg: "rounded-3xl",
-        xl: "rounded-4xl",
-        full: "rounded-full"
-      }
-    },
+}: ButtonProps): ReactNode => {
+  const useVariant = composeVariants({
+    beforeClasses: makeUiBaseClasses(makeUiClickableClasses()),
+    afterClasses: className,
     defaultVariants: {
-      variant: "hard",
-      size: "md",
-      rounded: "md"
+      scheme: "ghost",
+      schemeHover: "ghost",
+      padding: "md",
+      textSize: "md",
+      rounded: "sm"
     }
   })
-  const innerClasses = cn("flex items-center justify-center gap-4")
 
   return (
-    <button className={cn(buttonVariants({ variant, size, rounded }), className)} {...props}>
-      <span className={innerClasses}>{children}</span>
+    <button
+      {...props}
+      className={useVariant({
+        scheme,
+        schemeHover: scheme,
+        padding: size,
+        textSize: size,
+        rounded
+      })}
+    >
+      {children}
     </button>
   )
 }

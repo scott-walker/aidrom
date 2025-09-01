@@ -1,0 +1,110 @@
+/* Токены цветов */
+
+@theme {
+  --color-absolute-soft: oklch(100% 0 0);
+  --color-absolute-hard: oklch(0 0 0);
+
+  /* Base */
+  --color-background: var(--color-slate-100);
+  --color-background-soft: var(--color-absolute-soft);
+  --color-background-hard: oklch(0.91 0.02 262.43);
+  --color-foreground: var(--color-slate-700);
+  --color-foreground-soft: var(--color-slate-500);
+  --color-foreground-hard: var(--color-slate-900);
+
+  /* Primary */
+  --color-primary: var(--color-violet-600);
+  --color-primary-accent: var(--color-violet-700);
+  --color-primary-foreground: var(--color-white);
+  --color-primary-foreground-accent: var(--color-white);
+
+  /* Secondary */
+  --color-secondary: var(--color-fuchsia-600);
+  --color-secondary-accent: var(--color-fuchsia-700);
+  --color-secondary-foreground: var(--color-white);
+  --color-secondary-foreground-accent: var(--color-white);
+
+  /* Warning */
+  --color-warning: var(--color-amber-400);
+  --color-warning-accent: var(--color-amber-300);
+  --color-warning-foreground: var(--color-foreground);
+  --color-warning-foreground-accent: var(--color-foreground);
+
+  /* Danger */
+  --color-danger: var(--color-red-600);
+  --color-danger-accent: var(--color-red-500);
+  --color-danger-foreground: var(--color-background);
+  --color-danger-foreground-accent: var(--color-background);
+
+  /* Hard */
+  --color-hard: var(--color-foreground);
+  --color-hard-accent: var(--color-foreground-hard);
+  --color-hard-foreground: var(--color-background);
+  --color-hard-foreground-accent: var(--color-background);
+
+  /* Soft */
+  --color-soft: var(--color-background);
+  --color-soft-accent: var(--color-background-hard);
+  --color-soft-foreground: var(--color-foreground);
+  --color-soft-foreground-accent: var(--color-foreground);
+
+  /* Ghost */
+  --color-ghost: transparent;
+  --color-ghost-accent: transparent;
+  --color-ghost-foreground: var(--color-foreground);
+  --color-ghost-foreground-accent: var(--color-foreground);
+
+  /* Призрачные цвета */
+  --color-ghost-base: color-mix(in oklch, var(--color-neutral-15) 18%, transparent);
+  --color-ghost-epic: color-mix(in oklch, var(--color-secondary) 50%, transparent);
+
+  /* Градиенты */
+  --color-gradient-brand: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+
+  /* Скроллбар */
+  --color-scrollbar-track: transparent;
+  --color-scrollbar-thumb: var(--color-slate-300);
+
+  /* Границы */
+  --color-border: color-mix(in oklch, var(--color-gray-500) 10%, transparent);
+}
+
+/* 🌙  */
+body.theme-dark {
+  /* Base */
+  --color-background-soft: oklch(32.051% 0.049 273.77);
+  --color-background: oklab(26.375% 0.00313 -0.04548);
+  --color-background-hard: oklch(22.508% 0.04354 272.772);
+  --color-foreground: var(--color-slate-100);
+  --color-foreground-soft: var(--color-gray-300);
+  --color-foreground-hard: var(--color-white);
+
+  /* Warning */
+  --color-warning-foreground: var(--color-background);
+  --color-warning-foreground-accent: var(--color-background);
+
+  /* Danger */
+  --color-danger-foreground: var(--color-foreground);
+  --color-danger-foreground-accent: var(--color-foreground);
+
+  /* Soft */
+  --color-soft: var(--color-background);
+  --color-soft-accent: var(--color-background-hard);
+  --color-soft-foreground: var(--color-foreground);
+  --color-soft-foreground-accent: var(--color-foreground);
+
+  /* Hard */
+  --color-hard: var(--color-foreground);
+  --color-hard-accent: var(--color-foreground-hard);
+  --color-hard-foreground: var(--color-background);
+  --color-hard-foreground-accent: var(--color-background);
+
+  /* Скроллбар */
+  --color-scrollbar-thumb: var(--color-neutral-6);
+
+  /* Границы */
+  --color-border: color-mix(in oklch, var(--color-gray-500) 10%, transparent);
+
+  /* Призрачные цвета */
+  --color-ghost-base: color-mix(in oklch, var(--color-neutral-0) 30%, transparent);
+}

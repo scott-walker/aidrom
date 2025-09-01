@@ -1,77 +1,69 @@
 import type { ComponentProps, FC, ReactNode } from "react"
-import { cn, cva } from "@utils/jsxtools"
-import { Button, type Size, type Variant, type Rounded } from "@shared/ui/button"
 import { Icon, type IconName } from "@shared/ui/icon"
+import {
+  composeVariants,
+  makeUiBaseClasses,
+  makeUiClickableClasses,
+  makeClasses,
+  type ColorSchemeVariant,
+  type RoundedVariant
+} from "@lib/style-api"
 
 /**
- * Пропсы кнопки с иконкой
- * @namespace Ui.IconButton.Props
+ * Пропсы кнопки
+ * @namespace Ui.Button.Props
  */
 export type Props = ComponentProps<"button"> & {
   icon: IconName
-  variant?: Variant
-  size?: Size
   iconSize?: number
   iconStrokeWidth?: number
   iconClassName?: string
-  rounded?: Rounded
   circle?: boolean
-  full?: boolean
-  hoverVariant?: "content" | "outline" | "filled" | null
+  scheme?: ColorSchemeVariant
+  schemeHover?: ColorSchemeVariant
+  rounded?: RoundedVariant
 }
 
 /**
  * Кнопка с иконкой
- * @namespace Ui.IconButton
+ * @namespace Ui.Button
  * @param {Props} props.children - контент
- * @param {Props} props.variant - вариант
+ * @param {Props} props.scheme - цветовое решение
+ * @param {Props} props.size - размер
+ * @param {Props} props.rounded - скругление
  * @param {Props} props.className - CSS-классы
  * @returns {ReactNode}
  */
 export const IconButton: FC<Props> = ({
   icon,
-  variant = "ghost",
-  size = "md",
-  rounded = "sm",
-  hoverVariant = "content",
-  circle = false,
-  full = false,
-  className = "",
-  iconSize = 24,
+  iconSize = 36,
   iconStrokeWidth = 2,
   iconClassName = "",
+  circle = false,
+  scheme = "ghost",
+  schemeHover = "none",
+  className = "",
   ...props
 }: Props): ReactNode => {
-  if (circle) rounded = "full"
-  if (full) size = "none"
+  iconClassName = makeClasses(iconClassName, {
+    "m-1.5": circle
+  })
 
-  const buttonVariants = cva("p-0 w-10 h-10 transition-colors duration-200", {
-    variants: {
-      hoverVariant: {
-        content: cn("hover:text-primary"),
-        outline: cn("hover:text-primary", "hover:border-primary"),
-        filled: cn("hover:text-primary-foreground", "hover:bg-primary")
-      },
-      circle: {
-        true: "w-12 h-12"
-      },
-      full: {
-        false: "w-10 h-10",
-        true: "w-fit h-fit"
-      }
-    },
+  const useVariant = composeVariants({
+    beforeClasses: makeUiBaseClasses(makeUiClickableClasses()),
+    afterClasses: className,
     defaultVariants: {
-      hoverVariant: null,
-      circle: false,
-      full: false
+      scheme: "ghost",
+      schemeHover: "none",
+      padding: "none",
+      textSize: "none",
+      rounded: circle ? "full" : "sm"
     }
   })
-  const buttonClasses = cn(buttonVariants({ hoverVariant, circle, full }), className)
-  const iconClasses = cn(iconClassName)
 
   return (
-    <Button variant={variant} size={size} rounded={rounded} className={buttonClasses} {...props}>
-      <Icon name={icon} size={iconSize} strokeWidth={iconStrokeWidth} className={iconClasses} />
-    </Button>
+    <button className={useVariant({ scheme, schemeHover })} {...props}>
+      <Icon name={icon} size={iconSize} strokeWidth={iconStrokeWidth} className={iconClassName} />
+    </button>
   )
 }

@@ -17,14 +17,5 @@ export const FooterVisibleTrigger: FC<Props> = ({ ...props }: Props): ReactNode 
   const { isFooterHidden, toggleFooterVisibleMode } = useLayout()
   const iconName = isFooterHidden ? "panel-bottom-open" : "panel-bottom-close"
 
-  return (
-    <IconButton
-      icon={iconName}
-      iconSize={36}
-      iconStrokeWidth={2}
-      full={true}
-      onClick={toggleFooterVisibleMode}
-      {...props}
-    />
-  )
+  return <IconButton icon={iconName} onClick={toggleFooterVisibleMode} {...props} />
 }

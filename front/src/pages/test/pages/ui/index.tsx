@@ -37,106 +37,106 @@ export const UiPage = createPage(config, (): ReactNode => {
 
       <div className="flex flex-col gap-4 mt-10">
         <div className="flex items-center gap-4 flex-wrap">
-          <Button variant="soft" size="xs">
+          <Button scheme="soft" size="xs">
             Soft XS
           </Button>
-          <Button variant="soft" size="sm">
+          <Button scheme="soft" size="sm">
             Soft SM
           </Button>
-          <Button variant="soft" size="md">
+          <Button scheme="soft" size="md">
             Soft MD
           </Button>
-          <Button variant="soft" size="lg">
+          <Button scheme="soft" size="lg">
             Soft LG
           </Button>
-          <Button variant="soft" size="xl">
+          <Button scheme="soft" size="xl">
             Soft XL
           </Button>
         </div>
 
         <div className="flex items-center gap-4 flex-wrap">
-          <Button variant="hard" size="xs">
+          <Button scheme="hard" size="xs">
             Hard XS
           </Button>
-          <Button variant="hard" size="sm">
+          <Button scheme="hard" size="sm">
             Hard SM
           </Button>
-          <Button variant="hard" size="md">
+          <Button scheme="hard" size="md">
             Hard MD
           </Button>
-          <Button variant="hard" size="lg">
+          <Button scheme="hard" size="lg">
             Hard LG
           </Button>
-          <Button variant="hard" size="xl">
+          <Button scheme="hard" size="xl">
             Hard XL
           </Button>
         </div>
         <div className="flex items-center gap-4 flex-wrap">
-          <Button variant="primary" size="xs">
+          <Button scheme="primary" size="xs">
             Primary XS
           </Button>
-          <Button variant="primary" size="sm">
+          <Button scheme="primary" size="sm">
             Primary SM
           </Button>
-          <Button variant="primary" size="md">
+          <Button scheme="primary" size="md">
             Primary MD
           </Button>
-          <Button variant="primary" size="lg">
+          <Button scheme="primary" size="lg">
             Primary LG
           </Button>
-          <Button variant="primary" size="xl">
+          <Button scheme="primary" size="xl">
             Primary XL
           </Button>
         </div>
         <div className="flex items-center gap-4 flex-wrap">
-          <Button variant="secondary" size="xs">
+          <Button scheme="secondary" size="xs">
             Secondary XS
           </Button>
-          <Button variant="secondary" size="sm">
+          <Button scheme="secondary" size="sm">
             Secondary SM
           </Button>
-          <Button variant="secondary" size="md">
+          <Button scheme="secondary" size="md">
             Secondary MD
           </Button>
-          <Button variant="secondary" size="lg">
+          <Button scheme="secondary" size="lg">
             Secondary LG
           </Button>
-          <Button variant="secondary" size="xl">
+          <Button scheme="secondary" size="xl">
             Secondary XL
           </Button>
         </div>
         <div className="flex items-center gap-4 flex-wrap">
-          <Button variant="warning" size="xs">
+          <Button scheme="warning" size="xs">
             Warning XS
           </Button>
-          <Button variant="warning" size="sm">
+          <Button scheme="warning" size="sm">
             Warning SM
           </Button>
-          <Button variant="warning" size="md">
+          <Button scheme="warning" size="md">
             Warning MD
           </Button>
-          <Button variant="warning" size="lg">
+          <Button scheme="warning" size="lg">
             Warning LG
           </Button>
-          <Button variant="warning" size="xl">
+          <Button scheme="warning" size="xl">
             Warning XL
           </Button>
         </div>
 
         <div className="flex items-center gap-4 flex-wrap">
-          <Button variant="danger" size="xs">
+          <Button scheme="danger" size="xs">
             Danger XS
           </Button>
-          <Button variant="danger" size="sm">
+          <Button scheme="danger" size="sm">
             Danger SM
           </Button>
-          <Button variant="danger" size="md">
+          <Button scheme="danger" size="md">
             Danger MD
           </Button>
-          <Button variant="danger" size="lg">
+          <Button scheme="danger" size="lg">
             Danger LG
           </Button>
-          <Button variant="danger" size="xl">
+          <Button scheme="danger" size="xl">
             Danger XL
           </Button>
         </div>

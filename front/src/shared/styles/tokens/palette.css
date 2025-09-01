@@ -1,0 +1,49 @@
+/* Цветовая палитра */
+
+@theme {
+  /* 
+    Нейтральные цвета
+    https://hihayk.github.io/scale/#20/20/100/100/0/0/-100/-51/7991F8/121/145/243/white
+  */
+  --color-neutral-0: #000000;
+  --color-neutral-1: #08080b;
+  --color-neutral-2: #0f1016;
+  --color-neutral-3: #161821;
+  --color-neutral-4: #1d202c;
+  --color-neutral-5: #242838;
+  --color-neutral-6: #2b3044;
+  --color-neutral-7: #32374f;
+  --color-neutral-8: #383f5b;
+  --color-neutral-9: #3f4668;
+  --color-neutral-10: #454e74;
+  --color-neutral-11: #4b5580;
+  --color-neutral-12: #505c8d;
+  --color-neutral-13: #56639a;
+  --color-neutral-14: #5c6aa7;
+  --color-neutral-15: #6171b4;
+  --color-neutral-16: #6677c1;
+  --color-neutral-17: #6b7ecf;
+  --color-neutral-18: #7084dc;
+  --color-neutral-19: #758bea;
+  --color-neutral-20: #7991f8;
+  --color-neutral-21: #8398f5;
+  --color-neutral-22: #8ca0f3;
+  --color-neutral-23: #95a7f1;
+  --color-neutral-24: #9eadef;
+  --color-neutral-25: #a6b4ee;
+  --color-neutral-26: #afbaed;
+  --color-neutral-27: #b6c1ec;
+  --color-neutral-28: #bec7ec;
+  --color-neutral-29: #c5cceb;
+  --color-neutral-30: #ccd2ec;
+  --color-neutral-31: #d2d7ec;
+  --color-neutral-32: #d9dded;
+  --color-neutral-33: #dfe2ee;
+  --color-neutral-34: #e4e6f0;
+  --color-neutral-35: #e9ebf1;
+  --color-neutral-36: #eeeff3;
+  --color-neutral-37: #f3f4f6;
+  --color-neutral-38: #f7f8f9;
+  --color-neutral-39: #fbfbfc;
+  --color-neutral-40: #ffffff;
+}

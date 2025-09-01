@@ -18,14 +18,5 @@ export const InfobarCollapseTrigger: FC<Props> = ({ ...props }: Props): ReactNod
   const { isInfobarCollapsed, toggleInfobarCollapsedMode } = useLayout()
   const iconName = isInfobarCollapsed ? "panel-right-open" : "panel-right-close"
 
-  return (
-    <IconButton
-      icon={iconName}
-      iconSize={36}
-      iconStrokeWidth={2}
-      full={true}
-      onClick={toggleInfobarCollapsedMode}
-      {...props}
-    />
-  )
+  return <IconButton icon={iconName} onClick={toggleInfobarCollapsedMode} {...props} />
 }

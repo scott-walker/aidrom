@@ -1,0 +1,5 @@
+/* Токены анимации */
+
+@theme {
+  --duration-default: 80ms;
+}

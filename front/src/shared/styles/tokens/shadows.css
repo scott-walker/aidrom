@@ -1,0 +1,22 @@
+/* Тениииии (ууу 👻) */
+
+@theme {
+  --shadow-xs: 0px 1px 5px 0px var(--color-ghost-base);
+  --shadow-sm: 0px 5px 10px 0px var(--color-ghost-base);
+  --shadow-md: 0px 10px 20px 0px var(--color-ghost-base);
+  --shadow-lg: 0px 0px 45px 0px var(--color-ghost-base);
+  --shadow-xl: 0px 0px 60px 0px var(--color-ghost-base);
+  --shadow-2xl: 0px 0px 100px 0px var(--color-ghost-base);
+  --shadow-epic: 0px 0px 400px -80px var(--color-ghost-epic);
+}
+
+/* 🌙  */
+body.theme-dark {
+  --shadow-xs: 0px 1px 5px 0px var(--color-ghost-base);
+  --shadow-sm: 0px 5px 10px 0px var(--color-ghost-base);
+  --shadow-md: 0px 10px 20px 0px var(--color-ghost-base);
+  --shadow-lg: 0px 0px 45px 0px var(--color-ghost-base);
+  --shadow-xl: 0px 0px 60px 0px var(--color-ghost-base);
+  --shadow-2xl: 0px 0px 100px 0px var(--color-ghost-base);
+  --shadow-epic: 0px 0px 400px -80px var(--color-ghost-epic);
+}
