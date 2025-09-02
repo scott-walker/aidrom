@@ -13,8 +13,8 @@ export const CardHeader = ({ children }: { children: ReactNode }) => {
     "gap-(--ui-card-gap)",
     "px-(--ui-card-offset-x)",
     "py-(--ui-card-offset-y)",
-    "border-b-1",
-    "border-background-hard"
+    "border-b-2",
+    "border-(--ui-card-border)"
   )
 
   return <header className={classes}>{children}</header>

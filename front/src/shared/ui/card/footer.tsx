@@ -13,8 +13,8 @@ export const CardFooter = ({ children }: { children: ReactNode }) => {
     "gap-(--ui-card-gap)",
     "px-(--ui-card-offset-x)",
     "py-(--ui-card-offset-y)",
-    "border-t-1",
-    "border-background-hard"
+    "border-t-2",
+    "border-(--ui-card-border)"
   )
 
   return <footer className={classes}>{children}</footer>
