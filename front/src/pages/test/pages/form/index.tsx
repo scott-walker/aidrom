@@ -1,9 +1,10 @@
 import { useState, type ReactNode } from "react"
 import type { PageConfig } from "@lib/page-api"
 import { createPage } from "@lib/page-api"
-import { Input } from "@ui/input"
+import { Input } from "@shared/ui/input"
 import { Button } from "@ui/button"
 import { Select } from "@ui/select"
+import { CreateProviderForm } from "@features/provider/create-provider-form/ui/form"
 
 /**
  * Конфигурация страницы
@@ -31,6 +32,9 @@ export const FormPage = createPage(config, (): ReactNode => {
   return (
     <div className="flex flex-col">
       <div className="flex align-center gap-4 mt-10 flex-wrap">
+        <CreateProviderForm onSubmit={() => {}} />
+      </div>
+      <div className="flex align-center gap-4 mt-30 flex-wrap">
         <Input
           placeholder="Email"
           type="email"
@@ -39,7 +43,7 @@ export const FormPage = createPage(config, (): ReactNode => {
         />
         <Input error={true} placeholder="Поле с ошибкой" />
         <Select items={selectItems} value={selectedValue} onChangeValue={setSelectedValue} />
-        <Button scheme="primary">Отправить</Button>
+        <Button schema="primary">Отправить</Button>
       </div>
     </div>
   )

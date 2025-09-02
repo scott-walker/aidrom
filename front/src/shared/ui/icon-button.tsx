@@ -25,16 +25,23 @@ export const IconButton = ({
   iconStrokeWidth = 2,
   iconClassName = "",
   circle = false,
-  scheme = "ghost",
+  schema = "ghost",
   className = "",
   ...props
 }: IconButtonProps): ReactNode => {
-  const classes = makeClasses("p-0", scheme === "brand" && "p-(--ui-border-width)", circle && "rounded-full", className)
+  const classes = makeClasses(
+    "p-0",
+    "shadow-none",
+    schema === "brand" && "p-(--ui-border-width)",
+    schema === "ghost" && "hover:text-primary",
+    circle && "rounded-full",
+    className
+  )
 
   iconClassName = makeClasses("m-2.5", iconClassName)
 
   return (
-    <Button scheme={scheme} className={classes} {...props}>
+    <Button schema={schema} className={classes} {...props}>
       <Icon name={icon} size={iconSize} strokeWidth={iconStrokeWidth} className={iconClassName} />
     </Button>
   )

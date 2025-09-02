@@ -38,26 +38,26 @@ export const UiPage = createPage(config, (): ReactNode => {
 
       <div className="flex flex-col gap-4 mt-10">
         <div className="flex items-center gap-4 flex-wrap">
-          <Button scheme="soft">Soft</Button>
-          <Button scheme="hard">Hard</Button>
-          <Button scheme="primary">Primary</Button>
-          <Button scheme="outline">Outline</Button>
-          <Button scheme="brand">Brand</Button>
+          <Button schema="soft">Soft</Button>
+          <Button schema="hard">Hard</Button>
+          <Button schema="primary">Primary</Button>
+          <Button schema="outline">Outline</Button>
+          <Button schema="brand">Brand</Button>
         </div>
 
         <div className="flex items-center gap-4 flex-wrap">
-          <IconButton icon="home" scheme="ghost" />
-          <IconButton icon="home" scheme="hard" />
-          <IconButton icon="home" scheme="primary" />
-          <IconButton icon="home" scheme="outline" />
-          <IconButton icon="home" scheme="brand" />
+          <IconButton icon="home" schema="ghost" />
+          <IconButton icon="home" schema="hard" />
+          <IconButton icon="home" schema="primary" />
+          <IconButton icon="home" schema="outline" />
+          <IconButton icon="home" schema="brand" />
         </div>
         <div className="flex items-center gap-4 flex-wrap">
-          <IconButton icon="home" scheme="ghost" circle />
-          <IconButton icon="home" scheme="hard" circle />
-          <IconButton icon="home" scheme="primary" circle />
-          <IconButton icon="home" scheme="outline" circle />
-          <IconButton icon="home" scheme="brand" circle />
+          <IconButton icon="home" schema="ghost" circle />
+          <IconButton icon="home" schema="hard" circle />
+          <IconButton icon="home" schema="primary" circle />
+          <IconButton icon="home" schema="outline" circle />
+          <IconButton icon="home" schema="brand" circle />
         </div>
       </div>
 

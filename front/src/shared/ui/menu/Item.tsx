@@ -22,21 +22,11 @@ export const Item = ({ label, path, icon = null, compact = false }: MenuItem) =>
       }
     },
     compoundVariants: [
-      // {
-      //   compact: true,
-      //   active: true,
-      //   class: cn("bg-background-hard", "text-foreground-hard", "dark:bg-primary", "dark:text-foreground-hard")
-      // },
       {
         compact: true,
         active: false,
         class: cn("text-foreground", "hover:text-primary")
       },
-      // {
-      //   compact: false,
-      //   active: true,
-      //   class: cn("bg-background-hard", "text-foreground-hard", "dark:bg-background-soft", "dark:text-foreground-hard")
-      // },
       {
         compact: false,
         active: false,
@@ -48,13 +38,10 @@ export const Item = ({ label, path, icon = null, compact = false }: MenuItem) =>
       active: false
     }
   })
+
   const linkClassHandler = ({ isActive }: { isActive: boolean }) => linkVariants({ active: isActive, compact })
 
-  // Icon
-  const iconClasses = cn("")
-  const iconWeight = 3
-
-  // Label
+  const iconWeight = 2
   const labelClasses = cn("text-base")
   const labelVariants = cva(labelClasses, {
     variants: {
@@ -71,7 +58,7 @@ export const Item = ({ label, path, icon = null, compact = false }: MenuItem) =>
   return (
     <li>
       <NavLink className={linkClassHandler} to={path}>
-        {icon && <Icon strokeWidth={iconWeight} name={icon} className={iconClasses} />}
+        {icon && <Icon strokeWidth={iconWeight} name={icon} />}
 
         <span className={labelVariants({ compact })}>{label}</span>
       </NavLink>

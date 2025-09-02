@@ -15,15 +15,15 @@ import {
  */
 export type ButtonProps = ComponentProps<"button"> & {
   children: ReactNode
-  scheme?: "ghost" | "soft" | "hard" | "primary" | "outline" | "brand"
+  schema?: "ghost" | "soft" | "hard" | "primary" | "outline" | "brand"
 }
 
 /**
  * Кнопка
  * @namespace Shared.Ui.Button
  */
-export const Button = ({ children, scheme = "primary", className = "", ...props }: ButtonProps): ReactNode => {
-  const useScheme = makeVariants({
+export const Button = ({ children, schema = "primary", className = "", ...props }: ButtonProps): ReactNode => {
+  const useSchema = makeVariants({
     beforeClasses: makeClasses(
       makeUiBox(),
       makeUiShadow(),
@@ -69,7 +69,7 @@ export const Button = ({ children, scheme = "primary", className = "", ...props 
   })
 
   return (
-    <button {...props} className={useScheme(scheme)}>
+    <button {...props} className={useSchema(schema)}>
       {children}
     </button>
   )

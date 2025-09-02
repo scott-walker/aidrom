@@ -21,4 +21,8 @@
     transform var(--ui-transition-transform-duration) ease-in-out;
 
   --ui-shadow: var(--shadow-sm);
+
+  --ui-card-gap: 20px;
+  --ui-card-offset-x: 20px;
+  --ui-card-offset-y: 20px;
 }
