@@ -1,6 +1,6 @@
 import type { ComponentProps, FC, ReactNode } from "react"
 import { useLayout } from "@scottwalker/lucent"
-import { IconButton } from "@shared/ui/icon-button"
+import { IconButton } from "@ui/icon-button"
 
 /**
  * Пропсы триггера футера

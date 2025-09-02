@@ -12,13 +12,19 @@
 }
 
 /* Градиенты */
-@utility text-gradient-brand {
+@utility text-brand-gradient {
   color: transparent;
-  background: var(--color-gradient-brand);
+  background: var(--color-brand-gradient);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-@utility bg-gradient-brand {
-  background: var(--color-gradient-brand);
+@utility bg-brand-gradient {
+  background: var(--color-brand-gradient);
+}
+@utility border-brand-gradient {
+  border-image: var(--color-brand-gradient) 1;
+}
+@utility fill-brand-gradient {
+  fill: var(--color-brand-gradient);
 }

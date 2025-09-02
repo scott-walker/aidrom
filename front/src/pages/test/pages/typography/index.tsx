@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { Typography as TypographyComponent } from "@shared/ui/typography"
+import { Typography as TypographyComponent } from "@ui/typography"
 import { createPage, type PageConfig } from "@lib/page-api"
 
 /**

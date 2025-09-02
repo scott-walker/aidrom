@@ -1,6 +1,6 @@
 import type { ComponentProps, FC, ReactNode } from "react"
 import { useLayout } from "@scottwalker/lucent"
-import { IconButton } from "@shared/ui/icon-button"
+import { IconButton } from "@ui/icon-button"
 
 /**
  * Пропсы триггера схлопывания сайдбара
@@ -16,5 +16,5 @@ export const SidebarCollapseTrigger: FC<Props> = ({ ...props }): ReactNode => {
   const { isSidebarCollapsed, toggleSidebarCollapsedMode } = useLayout()
   const iconName = isSidebarCollapsed ? "panel-left-open" : "panel-left-close"
 
-  return <IconButton schemeHover="primary" icon={iconName} onClick={toggleSidebarCollapsedMode} {...props} />
+  return <IconButton icon={iconName} onClick={toggleSidebarCollapsedMode} {...props} />
 }

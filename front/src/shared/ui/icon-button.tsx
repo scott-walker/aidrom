@@ -1,69 +1,41 @@
-import type { ComponentProps, FC, ReactNode } from "react"
-import { Icon, type IconName } from "@shared/ui/icon"
-import {
-  buildVariant,
-  makeUiBaseClasses,
-  makeUiClickableClasses,
-  makeClasses,
-  type ColorSchemeVariant,
-  type RoundedVariant
-} from "@lib/style-api"
+import type { ReactNode } from "react"
+import { makeClasses } from "@lib/style-api"
+import { Icon, type IconName } from "@ui/icon"
+import { Button, type ButtonProps } from "@ui/button"
 
 /**
  * Пропсы кнопки
- * @namespace Ui.Button.Props
+ * @namespace Shared.Ui.IconButton.Props
  */
-export type Props = ComponentProps<"button"> & {
+export type IconButtonProps = Omit<ButtonProps, "children"> & {
   icon: IconName
   iconSize?: number
   iconStrokeWidth?: number
   iconClassName?: string
   circle?: boolean
-  scheme?: ColorSchemeVariant
-  schemeHover?: ColorSchemeVariant
-  rounded?: RoundedVariant
 }
 
 /**
  * Кнопка с иконкой
- * @namespace Ui.Button
- * @param {Props} props.children - контент
- * @param {Props} props.scheme - цветовое решение
- * @param {Props} props.size - размер
- * @param {Props} props.rounded - скругление
- * @param {Props} props.className - CSS-классы
- * @returns {ReactNode}
+ * @namespace Shared.Ui.IconButton
  */
-export const IconButton: FC<Props> = ({
+export const IconButton = ({
   icon,
   iconSize = 36,
   iconStrokeWidth = 2,
   iconClassName = "",
   circle = false,
   scheme = "ghost",
-  schemeHover = "none",
   className = "",
   ...props
-}: Props): ReactNode => {
-  iconClassName = makeClasses(iconClassName, {
-    "m-1.5": circle
-  })
+}: IconButtonProps): ReactNode => {
+  const classes = makeClasses("p-0", scheme === "brand" && "p-(--ui-border-width)", circle && "rounded-full", className)
 
-  const classes = buildVariant({
-    beforeClasses: makeClasses(makeUiBaseClasses(), makeUiClickableClasses()),
-    afterClasses: className,
-    variant: {
-      scheme,
-      schemeHover,
-      padding: "none",
-      textSize: "none",
-      rounded: circle ? "full" : "sm"
-    }
-  })
+  iconClassName = makeClasses("m-2.5", iconClassName)
 
   return (
-    <button className={classes} {...props}>
+    <Button scheme={scheme} className={classes} {...props}>
       <Icon name={icon} size={iconSize} strokeWidth={iconStrokeWidth} className={iconClassName} />
-    </button>
+    </Button>
   )
 }

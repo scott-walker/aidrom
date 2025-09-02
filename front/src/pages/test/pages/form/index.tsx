@@ -2,8 +2,8 @@ import { useState, type ReactNode } from "react"
 import type { PageConfig } from "@lib/page-api"
 import { createPage } from "@lib/page-api"
 import { Input } from "@ui/input"
-import { Button } from "@shared/ui/button"
-import { Select } from "@shared/ui/select"
+import { Button } from "@ui/button"
+import { Select } from "@ui/select"
 
 /**
  * Конфигурация страницы
@@ -38,7 +38,7 @@ export const FormPage = createPage(config, (): ReactNode => {
           onChange={({ target }) => setSelectedValue(target.value)}
         />
         <Input error={true} placeholder="Поле с ошибкой" />
-        <Select scheme="soft" items={selectItems} value={selectedValue} onChangeValue={setSelectedValue} />
+        <Select items={selectItems} value={selectedValue} onChangeValue={setSelectedValue} />
         <Button scheme="primary">Отправить</Button>
       </div>
     </div>

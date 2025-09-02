@@ -1,0 +1,24 @@
+/* UI tokens */
+
+@theme {
+  --ui-offset-x: 17px;
+  --ui-offset-y: 7px;
+  --ui-gap: 3px;
+
+  --ui-border-width: 2px;
+  --ui-rounded: 10px;
+
+  --ui-transition-color-duration: 125ms;
+  --ui-transition-border-duration: 100ms;
+  --ui-transition-transform-duration: 75ms;
+
+  --ui-animation-hover: spring-pop 0.35s ease-in-out;
+
+  /* prettier-ignore */
+  --ui-transition: 
+    background-color var(--ui-transition-color-duration) ease-in-out,
+    border-color var(--ui-transition-border-duration) ease-in-out,
+    transform var(--ui-transition-transform-duration) ease-in-out;
+
+  --ui-shadow: var(--shadow-sm);
+}

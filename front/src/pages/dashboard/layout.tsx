@@ -1,5 +1,5 @@
 import { type PageLayoutProps } from "@lib/page-api"
-import { Heading } from "@shared/ui/heading"
+import { Heading } from "@ui/heading"
 
 /**
  * Макет страницы

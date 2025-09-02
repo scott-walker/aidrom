@@ -59,7 +59,7 @@
   --color-ghost-epic: color-mix(in oklch, var(--color-secondary) 50%, transparent);
 
   /* Градиенты */
-  --color-gradient-brand: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  --color-brand-gradient: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
 
   /* Скроллбар */
   --color-scrollbar-track: transparent;

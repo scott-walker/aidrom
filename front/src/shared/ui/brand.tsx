@@ -1,6 +1,6 @@
 import type { ComponentProps, FC, ReactNode } from "react"
 import { cn } from "@utils/jsxtools"
-import { Icon } from "@shared/ui/icon"
+import { Icon } from "@ui/icon"
 
 /**
  * Пропсы бренда
@@ -26,15 +26,15 @@ export const Brand: FC<Props> = ({ compact = false, size = "md", className = "",
     "items-center",
     "justify-center",
     "select-none",
-    // compact && "bg-gradient-brand w-full h-full",
-    compact && "rounded-xl bg-gradient-brand",
+    // compact && "bg-brand-gradient w-full h-full",
+    compact && "rounded-xl bg-brand-gradient",
     className
   )
 
   const iconName = "bot-message-square"
   const iconStroke = 2.5
   const iconClasses = cn("p-2", "w-fit", "h-fit", "text-primary-foreground", "rounded-xl", {
-    "bg-gradient-brand": !compact,
+    "bg-brand-gradient": !compact,
     "bg-none": compact
   })
 

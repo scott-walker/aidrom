@@ -1,15 +1,7 @@
 import type { ComponentProps } from "react"
 import * as RadixSelect from "@radix-ui/react-select"
 import { type SelectContentProps } from "@radix-ui/react-select"
-import {
-  buildVariant,
-  makeClasses,
-  makeUiBaseClasses,
-  makeUiClickableClasses,
-  makeUiHoverableClasses,
-  type RoundedVariant,
-  type SizeVariant
-} from "@lib/style-api"
+import { makeClasses, makeUiClickable, makeUiTransition } from "@lib/style-api"
 import { ChevronDown } from "lucide-react"
 
 /**
@@ -22,9 +14,6 @@ export type SelectProps = Omit<ComponentProps<"select">, "size"> & {
   defaultValue?: string | undefined
   placeholder?: string
   className?: string
-  scheme?: "primary" | "soft" | "default"
-  size?: SizeVariant
-  rounded?: RoundedVariant
   onChangeValue?: (value: string) => void
 }
 
@@ -32,40 +21,23 @@ export type SelectProps = Omit<ComponentProps<"select">, "size"> & {
  * Компонент выбора (селект)
  * @namespace Shared.UI.Select
  */
-export const Select = ({
-  items,
-  value,
-  defaultValue,
-  placeholder,
-  className,
-  scheme = "default",
-  size = "default",
-  rounded = "default",
-  onChangeValue
-}: SelectProps) => {
-  const triggerClasses = buildVariant({
-    beforeClasses: makeUiBaseClasses(makeUiHoverableClasses(makeUiClickableClasses())),
-    afterClasses: makeClasses(
-      "inline-flex",
-      "align-center",
-      "justify-between",
-      "data-[state=open]:border-primary",
-      "transition-colors",
-      "duration-(--duration-default)",
-      "w-max",
-      "w-[170px]",
-      className
-    ),
-    outlined: false,
-    variant: {
-      scheme,
-      schemeHover: scheme,
-      padding: size,
-      textSize: size,
-      rounded
-    }
-  })
+export const Select = ({ items, value, defaultValue, placeholder, className, onChangeValue }: SelectProps) => {
+  const triggerClasses = makeClasses(
+    makeUiClickable(),
+    makeUiTransition(),
 
+    "data-[state=open]:border-primary",
+    "hover:border-primary",
+
+    "w-max",
+    "w-min-[170px]",
+
+    "bg-background",
+    "border-background",
+    "text-soft-foreground",
+    "fill-background",
+    className
+  )
   const contentClasses = makeClasses(
     "py-2",
     "bg-background-soft",

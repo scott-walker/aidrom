@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 import { createPage, type PageConfig } from "@lib/page-api"
-// import { Heading } from "@shared/ui/heading"
+// import { Heading } from "@ui/heading"
 
 /**
  * Конфигурация страницы

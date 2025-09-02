@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from "react-router"
-import { Icon } from "@shared/ui/icon"
+import { Icon } from "@ui/icon"
 import { cn } from "@shared/utils/jsxtools"
 
 /**
@@ -35,7 +35,7 @@ export const TestLayout = () => {
       <h1 className="flex items-center text-4xl">
         <Icon name="amphora" size={48} />
         <div className="ml-6">
-          Тестирование <span className="text-gradient-brand">всего и вся</span>
+          Тестирование <span className="text-brand-gradient">всего и вся</span>
         </div>
       </h1>
       <div className="flex items-center mt-10 bg-background">

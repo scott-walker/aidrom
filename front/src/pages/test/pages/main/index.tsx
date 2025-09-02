@@ -1,10 +1,10 @@
 import { useState } from "react"
 import type { ReactNode } from "react"
 import { createPage, type PageConfig } from "@lib/page-api"
-import { Tooltip } from "@shared/ui/tooltip"
-import { Button } from "@shared/ui/button"
-import { Select } from "@shared/ui/select"
-import { Heading } from "@shared/ui/heading"
+import { Tooltip } from "@ui/tooltip"
+import { Button } from "@ui/button"
+import { Select } from "@ui/select"
+import { Heading } from "@ui/heading"
 
 /**
  * Конфигурация страницы

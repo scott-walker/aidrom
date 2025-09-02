@@ -99,7 +99,7 @@ export const SidebarFooter = (): ReactNode => {
     "justify-center",
     "h-[var(--layout-footer-height)]",
     "gap-4",
-    "bg-gradient-brand",
+    "bg-brand-gradient",
     "text-primary-foreground"
   )
 

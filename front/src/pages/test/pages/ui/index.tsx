@@ -1,9 +1,10 @@
 import type { ReactNode } from "react"
 import { createPage, type PageConfig } from "@lib/page-api"
-import { Code } from "@shared/ui/code"
-import { Button } from "@shared/ui/button"
-import { Brand } from "@shared/ui/brand"
-import { Heading } from "@shared/ui/heading"
+import { Code } from "@ui/code"
+import { Button } from "@ui/button"
+import { Brand } from "@ui/brand"
+import { Heading } from "@ui/heading"
+import { IconButton } from "@ui/icon-button"
 
 /**
  * Конфигурация страницы
@@ -37,108 +38,26 @@ export const UiPage = createPage(config, (): ReactNode => {
 
       <div className="flex flex-col gap-4 mt-10">
         <div className="flex items-center gap-4 flex-wrap">
-          <Button scheme="soft" size="xs">
-            Soft XS
-          </Button>
-          <Button scheme="soft" size="sm">
-            Soft SM
-          </Button>
-          <Button scheme="soft" size="md">
-            Soft MD
-          </Button>
-          <Button scheme="soft" size="lg">
-            Soft LG
-          </Button>
-          <Button scheme="soft" size="xl">
-            Soft XL
-          </Button>
+          <Button scheme="soft">Soft</Button>
+          <Button scheme="hard">Hard</Button>
+          <Button scheme="primary">Primary</Button>
+          <Button scheme="outline">Outline</Button>
+          <Button scheme="brand">Brand</Button>
         </div>
 
         <div className="flex items-center gap-4 flex-wrap">
-          <Button scheme="hard" size="xs">
-            Hard XS
-          </Button>
-          <Button scheme="hard" size="sm">
-            Hard SM
-          </Button>
-          <Button scheme="hard" size="md">
-            Hard MD
-          </Button>
-          <Button scheme="hard" size="lg">
-            Hard LG
-          </Button>
-          <Button scheme="hard" size="xl">
-            Hard XL
-          </Button>
+          <IconButton icon="home" scheme="ghost" />
+          <IconButton icon="home" scheme="hard" />
+          <IconButton icon="home" scheme="primary" />
+          <IconButton icon="home" scheme="outline" />
+          <IconButton icon="home" scheme="brand" />
         </div>
         <div className="flex items-center gap-4 flex-wrap">
-          <Button scheme="primary" size="xs">
-            Primary XS
-          </Button>
-          <Button scheme="primary" size="sm">
-            Primary SM
-          </Button>
-          <Button scheme="primary" size="md">
-            Primary MD
-          </Button>
-          <Button scheme="primary" size="lg">
-            Primary LG
-          </Button>
-          <Button scheme="primary" size="xl">
-            Primary XL
-          </Button>
-        </div>
-        <div className="flex items-center gap-4 flex-wrap">
-          <Button scheme="secondary" size="xs">
-            Secondary XS
-          </Button>
-          <Button scheme="secondary" size="sm">
-            Secondary SM
-          </Button>
-          <Button scheme="secondary" size="md">
-            Secondary MD
-          </Button>
-          <Button scheme="secondary" size="lg">
-            Secondary LG
-          </Button>
-          <Button scheme="secondary" size="xl">
-            Secondary XL
-          </Button>
-        </div>
-        <div className="flex items-center gap-4 flex-wrap">
-          <Button scheme="warning" size="xs">
-            Warning XS
-          </Button>
-          <Button scheme="warning" size="sm">
-            Warning SM
-          </Button>
-          <Button scheme="warning" size="md">
-            Warning MD
-          </Button>
-          <Button scheme="warning" size="lg">
-            Warning LG
-          </Button>
-          <Button scheme="warning" size="xl">
-            Warning XL
-          </Button>
-        </div>
-
-        <div className="flex items-center gap-4 flex-wrap">
-          <Button scheme="danger" size="xs">
-            Danger XS
-          </Button>
-          <Button scheme="danger" size="sm">
-            Danger SM
-          </Button>
-          <Button scheme="danger" size="md">
-            Danger MD
-          </Button>
-          <Button scheme="danger" size="lg">
-            Danger LG
-          </Button>
-          <Button scheme="danger" size="xl">
-            Danger XL
-          </Button>
+          <IconButton icon="home" scheme="ghost" circle />
+          <IconButton icon="home" scheme="hard" circle />
+          <IconButton icon="home" scheme="primary" circle />
+          <IconButton icon="home" scheme="outline" circle />
+          <IconButton icon="home" scheme="brand" circle />
         </div>
       </div>
 
@@ -164,7 +83,7 @@ export const UiPage = createPage(config, (): ReactNode => {
         <div className="p-10 w-50 bg-foreground-hard text-pink-500 font-bold">Foreground Hard</div>
       </div>
 
-      <div className="mt-10 w-full h-40 bg-gradient-brand rounded-2xl" />
+      <div className="mt-10 w-full h-40 bg-brand-gradient rounded-2xl" />
     </div>
   )
 })

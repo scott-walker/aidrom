@@ -1,56 +1,75 @@
 import type { ComponentProps, ReactNode } from "react"
 import {
-  buildVariant,
-  makeUiBaseClasses,
-  makeUiClickableClasses,
-  type ColorSchemeVariant,
-  type RoundedVariant,
-  type SizeVariant
+  makeClasses,
+  makeUiBox,
+  makeUiClickable,
+  makeUiHoverableAnimation,
+  makeUiShadow,
+  makeUiTransition,
+  makeVariants
 } from "@lib/style-api"
 
 /**
  * Пропсы кнопки
- * @namespace Ui.Button.Props
+ * @namespace Shared.Ui.Button.Props
  */
 export type ButtonProps = ComponentProps<"button"> & {
   children: ReactNode
-  scheme?: ColorSchemeVariant
-  size?: SizeVariant
-  rounded?: RoundedVariant
+  scheme?: "ghost" | "soft" | "hard" | "primary" | "outline" | "brand"
 }
 
 /**
  * Кнопка
- * @namespace Ui.Button
- * @param {Props} props.children - контент
- * @param {Props} props.scheme - цветовое решение
- * @param {Props} props.size - размер
- * @param {Props} props.rounded - скругление
- * @param {Props} props.className - CSS-классы
- * @returns {ReactNode}
+ * @namespace Shared.Ui.Button
  */
-export const Button = ({
-  children,
-  scheme = "default",
-  size = "default",
-  rounded = "default",
-  className = "",
-  ...props
-}: ButtonProps): ReactNode => {
-  const classes = buildVariant({
-    beforeClasses: makeUiBaseClasses(makeUiClickableClasses()),
+export const Button = ({ children, scheme = "primary", className = "", ...props }: ButtonProps): ReactNode => {
+  const useScheme = makeVariants({
+    beforeClasses: makeClasses(
+      makeUiBox(),
+      makeUiShadow(),
+      makeUiTransition(),
+      makeUiClickable(),
+      makeUiHoverableAnimation()
+    ),
     afterClasses: className,
-    variant: {
-      scheme,
-      schemeHover: scheme,
-      padding: size,
-      textSize: size,
-      rounded
+    variants: {
+      soft: makeClasses(
+        "bg-soft",
+        "text-soft-foreground"
+        //"hover:bg-soft-accent",
+        // "hover:text-soft-foreground-accent"
+      ),
+      hard: makeClasses(
+        "bg-hard",
+        "text-hard-foreground"
+        //"hover:bg-hard-accent",
+        // "hover:text-hard-foreground-accent"
+      ),
+      primary: makeClasses(
+        "bg-primary",
+        "text-primary-foreground"
+        // "hover:bg-primary-accent",
+        // "hover:text-primary-foreground-accent"
+      ),
+      brand: makeClasses(
+        "bg-brand-gradient",
+        "text-primary-foreground",
+        "border-none",
+        "px-[calc(var(--ui-offset-x)+var(--ui-border-width))]",
+        "py-[calc(var(--ui-offset-y)+var(--ui-border-width))]"
+      ),
+      outline: makeClasses(
+        "bg-transparent",
+        "border-primary",
+        "text-primary"
+        // "hover:border-primary-accent",
+        // "hover:text-primary-accent"
+      )
     }
   })
 
   return (
-    <button {...props} className={classes}>
+    <button {...props} className={useScheme(scheme)}>
       {children}
     </button>
   )
