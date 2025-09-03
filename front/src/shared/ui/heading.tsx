@@ -1,5 +1,6 @@
-import { cva } from "@shared/utils/jsxtools"
 import { type ReactNode, createElement } from "react"
+import { makeClasses } from "@lib/style-api"
+import { cva } from "@utils/jsxtools"
 
 /**
  * Пропсы заголовка
@@ -7,7 +8,8 @@ import { type ReactNode, createElement } from "react"
  */
 type Props = {
   children: ReactNode
-  level?: 1 | 2 | 3 | 4
+  level?: 1 | 2 | 3 | 4 | 5 | 6
+  className?: string
 }
 
 /**
@@ -16,21 +18,23 @@ type Props = {
  * @param {Props} props
  * @returns {ReactNode}
  */
-export const Heading = ({ children, level = 3 }: Props): ReactNode => {
+export const Heading = ({ children, level = 6, className = "" }: Props): ReactNode => {
   const variants = cva("font-family-display font-semibold text-foreground", {
     variants: {
       level: {
-        1: "text-3xl",
-        2: "text-2xl",
-        3: "text-xl",
-        4: "text-lg"
+        1: "text-5xl",
+        2: "text-4xl",
+        3: "text-3xl",
+        4: "text-2xl",
+        5: "text-xl",
+        6: "text-lg"
       }
     },
     defaultVariants: {
       level: 3
     }
   })
-  const classes = variants({ level })
+  const classes = makeClasses(variants({ level }), className)
 
   return createElement(`h${level}`, { className: classes }, children)
 }

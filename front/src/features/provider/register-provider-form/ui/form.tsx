@@ -45,7 +45,7 @@ export const RegisterProviderForm = ({ values, onSubmit, onChange }: FormProps) 
   return (
     <Card as="form" onSubmit={handleSubmit(values => onSubmit(values))}>
       <Card.Header>
-        <Heading level={3}>Регистрация провайдера</Heading>
+        <Heading>Регистрация провайдера</Heading>
       </Card.Header>
 
       <Card.Body>

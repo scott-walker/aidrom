@@ -22,22 +22,29 @@
 
   --ui-shadow: var(--shadow-sm);
 
+  --ui-placeholder-color: color-mix(in srgb, var(--color-foreground-soft) 50%, transparent);
+  --ui-placeholder-text-size: 14px;
+
   --ui-card-gap: 10px;
   --ui-card-offset-x: 10px;
   --ui-card-offset-y: 13px;
-  --ui-card-background: var(--color-background-soft);
+  --ui-card-background: color-mix(in srgb, var(--color-background-soft) 70%, transparent);
   --ui-card-border: var(--color-background);
-  --ui-card-rounded: 3px;
-  --ui-card-shadow: 0px 2px 14px -7px var(--color-ghost-base);
+  --ui-card-rounded: 10px;
+  --ui-card-shadow: 0px 2px 34px 0px var(--color-ghost-base);
 
   --ui-table-offset-x: 20px;
   --ui-table-offset-y: 7px;
-  --ui-table-border: var(--color-background-hard);
+  --ui-table-border-width: 2px;
+  --ui-table-border-color: var(--ui-card-border);
 }
 
 /* 🌙  */
 body.theme-dark {
-  --ui-card-background: var(--color-background-soft);
-  --ui-card-border: var(--color-background);
+  /* --ui-card-background: var(--color-background-soft); */
+  --ui-card-background: color-mix(in srgb, var(--color-background-soft) 70%, transparent);
+  --ui-card-border: color-mix(in srgb, var(--color-background-hard) 20%, transparent);
   --ui-card-shadow: 0px 2px 14px -7px var(--color-ghost-base);
+
+  --ui-table-border-color: var(--ui-card-border);
 }

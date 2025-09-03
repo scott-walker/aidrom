@@ -10,4 +10,6 @@
   --layout-transition-duration: 125ms;
   --layout-inner-offset-x: 3.125rem;
   --layout-inner-offset-y: 1.875rem;
+
+  --layout-blocks-gap: 30px;
 }

@@ -15,7 +15,11 @@ type TableBodyProps = {
  * @namespace Shared.UI.Table.TableBody
  */
 export const TableBody = ({ children, className = "" }: TableBodyProps) => {
-  const classes = makeClasses("divide-y", "divide-background-hard", className)
+  const classes = makeClasses(
+    "divide-y-(length:--ui-table-border-width)",
+    "divide-(--ui-table-border-color)",
+    className
+  )
 
   return <tbody className={classes}>{children}</tbody>
 }

@@ -15,7 +15,11 @@ type TableHeaderProps = {
  * @namespace Shared.UI.Table.TableHeader
  */
 export const TableHeader = ({ children, className = "" }: TableHeaderProps) => {
-  const classes = makeClasses("border-b-1", "border-background-hard", className)
+  const classes = makeClasses(
+    "border-b-(length:--ui-table-border-width)",
+    "border-(--ui-table-border-color)",
+    className
+  )
 
   return <thead className={classes}>{children}</thead>
 }

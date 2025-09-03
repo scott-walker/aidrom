@@ -1,6 +1,9 @@
 import type { PageRoutes } from "@lib/page-api/types"
 import { ConstructorLayout } from "./layout"
 import { ConstructorMain } from "./main"
+import { ConstructorAgents } from "./agents"
+import { ConstructorProviders } from "./providers"
+import { ConstructorSettings } from "./settings"
 
 /**
  * Маршруты
@@ -13,6 +16,18 @@ export const routes: PageRoutes = {
     {
       index: true,
       element: <ConstructorMain />
+    },
+    {
+      path: "agents",
+      element: <ConstructorAgents />
+    },
+    {
+      path: "providers",
+      element: <ConstructorProviders />
+    },
+    {
+      path: "settings",
+      element: <ConstructorSettings />
     }
   ]
 }

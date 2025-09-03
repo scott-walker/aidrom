@@ -13,12 +13,10 @@ export const ProvidersListTable = () => {
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error: {error.message}</div>
 
-  const items = [...providers, ...providers, ...providers, ...providers, ...providers, ...providers]
-
   return (
     <Card>
       <Card.Header>
-        <Heading level={3}>Зарегистрированные провайдеры</Heading>
+        <Heading>Зарегистрированные провайдеры</Heading>
       </Card.Header>
       <Card.Body hasOffset={false}>
         <Table>
@@ -32,7 +30,7 @@ export const ProvidersListTable = () => {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {items.map(provider => (
+            {providers.map(provider => (
               <Table.Row key={provider.id}>
                 <Table.Cell>{provider.id}</Table.Cell>
                 <Table.Cell>{provider.alias}</Table.Cell>

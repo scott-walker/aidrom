@@ -31,8 +31,7 @@ export const LayoutProvider = ({ children }: { children: ReactNode }): ReactNode
   // Конфигурация по умолчанию для страниц
   const pageConfig: PageConfig = {
     meta: {
-      title: "AIDrom",
-      subtitle: "AIDrom Subtitle"
+      title: "AIDrom"
     }
   }
 

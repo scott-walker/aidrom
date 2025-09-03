@@ -15,8 +15,8 @@ export type FormFieldLabelProps = Omit<ComponentProps<"label">, "size"> & {
  * @namespace Shared.UI.FormFieldLabel
  */
 export const FormFieldLabel = ({ text, children, className = "", ...props }: FormFieldLabelProps) => {
-  const classes = makeClasses("flex", "flex-col", "gap-1", "font-semibold", "hover:text-primary", className)
-  const textClasses = makeClasses("px-(--ui-offset-x)", "text-sm", "cursor-pointer")
+  const classes = makeClasses("flex", "flex-col", "gap-1", "hover:text-primary", className)
+  const textClasses = makeClasses("px-(--ui-offset-x)", "text-sm", "font-semibold", "cursor-pointer")
 
   return (
     <label {...props} className={classes}>
