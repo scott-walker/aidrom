@@ -15,7 +15,7 @@ export const Footer = (): ReactNode => {
     "flex",
     "items-center",
     "h-full",
-    "px-[var(--layout-inner-offset)]",
+    "px-[var(--layout-inner-offset-x)]",
     "border-t",
     "border-border",
     "bg-background-hard"

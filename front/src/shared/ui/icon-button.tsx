@@ -29,16 +29,19 @@ export const IconButton = ({
   className = "",
   ...props
 }: IconButtonProps): ReactNode => {
+  const isGhost = schema === "ghost"
+  const isBrand = schema === "brand"
+
   const classes = makeClasses(
     "p-0",
     "shadow-none",
-    schema === "brand" && "p-(--ui-border-width)",
-    schema === "ghost" && "hover:text-primary",
+    isBrand && "p-(--ui-border-width)",
+    isGhost && "hover:text-primary",
     circle && "rounded-full",
     className
   )
 
-  iconClassName = makeClasses("m-2.5", iconClassName)
+  iconClassName = makeClasses(!isGhost && "m-2.5", iconClassName)
 
   return (
     <Button schema={schema} className={classes} {...props}>

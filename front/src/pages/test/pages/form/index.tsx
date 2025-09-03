@@ -4,7 +4,6 @@ import { createPage } from "@lib/page-api"
 import { Input } from "@shared/ui/input"
 import { Button } from "@ui/button"
 import { Select } from "@ui/select"
-import { RegisterProviderForm } from "@features/provider/register-provider-form/ui/form"
 
 /**
  * Конфигурация страницы
@@ -31,10 +30,7 @@ export const FormPage = createPage(config, (): ReactNode => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex align-center gap-4 mt-10 flex-wrap">
-        <RegisterProviderForm onSubmit={() => {}} />
-      </div>
-      <div className="flex align-center gap-4 mt-30 flex-wrap">
+      <div className="flex align-center gap-4 flex-wrap">
         <Input
           placeholder="Email"
           type="email"

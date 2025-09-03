@@ -8,8 +8,8 @@ export const ProviderDTOSchema = z.object({
   id: z.number(),
   alias: z.string(),
   name: z.string(),
-  base_url: z.string(),
-  api_key: z.string()
+  baseUrl: z.string(),
+  apiKey: z.string()
 })
 
 /**

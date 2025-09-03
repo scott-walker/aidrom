@@ -1,8 +1,10 @@
 import { useState, useCallback, type ReactNode } from "react"
 import { createPage, type PageConfig } from "@lib/page-api"
-import { RegisterProviderForm } from "@features/provider/register-provider-form/ui/form"
-import type { ProviderSchema } from "@entities/provider/lib/types"
 import { Card } from "@ui/card"
+import { Heading } from "@ui/heading"
+import type { ProviderSchema } from "@entities/provider/lib/types"
+import { RegisterProviderForm } from "@features/provider/register-provider-form/ui/form"
+import { ProvidersListTable } from "@features/provider/providers-list-table/ui/table"
 
 /**
  * Конфигурация страницы
@@ -31,18 +33,26 @@ export const ConstructorMain = createPage(config, (): ReactNode => {
   }, [])
 
   return (
-    <div className="flex items-start justify-start gap-8">
-      <RegisterProviderForm values={provider} onSubmit={handleSubmit} onChange={handleChange} />
-      {/* <RegisterProviderForm onSubmit={() => {}} /> */}
+    <div className="flex flex-col gap-8">
+      <div className="flex items-start justify-start align-start gap-4">
+        <RegisterProviderForm values={provider} onSubmit={handleSubmit} onChange={handleChange} />
+        {/* <RegisterProviderForm onSubmit={() => {}} /> */}
 
-      <Card>
-        <Card.Header> Информация о провайдере </Card.Header>
-        <Card.Body>
-          <Card.Section>
-            <pre> {JSON.stringify(provider, null, 2)} </pre>
-          </Card.Section>
-        </Card.Body>
-      </Card>
+        <Card>
+          <Card.Header>
+            <Heading level={3}>Информация</Heading>
+          </Card.Header>
+          <Card.Body>
+            <Card.Section>
+              <pre> {JSON.stringify(provider, null, 2)} </pre>
+            </Card.Section>
+          </Card.Body>
+        </Card>
+      </div>
+
+      <div className="flex items-start justify-start align-start gap-4">
+        <ProvidersListTable />
+      </div>
     </div>
   )
 })

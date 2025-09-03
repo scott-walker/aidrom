@@ -1,7 +1,7 @@
 import type { ComponentProps } from "react"
 import * as RadixSelect from "@radix-ui/react-select"
 import { type SelectContentProps } from "@radix-ui/react-select"
-import { makeClasses, makeUiClickable, makeUiTransition } from "@lib/style-api"
+import { makeClasses, makeUiBox, makeUiClickable, makeUiHoverableAnimation, makeUiTransition } from "@lib/style-api"
 import { ChevronDown } from "lucide-react"
 
 /**
@@ -23,8 +23,10 @@ export type SelectProps = Omit<ComponentProps<"select">, "size"> & {
  */
 export const Select = ({ items, value, defaultValue, placeholder, className, onChangeValue }: SelectProps) => {
   const triggerClasses = makeClasses(
+    makeUiBox(),
     makeUiClickable(),
     makeUiTransition(),
+    makeUiHoverableAnimation(),
 
     "data-[state=open]:border-primary",
     "hover:border-primary",

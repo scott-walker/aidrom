@@ -31,12 +31,6 @@ export const MainPage = createPage(config, (): ReactNode => {
     { label: "Персик", value: "peach" }
   ]
 
-  const button = (
-    <Button schema="primary" onClick={() => setOutlined(!outlined)}>
-      Наведи же!
-    </Button>
-  )
-
   return (
     <div className="flex flex-col">
       <p className="text-2xl text-foreground font-family-base">
@@ -47,11 +41,15 @@ export const MainPage = createPage(config, (): ReactNode => {
         <Heading level={3}>{selectedValue2}</Heading>
       </div>
       <div className="flex align-center gap-4 mt-10 flex-wrap">
-        <Tooltip target={button}>Ну вот и вы тут</Tooltip>
+        <Tooltip text="Ну вот и вы тут">
+          <Button schema="primary" onClick={() => setOutlined(!outlined)}>
+            Наведи же!
+          </Button>
+        </Tooltip>
 
         {/* <Select schema="hard" outlined={outlined} items={selectItems} value="apple" /> */}
-        <Select schema="soft" items={selectItems} value={selectedValue1} onChangeValue={setSelectedValue1} />
-        <Select schema="primary" items={selectItems} value={selectedValue2} onChangeValue={setSelectedValue2} />
+        <Select items={selectItems} value={selectedValue1} onChangeValue={setSelectedValue1} />
+        <Select items={selectItems} value={selectedValue2} onChangeValue={setSelectedValue2} />
         {/* <Select schema="ghost" outlined={outlined} items={selectItems} value="apple" />
         <Select schema="warning" outlined={outlined} items={selectItems} value="apple" />
         <Select schema="danger" outlined={outlined} items={selectItems} value="apple" />

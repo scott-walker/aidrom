@@ -9,7 +9,7 @@ export type { MenuItem, MenuItems } from "./types"
  * @namespace Shared.UI.Menu
  */
 export const Menu = ({ items, compact = false }: MenuProps) => {
-  const classes = cn("flex", "flex-col")
+  const classes = cn("flex", "flex-col", compact && "items-center")
   const variants = cva(classes, {
     variants: {
       compact: {

@@ -20,7 +20,7 @@ export const Header = (): ReactNode => {
     "items-center",
     "justify-between",
     "gap-8",
-    "px-[var(--layout-inner-offset)]",
+    "px-[var(--layout-inner-offset-x)]",
     "h-full",
     "border-b",
     "border-border"

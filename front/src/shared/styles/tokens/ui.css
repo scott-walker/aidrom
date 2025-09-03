@@ -27,9 +27,12 @@
   --ui-card-offset-y: 20px;
   --ui-card-background: var(--color-background-soft);
   --ui-card-border: var(--color-background);
-  /* --ui-card-border: transparent; */
   --ui-card-rounded: 3px;
   --ui-card-shadow: 0px 2px 14px -7px var(--color-ghost-base);
+
+  --ui-table-offset-x: 40px;
+  --ui-table-offset-y: 20px;
+  --ui-table-border: var(--color-background-hard);
 }
 
 /* 🌙  */

@@ -35,9 +35,6 @@ export const Card: CardComponent = ({ children, as: Component = "article", class
   const classes = makeClasses(
     "flex",
     "flex-col",
-    "w-[700px]",
-    // "border-1",
-    // "border-(--ui-card-border)",
     "bg-(--ui-card-background)",
     "rounded-(--ui-card-rounded)",
     "shadow-(--ui-card-shadow)",

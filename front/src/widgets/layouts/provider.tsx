@@ -1,19 +1,21 @@
 import type { ReactNode } from "react"
-import { type LayoutConfig, Lucent, THEME_MODE_LIGHT, SIDEBAR_MODE_COLLAPSED } from "@scottwalker/lucent"
-import { LayoutProvider as LayoutAdapterProvider } from "@lib/layout-api"
+import { Lucent, type LayoutConfig, type LayoutSidebarMode, type LayoutThemeMode } from "@scottwalker/lucent"
+import { getLayoutTheme, getLayoutSidebar, LayoutProvider as LayoutAdapterProvider } from "@lib/layout-api"
 import { PageProvider, type PageConfig } from "@lib/page-api"
 
 /**
  * Провайдер макета
  * @namespace Widgets.Layouts.Provider
- * @param {ReactNode} children дочерние элементы
  */
 export const LayoutProvider = ({ children }: { children: ReactNode }): ReactNode => {
+  const theme = getLayoutTheme() as LayoutThemeMode
+  const sidebar = getLayoutSidebar() as LayoutSidebarMode
+
   // Конфигурация Lucent макета
   const layoutConfig: LayoutConfig = {
     modes: {
-      theme: THEME_MODE_LIGHT,
-      sidebar: SIDEBAR_MODE_COLLAPSED
+      theme,
+      sidebar
     },
     params: {
       headerHeight: "var(--layout-header-height)",

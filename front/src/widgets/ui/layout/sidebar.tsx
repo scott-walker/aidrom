@@ -129,7 +129,7 @@ export const SidebarFooter = (): ReactNode => {
  * @returns {ReactNode}
  */
 export const Sidebar = (): ReactNode => {
-  const classes = cn("h-full", "w-full", "shadow-ghost-2xl", "overflow-hidden")
+  const classes = cn("h-full", "w-full", "shadow-2xl", "overflow-hidden")
 
   return (
     <div className={classes}>

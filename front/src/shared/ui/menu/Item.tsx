@@ -1,5 +1,6 @@
 import { NavLink } from "react-router"
 import { cn, cva } from "@utils/jsxtools"
+import { Tooltip } from "@ui/tooltip"
 import { Icon } from "@ui/icon"
 import type { MenuItem } from "./types"
 
@@ -13,7 +14,7 @@ export const Item = ({ label, path, icon = null, compact = false }: MenuItem) =>
   const linkVariants = cva(linkClasses, {
     variants: {
       compact: {
-        true: "px-0 justify-center",
+        true: "justify-center px-3",
         false: "px-5"
       },
       active: {
@@ -58,7 +59,12 @@ export const Item = ({ label, path, icon = null, compact = false }: MenuItem) =>
   return (
     <li>
       <NavLink className={linkClassHandler} to={path}>
-        {icon && <Icon strokeWidth={iconWeight} name={icon} />}
+        {icon && compact && (
+          <Tooltip text={label} side="right" offset={30} delay={50}>
+            <Icon strokeWidth={iconWeight} name={icon} />
+          </Tooltip>
+        )}
+        {icon && !compact && <Icon strokeWidth={iconWeight} name={icon} />}
 
         <span className={labelVariants({ compact })}>{label}</span>
       </NavLink>

@@ -9,8 +9,8 @@ export const toProviderSchema = (dto: ProviderResponseDTO): ProviderSchema => ({
   id: dto.id,
   alias: dto.alias,
   name: dto.name,
-  baseUrl: dto.base_url,
-  apiKey: dto.api_key
+  baseUrl: dto.baseUrl,
+  apiKey: dto.apiKey
 })
 
 /**
@@ -22,8 +22,8 @@ export const toProviderDTO = (provider: Partial<ProviderSchema>): Partial<Provid
 
   if (provider.alias) data.alias = provider.alias
   if (provider.name) data.name = provider.name
-  if (provider.baseUrl) data.base_url = provider.baseUrl
-  if (provider.apiKey) data.api_key = provider.apiKey
+  if (provider.baseUrl) data.baseUrl = provider.baseUrl
+  if (provider.apiKey) data.apiKey = provider.apiKey
 
   return data
 }

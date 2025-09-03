@@ -26,7 +26,7 @@ export const updateProvider = async (provider: Partial<ProviderSchema>) => {
  * Получить список провайдеров
  * @namespace Entities.Provider.Api.getProviders
  */
-export const getProviders = async () => {
+export const getProviders = async (): Promise<ProviderSchema[]> => {
   const { data } = await restClient.get("/providers")
 
   return data.map(toProviderSchema)
