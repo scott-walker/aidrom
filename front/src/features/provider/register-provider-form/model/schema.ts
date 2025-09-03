@@ -16,3 +16,9 @@ export const registerProviderFormSchema = z.object({
  * @namespace Features.Provider.RegisterProviderForm.Model.Schema
  */
 export type RegisterProviderForm = z.infer<typeof registerProviderFormSchema>
+
+/**
+ * Тип для частично заполненной формы регистрации провайдера
+ * @namespace Features.Provider.RegisterProviderForm.Model.Schema
+ */
+export type RegisterProviderFormPartial = Partial<RegisterProviderForm>

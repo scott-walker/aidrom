@@ -1,12 +1,16 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { type RegisterProviderForm, registerProviderFormSchema } from "../model/schema"
+import {
+  type RegisterProviderForm,
+  type RegisterProviderFormPartial,
+  registerProviderFormSchema
+} from "../model/schema"
 
 /**
  * Хук для формы регистрации провайдера
- * @namespace Features.Provider.RegisterProviderForm.Lib.Hooks
+ * @namespace Features.Provider.RegisterProviderForm.Lib.Hooks.useRegisterProviderForm
  */
-export const useRegisterProviderForm = (defaultValues?: Partial<RegisterProviderForm>) => {
+export const useRegisterProviderForm = (defaultValues?: RegisterProviderFormPartial) => {
   defaultValues = defaultValues || {}
 
   return useForm<RegisterProviderForm>({
