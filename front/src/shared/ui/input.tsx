@@ -25,6 +25,7 @@ export const Input = ({
     makeUiHoverableAnimation(),
     makeUiTransition(),
     "bg-background",
+    "text-foreground-hard",
     "placeholder:text-foreground-soft/50",
     error && "border-danger",
     error ? "hover:border-danger" : "hover:border-primary",

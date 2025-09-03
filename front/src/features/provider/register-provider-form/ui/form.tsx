@@ -50,6 +50,14 @@ export const RegisterProviderForm = ({ values, onSubmit, onChange }: FormProps) 
 
       <Card.Body>
         <Card.Section>
+          {/* <FormFieldInput
+            {...register("name")}
+            label="Название"
+            className="flex-1"
+            placeholder="Введите название провайдера"
+            onChange={handleChange}
+          /> */}
+
           <FormField label="Название" error={errors.name} className="flex-1">
             <Input
               {...register("name")}

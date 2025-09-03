@@ -7,7 +7,7 @@ import { type ReactNode, createElement } from "react"
  */
 type Props = {
   children: ReactNode
-  level?: 1 | 2 | 3 | 4 | 5 | 6
+  level?: 1 | 2 | 3 | 4
 }
 
 /**
@@ -17,15 +17,13 @@ type Props = {
  * @returns {ReactNode}
  */
 export const Heading = ({ children, level = 3 }: Props): ReactNode => {
-  const variants = cva("font-family-display font-bold text-foreground", {
+  const variants = cva("font-family-display font-semibold text-foreground", {
     variants: {
       level: {
-        1: "text-4xl",
-        2: "text-3xl",
-        3: "text-2xl",
-        4: "text-xl",
-        5: "text-lg",
-        6: "text-md"
+        1: "text-3xl",
+        2: "text-2xl",
+        3: "text-xl",
+        4: "text-lg"
       }
     },
     defaultVariants: {

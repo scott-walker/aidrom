@@ -20,7 +20,7 @@
   /* Размеры текста */
   --text-xs: 0.75rem; /* 12px */
   --text-sm: 0.875rem; /* 14px */
-  --text-base: 1.125rem; /* 18px */
+  --text-base: 16px; /* 18px */
   --text-lg: 1.25rem; /* 20px */
   --text-xl: 1.375rem; /* 22px */
   --text-2xl: 1.5rem; /* 24px */

@@ -1,12 +1,12 @@
 /* UI tokens */
 
 @theme {
-  --ui-offset-x: 17px;
-  --ui-offset-y: 7px;
+  --ui-offset-x: 14px;
+  --ui-offset-y: 2px;
   --ui-gap: 3px;
 
   --ui-border-width: 2px;
-  --ui-rounded: 3px;
+  --ui-rounded: 5px;
 
   --ui-transition-color-duration: 125ms;
   --ui-transition-border-duration: 100ms;
@@ -22,16 +22,16 @@
 
   --ui-shadow: var(--shadow-sm);
 
-  --ui-card-gap: 20px;
-  --ui-card-offset-x: 20px;
-  --ui-card-offset-y: 20px;
+  --ui-card-gap: 10px;
+  --ui-card-offset-x: 10px;
+  --ui-card-offset-y: 13px;
   --ui-card-background: var(--color-background-soft);
   --ui-card-border: var(--color-background);
   --ui-card-rounded: 3px;
   --ui-card-shadow: 0px 2px 14px -7px var(--color-ghost-base);
 
-  --ui-table-offset-x: 40px;
-  --ui-table-offset-y: 20px;
+  --ui-table-offset-x: 20px;
+  --ui-table-offset-y: 7px;
   --ui-table-border: var(--color-background-hard);
 }
 

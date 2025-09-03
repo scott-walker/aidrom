@@ -1,4 +1,4 @@
-import type { ComponentProps } from "react"
+import type { ComponentProps, ReactNode } from "react"
 import { makeClasses } from "@lib/style-api"
 
 /**
@@ -6,18 +6,21 @@ import { makeClasses } from "@lib/style-api"
  * @namespace Shared.UI.FormFieldLabel.FormFieldLabelProps
  */
 export type FormFieldLabelProps = Omit<ComponentProps<"label">, "size"> & {
-  children: string
+  text: string
+  children: ReactNode
 }
 
 /**
  * Название поля формы
  * @namespace Shared.UI.FormFieldLabel
  */
-export const FormFieldLabel = ({ children, className = "", ...props }: FormFieldLabelProps) => {
-  const classes = makeClasses("px-(--ui-offset-x) text-sm font-semibold", className)
+export const FormFieldLabel = ({ text, children, className = "", ...props }: FormFieldLabelProps) => {
+  const classes = makeClasses("flex", "flex-col", "gap-1", "font-semibold", "hover:text-primary", className)
+  const textClasses = makeClasses("px-(--ui-offset-x)", "text-sm", "cursor-pointer")
 
   return (
     <label {...props} className={classes}>
+      <span className={textClasses}>{text}</span>
       {children}
     </label>
   )

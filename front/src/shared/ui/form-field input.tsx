@@ -1,32 +1,32 @@
-import { type ReactNode } from "react"
 import { type FieldError as FieldErrorType } from "react-hook-form"
+import { makeClasses } from "@lib/style-api"
 import { FormFieldLabel } from "./form-field-label"
 import { FormFieldError } from "./form-field-error"
-import { makeClasses } from "@shared/lib/style-api"
+import { Input, type InputProps } from "./input"
 
 /**
  * Пропсы поля формы
  * @namespace Shared.UI.FormField.FormFieldProps
  */
-type FormFieldProps = {
+type FormFieldProps = InputProps & {
   label: string
-  children: ReactNode
-  error?: FieldErrorType
   className?: string
+  error?: FieldErrorType
 }
 
 /**
  * Поле формы
  * @namespace Shared.UI.FormField
  */
-export const FormField = ({ label, children, error, className }: FormFieldProps) => {
-  const classes = makeClasses(className)
-  const labelClasses = makeClasses(error && "text-danger")
+export const FormFieldInput = ({ label, error, className, ...props }: FormFieldProps) => {
+  const classes = makeClasses("flex", "flex-col", "gap-1", className)
+  const labelClasses = makeClasses("group-hover:text-primary", error && "text-danger")
+  const inputClasses = makeClasses("group")
 
   return (
     <div className={classes}>
       <FormFieldLabel text={label} className={labelClasses}>
-        {children}
+        <Input error={!!error} {...props} className={inputClasses} />
         {error && <FormFieldError error={error} />}
       </FormFieldLabel>
     </div>

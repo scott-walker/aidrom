@@ -19,7 +19,7 @@ export const TableHead = ({ children, className = "" }: TableHeadProps) => {
     "px-(--ui-table-offset-x)",
     "py-(--ui-table-offset-y)",
     "text-left",
-    "font-bold",
+    "font-semibold",
     className
   )
 

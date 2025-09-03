@@ -24,7 +24,6 @@ export const Code: FC<Props> = ({ children, accent = false, className = "", ...p
   const classes = cn(
     "px-8",
     "py-6",
-    "text-base",
     "font-family-mono",
     "font-semibold",
     "rounded-2xl",

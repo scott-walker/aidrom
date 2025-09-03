@@ -8,6 +8,10 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-size: var(--text-base);
+    line-height: var(--line-height-normal);
+    font-weight: var(--font-weight-normal);
+    font-family: var(--font-family-base);
   }
 }
 
