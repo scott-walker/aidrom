@@ -72,7 +72,10 @@ export const getAgentById = async (agentId, withHandler = false) => {
     })
 
     const agent = await db.query.agents.findFirst({
-      where: eq(agents.id, agentId)
+      where: eq(agents.id, agentId),
+      with: {
+        provider: true
+      }
     })
 
     if (!agent) {

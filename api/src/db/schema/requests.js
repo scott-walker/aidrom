@@ -1,7 +1,7 @@
 import { pgTable, index } from "drizzle-orm/pg-core"
 import { relations } from "drizzle-orm"
 import { messagePairs } from "./messagePairs.js"
-import { provider } from "./provider.js"
+import { providers } from "./providers.js"
 
 // Запросы к API
 export const requests = pgTable(
@@ -11,7 +11,7 @@ export const requests = pgTable(
     providerId: table
       .integer("provider_id")
       .notNull()
-      .references(() => provider.id),
+      .references(() => providers.id),
     providerRequestId: table.varchar("provider_request_id", { length: 255 }),
     clientParams: table.json("client_params"),
     clientMessage: table.text("client_message").notNull(),
@@ -20,13 +20,13 @@ export const requests = pgTable(
     cost: table.doublePrecision("cost", { precision: 7, scale: 2 }).notNull().default(0.0),
     createdAt: table.timestamp("created_at").notNull().defaultNow()
   }),
-  table => [index("requests_cost_idx").on(table.cost)]
+  table => [index("requests_cost_idx").on(table.cost), index("requests_provider_id_idx").on(table.providerId)]
 )
 
 export const requestsRelations = relations(requests, ({ one }) => ({
-  provider: one(provider, {
+  provider: one(providers, {
     fields: [requests.providerId],
-    references: [provider.id]
+    references: [providers.id]
   }),
   messagePair: one(messagePairs, {
     fields: [requests.id],

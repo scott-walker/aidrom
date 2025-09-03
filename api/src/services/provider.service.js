@@ -5,7 +5,7 @@
 
 import { eq, desc } from "drizzle-orm"
 import { db } from "#db/index.js"
-import { provider } from "#db/schema/provider.js"
+import { providers } from "#db/schema/providers.js"
 import { createServiceLogger } from "#utils/logger.js"
 import { NotFoundError } from "#utils/errors.js"
 
@@ -21,8 +21,8 @@ export const getProviders = async () => {
   try {
     logger.info("Получение всех провайдеров из БД")
 
-    const items = await db.query.provider.findMany({
-      orderBy: [desc(provider.createdAt)]
+    const items = await db.query.providers.findMany({
+      orderBy: [desc(providers.createdAt)]
     })
 
     logger.info("Запрос к БД выполнен успешно", {
@@ -51,8 +51,8 @@ export const getProviderById = async providerId => {
       providerId
     })
 
-    const providerItem = await db.query.provider.findFirst({
-      where: eq(provider.id, providerId)
+    const providerItem = await db.query.providers.findFirst({
+      where: eq(providers.id, providerId)
     })
 
     if (!providerItem) {
@@ -86,8 +86,8 @@ export const getProviderByAlias = async alias => {
       alias
     })
 
-    const providerItem = await db.query.provider.findFirst({
-      where: eq(provider.alias, alias)
+    const providerItem = await db.query.providers.findFirst({
+      where: eq(providers.alias, alias)
     })
 
     if (!providerItem) {
@@ -123,7 +123,7 @@ export const createProvider = async data => {
   try {
     logger.info("Создание нового провайдера в БД", data)
 
-    const [providerItem] = await db.insert(provider).values(data).returning()
+    const [providerItem] = await db.insert(providers).values(data).returning()
 
     logger.info("Провайдер успешно создан", {
       providerId: providerItem.id
@@ -159,12 +159,12 @@ export const updateProvider = async (providerId, data) => {
     })
 
     const [providerItem] = await db
-      .update(provider)
+      .update(providers)
       .set({
         ...data,
         updatedAt: new Date()
       })
-      .where(eq(provider.id, providerId))
+      .where(eq(providers.id, providerId))
       .returning()
 
     if (!providerItem) {
@@ -199,7 +199,7 @@ export const deleteProvider = async providerId => {
       providerId
     })
 
-    const [providerItem] = await db.delete(provider).where(eq(provider.id, providerId)).returning()
+    const [providerItem] = await db.delete(providers).where(eq(providers.id, providerId)).returning()
 
     if (!providerItem) {
       throw new NotFoundError(`Провайдер с ID #${providerId} не найден`)

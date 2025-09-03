@@ -3,8 +3,8 @@ import { relations } from "drizzle-orm"
 import { requests } from "./requests.js"
 
 // Провайдеры - компании, которые предоставляют услуги API
-export const provider = pgTable(
-  "provider",
+export const providers = pgTable(
+  "providers",
   table => ({
     id: table.serial("id").primaryKey(),
     alias: table.varchar("alias", { length: 255 }).notNull(),
@@ -14,10 +14,10 @@ export const provider = pgTable(
     createdAt: table.timestamp("created_at").notNull().defaultNow(),
     updatedAt: table.timestamp("updated_at").notNull().defaultNow()
   }),
-  table => [unique("provider_alias_idx").on(table.alias)]
+  table => [unique("providers_alias_idx").on(table.alias)]
 )
 
 // Определяем отношения
-export const providerRelations = relations(provider, ({ one, many }) => ({
+export const providersRelations = relations(providers, ({ one, many }) => ({
   requests: many(requests)
 }))

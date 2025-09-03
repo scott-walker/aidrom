@@ -8,10 +8,7 @@ export const clients = pgTable(
   table => ({
     id: table.serial("id").primaryKey(),
     email: table.varchar("email", { length: 255 }).notNull(),
-    balance: table
-      .doublePrecision("balance", { precision: 10, scale: 2 })
-      .notNull()
-      .default(0.0),
+    balance: table.doublePrecision("balance", { precision: 10, scale: 2 }).notNull().default(0.0),
     createdAt: table.timestamp("created_at").notNull().defaultNow(),
     updatedAt: table.timestamp("updated_at").notNull().defaultNow()
   }),
