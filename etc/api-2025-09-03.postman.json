@@ -1,0 +1,870 @@
+{
+	"info": {
+		"_postman_id": "0df043c0-441d-4b9d-a807-002a81af5a05",
+		"name": "AIDromTech",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9281804"
+	},
+	"item": [
+		{
+			"name": "External API",
+			"item": [
+				{
+					"name": "Raw GenAPI",
+					"item": [
+						{
+							"name": "Send prompt",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"is_sync\": true,\n    \"max_tokens\": 20,\n    \"temperature\": 0.1,\n    \"messages\": [\n        {\n            \"role\": \"user\",\n            \"content\": \"Привет\"\n        }\n    ]\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://api.gen-api.ru/api/v1/networks/gemini-2-5-flash",
+									"protocol": "https",
+									"host": [
+										"api",
+										"gen-api",
+										"ru"
+									],
+									"path": [
+										"api",
+										"v1",
+										"networks",
+										"gemini-2-5-flash"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Check status",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"messages\": [\n        {\n            \"role\": \"user\",\n            \"content\": \"Как лучше всего обрабатывать ошибки на бекенде написанном на nodejs express?\"\n        }\n    ]\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://api.gen-api.ru/api/v1/request/get/21513767",
+									"protocol": "https",
+									"host": [
+										"api",
+										"gen-api",
+										"ru"
+									],
+									"path": [
+										"api",
+										"v1",
+										"request",
+										"get",
+										"21513767"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get user",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer sk-XqnPOzF2v6TktP3kto7VoW7j98zyZSEAmT125WiSFaxVSPiWZmU38wRNDgAr",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"messages\": [\n        {\n            \"role\": \"user\",\n            \"content\": \"Как лучше всего обрабатывать ошибки на бекенде написанном на nodejs express?\"\n        }\n    ]\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://api.gen-api.ru/api/v1/user",
+									"protocol": "https",
+									"host": [
+										"api",
+										"gen-api",
+										"ru"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "sk-XqnPOzF2v6TktP3kto7VoW7j98zyZSEAmT125WiSFaxVSPiWZmU38wRNDgAr",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"packages": {},
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "API Free LLM",
+					"item": [
+						{
+							"name": "Send message",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"message\": \"Как пользоваться API от apifreellm.com?\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://apifreellm.com/api/chat",
+									"protocol": "https",
+									"host": [
+										"apifreellm",
+										"com"
+									],
+									"path": [
+										"api",
+										"chat"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Agents",
+			"item": [
+				{
+					"name": "Get list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/agents",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/agents/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agents",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by alias",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"alias\": \"genya\",\n    \"name\": \"AI Женя\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/agents/alias/genya",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agents",
+								"alias",
+								"genya"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"providerId\": 6,\n    \"alias\": \"deep\",\n    \"name\": \"Mr.Deep\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/agents",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"AI Женя\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/agents/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agents",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"AI Женя 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/agents/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"agents",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Provider",
+			"item": [
+				{
+					"name": "Get list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/providers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"providers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/providers/6",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"providers",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by alias",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"alias\": \"genya\",\n    \"name\": \"AI Женя\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/providers/alias/deepseek",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"providers",
+								"alias",
+								"deepseek"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"DeepSeek\",\n    \"alias\": \"deepseek\",\n    \"baseUrl\": \"https://api.deepseek.com\",\n    \"apiKey\": \"sk-e5818838ff7048f39591597588c43842\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/providers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"providers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"DeepSeek\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/providers/6",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"providers",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"AI Женя 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/providers/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"providers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Clients",
+			"item": [
+				{
+					"name": "Get list",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"scott@swlt.ru\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/clients",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"scott@swlt.ru\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/clients/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by email",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"scott@swlt.ru\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/clients/email/scott@swlt.ru",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients",
+								"email",
+								"scott@swlt.ru"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"scott@swlt.ru\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/clients",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"scott@swlt.ru\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/clients/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update balance",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"balance\": 100\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/clients/3/balance",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients",
+								"3",
+								"balance"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"scott@swlt.ru\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/clients/2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"clients",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Chats",
+			"item": [
+				{
+					"name": "Get list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/chats",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"chats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/chats/9",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"chats",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"agentId\": 3,\n    \"clientId\": 3,\n    \"title\": \"Чат с Клавой\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/chats",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"chats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Тестовый чат\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/chats/5",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"chats",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/chats/6",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"chats",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send message",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"message\": \"Привет\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/chats/9/send",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"chats",
+								"9",
+								"send"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Index",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}",
+					"host": [
+						"{{base_url}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://api.aidrom.lc"
+		}
+	]
+}
