@@ -13,7 +13,7 @@ import { NotFoundError } from "#utils/errors.js"
 const logger = createServiceLogger("ClientService")
 
 /**
- * Получает всех клиентов из базы данных
+ * Получить всех клиентов из базы данных
  * @memberof Client.Service
  * @returns {Promise<Array<Object>>} Массив объектов с информацией о клиентах.
  */
@@ -40,7 +40,7 @@ export const getClients = async () => {
 }
 
 /**
- * Получает клиента по его идентификатору
+ * Получить клиента по его идентификатору
  * @memberof Client.Service
  * @param {string|number} clientId - Идентификатор клиента.
  * @returns {Promise<Object>} Объект с информацией о клиенте.
@@ -75,7 +75,7 @@ export const getClientById = async clientId => {
 }
 
 /**
- * Получает клиента по email
+ * Получить клиента по email
  * @memberof Client.Service
  * @param {string} email - Email клиента.
  * @returns {Promise<Object>} Объект с информацией о клиенте.
@@ -110,7 +110,7 @@ export const getClientByEmail = async email => {
 }
 
 /**
- * Создает нового клиента
+ * Создать нового клиента
  * @memberof Client.Service
  * @param {Object} data - Данные для создания клиента
  * @param {string} data.email - Email клиента
@@ -139,7 +139,7 @@ export const createClient = async data => {
 }
 
 /**
- * Обновляет данные клиента
+ * Обновить данные клиента
  * @memberof Client.Service
  * @param {string|number} clientId - Идентификатор клиента
  * @param {Object} data - Данные для обновления
@@ -184,7 +184,7 @@ export const updateClient = async (clientId, data) => {
 }
 
 /**
- * Удаляет клиента
+ * Удалить клиента
  * @memberof Client.Service
  * @param {string|number} clientId - Идентификатор клиента
  * @returns {Promise<Object>} Удаленный клиент
@@ -195,10 +195,7 @@ export const deleteClient = async clientId => {
       clientId
     })
 
-    const [client] = await db
-      .delete(clients)
-      .where(eq(clients.id, clientId))
-      .returning()
+    const [client] = await db.delete(clients).where(eq(clients.id, clientId)).returning()
 
     if (!client) {
       throw new NotFoundError(`Клиент с ID #${clientId} не найден`)

@@ -1,3 +1,4 @@
+export { provider } from "./provider.js"
 export { agents } from "./agents.js"
 export { clients } from "./clients.js"
 export { chats, chatsRelations } from "./chats.js"

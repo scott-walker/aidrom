@@ -17,7 +17,7 @@ import { sendRequest } from "#services/agent.service.js"
 const logger = createServiceLogger("ChatService")
 
 /**
- * Получает все чаты из базы данных
+ * Получить все чаты из базы данных
  * @memberof Chat.Service
  * @returns {Promise<Array<Object>>} Массив объектов с информацией о чатах.
  */
@@ -44,7 +44,7 @@ export const getChats = async () => {
 }
 
 /**
- * Получает чат по его идентификатору
+ * Получить чат по его идентификатору
  * @memberof Chat.Service
  * @param {string|number} chatId - Идентификатор чата.
  * @returns {Promise<Object>} Объект с информацией о чате.
@@ -89,7 +89,7 @@ export const getChatById = async chatId => {
 }
 
 /**
- * Создает новый чат
+ * Создать новый чат
  * @memberof Chat.Service
  * @param {Object} data - Данные для создания чата
  * @param {number} data.agentId - ID агента
@@ -119,7 +119,7 @@ export const createChat = async data => {
 }
 
 /**
- * Обновляет чат
+ * Обновить данные чата
  * @memberof Chat.Service
  * @param {number} chatId - ID чата
  * @param {Object} data - Данные для обновления
@@ -134,11 +134,7 @@ export const updateChat = async (chatId, data) => {
 
     data.updatedAt = new Date()
 
-    const [chat] = await db
-      .update(chats)
-      .set(data)
-      .where(eq(chats.id, chatId))
-      .returning()
+    const [chat] = await db.update(chats).set(data).where(eq(chats.id, chatId)).returning()
 
     if (!chat) {
       throw new NotFoundError(`Чат с ID #${chatId} не найден`)
@@ -160,7 +156,7 @@ export const updateChat = async (chatId, data) => {
 }
 
 /**
- * Удаляет чат
+ * Удалить чат
  * @memberof Chat.Service
  * @param {number} chatId - ID чата
  * @returns {Promise<Object>} Удаленный чат
@@ -214,17 +210,11 @@ export const sendMessage = async (chatId, message) => {
 
     // Создаем сообщение клиента
     logger.info("Создание сообщения клиента")
-    const [clientMessage] = await db
-      .insert(clientMessages)
-      .values({ content: request.clientMessage })
-      .returning()
+    const [clientMessage] = await db.insert(clientMessages).values({ content: request.clientMessage }).returning()
 
     // Создаем сообщение агента
     logger.info("Создание сообщения агента")
-    const [agentMessage] = await db
-      .insert(agentMessages)
-      .values({ content: request.agentMessage })
-      .returning()
+    const [agentMessage] = await db.insert(agentMessages).values({ content: request.agentMessage }).returning()
 
     // Создаем messagePair с ID сообщений
     logger.info("Создание messagePair")
@@ -241,10 +231,7 @@ export const sendMessage = async (chatId, message) => {
     // Обновляем дату последнего обновления чата
     logger.info("Обновление даты последнего обновления чата")
 
-    await db
-      .update(chats)
-      .set({ updatedAt: new Date() })
-      .where(eq(chats.id, chatId))
+    await db.update(chats).set({ updatedAt: new Date() }).where(eq(chats.id, chatId))
 
     logger.info("Сообщение успешно отправлено в чат", {
       chatId: chatId,

@@ -16,7 +16,7 @@ import agentHandlers from "#agents/index.js"
 const logger = createServiceLogger("AgentService")
 
 /**
- * Получает обработчик агента по алиасу
+ * Получить обработчик агента по алиасу
  * @memberof Agent.Service
  * @param {string} agentAlias - Алиас агента.
  * @returns {Promise<Object>} Объект с информацией об агенте.
@@ -32,7 +32,7 @@ export const getAgentHandler = agentAlias => {
 }
 
 /**
- * Получает всех агентов из базы данных
+ * Получить всех агентов из базы данных
  * @memberof Agent.Service
  * @returns {Promise<Array<Object>>} Массив объектов с информацией об агентах.
  */
@@ -59,7 +59,7 @@ export const getAgents = async () => {
 }
 
 /**
- * Получает агента по его идентификатору
+ * Получить агента по его идентификатору
  * @memberof Agent.Service
  * @param {string|number} agentId - Идентификатор агента.
  * @param {boolean} [withHandler=false] - Получить ли обработчик агента.
@@ -100,7 +100,7 @@ export const getAgentById = async (agentId, withHandler = false) => {
 }
 
 /**
- * Получает агента по алиасу
+ * Получить агента по алиасу
  * @memberof Agent.Service
  * @param {string} alias - Алиас агента.
  * @param {boolean} [withHandler=false] - Получить ли обработчик агента.
@@ -141,7 +141,7 @@ export const getAgentByAlias = async (alias, withHandler = false) => {
 }
 
 /**
- * Создает нового агента
+ * Создать нового агента
  * @memberof Agent.Service
  * @param {Object} data - Данные для создания агента
  * @param {string} data.alias - Алиас агента
@@ -172,7 +172,7 @@ export const createAgent = async data => {
 }
 
 /**
- * Обновляет данные агента
+ * Обновить данные агента
  * @memberof Agent.Service
  * @param {string|number} agentId - Идентификатор агента
  * @param {Object} data - Данные для обновления
@@ -219,7 +219,7 @@ export const updateAgent = async (agentId, data) => {
 }
 
 /**
- * Удаляет агента
+ * Удалить агента
  * @memberof Agent.Service
  * @param {string|number} agentId - Идентификатор агента
  * @returns {Promise<Object>} Удаленный агент
@@ -230,10 +230,7 @@ export const deleteAgent = async agentId => {
       agentId
     })
 
-    const [agent] = await db
-      .delete(agents)
-      .where(eq(agents.id, agentId))
-      .returning()
+    const [agent] = await db.delete(agents).where(eq(agents.id, agentId)).returning()
 
     if (!agent) {
       throw new NotFoundError(`Агент с ID #${agentId} не найден`)
@@ -255,7 +252,7 @@ export const deleteAgent = async agentId => {
 }
 
 /**
- * Отправляет запрос к AI агенту
+ * Отправить запрос к AI агенту
  * @memberof Agent.Service
  * @param {string} agentAlias - Алиас агента
  * @param {string} prompt - Текст запроса к AI агенту
@@ -273,9 +270,7 @@ export const sendRequest = async (agentAlias, prompt) => {
     const interactionData = await agentHandler.send(prompt)
 
     if (!(interactionData instanceof AgentInteraction)) {
-      throw new ApiError(
-        "Ответ от API агента не является экземпляром класса AgentInteraction"
-      )
+      throw new ApiError("Ответ от API агента не является экземпляром класса AgentInteraction")
     }
 
     logger.info("Запрос к API успешно отправлен", {
@@ -285,10 +280,7 @@ export const sendRequest = async (agentAlias, prompt) => {
     logger.info("Сохранение нового запроса в БД")
 
     // Сохраняем запрос в БД
-    const [request] = await db
-      .insert(requests)
-      .values(interactionData)
-      .returning()
+    const [request] = await db.insert(requests).values(interactionData).returning()
 
     logger.info("Запрос успешно сохранен в БД", {
       requestId: request.id
