@@ -224,7 +224,7 @@ hand-down: db-down api-down	front-down gateway-down	net-down
 
 # Накатить миграции
 db-migrate:
-	docker exec -it -w /app api npm run db:gen
+	docker exec -it -w /app api npm run db:push
 
 # Сделать дамп БД
 db-dump:
