@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 import { createPage, type PageConfig } from "@lib/page-api"
-import { CreateProviderForm } from "@features/provider/create-provider-form/ui/form"
+import { RegisterProviderForm } from "@features/provider/register-provider-form/ui/form"
 
 /**
  * Конфигурация страницы
@@ -20,8 +20,8 @@ const config: PageConfig = {
 export const ConstructorMain = createPage(config, (): ReactNode => {
   return (
     <div className="flex items-start justify-start gap-8">
-      <CreateProviderForm onSubmit={() => {}} />
-      <CreateProviderForm onSubmit={() => {}} />
+      <RegisterProviderForm onSubmit={() => {}} />
+      <RegisterProviderForm onSubmit={() => {}} />
     </div>
   )
 })

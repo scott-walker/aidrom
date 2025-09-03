@@ -1,5 +1,5 @@
-import { toCreateProviderDTO } from "../models/mappers"
-import { useCreateProviderForm } from "../lib/hooks"
+import { toRegisterProviderSchema } from "../model/mappers"
+import { useRegisterProviderForm } from "../lib/hooks"
 import { Button } from "@ui/button"
 import { Input } from "@ui/input"
 import { FormField } from "@ui/form-field"
@@ -7,26 +7,26 @@ import { Heading } from "@ui/heading"
 import { Card } from "@ui/card"
 
 /**
- * Пропсы формы создания провайдера
- * @namespace Features.Provider.CreateProviderForm.Ui.FormProps
+ * Пропсы формы регистрации провайдера
+ * @namespace Features.Provider.RegisterProviderForm.Ui.FormProps
  */
 type FormProps = {
-  onSubmit: (dto: ReturnType<typeof toCreateProviderDTO>) => void
+  onSubmit: (dto: ReturnType<typeof toRegisterProviderSchema>) => void
 }
 
 /**
- * Форма создания провайдера
- * @namespace Features.Provider.CreateProviderForm.Ui.CreateProviderForm
+ * Форма регистрации провайдера
+ * @namespace Features.Provider.RegisterProviderForm.Ui.RegisterProviderForm
  */
-export const CreateProviderForm = ({ onSubmit }: FormProps) => {
+export const RegisterProviderForm = ({ onSubmit }: FormProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useCreateProviderForm()
+  } = useRegisterProviderForm()
 
   return (
-    <Card as="form" onSubmit={handleSubmit(values => onSubmit(toCreateProviderDTO(values)))}>
+    <Card as="form" onSubmit={handleSubmit(values => onSubmit(toRegisterProviderSchema(values)))}>
       <Card.Header>
         <Heading level={3}>Регистрация провайдера</Heading>
       </Card.Header>
@@ -43,8 +43,8 @@ export const CreateProviderForm = ({ onSubmit }: FormProps) => {
         </Card.Section>
 
         <Card.Section>
-          <FormField label="Base URL" error={errors.baserUrl} className="flex-1">
-            <Input {...register("baserUrl")} placeholder="Введите базовый API URL" error={!!errors.baserUrl} />
+          <FormField label="Base URL" error={errors.baseUrl} className="flex-1">
+            <Input {...register("baseUrl")} placeholder="Введите базовый API URL" error={!!errors.baseUrl} />
           </FormField>
 
           <FormField label="API Key" error={errors.apiKey} className="flex-1">
