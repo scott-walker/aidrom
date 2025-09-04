@@ -3,13 +3,16 @@ import { relations } from "drizzle-orm"
 import { chats } from "./chats"
 import { providers } from "./providers"
 
-// Агенты - это боты, которые общаются с клиентами
+/**
+ * Агенты
+ * @namespace Db.Schema.Agents
+ */
 export const agents = pgTable(
   "agents",
   table => ({
     id: table.serial("id").primaryKey(),
     name: table.varchar("name", { length: 255 }).notNull(),
-    config: table.json("config").notNull(),
+    params: table.json("params").notNull(),
     description: table.text("description"),
     providerId: table
       .integer("provider_id")
@@ -21,6 +24,10 @@ export const agents = pgTable(
   table => [index("agents_provider_id_idx").on(table.providerId)]
 )
 
+/**
+ * Отношения агентов
+ * @namespace Db.Schema.AgentsRelations
+ */
 export const agentsRelations = relations(agents, ({ many, one }) => ({
   provider: one(providers, {
     fields: [agents.providerId],

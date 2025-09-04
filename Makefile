@@ -237,6 +237,17 @@ db-restore:
 db-perm:
 	sudo chmod 777 -R ./db/logs ./db/backups
 
+# Удалить БД
+db-drop:
+	docker exec -it db dropdb ${DB_NAME} -U ${DB_USER}
+
+# Создать БД
+db-create:
+	docker exec -it db createdb ${DB_NAME} -U ${DB_USER}
+
+# Сбросить БД
+db-reset: db-drop db-create db-migrate
+
 # Дать права на все служебные файлы
 perm:
 	sudo chmod -R 0777 \

@@ -7,6 +7,7 @@ import { eq, desc } from "drizzle-orm"
 import { db, providers, Provider, CreateProviderData, UpdateProviderData } from "@db"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
+import { initDriver, DriverConfig, DriverRequest, DriverResponse } from "@drivers"
 
 // Создаем логгер для сервиса провайдеров
 const logger = createServiceLogger("ProviderService")
@@ -129,6 +130,26 @@ export const deleteProvider = async (providerId: number): Promise<Provider> => {
     return providerItem
   } catch (error) {
     logger.error("Ошибка при удалении провайдера", { error: error.message, providerId })
+
+    throw error
+  }
+}
+
+/**
+ * Обработка запроса к провайдеру
+ * @namespace Provider.Service.processRequest
+ */
+export const processRequest = async (providerId: number, request: DriverRequest): Promise<DriverResponse> => {
+  try {
+    logger.info("Обработка запроса к провайдеру", { providerId, request })
+
+    const provider = await getProviderById(providerId)
+    const driver = initDriver(provider.driver, provider.config as DriverConfig)
+    const response = await driver.sendRequest(request)
+
+    return response
+  } catch (error) {
+    logger.error("Ошибка при обработке запроса к провайдеру", { error: error.message, providerId, request })
 
     throw error
   }

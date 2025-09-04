@@ -1,31 +1,29 @@
-import { pgTable, index } from "drizzle-orm/pg-core"
+import { pgTable, unique } from "drizzle-orm/pg-core"
 import { relations } from "drizzle-orm"
 import { requests } from "./requests"
-import { drivers } from "./drivers"
 
-// Провайдеры - компании, которые предоставляют услуги API
+/**
+ * Провайдеры
+ * @namespace Db.Schema.Providers
+ */
 export const providers = pgTable(
   "providers",
   table => ({
     id: table.serial("id").primaryKey(),
+    driver: table.varchar("driver", { length: 255 }).notNull(),
+    config: table.json("config").notNull(),
     name: table.varchar("name", { length: 255 }).notNull(),
     description: table.text("description"),
-    config: table.json("config").notNull(),
-    driverId: table
-      .integer("driver_id")
-      .notNull()
-      .references(() => drivers.id),
     createdAt: table.timestamp("created_at").notNull().defaultNow(),
     updatedAt: table.timestamp("updated_at").notNull().defaultNow()
   }),
-  table => [index("providers_driver_id_idx").on(table.driverId)]
+  table => [unique("providers_driver_idx").on(table.driver)]
 )
 
-// Определяем отношения
-export const providersRelations = relations(providers, ({ one, many }) => ({
-  driver: one(drivers, {
-    fields: [providers.driverId],
-    references: [drivers.id]
-  }),
+/**
+ * Отношения провайдеров
+ * @namespace Db.Schema.ProvidersRelations
+ */
+export const providersRelations = relations(providers, ({ many }) => ({
   requests: many(requests)
 }))

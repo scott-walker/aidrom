@@ -6,7 +6,10 @@ import { requests } from "./requests"
 import { clientMessages } from "./clientMessages"
 import { agentMessages } from "./agentMessages"
 
-// Пара сообщений - объединяет сообщение клиента и ответ агента
+/**
+ * Пара сообщений - объединяет сообщение клиента и ответ агента
+ * @namespace Db.Schema.MessagePairs
+ */
 export const messagePairs = pgTable(
   "message_pairs",
   table => ({
@@ -38,7 +41,10 @@ export const messagePairs = pgTable(
   ]
 )
 
-// Определяем отношения
+/**
+ * Отношения пар сообщений
+ * @namespace Db.Schema.MessagePairsRelations
+ */
 export const messagePairsRelations = relations(messagePairs, ({ one }) => ({
   chat: one(chats, {
     fields: [messagePairs.chatId],

@@ -15,16 +15,21 @@ import {
   UpdateChatData,
   ChatWithRelations,
   ClientMessage,
-  AgentMessage
+  AgentMessage,
+  RequestWithResponseContent
 } from "@db"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
 import { sendRequest } from "@services/agent.service"
 
-// Тип для результата отправки сообщения
+/**
+ * Тип для результата отправки сообщения
+ * @namespace Chat.Service.SendMessageResult
+ */
 type SendMessageResult = {
-  id: number
-  cost?: number
+  chatId: number
+  messagePairId: number
+  requestId: number
   clientMessage: ClientMessage
   agentMessage: AgentMessage
 }
@@ -172,7 +177,7 @@ export const sendMessage = async (chatId: number, message: string): Promise<Send
     const chat = await getChatById(chatId)
 
     // Отправляем запрос к API
-    const request = { id: 1 } // await sendRequest(chat.agent.alias, message)
+    const request: RequestWithResponseContent = await sendRequest(chat.agent.id, message)
 
     // Создаем сообщение клиента
     logger.info("Создание сообщения клиента")
@@ -180,8 +185,7 @@ export const sendMessage = async (chatId: number, message: string): Promise<Send
 
     // Создаем сообщение агента
     logger.info("Создание сообщения агента")
-    // const [agentMessage] = await db.insert(agentMessages).values({ content: request.content }).returning()
-    const [agentMessage] = await db.insert(agentMessages).values({ content: "" }).returning()
+    const [agentMessage] = await db.insert(agentMessages).values({ content: request.responseContent }).returning()
 
     // Создаем messagePair с ID сообщений
     logger.info("Создание messagePair")
@@ -209,7 +213,9 @@ export const sendMessage = async (chatId: number, message: string): Promise<Send
     })
 
     return {
-      id: messagePair.id,
+      chatId,
+      messagePairId: messagePair.id,
+      requestId: request.id,
       clientMessage,
       agentMessage
     }

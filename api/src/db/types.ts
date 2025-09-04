@@ -1,20 +1,5 @@
 import { InferSelectModel, InferInsertModel } from "drizzle-orm"
-import {
-  drivers,
-  providers,
-  agents,
-  clients,
-  chats,
-  messagePairs,
-  clientMessages,
-  agentMessages,
-  requests
-} from "./schema"
-
-// Типы для драйвера
-export type Driver = InferSelectModel<typeof drivers>
-export type CreateDriverData = InferInsertModel<typeof drivers>
-export type UpdateDriverData = Partial<CreateDriverData>
+import { providers, agents, clients, chats, messagePairs, clientMessages, agentMessages, requests } from "./schema"
 
 // Типы для провайдера
 export type Provider = InferSelectModel<typeof providers>
@@ -49,3 +34,8 @@ export type MessagePair = InferSelectModel<typeof messagePairs>
 
 // Типы для запроса
 export type Request = InferSelectModel<typeof requests>
+export type RequestWithResponseContent = Request & {
+  responseContent: string
+}
+export type CreateRequestData = InferInsertModel<typeof requests>
+export type UpdateRequestData = Partial<CreateRequestData>

@@ -4,10 +4,20 @@
  */
 
 import { eq, desc } from "drizzle-orm"
-import { db, agents, requests, Agent, CreateAgentData, UpdateAgentData, Request } from "@db"
+import {
+  db,
+  agents,
+  requests,
+  Agent,
+  CreateAgentData,
+  UpdateAgentData,
+  CreateRequestData,
+  RequestWithResponseContent
+} from "@db"
+import { DriverResponse } from "@drivers"
 import { createServiceLogger } from "@utils/logger"
-import { NotFoundError, ApiError } from "@utils/errors"
-import { getDriver } from "@drivers"
+import { NotFoundError } from "@utils/errors"
+import { processRequest } from "./provider.service"
 
 // Создаем логгер для сервиса агентов
 const logger = createServiceLogger("AgentService")
@@ -144,29 +154,36 @@ export const deleteAgent = async (agentId: number): Promise<Agent> => {
  * Отправить запрос к AI агенту
  * @namespace Agent.Service.sendRequest
  */
-export const sendRequest = async (agentAlias: string, prompt: string): Promise<Request> => {
+export const sendRequest = async (agentId: number, message: string): Promise<RequestWithResponseContent> => {
   try {
-    logger.info("Отправка запроса к AI агенту", { agentAlias, prompt })
+    logger.info("Отправка запроса к AI агенту", { agentId, message })
+
+    const agent = await getAgentById(agentId)
 
     // Отправляем запрос к API
-    // const agentHandler = getAgentHandler(agentAlias)
-    // const interactionData = await agentHandler.send(prompt)
+    const response: DriverResponse = await processRequest(agent.providerId, {
+      message,
+      params: agent.params
+    })
 
-    // if (!(interactionData instanceof DriverAdaptedResponse)) {
-    //   throw new ApiError("Ответ от API агента не является экземпляром класса DriverAdaptedResponse")
-    // }
-
-    logger.info("Запрос к API успешно отправлен", { agentAlias })
-
+    logger.info("Запрос к API успешно отправлен", { agentId })
     logger.info("Сохранение нового запроса в БД")
 
+    const requestData: CreateRequestData = {
+      providerId: agent.providerId,
+      providerRequestId: response.providerRequestId,
+      requestParams: response.requestParams,
+      responseData: response.responseData,
+      requestTokens: response.requestTokens,
+      responseTokens: response.responseTokens
+    }
+
     // Сохраняем запрос в БД
-    // const [request] = await db.insert(requests).values(interactionData).returning()
+    const [request] = await db.insert(requests).values(requestData).returning()
 
-    // logger.info("Запрос успешно сохранен в БД", { requestId: request.id })
+    logger.info("Запрос успешно сохранен в БД", { requestId: request.id })
 
-    // return request
-    return {} as Request
+    return { ...request, responseContent: response.content }
   } catch (error) {
     logger.error("Ошибка при создании нового запроса к AI агенту", { error: error.message })
 

@@ -1,10 +1,13 @@
 import { pgTable, index } from "drizzle-orm/pg-core"
 import { relations } from "drizzle-orm"
-import { agents } from "./agents.js"
-import { clients } from "./clients.js"
-import { messagePairs } from "./messagePairs.js"
+import { agents } from "./agents"
+import { clients } from "./clients"
+import { messagePairs } from "./messagePairs"
 
-// Чаты - диалог между клиентом и агентом
+/**
+ * Чаты
+ * @namespace Db.Schema.Chats
+ */
 export const chats = pgTable(
   "chats",
   table => ({
@@ -21,13 +24,13 @@ export const chats = pgTable(
     createdAt: table.timestamp("created_at").notNull().defaultNow(),
     updatedAt: table.timestamp("updated_at").notNull().defaultNow()
   }),
-  table => [
-    index("chats_agent_id_idx").on(table.agentId),
-    index("chats_client_id_idx").on(table.clientId)
-  ]
+  table => [index("chats_agent_id_idx").on(table.agentId), index("chats_client_id_idx").on(table.clientId)]
 )
 
-// Определяем отношения
+/**
+ * Отношения чатов
+ * @namespace Db.Schema.ChatsRelations
+ */
 export const chatsRelations = relations(chats, ({ one, many }) => ({
   agent: one(agents, {
     fields: [chats.agentId],

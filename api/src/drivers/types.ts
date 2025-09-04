@@ -8,7 +8,10 @@
  * @namespace Drivers.DriverRequest
  */
 export interface DriverRequest {
-  [key: string]: any
+  message: string
+  params: {
+    [key: string]: any
+  }
 }
 
 /**
@@ -16,14 +19,6 @@ export interface DriverRequest {
  * @namespace Drivers.DriverResponse
  */
 export interface DriverResponse {
-  [key: string]: any
-}
-
-/**
- * Интерфейс ответа от API (адаптированный под приложение)
- * @namespace Drivers.DriverAdaptedResponse
- */
-export interface DriverAdaptedResponse {
   providerRequestId: string
   requestParams: {
     [key: string]: any
@@ -50,7 +45,7 @@ export interface DriverConfig {
  * @namespace Drivers.DriverSendRequestMethod
  */
 export interface DriverSendRequestMethod {
-  (request: DriverRequest): Promise<DriverAdaptedResponse>
+  (request: DriverRequest): Promise<DriverResponse>
 }
 
 /**
@@ -70,9 +65,9 @@ export interface DriverFactory {
 }
 
 /**
- * Интерфейс коллекции драйверов
- * @namespace Drivers.DriversCollection
+ * Интерфейс коллекции фабрик драйверов
+ * @namespace Drivers.DriverFactoriesCollection
  */
-export interface DriversCollection {
+export interface DriverFactoriesCollection {
   [key: string]: DriverFactory
 }

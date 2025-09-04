@@ -1,8 +1,11 @@
 import { pgTable, index } from "drizzle-orm/pg-core"
 import { relations } from "drizzle-orm"
-import { messagePairs } from "./messagePairs.js"
+import { messagePairs } from "./messagePairs"
 
-// Сообщения агента
+/**
+ * Сообщения агента
+ * @namespace Db.Schema.AgentMessages
+ */
 export const agentMessages = pgTable(
   "agent_messages",
   table => ({
@@ -15,7 +18,10 @@ export const agentMessages = pgTable(
   table => [index("agent_messages_is_favorite_idx").on(table.isFavorite)]
 )
 
-// Определяем отношения
+/**
+ * Отношения сообщений агента
+ * @namespace Db.Schema.AgentMessagesRelations
+ */
 export const agentMessagesRelations = relations(agentMessages, ({ one }) => ({
   messagePair: one(messagePairs, {
     fields: [agentMessages.id],

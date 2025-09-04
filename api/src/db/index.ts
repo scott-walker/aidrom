@@ -9,11 +9,6 @@ export const db = createConnection()
 export * from "./schema"
 
 export type {
-  // Драйверы
-  Driver,
-  CreateDriverData,
-  UpdateDriverData,
-
   // Провайдеры
   Provider,
   CreateProviderData,
@@ -39,5 +34,8 @@ export type {
   MessagePair,
 
   // Запросы
-  Request
+  Request,
+  RequestWithResponseContent,
+  CreateRequestData,
+  UpdateRequestData
 } from "./types"

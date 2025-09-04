@@ -3,7 +3,10 @@ import { relations } from "drizzle-orm"
 import { messagePairs } from "./messagePairs"
 import { providers } from "./providers"
 
-// Запросы к API
+/**
+ * Запросы к API
+ * @namespace Db.Schema.Requests
+ */
 export const requests = pgTable(
   "requests",
   table => ({
@@ -26,6 +29,10 @@ export const requests = pgTable(
   ]
 )
 
+/**
+ * Отношения запросов
+ * @namespace Db.Schema.RequestsRelations
+ */
 export const requestsRelations = relations(requests, ({ one }) => ({
   provider: one(providers, {
     fields: [requests.providerId],

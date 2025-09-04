@@ -1,4 +1,3 @@
-export { drivers, driversRelations } from "./drivers"
 export { providers, providersRelations } from "./providers"
 export { agents, agentsRelations } from "./agents"
 export { clients, clientsRelations } from "./clients"

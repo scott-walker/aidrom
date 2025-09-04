@@ -1,8 +1,11 @@
 import { pgTable, index } from "drizzle-orm/pg-core"
 import { relations } from "drizzle-orm"
-import { messagePairs } from "./messagePairs.js"
+import { messagePairs } from "./messagePairs"
 
-// Сообщения клиента
+/**
+ * Сообщения клиента
+ * @namespace Db.Schema.ClientMessages
+ */
 export const clientMessages = pgTable(
   "client_messages",
   table => ({
@@ -14,7 +17,10 @@ export const clientMessages = pgTable(
   table => [index("client_messages_created_at_idx").on(table.createdAt)]
 )
 
-// Определяем отношения
+/**
+ * Отношения сообщений клиента
+ * @namespace Db.Schema.ClientMessagesRelations
+ */
 export const clientMessagesRelations = relations(clientMessages, ({ one }) => ({
   messagePair: one(messagePairs, {
     fields: [clientMessages.id],

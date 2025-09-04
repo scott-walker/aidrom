@@ -4,57 +4,84 @@
  * https://api-docs.deepseek.com/api/create-chat-completion
  */
 
-import {
-  Driver,
-  DriverConfig,
-  DriverRequest,
-  DriverResponse,
-  DriverAdaptedResponse,
-  DriverSendRequestMethod
-} from "../types"
+import { DriverConfig } from "../types"
+
+/**
+ * Модели Deepseek
+ * @namespace Drivers.Deepseek.DeepseekDriverModel
+ */
+export enum DeepseekDriverModel {
+  DEEPSEEK_CHAT = "deepseek-chat",
+  DEEPSEEK_REASONER = "deepseek-reasoner"
+}
+
+/**
+ * Роли Deepseek
+ * @namespace Drivers.Deepseek.DeepseekDriverRole
+ */
+export enum DeepseekDriverRole {
+  SYSTEM = "system",
+  USER = "user",
+  ASSISTANT = "assistant",
+  TOOL = "tool"
+}
+
+/**
+ * Причина остановки Deepseek
+ * @namespace Drivers.Deepseek.DeepseekDriverFinishReason
+ */
+export enum DeepseekDriverFinishReason {
+  STOP = "stop",
+  LENGTH = "length",
+  CONTENT_FILTER = "content_filter",
+  TOOL_CALLS = "tool_calls",
+  INSUFFICIENT_SYSTEM_RESOURCE = "insufficient_system_resource"
+}
 
 /**
  * Интерфейс запроса к Deepseek
  * @namespace Drivers.Deepseek.DeepseekDriverRequest
  */
-export interface DeepseekDriverRequest extends DriverRequest {
+export interface DeepseekDriverRequest {
   messages: {
     content: string
-    role: "system" | "user"
+    role: DeepseekDriverRole
+    // Имя участника. Предоставляет информацию о модели, позволяющую различать участников с одинаковой ролью.
+    name?: string
   }[]
-  model: "deepseek-chat" | "deepseek-reasoner"
-  frequency_penalty: number
-  max_tokens: number
-  presence_penalty: number
-  response_format: {
+  model: DeepseekDriverModel
+  frequency_penalty?: number
+  max_tokens?: number
+  presence_penalty?: number
+  response_format?: {
     type: "text" | "json_object"
   }
-  stop: string | null
-  stream: boolean
-  stream_options: string | null
-  temperature: number
-  top_p: number
-  tools: string | null
-  tool_choice: string | null
-  logprobs: boolean
-  top_logprobs: string | null
+  stop?: string | null
+  stream?: boolean
+  stream_options?: string | null
+  temperature?: number
+  top_p?: number
+  tools?: string | null
+  tool_choice?: string | null
+  logprobs?: boolean
+  top_logprobs?: string | null
 }
 
 /**
  * Интерфейс ответа от Deepseek
  * @namespace Drivers.Deepseek.DeepseekDriverResponse
  */
-export interface DeepseekDriverResponse extends DriverResponse {
+export interface DeepseekDriverResponse {
   id: string
   // Тип объекта, который всегда является chat.completion
   object: "chat.completion"
   created: number
-  model: "deepseek-chat" | "deepseek-reasoner"
+  model: DeepseekDriverModel
   choices: {
     index: number
     message: {
       // Роль автора этого сообщения
-      role: "assistant"
+      role: DeepseekDriverRole.ASSISTANT
       // Содержание сообщения
       content: string
       // Содержимое, сгенерированное моделью в ходе логического вывода (только для модели deepseek-reasoner)
@@ -84,7 +111,7 @@ export interface DeepseekDriverResponse extends DriverResponse {
     // content_filter - если содержимое было пропущено из-за флага наших фильтров содержимого
     // tool_calls - если модель вызвала инструмент
     // insufficient_system_resource - если запрос не выполнен из-за недостаточного ресурса системы логического вывода
-    finish_reason: "stop" | "length" | "content_filter" | "tool_calls" | "insufficient_system_resource"
+    finish_reason: DeepseekDriverFinishReason
   }[]
   usage: {
     // Количество токенов в приглашении. Оно равно prompt_cache_hit_tokens + prompt_cache_miss_tokens
@@ -112,19 +139,3 @@ export interface DeepseekDriverResponse extends DriverResponse {
  * @namespace Drivers.Deepseek.DeepseekDriverConfig
  */
 export interface DeepseekDriverConfig extends DriverConfig {}
-
-/**
- * Интерфейс метода отправки запроса к API драйвера Deepseek
- * @namespace Drivers.Deepseek.DeepseekDriverSendRequestMethod
- */
-export interface DeepseekDriverSendRequestMethod extends DriverSendRequestMethod {
-  (request: DeepseekDriverRequest): Promise<DriverAdaptedResponse>
-}
-
-/**
- * Интерфейс драйвера Deepseek
- * @namespace Drivers.Deepseek.DeepseekDriver
- */
-export interface DeepseekDriver extends Driver {
-  sendRequest: DeepseekDriverSendRequestMethod
-}
