@@ -1,15 +1,17 @@
-import { Router } from "express"
-import chatRoutes from "./chat.routes.js"
-import clientRoutes from "./client.routes.js"
-import agentRoutes from "./agent.routes.js"
-import providerRoutes from "./provider.routes.js"
+import { Router, Request, Response } from "express"
+import { chatRouter } from "./chat.router"
+import { clientRouter } from "./client.router"
+import { agentRouter } from "./agent.router"
+import { providerRouter } from "./provider.router"
+import { driverRouter } from "./driver.router"
 
 const router: Router = Router()
 
-router.get("/", (req, res) => res.json({ message: "API is running" }))
-router.use("/providers", providerRoutes)
-router.use("/agents", agentRoutes)
-router.use("/clients", clientRoutes)
-router.use("/chats", chatRoutes)
+router.get("/", (req: Request, res: Response) => res.json({ message: "API is running" }))
+router.use("/providers", providerRouter)
+router.use("/agents", agentRouter)
+router.use("/clients", clientRouter)
+router.use("/chats", chatRouter)
+router.use("/drivers", driverRouter)
 
 export { router }

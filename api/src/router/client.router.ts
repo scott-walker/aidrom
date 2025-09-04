@@ -1,7 +1,7 @@
 import { Router } from "express"
-import * as clientController from "@controllers/client.controller.js"
+import * as clientController from "@controllers/client.controller"
 
-const router = Router()
+const router: Router = Router()
 
 // Роуты для клиентов
 router.get("/", clientController.getClients)
@@ -12,4 +12,4 @@ router.put("/:clientId", clientController.updateClient)
 router.delete("/:clientId", clientController.deleteClient)
 router.patch("/:clientId/balance", clientController.updateClientBalance)
 
-export default router
+export { router as clientRouter }

@@ -1,7 +1,7 @@
 import { Router } from "express"
-import * as chatController from "@controllers/chat.controller.js"
+import * as chatController from "@controllers/chat.controller"
 
-const router = Router()
+const router: Router = Router()
 
 // Роуты для чатов
 router.get("/", chatController.getChats)
@@ -11,4 +11,4 @@ router.put("/:chatId", chatController.updateChat)
 router.delete("/:chatId", chatController.deleteChat)
 router.post("/:chatId/send", chatController.sendMessage)
 
-export default router
+export { router as chatRouter }

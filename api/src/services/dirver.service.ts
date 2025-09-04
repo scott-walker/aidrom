@@ -65,32 +65,6 @@ export const getDriverById = async (driverId: number): Promise<Driver> => {
 }
 
 /**
- * Получить драйвер по алиасу
- * @namespace Driver.Service.getDriverByAlias
- */
-export const getDriverByAlias = async (alias: string): Promise<Driver> => {
-  try {
-    logger.info("Получение драйвера по алиасу", { alias })
-
-    const driverItem = await db.query.drivers.findFirst({
-      where: eq(drivers.alias, alias)
-    })
-
-    if (!driverItem) {
-      throw new NotFoundError(`Драйвер с алиасом ${alias} не найден`)
-    }
-
-    logger.info("Драйвер по алиасу успешно найден", { alias })
-
-    return driverItem
-  } catch (error) {
-    logger.error("Ошибка при получении драйвера по алиасу", { error: error.message, alias })
-
-    throw error
-  }
-}
-
-/**
  * Создать нового драйвера
  * @namespace Driver.Service.createDriver
  */
