@@ -4,32 +4,16 @@
  */
 
 import { eq, desc } from "drizzle-orm"
-import { db } from "#db/index.js"
-import { agents } from "#db/schema/agents.js"
-import { requests } from "#db/schema/requests.js"
-import { createServiceLogger } from "#utils/logger.js"
-import { NotFoundError, ApiError } from "#utils/errors.js"
-import { AgentInteraction } from "#utils/api/index.js"
-import agentHandlers from "#agents/index.js"
+import { db } from "@db/index.js"
+import { agents } from "@db/schema/agents.js"
+import { requests } from "@db/schema/requests.js"
+import { createServiceLogger } from "@utils/logger.js"
+import { NotFoundError, ApiError } from "@utils/errors.js"
+import { AgentInteraction } from "@utils/api/index.js"
+import { getDriver } from "@drivers"
 
 // Создаем логгер для сервиса агентов
 const logger = createServiceLogger("AgentService")
-
-/**
- * Получить обработчик агента по алиасу
- * @memberof Agent.Service
- * @param {string} agentAlias - Алиас агента.
- * @returns {Promise<Object>} Объект с информацией об агенте.
- */
-export const getAgentHandler = agentAlias => {
-  const handler = agentHandlers[agentAlias]
-
-  if (!handler) {
-    throw new NotFoundError(`Агент с алиасом ${agentAlias} не найден`)
-  }
-
-  return handler
-}
 
 /**
  * Получить всех агентов из базы данных
@@ -84,7 +68,7 @@ export const getAgentById = async (agentId, withHandler = false) => {
 
     // Если требуется получить обработчик агента, добавляем его в объект
     if (withHandler) {
-      agent.handler = getAgentHandler(alias)
+      agent.handler = getDriver("dummy")
     }
 
     logger.info("Агент по ID успешно найден", {

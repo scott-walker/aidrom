@@ -4,10 +4,10 @@
  */
 
 import { eq, desc } from "drizzle-orm"
-import { db } from "#db/index.js"
-import { providers } from "#db/schema/providers.js"
-import { createServiceLogger } from "#utils/logger.js"
-import { NotFoundError } from "#utils/errors.js"
+import { db } from "@db/index.js"
+import { providers } from "@db/schema/providers.js"
+import { createServiceLogger } from "@utils/logger.js"
+import { NotFoundError } from "@utils/errors.js"
 
 // Создаем логгер для сервиса провайдеров
 const logger = createServiceLogger("ProviderService")

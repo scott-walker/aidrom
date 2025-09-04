@@ -1,4 +1,4 @@
-import { createHttpLogger } from "#utils/logger.js"
+import { createHttpLogger } from "@utils/logger.js"
 
 const logger = createHttpLogger()
 

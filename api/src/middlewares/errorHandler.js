@@ -1,5 +1,5 @@
-import logger from "#utils/logger.js"
-import { AppError } from "#utils/errors.js"
+import logger from "@utils/logger.js"
+import { AppError } from "@utils/errors.js"
 
 /**
  * Middleware для обработки ошибок приложения

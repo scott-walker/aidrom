@@ -1,6 +1,6 @@
 import axios from "axios"
-import config from "#config/index.js"
-import { createApiLogger } from "#utils/logger.js"
+import config from "@config/index.js"
+import { createApiLogger } from "@utils/logger.js"
 
 // Создаем логгер для API
 const logger = createApiLogger("GenAPI")

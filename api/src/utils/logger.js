@@ -2,15 +2,15 @@ import winston from "winston"
 import DailyRotateFile from "winston-daily-rotate-file"
 import { mkdir } from "fs/promises"
 import { dirname } from "path"
-import config from "#config/index.js"
+import { getConfigParam } from "@config"
 
 /**
  * Создает директории для логов и метаданных если они не существуют
  */
 const makeDirectories = async () => {
   try {
-    const logDir = dirname(config("logFile"))
-    const metaDir = config("logMetaDir")
+    const logDir = dirname(getConfigParam("logFile"))
+    const metaDir = getConfigParam("logMetaDir")
 
     await mkdir(logDir, { recursive: true })
     await mkdir(metaDir, { recursive: true })
@@ -52,7 +52,9 @@ const createLogFormat = () => {
  */
 const createTransports = fileMarker => {
   const transports = []
-  const logFile = fileMarker ? config("logFile").replace(".log", `-${fileMarker}.log`) : config("logFile")
+  const logFile = fileMarker
+    ? getConfigParam("logFile").replace(".log", `-${fileMarker}.log`)
+    : getConfigParam("logFile")
 
   // Консольный транспорт
   transports.push(
@@ -69,7 +71,7 @@ const createTransports = fileMarker => {
       maxSize: "20m",
       maxFiles: "14d",
       format: createLogFormat(),
-      auditFile: config("logMetaDir") + "/audit.json",
+      auditFile: getConfigParam("logMetaDir") + "/audit.json",
       zippedArchive: true
     })
   )
@@ -99,7 +101,7 @@ makeDirectories()
  */
 const createAppLogger = () => {
   const logger = winston.createLogger({
-    level: config("logLevel"),
+    level: getConfigParam("logLevel"),
     format: createLogFormat(),
     transports: createTransports(),
     defaultMeta: { layer: "APP" },

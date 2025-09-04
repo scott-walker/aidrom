@@ -3,8 +3,8 @@
  * @namespace Chat.Controller
  */
 
-import { createControllerLogger } from "#utils/logger.js"
-import * as chatService from "#services/chat.service.js"
+import { createControllerLogger } from "@utils/logger.js"
+import * as chatService from "@services/chat.service.js"
 
 // Создаем логгер для контроллера чатов
 const logger = createControllerLogger("ChatController")

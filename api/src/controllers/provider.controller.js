@@ -3,8 +3,8 @@
  * @namespace Provider.Controller
  */
 
-import { createControllerLogger } from "#utils/logger.js"
-import * as providerService from "#services/provider.service.js"
+import { createControllerLogger } from "@utils/logger.js"
+import * as providerService from "@services/provider.service.js"
 
 // Создаем логгер для контроллера провайдеров
 const logger = createControllerLogger("ProviderController")

@@ -1,9 +1,9 @@
-import app from "./app.js"
-import config from "#config/index.js"
-import logger from "#utils/logger.js"
+import app from "./app"
+import { getConfigParam } from "@config"
+import logger from "@utils/logger.js"
 
-const HOST = config("host")
-const PORT = config("port")
+const HOST = getConfigParam("host")
+const PORT = getConfigParam("port")
 
 // Запуск сервера
 const server = app.listen(PORT, () => {
@@ -14,9 +14,8 @@ const server = app.listen(PORT, () => {
  * Обработчик graceful shutdown сервера
  * Логирует получение сигнала завершения и корректно останавливает сервер
  * @param {string} signal - Тип полученного сигнала
- * @returns {void}
  */
-const handleShutdown = signal => {
+const handleShutdown = (signal: string) => {
   logger.info(`Получен сигнал ${signal}, завершение работы сервера`)
   server.close(() => {
     logger.info("Сервер успешно остановлен")

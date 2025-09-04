@@ -4,14 +4,14 @@
  */
 
 import { eq, desc } from "drizzle-orm"
-import { db } from "#db/index.js"
-import { chats } from "#db/schema/chats.js"
-import { messagePairs } from "#db/schema/messagePairs.js"
-import { clientMessages } from "#db/schema/clientMessages.js"
-import { agentMessages } from "#db/schema/agentMessages.js"
-import { createServiceLogger } from "#utils/logger.js"
-import { NotFoundError } from "#utils/errors.js"
-import { sendRequest } from "#services/agent.service.js"
+import { db } from "@db/index.js"
+import { chats } from "@db/schema/chats.js"
+import { messagePairs } from "@db/schema/messagePairs.js"
+import { clientMessages } from "@db/schema/clientMessages.js"
+import { agentMessages } from "@db/schema/agentMessages.js"
+import { createServiceLogger } from "@utils/logger.js"
+import { NotFoundError } from "@utils/errors.js"
+import { sendRequest } from "@services/agent.service.js"
 
 // Создаем логгер для сервиса чатов
 const logger = createServiceLogger("ChatService")

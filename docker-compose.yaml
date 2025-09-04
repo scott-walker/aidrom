@@ -35,8 +35,6 @@ services:
       HOST: ${API_HOST}
       PORT: ${API_PORT}
       DB_CONNECTION_URL: ${API_DB_CONNECTION_URL}
-      INTEGRATION_GEN_API_BASE_URL: ${API_INTEGRATION_GEN_API_BASE_URL}
-      INTEGRATION_GEN_API_KEY: ${API_INTEGRATION_GEN_API_KEY}
     volumes:
       - ./api/docker/entrypoint.sh:/entrypoint.sh
       - ./api:/app

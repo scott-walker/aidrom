@@ -1,19 +1,10 @@
 {
   "name": "aidrom-api",
   "type": "module",
-  "imports": {
-    "#config/*": "./src/config/*",
-    "#db/*": "./src/db/*",
-    "#routes/*": "./src/routes/*",
-    "#controllers/*": "./src/controllers/*",
-    "#middlewares/*": "./src/middlewares/*",
-    "#services/*": "./src/services/*",
-    "#agents/*": "./src/agents/*",
-    "#utils/*": "./src/utils/*"
-  },
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
+    "start": "node dist/server.js",
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
     "dump": "node dumpconfig.js",
     "db:gen": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
@@ -33,7 +24,10 @@
     "winston-daily-rotate-file": "^4.7.1"
   },
   "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.3.0",
     "drizzle-kit": "^0.31.4",
-    "nodemon": "^3.1.4"
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
   }
 }

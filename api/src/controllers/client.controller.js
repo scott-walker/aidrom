@@ -3,8 +3,8 @@
  * @namespace Client.Controller
  */
 
-import { createControllerLogger } from "#utils/logger.js"
-import * as clientService from "#services/client.service.js"
+import { createControllerLogger } from "@utils/logger.js"
+import * as clientService from "@services/client.service.js"
 
 // Создаем логгер для контроллера клиентов
 const logger = createControllerLogger("ClientController")

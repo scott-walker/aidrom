@@ -1,4 +1,4 @@
-import { NotFoundError } from "#utils/errors.js"
+import { NotFoundError } from "@utils/errors.js"
 
 /**
  * Middleware для обработки несуществующих маршрутов

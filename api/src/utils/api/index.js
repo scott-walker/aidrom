@@ -1,4 +1,4 @@
-export * as GenAPI from "./GenAPI.js"
+// export * as GenAPI from "./GenAPI.js"
 
 /**
  * Константа для обозначения перемещенного сообщения от агента (из ответа от API)
@@ -17,15 +17,7 @@ export const MOVED_AGENT_MESSAGE = "<look_at_agent_message>"
  * @param {String} agentMessage - сообщение от агента
  */
 export class AgentInteraction {
-  constructor(
-    provider,
-    providerRequestId,
-    clientParams,
-    clientMessage,
-    agentResponse,
-    agentMessage,
-    cost
-  ) {
+  constructor(provider, providerRequestId, clientParams, clientMessage, agentResponse, agentMessage, cost) {
     this.provider = provider
     this.providerRequestId = providerRequestId
     this.clientParams = clientParams

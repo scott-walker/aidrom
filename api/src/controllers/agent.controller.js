@@ -3,8 +3,8 @@
  * @namespace Agent.Controller
  */
 
-import { createControllerLogger } from "#utils/logger.js"
-import * as agentService from "#services/agent.service.js"
+import { createControllerLogger } from "@utils/logger.js"
+import * as agentService from "@services/agent.service.js"
 
 // Создаем логгер для контроллера агентов
 const logger = createControllerLogger("AgentController")
