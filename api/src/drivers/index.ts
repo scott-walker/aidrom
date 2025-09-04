@@ -1,27 +1,40 @@
 import { NotFoundError } from "@utils/errors"
-import { dummyDriver } from "./dummy"
+import { Driver, DriverFactory, DriversCollection } from "./types"
+import { createDummyDriver } from "./dummy"
+import { createDeepseekDriver } from "./deepseek"
 
-const drivers = {
-  dummy: dummyDriver
+/**
+ * Коллекция драйверов
+ * @namespace Drivers.drivers
+ */
+const drivers: DriversCollection = {
+  dummy: createDummyDriver,
+  deepseek: createDeepseekDriver
 }
-
-// type Driver = {
-//   alias: string
-//   name: string
-//   description: string
-//   params: Record<string, any>
-// }
 
 /**
  * Получить драйвер
- * @param {string} key - Ключ драйвера.
+ * @namespace Drivers.getDriver
+ * @param {string} alias - Алиас драйвера
  */
-export const getDriver = (key: string) => {
-  const driver = drivers[key]
+export const getDriver = (alias: Driver["alias"]): DriverFactory => {
+  const driver = drivers[alias]
 
   if (!driver) {
-    throw new NotFoundError(`Драйвер "${key}" не найден`)
+    throw new NotFoundError(`Драйвер "${alias}" не найден`)
   }
 
   return driver
 }
+
+// /**
+//  * Инициализировать драйвер
+//  * @namespace Drivers.initDriver
+//  * @param {string} alias - Алиас драйвера
+//  * @param {Driver["config"]} config - Конфиг драйвера
+//  */
+// export const initDriver = (alias: Driver["alias"], config: Driver["config"]): Driver => {
+//   const driver = getDriver(alias)
+
+//   return driver(config)
+// }
