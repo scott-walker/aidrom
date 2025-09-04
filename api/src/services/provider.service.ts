@@ -3,15 +3,10 @@
  * @namespace Provider.Service
  */
 
-import { eq, desc, InferInsertModel, InferSelectModel } from "drizzle-orm"
-import { db, providers } from "@db"
+import { eq, desc } from "drizzle-orm"
+import { db, providers, Provider, CreateProviderData, UpdateProviderData } from "@db"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
-
-// Типы для провайдера
-type Provider = InferSelectModel<typeof providers>
-type CreateProviderData = InferInsertModel<typeof providers>
-type UpdateProviderData = Partial<CreateProviderData>
 
 // Создаем логгер для сервиса провайдеров
 const logger = createServiceLogger("ProviderService")

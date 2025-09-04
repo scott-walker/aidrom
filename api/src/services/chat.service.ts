@@ -3,31 +3,23 @@
  * @namespace Chat.Service
  */
 
-import { eq, desc, InferInsertModel, InferSelectModel } from "drizzle-orm"
-import { db, chats, messagePairs, clientMessages, agentMessages } from "@db"
+import { eq, desc } from "drizzle-orm"
+import {
+  db,
+  chats,
+  messagePairs,
+  clientMessages,
+  agentMessages,
+  Chat,
+  CreateChatData,
+  UpdateChatData,
+  ChatWithRelations,
+  ClientMessage,
+  AgentMessage
+} from "@db"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
 import { sendRequest } from "@services/agent.service"
-
-// Типы для чата
-type Chat = InferSelectModel<typeof chats>
-type CreateChatData = InferInsertModel<typeof chats>
-type UpdateChatData = Partial<CreateChatData>
-
-// Типы для сообщений
-type ClientMessage = InferSelectModel<typeof clientMessages>
-type AgentMessage = InferSelectModel<typeof agentMessages>
-type MessagePair = InferSelectModel<typeof messagePairs>
-
-// Типы для чата с отношениями
-type ChatWithRelations = Chat & {
-  agent: any
-  client: any
-  messagePairs: (MessagePair & {
-    clientMessage: ClientMessage
-    agentMessage: AgentMessage
-  })[]
-}
 
 // Тип для результата отправки сообщения
 type SendMessageResult = {
@@ -180,21 +172,16 @@ export const sendMessage = async (chatId: number, message: string): Promise<Send
     const chat = await getChatById(chatId)
 
     // Отправляем запрос к API
-    const request = await sendRequest(chat.agent.alias, message)
+    const request = { id: 1 } // await sendRequest(chat.agent.alias, message)
 
     // Создаем сообщение клиента
     logger.info("Создание сообщения клиента")
-    const [clientMessage] = await db
-      .insert(clientMessages)
-      .values({ content: (request as any).clientMessage })
-      .returning()
+    const [clientMessage] = await db.insert(clientMessages).values({ content: message }).returning()
 
     // Создаем сообщение агента
     logger.info("Создание сообщения агента")
-    const [agentMessage] = await db
-      .insert(agentMessages)
-      .values({ content: (request as any).agentMessage })
-      .returning()
+    // const [agentMessage] = await db.insert(agentMessages).values({ content: request.content }).returning()
+    const [agentMessage] = await db.insert(agentMessages).values({ content: "" }).returning()
 
     // Создаем messagePair с ID сообщений
     logger.info("Создание messagePair")
@@ -223,7 +210,6 @@ export const sendMessage = async (chatId: number, message: string): Promise<Send
 
     return {
       id: messagePair.id,
-      cost: (request as any).cost,
       clientMessage,
       agentMessage
     }

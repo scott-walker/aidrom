@@ -3,30 +3,18 @@
  * @namespace Agent.Service
  */
 
-import { eq, desc, InferInsertModel, InferSelectModel } from "drizzle-orm"
-import { db, agents, requests } from "@db"
+import { eq, desc } from "drizzle-orm"
+import { db, agents, requests, Agent, CreateAgentData, UpdateAgentData, Request } from "@db"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError, ApiError } from "@utils/errors"
 import { getDriver } from "@drivers"
-
-// Типы для агента
-type Agent = InferSelectModel<typeof agents>
-type CreateAgentData = InferInsertModel<typeof agents>
-type UpdateAgentData = Partial<CreateAgentData>
-type Request = InferSelectModel<typeof requests>
-
-// Тип для агента с обработчиком
-type AgentWithHandler = Agent & {
-  handler?: any
-}
 
 // Создаем логгер для сервиса агентов
 const logger = createServiceLogger("AgentService")
 
 /**
  * Получить всех агентов из базы данных
- * @memberof Agent.Service
- * @returns {Promise<Agent[]>} Массив объектов с информацией об агентах.
+ * @namespace Agent.Service.getAgents
  */
 export const getAgents = async (): Promise<Agent[]> => {
   try {
@@ -50,10 +38,9 @@ export const getAgents = async (): Promise<Agent[]> => {
 
 /**
  * Получить агента по его идентификатору
- * @memberof Agent.Service
- * @param {number} agentId - Идентификатор агента.
+ * @namespace Agent.Service.getAgentById
  */
-export const getAgentById = async (agentId: number): Promise<Agent | AgentWithHandler> => {
+export const getAgentById = async (agentId: number): Promise<Agent> => {
   try {
     logger.info("Получение агента по ID", { agentId })
 
@@ -80,9 +67,7 @@ export const getAgentById = async (agentId: number): Promise<Agent | AgentWithHa
 
 /**
  * Создать нового агента
- * @memberof Agent.Service
- * @param {CreateAgentData} data - Данные для создания агента
- * @returns {Promise<Agent>} Созданный агент
+ * @namespace Agent.Service.createAgent
  */
 export const createAgent = async (data: CreateAgentData): Promise<Agent> => {
   try {
@@ -102,10 +87,7 @@ export const createAgent = async (data: CreateAgentData): Promise<Agent> => {
 
 /**
  * Обновить данные агента
- * @memberof Agent.Service
- * @param {number} agentId - Идентификатор агента
- * @param {UpdateAgentData} data - Данные для обновления
- * @returns {Promise<Agent>} Обновленный агент
+ * @namespace Agent.Service.updateAgent
  */
 export const updateAgent = async (agentId: number, data: UpdateAgentData): Promise<Agent> => {
   try {
@@ -136,9 +118,7 @@ export const updateAgent = async (agentId: number, data: UpdateAgentData): Promi
 
 /**
  * Удалить агента
- * @memberof Agent.Service
- * @param {number} agentId - Идентификатор агента
- * @returns {Promise<Agent>} Удаленный агент
+ * @namespace Agent.Service.deleteAgent
  */
 export const deleteAgent = async (agentId: number): Promise<Agent> => {
   try {
@@ -162,10 +142,7 @@ export const deleteAgent = async (agentId: number): Promise<Agent> => {
 
 /**
  * Отправить запрос к AI агенту
- * @memberof Agent.Service
- * @param {string} agentAlias - Алиас агента
- * @param {string} prompt - Текст запроса к AI агенту
- * @returns {Promise<Request>} Объект с информацией о запросе.
+ * @namespace Agent.Service.sendRequest
  */
 export const sendRequest = async (agentAlias: string, prompt: string): Promise<Request> => {
   try {

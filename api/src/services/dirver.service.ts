@@ -3,15 +3,10 @@
  * @namespace Driver.Service
  */
 
-import { eq, desc, InferInsertModel, InferSelectModel } from "drizzle-orm"
-import { db, drivers } from "@db"
+import { eq, desc } from "drizzle-orm"
+import { db, drivers, Driver, CreateDriverData, UpdateDriverData } from "@db"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
-
-// Типы для драйвера
-type Driver = InferSelectModel<typeof drivers>
-type CreateDriverData = InferInsertModel<typeof drivers>
-type UpdateDriverData = Partial<CreateDriverData>
 
 // Создаем логгер для сервиса драйверов
 const logger = createServiceLogger("DriverService")

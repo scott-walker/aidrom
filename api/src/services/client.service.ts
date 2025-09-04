@@ -3,15 +3,10 @@
  * @namespace Client.Service
  */
 
-import { eq, desc, InferInsertModel, InferSelectModel } from "drizzle-orm"
-import { db, clients } from "@db"
+import { eq, desc } from "drizzle-orm"
+import { db, clients, Client, CreateClientData, UpdateClientData } from "@db"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
-
-// Типы для клиента
-type Client = InferSelectModel<typeof clients>
-type CreateClientData = InferInsertModel<typeof clients>
-type UpdateClientData = Partial<CreateClientData>
 
 // Создаем логгер для сервиса клиентов
 const logger = createServiceLogger("ClientService")

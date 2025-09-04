@@ -8,40 +8,36 @@ import { createConnection } from "./connection"
 export const db = createConnection()
 export * from "./schema"
 
-// export {
-//   // Драйверы
-//   DriverSchema,
-//   DriverWithProviders,
+export type {
+  // Драйверы
+  Driver,
+  CreateDriverData,
+  UpdateDriverData,
 
-//   // Провайдеры
-//   ProviderSchema,
-//   ProviderWithRelations,
+  // Провайдеры
+  Provider,
+  CreateProviderData,
+  UpdateProviderData,
 
-//   // Агенты
-//   AgentSchema,
-//   AgentWithRelations,
+  // Агенты
+  Agent,
+  CreateAgentData,
+  UpdateAgentData,
 
-//   // Клиенты
-//   ClientSchema,
-//   ClientWithRelations,
+  // Клиенты
+  Client,
+  CreateClientData,
+  UpdateClientData,
 
-//   // Чаты
-//   ChatSchema,
-//   ChatWithRelations,
+  // Чаты
+  Chat,
+  CreateChatData,
+  UpdateChatData,
+  ChatWithRelations,
+  ClientMessage,
+  AgentMessage,
+  MessagePair,
 
-//   // Пара сообщений
-//   MessagePairSchema,
-//   MessagePairWithRelations,
-
-//   // Сообщения от клиента
-//   ClientMessageSchema,
-//   ClientMessageWithRelations,
-
-//   // Сообщения от агента
-//   AgentMessageSchema,
-//   AgentMessageWithRelations,
-
-//   // Запросы
-//   RequestSchema,
-//   RequestWithRelations
-// } from "./types"
+  // Запросы
+  Request
+} from "./types"
