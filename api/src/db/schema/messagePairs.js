@@ -1,10 +1,10 @@
 // api/src/db/schema/messagePairs.js
 import { pgTable, index } from "drizzle-orm/pg-core"
 import { relations } from "drizzle-orm"
-import { chats } from "./chats.js"
-import { requests } from "./requests.js"
-import { clientMessages } from "./clientMessages.js"
-import { agentMessages } from "./agentMessages.js"
+import { chats } from "./chats"
+import { requests } from "./requests"
+import { clientMessages } from "./clientMessages"
+import { agentMessages } from "./agentMessages"
 
 // Пара сообщений - объединяет сообщение клиента и ответ агента
 export const messagePairs = pgTable(

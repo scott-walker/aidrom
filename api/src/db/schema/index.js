@@ -1,8 +1,0 @@
-export { providers, providersRelations } from "./providers.js"
-export { agents, agentsRelations } from "./agents.js"
-export { clients, clientsRelations } from "./clients.js"
-export { chats, chatsRelations } from "./chats.js"
-export { messagePairs, messagePairsRelations } from "./messagePairs.js"
-export { clientMessages, clientMessagesRelations } from "./clientMessages.js"
-export { agentMessages, agentMessagesRelations } from "./agentMessages.js"
-export { requests, requestsRelations } from "./requests.js"

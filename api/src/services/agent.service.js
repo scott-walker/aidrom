@@ -4,12 +4,11 @@
  */
 
 import { eq, desc } from "drizzle-orm"
-import { db } from "@db/index.js"
+import { db } from "@db/connection.js"
 import { agents } from "@db/schema/agents.js"
 import { requests } from "@db/schema/requests.js"
 import { createServiceLogger } from "@utils/logger.js"
 import { NotFoundError, ApiError } from "@utils/errors.js"
-import { AgentInteraction } from "@utils/api/index.js"
 import { getDriver } from "@drivers"
 
 // Создаем логгер для сервиса агентов
@@ -256,9 +255,9 @@ export const sendRequest = async (agentAlias, prompt) => {
     const agentHandler = getAgentHandler(agentAlias)
     const interactionData = await agentHandler.send(prompt)
 
-    if (!(interactionData instanceof AgentInteraction)) {
-      throw new ApiError("Ответ от API агента не является экземпляром класса AgentInteraction")
-    }
+    // if (!(interactionData instanceof DriverAdaptedResponse)) {
+    //   throw new ApiError("Ответ от API агента не является экземпляром класса DriverAdaptedResponse")
+    // }
 
     logger.info("Запрос к API успешно отправлен", {
       agentAlias

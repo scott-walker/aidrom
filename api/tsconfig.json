@@ -3,20 +3,20 @@
     "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "Node",
-    "rootDir": "src",
+    "rootDir": ".",
     "outDir": "dist",
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@config": ["config/index.ts"],
-      "@config/*": ["config/*"],
-      "@drivers": ["drivers/index.ts"],
-      "@db/*": ["db/*"],
-      "@router/*": ["router/*"],
-      "@router": ["router/index.ts"],   
-      "@controllers/*": ["controllers/*"],
-      "@middlewares/*": ["middlewares/*"],
-      "@services/*": ["services/*"],
-      "@utils/*": ["utils/*"]
+      "@config": ["src/config/index.ts"],
+      "@config/*": ["src/config/*"],
+      "@drivers": ["src/drivers/index.ts"],
+      "@db": ["src/db/index.ts"],
+      "@router/*": ["src/router/*"],
+      "@router": ["src/router/index.ts"],   
+      "@controllers/*": ["src/controllers/*"],
+      "@middlewares/*": ["src/middlewares/*"],
+      "@services/*": ["src/services/*"],
+      "@utils/*": ["src/utils/*"]
     },
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -24,6 +24,10 @@
     "strict": false, // TODO: после полного перехода на TS перевести в true
     "allowJs": true // TODO: после полного перехода на TS убрать
   },
-  "include": ["src/**/*.js", "src/**/*.ts"],
+  "include": [
+    "src/**/*.js",
+    "src/**/*.ts",
+    "drizzle.config.ts"
+  ],
   "exclude": ["node_modules"],
 }

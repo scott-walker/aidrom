@@ -4,7 +4,7 @@
  */
 
 import { eq, desc } from "drizzle-orm"
-import { db } from "@db/index.js"
+import { db } from "@db/connection.js"
 import { providers } from "@db/schema/providers.js"
 import { createServiceLogger } from "@utils/logger.js"
 import { NotFoundError } from "@utils/errors.js"

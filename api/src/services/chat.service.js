@@ -4,7 +4,7 @@
  */
 
 import { eq, desc } from "drizzle-orm"
-import { db } from "@db/index.js"
+import { db } from "@db/connection.js"
 import { chats } from "@db/schema/chats.js"
 import { messagePairs } from "@db/schema/messagePairs.js"
 import { clientMessages } from "@db/schema/clientMessages.js"

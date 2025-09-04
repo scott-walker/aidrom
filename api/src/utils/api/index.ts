@@ -1,4 +1,4 @@
-export { RestClient, RestClientConfig, RestClientFactory } from "./types"
+export type { RestClient, RestClientConfig, RestClientFactory } from "./types"
 export { createRestClient } from "./rest-client"
 
 /**

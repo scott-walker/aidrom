@@ -16,10 +16,7 @@ export interface DriverRequest {
  * @namespace Drivers.DriverResponse
  */
 export interface DriverResponse {
-  content: string
-  data: {
-    [key: string]: any
-  }
+  [key: string]: any
 }
 
 /**
@@ -27,10 +24,16 @@ export interface DriverResponse {
  * @namespace Drivers.DriverAdaptedResponse
  */
 export interface DriverAdaptedResponse {
-  content: string
-  data: {
+  providerRequestId: string
+  requestParams: {
     [key: string]: any
   }
+  responseData: {
+    [key: string]: any
+  }
+  requestTokens: number
+  responseTokens: number
+  content: string
 }
 
 /**
@@ -38,7 +41,6 @@ export interface DriverAdaptedResponse {
  * @namespace Drivers.DriverConfig
  */
 export interface DriverConfig {
-  alias: string
   baseUrl: string
   apiKey: string
 }
@@ -56,7 +58,6 @@ export interface DriverSendRequestMethod {
  * @namespace Drivers.Driver
  */
 export interface Driver {
-  alias: string
   sendRequest: DriverSendRequestMethod
 }
 
@@ -73,5 +74,5 @@ export interface DriverFactory {
  * @namespace Drivers.DriversCollection
  */
 export interface DriversCollection {
-  [key: Driver["alias"]]: DriverFactory
+  [key: string]: DriverFactory
 }
