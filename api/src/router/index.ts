@@ -3,6 +3,7 @@ import { chatRouter } from "./chat.router"
 import { clientRouter } from "./client.router"
 import { agentRouter } from "./agent.router"
 import { providerRouter } from "./provider.router"
+import { requestRouter } from "./request.router"
 
 const router: Router = Router()
 
@@ -11,5 +12,6 @@ router.use("/providers", providerRouter)
 router.use("/agents", agentRouter)
 router.use("/clients", clientRouter)
 router.use("/chats", chatRouter)
+router.use("/requests", requestRouter)
 
 export { router }

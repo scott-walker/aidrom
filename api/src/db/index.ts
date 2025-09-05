@@ -35,7 +35,7 @@ export type {
 
   // Запросы
   Request,
+  RequestWithProvider,
   RequestWithResponseContent,
-  CreateRequestData,
-  UpdateRequestData
+  CreateRequestData
 } from "./types"

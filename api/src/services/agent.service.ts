@@ -4,20 +4,12 @@
  */
 
 import { eq, desc } from "drizzle-orm"
-import {
-  db,
-  agents,
-  requests,
-  Agent,
-  CreateAgentData,
-  UpdateAgentData,
-  CreateRequestData,
-  RequestWithResponseContent
-} from "@db"
+import { db, agents, Agent, CreateAgentData, UpdateAgentData, CreateRequestData, RequestWithResponseContent } from "@db"
 import { DriverResponse } from "@drivers"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
 import { processRequest } from "./provider.service"
+import { createRequest } from "./request.service"
 
 // Создаем логгер для сервиса агентов
 const logger = createServiceLogger("AgentService")
@@ -169,17 +161,15 @@ export const sendRequest = async (agentId: number, message: string): Promise<Req
     logger.info("Запрос к API успешно отправлен", { agentId })
     logger.info("Сохранение нового запроса в БД")
 
-    const requestData: CreateRequestData = {
+    // Сохраняем запрос в БД
+    const request = await createRequest({
       providerId: agent.providerId,
       providerRequestId: response.providerRequestId,
       requestParams: response.requestParams,
       responseData: response.responseData,
       requestTokens: response.requestTokens,
       responseTokens: response.responseTokens
-    }
-
-    // Сохраняем запрос в БД
-    const [request] = await db.insert(requests).values(requestData).returning()
+    })
 
     logger.info("Запрос успешно сохранен в БД", { requestId: request.id })
 

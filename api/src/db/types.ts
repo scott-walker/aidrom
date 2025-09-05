@@ -34,8 +34,10 @@ export type MessagePair = InferSelectModel<typeof messagePairs>
 
 // Типы для запроса
 export type Request = InferSelectModel<typeof requests>
+export type RequestWithProvider = Request & {
+  provider: Provider
+}
 export type RequestWithResponseContent = Request & {
   responseContent: string
 }
 export type CreateRequestData = InferInsertModel<typeof requests>
-export type UpdateRequestData = Partial<CreateRequestData>
