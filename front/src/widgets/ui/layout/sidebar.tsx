@@ -16,9 +16,9 @@ const menuItems: MenuItems = [
     path: "/"
   },
   {
-    label: "Конструктор",
+    label: "Сервис",
     icon: "wrench",
-    path: "/constructor"
+    path: "/service"
   },
   {
     label: "Инструменты",

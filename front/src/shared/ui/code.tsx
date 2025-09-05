@@ -6,6 +6,8 @@ import { cn, cva } from "@utils/jsxtools"
  * @namespace Ui.Code.Props
  */
 type Props = ComponentProps<"pre"> & {
+  children?: ReactNode
+  data?: string | object
   accent?: boolean
 }
 
@@ -17,7 +19,9 @@ type Props = ComponentProps<"pre"> & {
  * @param {Props} props.className - CSS-классы
  * @returns {ReactNode}
  */
-export const Code: FC<Props> = ({ children, accent = false, className = "", ...props }: Props): ReactNode => {
+export const Code: FC<Props> = ({ children, data, accent = false, className = "", ...props }: Props): ReactNode => {
+  const content = children || (typeof data === "string" ? data : JSON.stringify(data, null, 2))
+
   /**
    * Классы для компонента Code, чтобы строки переносились и не появлялся скролл
    */
@@ -46,7 +50,7 @@ export const Code: FC<Props> = ({ children, accent = false, className = "", ...p
 
   return (
     <pre className={variants({ accent })} {...props}>
-      <code>{children}</code>
+      <code>{content}</code>
     </pre>
   )
 }

@@ -4,8 +4,11 @@
  */
 export interface ProviderSchema {
   id: number
-  alias: string
+  driver: string
   name: string
-  baseUrl: string
-  apiKey: string
+  description: string
+  config: {
+    baseUrl: string
+    apiKey: string
+  }
 }

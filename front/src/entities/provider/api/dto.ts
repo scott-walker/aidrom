@@ -6,10 +6,13 @@ import { z } from "zod"
  */
 export const ProviderDTOSchema = z.object({
   id: z.number(),
-  alias: z.string(),
+  driver: z.string(),
   name: z.string(),
-  baseUrl: z.string(),
-  apiKey: z.string()
+  description: z.string(),
+  config: z.object({
+    baseUrl: z.string(),
+    apiKey: z.string()
+  })
 })
 
 /**

@@ -3,7 +3,7 @@ import { type ProviderSchema } from "@entities/provider/lib/types"
 
 /**
  * Получить список провайдеров
- * @namespace Features.Provider.ProvidersListTable.Api.getProviders
+ * @namespace Features.Provider.ProvidersDataTable.Api.getProviders
  */
 export const getProviders = async (): Promise<ProviderSchema[]> => {
   const providers = await getProvidersApi()

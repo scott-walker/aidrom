@@ -4,7 +4,7 @@ import { type ProviderSchema } from "@entities/provider/lib/types"
 
 /**
  * Хук для получения списка провайдеров
- * @namespace Features.Provider.ProvidersListTable.Model.useProviders
+ * @namespace Features.Provider.ProvidersDataTable.Model.useProviders
  */
 export const useProviders = () => {
   const [providers, setProviders] = useState<ProviderSchema[]>([])

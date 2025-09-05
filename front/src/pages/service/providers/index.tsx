@@ -4,26 +4,26 @@ import { Card } from "@ui/card"
 import { Heading } from "@ui/heading"
 import type { ProviderSchema } from "@entities/provider/lib/types"
 import { RegisterProviderForm } from "@features/provider/register-provider-form/ui/form"
-import { ProvidersListTable } from "@features/provider/providers-list-table/ui/table"
+import { ProvidersDataTable } from "@features/provider/providers-data-table/ui/table"
 import { Blocks } from "@shared/ui/blocks"
 
 /**
  * Конфигурация страницы
- * @namespace Pages.Constructor.ConstructorProviders.PageConfig
+ * @namespace Pages.Service.ServiceProviders.PageConfig
  */
 const config: PageConfig = {
   meta: {
-    title: "Конструктор",
+    title: "Сервис",
     subtitle: "Провайдеры"
   }
 }
 
 /**
- * Страница конструктора - провайдеры
- * @namespace Pages.Constructor.ConstructorProviders
+ * Страница сервиса - провайдеры
+ * @namespace Pages.Service.ServiceProviders
  * @returns {ReactNode}
  */
-export const ConstructorProviders = createPage(config, (): ReactNode => {
+export const ServiceProviders = createPage(config, (): ReactNode => {
   const [provider, setProvider] = useState<Partial<ProviderSchema>>({})
 
   const handleSubmit = (provider: Partial<ProviderSchema>) => {
@@ -57,7 +57,7 @@ export const ConstructorProviders = createPage(config, (): ReactNode => {
 
       <Blocks.Row>
         <Blocks.Block>
-          <ProvidersListTable />
+          <ProvidersDataTable />
         </Blocks.Block>
       </Blocks.Row>
     </Blocks>

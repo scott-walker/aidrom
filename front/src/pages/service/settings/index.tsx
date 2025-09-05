@@ -5,26 +5,26 @@ import { Blocks } from "@shared/ui/blocks"
 
 /**
  * Конфигурация страницы
- * @namespace Pages.Constructor.ConstructorMain.PageConfig
+ * @namespace Pages.Service.ServiceSettings.PageConfig
  */
 const config: PageConfig = {
   meta: {
-    title: "Конструктор",
-    subtitle: "Главная"
+    title: "Сервис",
+    subtitle: "Настройки"
   }
 }
 
 /**
- * Страница конструктора - главная
- * @namespace Pages.Constructor.ConstructorMain
+ * Страница настроек сервиса
+ * @namespace Pages.Service.ServiceSettings
  * @returns {ReactNode}
  */
-export const ConstructorMain = createPage(config, (): ReactNode => {
+export const ServiceSettings = createPage(config, (): ReactNode => {
   return (
     <Blocks>
       <Blocks.Row>
         <Blocks.Block>
-          <Heading>Главная</Heading>
+          <Heading>Настройки сервиса</Heading>
         </Blocks.Block>
       </Blocks.Row>
     </Blocks>

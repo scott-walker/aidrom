@@ -2,12 +2,13 @@ import { Table } from "@ui/table"
 import { Card } from "@ui/card"
 import { Heading } from "@ui/heading"
 import { useProviders } from "../model"
+import { Code } from "@ui/code"
 
 /**
  * Таблица провайдеров
- * @namespace Features.Provider.ProvidersListTable.Ui.ProvidersListTable
+ * @namespace Features.Provider.ProvidersDataTable.Ui.ProvidersDataTable
  */
-export const ProvidersListTable = () => {
+export const ProvidersDataTable = () => {
   const { providers, isLoading, error } = useProviders()
 
   if (isLoading) return <div>Loading...</div>
@@ -23,20 +24,20 @@ export const ProvidersListTable = () => {
           <Table.Header>
             <Table.Row hoverable={false}>
               <Table.Head>ID</Table.Head>
-              <Table.Head>Системное имя</Table.Head>
+              <Table.Head>Драйвер</Table.Head>
               <Table.Head>Название</Table.Head>
-              <Table.Head>Базовый URL</Table.Head>
-              <Table.Head>API ключ</Table.Head>
+              <Table.Head>Конфигурация</Table.Head>
             </Table.Row>
           </Table.Header>
           <Table.Body>
             {providers.map(provider => (
               <Table.Row key={provider.id}>
                 <Table.Cell>{provider.id}</Table.Cell>
-                <Table.Cell>{provider.alias}</Table.Cell>
                 <Table.Cell>{provider.name}</Table.Cell>
-                <Table.Cell>{provider.baseUrl}</Table.Cell>
-                <Table.Cell>{provider.apiKey}</Table.Cell>
+                <Table.Cell>{provider.driver}</Table.Cell>
+                <Table.Cell>
+                  <Code data={provider.config} />
+                </Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>
