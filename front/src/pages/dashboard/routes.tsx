@@ -1,7 +1,8 @@
 import { Outlet } from "react-router"
 import type { PageRoutes } from "@lib/page-api/types"
-import { DashboardLayout } from "./layout"
-import { DashboardMain, DashboardSettings } from "./pages"
+import { Layout } from "./layout"
+import { Main } from "./pages/main"
+import { Settings } from "./pages/settings"
 
 /**
  * Маршруты
@@ -9,18 +10,18 @@ import { DashboardMain, DashboardSettings } from "./pages"
  */
 export const routes: PageRoutes = {
   element: (
-    <DashboardLayout>
+    <Layout>
       <Outlet />
-    </DashboardLayout>
+    </Layout>
   ),
   children: [
     {
       index: true,
-      element: <DashboardMain />
+      element: <Main />
     },
     {
       path: "settings",
-      element: <DashboardSettings />
+      element: <Settings />
     }
   ]
 }

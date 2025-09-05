@@ -1,5 +1,5 @@
 import { createBrowserRouter, Outlet } from "react-router"
-import { MainLayout } from "@widgets/layouts"
+import { CleanLayout, MainLayout } from "@widgets/layouts"
 import { pageRegistry } from "@pages"
 
 /**
@@ -12,6 +12,9 @@ export const router = createBrowserRouter([
       <MainLayout>
         <Outlet />
       </MainLayout>
+      // <CleanLayout>
+      //   <Outlet />
+      // </CleanLayout>
     ),
     children: pageRegistry.getRoutes()
   }

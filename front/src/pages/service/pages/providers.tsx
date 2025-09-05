@@ -1,35 +1,25 @@
 import { useState, useCallback, type ReactNode } from "react"
-import { createPage, type PageConfig } from "@lib/page-api"
 import { Card } from "@ui/card"
 import { Heading } from "@ui/heading"
 import type { ProviderSchema } from "@entities/provider/lib/types"
 import { RegisterProviderForm } from "@features/provider/register-provider-form/ui/form"
 import { ProvidersDataTable } from "@widgets/providers-data-table/ui/table"
 import { Blocks } from "@shared/ui/blocks"
-
-/**
- * Конфигурация страницы
- * @namespace Pages.Service.ServiceProviders.PageConfig
- */
-const config: PageConfig = {
-  meta: {
-    title: "Сервис",
-    subtitle: "Провайдеры"
-  }
-}
+import { useSubtitle } from "@shared/lib/layout-api/utils"
 
 /**
  * Страница сервиса - провайдеры
- * @namespace Pages.Service.ServiceProviders
+ * @namespace Pages.Service.Providers
  * @returns {ReactNode}
  */
-export const ServiceProviders = createPage(config, (): ReactNode => {
+export const Providers = (): ReactNode => {
+  useSubtitle("Провайдеры")
+
   const [provider, setProvider] = useState<Partial<ProviderSchema>>({})
 
   const handleSubmit = (provider: Partial<ProviderSchema>) => {
     setProvider(provider)
   }
-
   const handleChange = useCallback((provider: Partial<ProviderSchema>) => {
     setProvider(prev => ({ ...prev, ...provider }))
   }, [])
@@ -62,4 +52,4 @@ export const ServiceProviders = createPage(config, (): ReactNode => {
       </Blocks.Row>
     </Blocks>
   )
-})
+}

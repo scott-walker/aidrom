@@ -1,6 +1,6 @@
 import type { PageRoutes } from "@lib/page-api/types"
 import { ErrorLayout } from "./layout"
-import { NotFound } from "./pages"
+import { NotFound } from "./pages/not-found"
 
 /**
  * Маршруты страницы Error

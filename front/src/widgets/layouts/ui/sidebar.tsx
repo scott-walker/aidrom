@@ -1,6 +1,5 @@
 import type { ReactNode } from "react"
 import { useLayout } from "@scottwalker/lucent"
-import { usePage } from "@lib/page-api"
 import { cn } from "@utils/jsxtools"
 import { Menu, type MenuItems } from "@ui/menu"
 import { Brand } from "@ui/brand"
@@ -19,19 +18,14 @@ const menuItems: MenuItems = [
     label: "Сервис",
     icon: "wrench",
     path: "/service"
-  },
-  {
-    label: "Инструменты",
-    icon: "code",
-    path: "/tools"
   }
 ]
 
 // Меню для разработки
 const developmentMenuItems: MenuItems = [
   {
-    label: "Тесты",
-    icon: "amphora",
+    label: "Разработка",
+    icon: "code",
     path: "/test"
   }
 ]
@@ -65,7 +59,7 @@ export const SidebarHeader = (): ReactNode => {
  * @returns {ReactNode}
  */
 export const SidebarBody = (): ReactNode => {
-  const sidebar = usePage().getSlot("sidebar")
+  // const sidebar = usePage().getSlot("sidebar")
   const collapsed = useLayout().isSidebarCollapsed
   const classes = cn(
     "flex-1",
@@ -85,7 +79,7 @@ export const SidebarBody = (): ReactNode => {
         <section className="p-4">
           <Menu items={developmentMenuItems} compact={collapsed} />
         </section>
-        {sidebar}
+        {/* {sidebar} */}
       </Scrollbar>
     </div>
   )

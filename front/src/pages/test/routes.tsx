@@ -1,30 +1,23 @@
+import { Outlet } from "react-router"
 import type { PageRoutes } from "@lib/page-api/types"
-import { TestLayout } from "./layout"
-import { UiPage, TypographyPage, MainPage, FormPage } from "./pages"
+import { Layout } from "./layout"
+import { Main } from "./pages/main"
 
 /**
- * Маршруты страницы Test
- * @namespace Pages.Test.Routes
+ * Маршруты
+ * @namespace Pages.Tools.Routes
  */
 export const routes: PageRoutes = {
-  element: <TestLayout />,
+  element: (
+    <Layout>
+      <Outlet />
+    </Layout>
+  ),
   path: "test",
   children: [
     {
       index: true,
-      element: <MainPage />
-    },
-    {
-      path: "ui",
-      element: <UiPage />
-    },
-    {
-      path: "typography",
-      element: <TypographyPage />
-    },
-    {
-      path: "form",
-      element: <FormPage />
+      element: <Main />
     }
   ]
 }

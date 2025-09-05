@@ -1,28 +1,33 @@
+import { Outlet } from "react-router"
 import type { PageRoutes } from "@lib/page-api/types"
-import { ServiceLayout } from "./layout"
-import { ServiceProviders } from "./providers"
-import { ServiceSettings } from "./settings"
-import { ServiceRequests } from "./requests"
+import { Layout } from "./layout"
+import { Providers } from "./pages/providers"
+import { Settings } from "./pages/settings"
+import { Requests } from "./pages/requests"
 
 /**
  * Маршруты
  * @namespace Pages.Service.Routes
  */
 export const routes: PageRoutes = {
-  element: <ServiceLayout />,
+  element: (
+    <Layout>
+      <Outlet />
+    </Layout>
+  ),
   path: "service",
   children: [
     {
       index: true,
-      element: <ServiceProviders />
+      element: <Providers />
     },
     {
       path: "requests",
-      element: <ServiceRequests />
+      element: <Requests />
     },
     {
       path: "settings",
-      element: <ServiceSettings />
+      element: <Settings />
     }
   ]
 }

@@ -1,15 +1,15 @@
-import { Outlet } from "react-router"
+import type { ReactNode } from "react"
 import { Heading } from "@ui/heading"
 
 /**
  * Макет страницы
  * @namespace Pages.Dashboard.Layout
  */
-export const DashboardLayout = () => {
+export const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <Heading level={1}>Dashboard</Heading>
-      <Outlet />
+      {children}
     </>
   )
 }

@@ -1,13 +1,14 @@
 import type { ReactNode } from "react"
 import { Lucent, type LayoutConfig, type LayoutSidebarMode, type LayoutThemeMode } from "@scottwalker/lucent"
 import { getLayoutTheme, getLayoutSidebar, LayoutProvider as LayoutAdapterProvider } from "@lib/layout-api"
-import { PageProvider, type PageConfig } from "@lib/page-api"
 
 /**
- * Провайдер макета
- * @namespace Widgets.Layouts.Provider
+ * Провайдер приложения
+ * @namespace App.Provider
  */
-export const LayoutProvider = ({ children }: { children: ReactNode }): ReactNode => {
+export const AppProvider = ({ children }: { children: ReactNode }): ReactNode => {
+  // console.log("AppProvider")
+
   const theme = getLayoutTheme() as LayoutThemeMode
   const sidebar = getLayoutSidebar() as LayoutSidebarMode
 
@@ -22,24 +23,17 @@ export const LayoutProvider = ({ children }: { children: ReactNode }): ReactNode
       footerHeight: "var(--layout-footer-height)",
       sidebarWidth: "var(--layout-sidebar-width)",
       sidebarCollapsedWidth: "var(--layout-sidebar-collapsed-width)",
-      infobarWidth: "var(--layout-infobar-width)",
-      infobarCollapsedWidth: "var(--layout-infobar-collapsed-width)",
+      infobarWidth: "0rem",
+      infobarCollapsedWidth: "0rem",
+      // infobarWidth: "var(--layout-infobar-width)",
+      // infobarCollapsedWidth: "var(--layout-infobar-collapsed-width)",
       transitionDuration: "var(--layout-transition-duration)"
-    }
-  }
-
-  // Конфигурация по умолчанию для страниц
-  const pageConfig: PageConfig = {
-    meta: {
-      title: "AIDrom"
     }
   }
 
   return (
     <Lucent config={layoutConfig}>
-      <LayoutAdapterProvider>
-        <PageProvider config={pageConfig}>{children}</PageProvider>
-      </LayoutAdapterProvider>
+      <LayoutAdapterProvider>{children}</LayoutAdapterProvider>
     </Lucent>
   )
 }

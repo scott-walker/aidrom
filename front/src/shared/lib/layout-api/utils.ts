@@ -1,5 +1,8 @@
 import { SIDEBAR_MODE_BASE, THEME_MODE_DARK, THEME_MODE_LIGHT } from "@scottwalker/lucent"
 import { SIDEBAR_MODE_COLLAPSED } from "@scottwalker/lucent"
+import { useEffect } from "react"
+import type { LayoutContextApi } from "./types"
+import { useLayout } from "./context"
 
 /**
  * Установить темную тему макета
@@ -30,3 +33,35 @@ export const getLayoutTheme = (): string => localStorage.getItem("layout.theme")
  * @namespace Shared.Lib.LayoutApi.Utils.getLayoutSidebar
  */
 export const getLayoutSidebar = (): string => localStorage.getItem("layout.sidebar") || SIDEBAR_MODE_BASE
+
+/**
+ * Хук для установки заголовка страницы
+ * @namespace Shared.Lib.LayoutApi.Utils.useTitle
+ */
+export const useTitle = (title: string, subtitle?: string) => {
+  const { setTitle, setSubtitle } = useLayout() as LayoutContextApi
+
+  useEffect(() => {
+    setTitle(title)
+    if (subtitle) setSubtitle(subtitle)
+
+    return () => {
+      setTitle("")
+      if (subtitle) setSubtitle("")
+    }
+  }, [title, subtitle, setTitle, setSubtitle])
+}
+
+/**
+ * Хук для установки заголовка страницы
+ * @namespace Shared.Lib.LayoutApi.Utils.useSubtitle
+ */
+export const useSubtitle = (subtitle: string) => {
+  const { setSubtitle } = useLayout() as LayoutContextApi
+
+  useEffect(() => {
+    setSubtitle(subtitle)
+
+    return () => setSubtitle("")
+  }, [subtitle, setSubtitle])
+}

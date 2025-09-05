@@ -1,10 +1,10 @@
 import type { ReactNode } from "react"
-import { LucentHeader, LucentBody, LucentSidebar, LucentInfobar } from "@scottwalker/lucent"
-import { usePage } from "@lib/page-api"
+import { Lucent } from "@scottwalker/lucent"
+// import { usePage } from "@lib/page-api"
 import { Header } from "@widgets/layouts/ui/header"
 import { Sidebar } from "@widgets/layouts/ui/sidebar"
 import { Body } from "@widgets/layouts/ui/body"
-import { Infobar } from "@widgets/layouts/ui/infobar"
+// import { Infobar } from "@widgets/layouts/ui/infobar"
 // import { Footer } from "@widgets/layout/ui/footer"
 
 /**
@@ -13,31 +13,31 @@ import { Infobar } from "@widgets/layouts/ui/infobar"
  * @param {ReactNode} children дочерние элементы
  */
 export const Main = ({ children }: { children: ReactNode }): ReactNode => {
-  const infobar = usePage().getSlot("infobar")
+  // const infobar = usePage().getSlot("infobar")
 
   return (
     <>
-      <LucentHeader>
+      <Lucent.Header>
         <Header />
-      </LucentHeader>
+      </Lucent.Header>
 
-      <LucentSidebar>
+      <Lucent.Sidebar>
         <Sidebar />
-      </LucentSidebar>
+      </Lucent.Sidebar>
 
-      <LucentBody>
+      <Lucent.Body>
         <Body>{children}</Body>
-      </LucentBody>
+      </Lucent.Body>
 
-      {infobar && (
-        <LucentInfobar>
+      {/* {infobar && (
+        <Lucent.Infobar>
           <Infobar>{infobar}</Infobar>
-        </LucentInfobar>
-      )}
+        </Lucent.Infobar>
+      )} */}
 
-      {/* <LucentFooter>
+      {/* <Lucent.Footer>
         <Footer />
-      </LucentFooter> */}
+      </Lucent.Footer> */}
     </>
   )
 }

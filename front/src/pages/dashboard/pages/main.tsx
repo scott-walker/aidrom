@@ -1,27 +1,10 @@
 import type { ReactNode } from "react"
-import { createPage, type PageConfig } from "@lib/page-api"
 import { Icon } from "@ui/icon"
-
-/**
- * Конфигурация страницы
- */
-const config: PageConfig = {
-  meta: {
-    // title: "Dashboard Main",
-    subtitle: "Dashboard Main Subtitle"
-  },
-  slots: {
-    // header: <h2>Dashboard Header</h2>
-    // sidebar: <h2>Dashboard Sidebar</h2>,
-    // infobar: <h2>Dashboard Infobar</h2>,
-    // footer: <h2>Dashboard Footer</h2>
-  }
-}
 
 /**
  * Страница Dashboard
  */
-export const DashboardMain = createPage(config, (): ReactNode => {
+export const Main = (): ReactNode => {
   return (
     <div className="flex flex-col">
       <h1>Страница "Dashboard"</h1>
@@ -41,4 +24,4 @@ export const DashboardMain = createPage(config, (): ReactNode => {
       </div>
     </div>
   )
-})
+}

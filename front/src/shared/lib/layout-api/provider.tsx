@@ -1,5 +1,5 @@
-import { useEffect, type FC, type ReactNode } from "react"
-import { useLayout } from "@scottwalker/lucent"
+import { useEffect, useState, type FC, type ReactNode } from "react"
+import { useLayout, type LayoutApi as LucentApi } from "@scottwalker/lucent"
 import type { LayoutContextApi, LayoutProviderProps } from "./types"
 import { setLayoutCollapsedSidebar, setLayoutDarkTheme } from "./utils"
 import { LayoutContext } from "./context"
@@ -11,9 +11,20 @@ import { LayoutContext } from "./context"
  * @param {ReactNode} props.children дочерние элементы
  */
 export const LayoutProvider: FC<LayoutProviderProps> = ({ children }: LayoutProviderProps): ReactNode => {
-  const lucentApi: LayoutContextApi = useLayout()
+  // console.log("LayoutProvider")
+
+  const lucentApi: LucentApi = useLayout()
   const { isThemeDark, isSidebarCollapsed } = lucentApi
-  const api: LayoutContextApi = { ...lucentApi }
+  const [title, setTitle] = useState<string>("")
+  const [subtitle, setSubtitle] = useState<string>("")
+
+  const api: LayoutContextApi = {
+    ...lucentApi,
+    title,
+    subtitle,
+    setTitle,
+    setSubtitle
+  }
 
   useEffect(() => setLayoutDarkTheme(isThemeDark), [isThemeDark])
   useEffect(() => setLayoutCollapsedSidebar(isSidebarCollapsed), [isSidebarCollapsed])
