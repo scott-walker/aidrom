@@ -1,7 +1,7 @@
 import { type ReactNode } from "react"
 import { createPage, type PageConfig } from "@lib/page-api"
 import { Blocks } from "@shared/ui/blocks"
-import { RequestsDataTable } from "@features/request/requests-data-table/ui/table"
+import { RequestsDataTable } from "@widgets/requests-data-table/ui/table"
 
 /**
  * Конфигурация страницы

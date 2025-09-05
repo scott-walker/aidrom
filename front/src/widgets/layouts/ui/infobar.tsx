@@ -5,7 +5,7 @@ import { InfobarCollapseTrigger } from "@ui/triggers"
 
 /**
  * Инфобар макета
- * @namespace App.Layouts.Lucent.Infobar
+ * @namespace Widgets.Layouts.UI.Infobar
  * @returns {ReactNode}
  */
 export const Infobar = ({ children }: { children: ReactNode }): ReactNode => {

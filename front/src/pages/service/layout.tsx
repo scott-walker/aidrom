@@ -1,5 +1,5 @@
 import { Outlet } from "react-router"
-import { PageNavbar } from "@widgets/ui/PageNavbar"
+import { PageNavbar } from "@widgets/page-navbar"
 
 /**
  * Макет страницы

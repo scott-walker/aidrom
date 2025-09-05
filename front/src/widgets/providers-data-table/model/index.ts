@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react"
-import { getProviders } from "../api"
+import { getProviders } from "@entities/provider/api"
 import { type ProviderSchema } from "@entities/provider/lib/types"
 
 /**
  * Хук для получения списка провайдеров
- * @namespace Features.Provider.ProvidersDataTable.Model.useProviders
+ * @namespace Widgets.ProvidersDataTable.Model.useProviders
  */
 export const useProviders = () => {
   const [providers, setProviders] = useState<ProviderSchema[]>([])

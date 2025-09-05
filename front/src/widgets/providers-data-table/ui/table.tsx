@@ -6,7 +6,7 @@ import { Code } from "@ui/code"
 
 /**
  * Таблица провайдеров
- * @namespace Features.Provider.ProvidersDataTable.Ui.ProvidersDataTable
+ * @namespace Widgets.ProvidersDataTable.Ui.ProvidersDataTable
  */
 export const ProvidersDataTable = () => {
   const { providers, isLoading, error } = useProviders()

@@ -9,7 +9,7 @@ import { Heading } from "@ui/heading"
 
 /**
  * Заголовок макета
- * @namespace App.Layouts.Lucent.Header
+ * @namespace Widgets.Layouts.UI.Header
  */
 export const Header = (): ReactNode => {
   const { getTitle, getSlot } = usePage()

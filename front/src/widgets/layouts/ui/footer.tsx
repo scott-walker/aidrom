@@ -5,7 +5,7 @@ import { cn } from "@utils/jsxtools"
 
 /**
  * Футер макета
- * @namespace App.Layouts.Lucent.Footer
+ * @namespace Widgets.Layouts.UI.Footer
  * @returns {ReactNode}
  */
 export const Footer = (): ReactNode => {

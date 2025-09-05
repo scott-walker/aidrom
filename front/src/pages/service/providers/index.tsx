@@ -4,7 +4,7 @@ import { Card } from "@ui/card"
 import { Heading } from "@ui/heading"
 import type { ProviderSchema } from "@entities/provider/lib/types"
 import { RegisterProviderForm } from "@features/provider/register-provider-form/ui/form"
-import { ProvidersDataTable } from "@features/provider/providers-data-table/ui/table"
+import { ProvidersDataTable } from "@widgets/providers-data-table/ui/table"
 import { Blocks } from "@shared/ui/blocks"
 
 /**

@@ -1,6 +1,5 @@
 import type { ReactNode } from "react"
-import { LayoutProvider } from "../provider"
-import { Structure } from "./structure"
+import { Body } from "@widgets/layouts/ui/body"
 
 /**
  * "Чистый" макет приложения
@@ -9,8 +8,8 @@ import { Structure } from "./structure"
  */
 export const Clean = ({ children }: { children: ReactNode }): ReactNode => {
   return (
-    <LayoutProvider>
-      <Structure>{children}</Structure>
-    </LayoutProvider>
+    <>
+      <Body>{children}</Body>
+    </>
   )
 }

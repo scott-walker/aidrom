@@ -3,7 +3,7 @@ import { makeClasses } from "@lib/style-api"
 
 /**
  * Тип ссылки
- * @namespace Widgets.UI.PageNavbar.Link
+ * @namespace Widgets.Layouts.UI.PageNavbar.Link
  */
 export type Link = {
   label: string
@@ -13,7 +13,7 @@ export type Link = {
 
 /**
  * Пропсы для навигации по странице
- * @namespace Widgets.UI.PageNavbar.Props
+ * @namespace Widgets.Layouts.UI.PageNavbar.Props
  */
 export type PageNavbarProps = {
   links: Link[]
@@ -21,7 +21,7 @@ export type PageNavbarProps = {
 
 /**
  * Навигация по странице
- * @namespace Widgets.UI.PageNavbar
+ * @namespace Widgets.Layouts.UI.PageNavbar
  */
 export const PageNavbar = ({ links }: PageNavbarProps) => {
   const makeLinkClass = ({ isActive }: { isActive: boolean }) => {

@@ -38,7 +38,7 @@ const developmentMenuItems: MenuItems = [
 
 /**
  * Шапка сайдбара
- * @namespace App.Layouts.Lucent.SidebarHeader
+ * @namespace Widgets.Layouts.UI.SidebarHeader
  * @returns {ReactNode}
  */
 export const SidebarHeader = (): ReactNode => {
@@ -61,7 +61,7 @@ export const SidebarHeader = (): ReactNode => {
 
 /**
  * Основной контент сайдбара
- * @namespace App.Layouts.Lucent.SidebarBody
+ * @namespace Widgets.Layouts.UI.SidebarBody
  * @returns {ReactNode}
  */
 export const SidebarBody = (): ReactNode => {
@@ -93,7 +93,7 @@ export const SidebarBody = (): ReactNode => {
 
 /**
  * Футер сайдбара
- * @namespace App.Layouts.Lucent.SidebarFooter
+ * @namespace Widgets.Layouts.UI.SidebarFooter
  * @returns {ReactNode}
  */
 export const SidebarFooter = (): ReactNode => {
@@ -125,7 +125,7 @@ export const SidebarFooter = (): ReactNode => {
 
 /**
  * Сайдбар
- * @namespace App.Layouts.Lucent.Sidebar
+ * @namespace Widgets.Layouts.UI.Sidebar
  * @returns {ReactNode}
  */
 export const Sidebar = (): ReactNode => {

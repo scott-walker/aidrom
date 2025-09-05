@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react"
-import { getRequests } from "../api"
+import { getRequests } from "@entities/request/api"
 import { type RequestSchema } from "@entities/request/lib/types"
 
 /**
  * Хук для получения списка запросов
- * @namespace Features.Request.RequestsDataTable.Model.useRequests
+ * @namespace Widgets.RequestsDataTable.Model.useRequests
  */
 export const useRequests = () => {
   const [requests, setRequests] = useState<RequestSchema[]>([])

@@ -5,8 +5,8 @@ import { useRequests } from "../model"
 import type { RequestSchema } from "@entities/request/lib/types"
 
 /**
- * Таблица запросов
- * @namespace Features.Request.RequestsDataTable.Ui.RequestsDataTable
+ * Виджет. Таблица запросов к провайдерам
+ * @namespace Widgets.RequestsDataTable.Ui.RequestsDataTable
  */
 export const RequestsDataTable = () => {
   const { requests, isLoading, error } = useRequests()
