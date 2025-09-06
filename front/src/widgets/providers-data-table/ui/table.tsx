@@ -1,7 +1,7 @@
+import { useProviders } from "@entities/provider/model/queries"
 import { Table } from "@ui/table"
 import { Card } from "@ui/card"
 import { Heading } from "@ui/heading"
-import { useProviders } from "../model"
 import { Code } from "@ui/code"
 
 /**
@@ -30,7 +30,7 @@ export const ProvidersDataTable = () => {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {providers.map(provider => (
+            {providers?.map(provider => (
               <Table.Row key={provider.id}>
                 <Table.Cell>{provider.id}</Table.Cell>
                 <Table.Cell>{provider.name}</Table.Cell>

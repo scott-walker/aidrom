@@ -1,8 +1,7 @@
+import { useRequests } from "@entities/request/model/queries"
 import { Table } from "@ui/table"
 import { Card } from "@ui/card"
 import { Heading } from "@ui/heading"
-import { useRequests } from "../model"
-import type { RequestSchema } from "@entities/request/lib/types"
 
 /**
  * Виджет. Таблица запросов к провайдерам
@@ -31,7 +30,7 @@ export const RequestsDataTable = () => {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {(requests as RequestSchema[]).map(request => (
+            {requests.map(request => (
               <Table.Row key={request.id}>
                 <Table.Cell>{request.id}</Table.Cell>
                 <Table.Cell>{request.provider}</Table.Cell>

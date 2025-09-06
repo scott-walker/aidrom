@@ -12,3 +12,13 @@ export interface ProviderSchema {
     apiKey: string
   }
 }
+
+/**
+ * Тип для данных запроса списка провайдеров
+ * @namespace Entities.Provider.Lib.ProvidersQueryData
+ */
+export type ProvidersQueryData = {
+  providers: ProviderSchema[]
+  isLoading: boolean
+  error: Error | null
+}

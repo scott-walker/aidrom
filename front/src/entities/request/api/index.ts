@@ -4,9 +4,9 @@ import { toRequestSchema } from "../lib/mappers"
 
 /**
  * Получить список запросов
- * @namespace Entities.Request.Api.getRequests
+ * @namespace Entities.Request.Api.fetchRequests
  */
-export const getRequests = async (): Promise<RequestSchema[]> => {
+export const fetchRequests = async (): Promise<RequestSchema[]> => {
   const { data } = await restClient.get("/requests")
 
   return data.map(toRequestSchema)
@@ -14,9 +14,9 @@ export const getRequests = async (): Promise<RequestSchema[]> => {
 
 /**
  * Получить список запросов по ID провайдера
- * @namespace Entities.Request.Api.getRequestsByProviderId
+ * @namespace Entities.Request.Api.fetchRequestsByProviderId
  */
-export const getRequestsByProviderId = async (providerId: number): Promise<RequestSchema[]> => {
+export const fetchRequestsByProviderId = async (providerId: number): Promise<RequestSchema[]> => {
   const { data } = await restClient.get(`/requests`, { params: { providerId } })
 
   return data.map(toRequestSchema)

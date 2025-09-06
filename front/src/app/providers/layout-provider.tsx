@@ -3,11 +3,11 @@ import { Lucent, type LayoutConfig, type LayoutSidebarMode, type LayoutThemeMode
 import { getLayoutTheme, getLayoutSidebar, LayoutProvider as LayoutAdapterProvider } from "@lib/layout-api"
 
 /**
- * Провайдер приложения
+ * Провайдер макета
  * @namespace App.Provider
  */
-export const AppProvider = ({ children }: { children: ReactNode }): ReactNode => {
-  // console.log("AppProvider")
+export const LayoutProvider = ({ children }: { children: ReactNode }): ReactNode => {
+  // console.log("LayoutProvider")
 
   const theme = getLayoutTheme() as LayoutThemeMode
   const sidebar = getLayoutSidebar() as LayoutSidebarMode

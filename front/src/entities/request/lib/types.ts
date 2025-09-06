@@ -12,3 +12,13 @@ export interface RequestSchema {
   responseTokens: number
   createdAt: Date
 }
+
+/**
+ * Тип для данных запроса списка запросов к провайдерам
+ * @namespace Entities.Request.Lib.RequestsQueryData
+ */
+export type RequestsQueryData = {
+  requests: RequestSchema[]
+  isLoading: boolean
+  error: Error | null
+}
