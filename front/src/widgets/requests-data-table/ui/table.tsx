@@ -4,6 +4,7 @@ import { Card } from "@ui/card"
 import { Heading } from "@ui/heading"
 import { Loader } from "@shared/ui/loader"
 import { Notification } from "@shared/ui/notification"
+import { Item } from "./item"
 
 /**
  * Виджет. Таблица запросов к провайдерам
@@ -35,13 +36,7 @@ export const RequestsDataTable = () => {
             </Table.Header>
             <Table.Body>
               {requests.map(request => (
-                <Table.Row key={request.id}>
-                  <Table.Cell>{request.id}</Table.Cell>
-                  <Table.Cell>{request.provider}</Table.Cell>
-                  <Table.Cell>{request.providerRequestId}</Table.Cell>
-                  <Table.Cell>{request.requestTokens}</Table.Cell>
-                  <Table.Cell>{request.responseTokens}</Table.Cell>
-                </Table.Row>
+                <Item key={request.id} request={request} />
               ))}
             </Table.Body>
           </Table>

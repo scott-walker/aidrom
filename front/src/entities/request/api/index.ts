@@ -16,8 +16,8 @@ export const fetchRequests = async (): Promise<RequestSchema[]> => {
  * Получить список запросов по ID провайдера
  * @namespace Entities.Request.Api.fetchRequestsByProviderId
  */
-export const fetchRequestsByProviderId = async (providerId: number): Promise<RequestSchema[]> => {
-  const { data } = await restClient.get(`requests`, { params: { providerId } })
+export const fetchRequestsByProviderId = async (providerId: number): Promise<RequestSchema> => {
+  const { data } = await restClient.get(`requests/${providerId}`)
 
-  return data.map(toRequestSchema)
+  return toRequestSchema(data)
 }

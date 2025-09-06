@@ -16,7 +16,17 @@ export interface RequestSchema {
 }
 
 /**
- * Тип для данных запроса списка запросов к провайдерам
+ * Тип для данных "запроса к провайдеру"
+ * @namespace Entities.Request.Lib.RequestQueryData
+ */
+export type RequestQueryData = {
+  request: RequestSchema | null
+  isLoading: boolean
+  error: RestError | null
+}
+
+/**
+ * Тип для данных списка "запросов к провайдерам"
  * @namespace Entities.Request.Lib.RequestsQueryData
  */
 export type RequestsQueryData = {
