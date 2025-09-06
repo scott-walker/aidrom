@@ -1,11 +1,11 @@
-import type { ReactNode } from "react"
+import type { ReactNode, JSX } from "react"
 import { makeClasses } from "@lib/style-api"
 
 /**
  * Пропсы тела таблицы
  * @namespace Shared.UI.Table.TableBodyProps
  */
-type TableBodyProps = {
+type TableBodyProps = JSX.IntrinsicElements["tbody"] & {
   children: ReactNode
   className?: string
 }
@@ -14,12 +14,16 @@ type TableBodyProps = {
  * Тело таблицы
  * @namespace Shared.UI.Table.TableBody
  */
-export const TableBody = ({ children, className = "" }: TableBodyProps) => {
+export const TableBody = ({ children, className = "", ...props }: TableBodyProps) => {
   const classes = makeClasses(
     "divide-y-(length:--ui-table-border-width)",
     "divide-(--ui-table-border-color)",
     className
   )
 
-  return <tbody className={classes}>{children}</tbody>
+  return (
+    <tbody className={classes} {...props}>
+      {children}
+    </tbody>
+  )
 }

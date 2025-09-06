@@ -1,11 +1,11 @@
-import type { ReactNode } from "react"
+import type { ReactNode, JSX } from "react"
 import { makeClasses } from "@lib/style-api"
 
 /**
  * Пропсы ячейки данных
  * @namespace Shared.UI.Table.TableCellProps
  */
-type TableCellProps = {
+type TableCellProps = JSX.IntrinsicElements["td"] & {
   children: ReactNode
   className?: string
 }
@@ -14,8 +14,12 @@ type TableCellProps = {
  * Ячейка данных
  * @namespace Shared.UI.Table.TableCell
  */
-export const TableCell = ({ children, className = "" }: TableCellProps) => {
+export const TableCell = ({ children, className = "", ...props }: TableCellProps) => {
   const classes = makeClasses("px-(--ui-table-offset-x)", "py-(--ui-table-offset-y)", className)
 
-  return <td className={classes}>{children}</td>
+  return (
+    <td className={classes} {...props}>
+      {children}
+    </td>
+  )
 }

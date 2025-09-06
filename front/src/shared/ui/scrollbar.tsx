@@ -67,13 +67,13 @@ const useAutoHide = (config: AutoHideConfig = {}): AutoHideAPI => {
  */
 export const Scrollbar: FC<Props> = ({ children, xAxis = true, yAxis = true, ...props }): ReactNode => {
   const { visible, onScrollStart, onScrollStop } = useAutoHide()
-  const SCROLLBAR_SIZE = ".35rem"
+  const SCROLLBAR_SIZE = "var(--ui-scrollbar-size)"
 
   const wrapperProps = { className: "!inset-0" }
   const contentProps = { style: {} }
   const trackProps = {
     style: {
-      background: "var(--color-scrollbar-track)",
+      background: "var(--ui-scrollbar-track-color)",
       opacity: visible ? 1 : 0,
       pointerEvents: visible ? "auto" : "none",
       transition: "opacity 0.15s ease"
@@ -81,8 +81,8 @@ export const Scrollbar: FC<Props> = ({ children, xAxis = true, yAxis = true, ...
   }
   const thumbProps = {
     style: {
-      background: "var(--color-scrollbar-thumb)",
-      borderRadius: ".25rem"
+      background: "var(--ui-scrollbar-thumb-color)",
+      borderRadius: "var(--ui-scrollbar-rounded)"
     }
   }
   const trackXProps = { style: { ...trackProps.style, height: SCROLLBAR_SIZE } }

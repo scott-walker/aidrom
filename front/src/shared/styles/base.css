@@ -5,6 +5,29 @@
     /* transition: background-color 0.1s ease-in-out; */
     outline: none;
   }
+  /* Для скроллбаров */
+  div {
+    /* Chrome, Edge, Safari */
+    &::-webkit-scrollbar {
+      width: var(--ui-scrollbar-size);
+      height: var(--ui-scrollbar-size);
+    }
+    &::-webkit-scrollbar-track {
+      background: var(--ui-scrollbar-track-color);
+      border-radius: var(--ui-scrollbar-rounded);
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--ui-scrollbar-thumb-color);
+      border-radius: var(--ui-scrollbar-rounded);
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: var(--ui-scrollbar-thumb-color-hover);
+      cursor: grabbing;
+    }
+    &::-webkit-scrollbar-corner {
+      background: var(--ui-scrollbar-track-color);
+    }
+  }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);

@@ -1,11 +1,11 @@
-import type { ReactNode } from "react"
+import type { ReactNode, JSX } from "react"
 import { makeClasses } from "@lib/style-api"
 
 /**
  * Пропсы ячейки заголовка
  * @namespace Shared.UI.Table.TableHeadProps
  */
-type TableHeadProps = {
+type TableHeadProps = JSX.IntrinsicElements["th"] & {
   children: ReactNode
   className?: string
 }
@@ -14,7 +14,7 @@ type TableHeadProps = {
  * Ячейка заголовка
  * @namespace Shared.UI.Table.TableHead
  */
-export const TableHead = ({ children, className = "" }: TableHeadProps) => {
+export const TableHead = ({ children, className = "", ...props }: TableHeadProps) => {
   const classes = makeClasses(
     "px-(--ui-table-offset-x)",
     "py-(--ui-table-offset-y)",
@@ -23,5 +23,9 @@ export const TableHead = ({ children, className = "" }: TableHeadProps) => {
     className
   )
 
-  return <th className={classes}>{children}</th>
+  return (
+    <th className={classes} {...props}>
+      {children}
+    </th>
+  )
 }

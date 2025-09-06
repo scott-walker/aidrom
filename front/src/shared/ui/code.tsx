@@ -1,56 +1,91 @@
 import type { ComponentProps, FC, ReactNode } from "react"
-import { cn, cva } from "@utils/jsxtools"
+import CodeMirror, { EditorView } from "@uiw/react-codemirror"
+import { createTheme } from "@uiw/codemirror-themes"
+import { json } from "@codemirror/lang-json"
+import { tags } from "@lezer/highlight"
+import { makeClasses } from "@lib/style-api"
 
 /**
  * Пропсы компонента для отображения кода
  * @namespace Ui.Code.Props
  */
 type Props = ComponentProps<"pre"> & {
-  children?: ReactNode
-  data?: string | object
-  accent?: boolean
+  data: string | object
+  interactive?: boolean
 }
 
 /**
  * Компонент для отображения кода
  * @namespace Ui.Code
- * @param {Props} props.children - контент
- * @param {Props} props.accent - стилевой акцент
- * @param {Props} props.className - CSS-классы
- * @returns {ReactNode}
+ * @param props.data - данные для отображения
+ * @param props.interactive - режим интерактивный
+ * @param props.className - CSS-классы
  */
-export const Code: FC<Props> = ({ children, data, accent = false, className = "", ...props }: Props): ReactNode => {
-  const content = children || (typeof data === "string" ? data : JSON.stringify(data, null, 2))
+export const Code: FC<Props> = ({ data, interactive = false, className = "" }: Props): ReactNode => {
+  const content = typeof data === "string" ? data : JSON.stringify(data, null, 2)
 
-  /**
-   * Классы для компонента Code, чтобы строки переносились и не появлялся скролл
-   */
-  const classes = cn(
-    "px-8",
-    "py-6",
-    "font-family-mono",
-    "font-semibold",
-    "rounded-2xl",
-    "break-words", // перенос длинных слов
-    "whitespace-pre-wrap", // сохраняет пробелы и переносит строки
-    "overflow-hidden", // скрывает скролл
-    className
-  )
-  const variants = cva(classes, {
-    variants: {
-      accent: {
-        true: "bg-background-soft text-foreground",
-        false: "bg-background text-foreground"
-      }
+  if (!interactive) {
+    const classes = makeClasses("px-8", "py-6", "bg-background", "rounded-xl", className)
+
+    return (
+      <pre className={classes}>
+        <code>{content}</code>
+      </pre>
+    )
+  }
+
+  const classes = makeClasses("overflow-x-auto", "overflow-y-auto", className)
+  const theme = createTheme({
+    theme: "light",
+    settings: {
+      fontFamily: "var(--font-family-mono)",
+      fontSize: "var(--text-lg)",
+      background: "var(--color-background)",
+      backgroundImage: "",
+      foreground: "var(--color-foreground)",
+      caret: "var(--color-primary)",
+      selection: "var(--color-primary-ghost-hard)",
+      selectionMatch: "var(--color-primary-ghost-hard)",
+      lineHighlight: "var(--color-primary-ghost-hard)",
+      gutterBackground: "var(--color-background)",
+      gutterForeground: "var(--color-foreground-soft)",
+      gutterBorder: "var(--color-background)"
     },
-    defaultVariants: {
-      accent: false
+    styles: [
+      { tag: tags.propertyName, color: "var(--color-foreground)", fontWeight: "bold" },
+      { tag: tags.string, color: "var(--color-foreground-soft)" },
+      { tag: tags.number, color: "var(--color-primary)" },
+      { tag: tags.comment, color: "var(--color-foreground-soft)", fontStyle: "italic" },
+      { tag: tags.punctuation, color: "var(--color-foreground)" }
+    ]
+  })
+  const viewTheme = EditorView.theme({
+    ".cm-foldPlaceholder": {
+      backgroundColor: "var(--color-background)",
+      color: "var(--color-primary)",
+      border: "1px solid var(--color-primary)",
+      borderRadius: "10px",
+      padding: "0px 10px",
+      fontWeight: "bold"
+    },
+    ".cm-foldPlaceholder:hover": {
+      backgroundColor: "var(--color-primary-ghost-hard)"
     }
   })
+  const extensions = [json(), viewTheme]
 
   return (
-    <pre className={variants({ accent })} {...props}>
-      <code>{content}</code>
-    </pre>
+    <div className={classes}>
+      <CodeMirror
+        value={content}
+        theme={theme}
+        extensions={extensions}
+        readOnly={true}
+        editable={false}
+        className={classes}
+        width="100%"
+        height="100%"
+      />
+    </div>
   )
 }

@@ -34,7 +34,7 @@ type TableComponent = FC<TableProps> & {
  * @namespace Shared.UI.Table.Table
  */
 export const Table: TableComponent = ({ children, as: Component = "div", className = "", ...props }) => {
-  const classes = makeClasses("overflow-x-auto", className)
+  const classes = makeClasses(className)
 
   return (
     <Component {...props} className={classes}>
