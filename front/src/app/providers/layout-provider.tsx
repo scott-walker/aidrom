@@ -7,7 +7,7 @@ import { getLayoutTheme, getLayoutSidebar, LayoutProvider as LayoutAdapterProvid
  * @namespace App.Provider
  */
 export const LayoutProvider = ({ children }: { children: ReactNode }): ReactNode => {
-  // console.log("LayoutProvider")
+  // console.log("AppProvider")
 
   const theme = getLayoutTheme() as LayoutThemeMode
   const sidebar = getLayoutSidebar() as LayoutSidebarMode
@@ -23,10 +23,8 @@ export const LayoutProvider = ({ children }: { children: ReactNode }): ReactNode
       footerHeight: "var(--layout-footer-height)",
       sidebarWidth: "var(--layout-sidebar-width)",
       sidebarCollapsedWidth: "var(--layout-sidebar-collapsed-width)",
-      infobarWidth: "0rem",
-      infobarCollapsedWidth: "0rem",
-      // infobarWidth: "var(--layout-infobar-width)",
-      // infobarCollapsedWidth: "var(--layout-infobar-collapsed-width)",
+      infobarWidth: "var(--layout-infobar-width)",
+      infobarCollapsedWidth: "var(--layout-infobar-collapsed-width)",
       transitionDuration: "var(--layout-transition-duration)"
     }
   }

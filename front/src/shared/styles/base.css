@@ -6,7 +6,8 @@
     outline: none;
   }
   /* Для скроллбаров */
-  div {
+  div,
+  .nice-scrollbar {
     /* Chrome, Edge, Safari */
     &::-webkit-scrollbar {
       width: var(--ui-scrollbar-size);

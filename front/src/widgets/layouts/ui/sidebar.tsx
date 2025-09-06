@@ -22,6 +22,20 @@ const menuItems: MenuItems = [
 ]
 
 // Меню для разработки
+const chatMenuItems: MenuItems = [
+  {
+    label: "Чат",
+    icon: "messages-square",
+    path: "/chat"
+  },
+  {
+    label: "Агенты",
+    icon: "users",
+    path: "/agents"
+  }
+]
+
+// Меню для разработки
 const developmentMenuItems: MenuItems = [
   {
     label: "Разработка",
@@ -59,7 +73,6 @@ export const SidebarHeader = (): ReactNode => {
  * @returns {ReactNode}
  */
 export const SidebarBody = (): ReactNode => {
-  // const sidebar = usePage().getSlot("sidebar")
   const collapsed = useLayout().isSidebarCollapsed
   const classes = cn(
     "flex-1",
@@ -74,6 +87,10 @@ export const SidebarBody = (): ReactNode => {
       <Scrollbar xAxis={false}>
         <section className="p-4">
           <Menu items={menuItems} compact={collapsed} />
+        </section>
+        <Separator />
+        <section className="p-4">
+          <Menu items={chatMenuItems} compact={collapsed} />
         </section>
         <Separator />
         <section className="p-4">
