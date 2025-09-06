@@ -11,8 +11,8 @@ export type MakerClassesProps = ClassValue[]
  * @namespace Shared.Lib.StyleApi.MakerVariantProps
  */
 export type MakerVariantsProps = {
-  beforeClasses?: string
-  afterClasses?: string
+  beforeClasses?: MakerClassesProps
+  afterClasses?: MakerClassesProps
   variants: Record<string, string>
 }
 

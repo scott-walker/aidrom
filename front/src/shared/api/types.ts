@@ -20,23 +20,12 @@ export type RestClient = {
   patch: AxiosInstance["patch"]
 }
 
-// /**
-//  * Тип ответа API клиента
-//  * @namespace Shared.Api.RestResponse
-//  */
-// export type ApiResponse = {
-//   data: unknown
-//   status: number
-//   headers: Record<string, string | string[] | number | boolean | null>
-// }
-
 /**
- * Ошибка REST клиента
- * @namespace Shared.Api.RestError
+ * Тип ошибки API
+ * @namespace Shared.Api.ApiError
  */
-export type RestError = {
+export type ApiError = {
+  statusCode: number
   message: string
-  status?: number
-  data?: unknown
-  code?: string
+  code: string
 }

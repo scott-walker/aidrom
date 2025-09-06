@@ -1,3 +1,5 @@
+import type { RestError } from "@shared/api/rest-error"
+
 /**
  * Схема запроса
  * @namespace Entities.Request.Model.RequestSchema
@@ -20,5 +22,5 @@ export interface RequestSchema {
 export type RequestsQueryData = {
   requests: RequestSchema[]
   isLoading: boolean
-  error: Error | null
+  error: RestError | null
 }

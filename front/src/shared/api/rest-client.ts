@@ -1,5 +1,6 @@
 import axios, { type AxiosInstance, type AxiosResponse, type AxiosError } from "axios"
-import type { RestClientConfig, RestError } from "./types"
+import type { RestClientConfig, ApiError } from "./types"
+import { RestError } from "@shared/api/rest-error"
 
 /**
  * REST-клиент для выполнения запросов к API
@@ -9,24 +10,10 @@ export const createRestClient = (config: RestClientConfig) => {
   const client: AxiosInstance = axios.create({
     baseURL: config.baseURL,
     headers: {
-      // Authorization: `Bearer ${config.apiKey}`,
       "Content-Type": "application/json",
       Accept: "application/json"
     }
   })
-
-  // /**
-  //  * Обернуть ответ от REST-клиента
-  //  */
-  // const wrapResponse = (response: AxiosResponse): ApiResponse => {
-  //   const headers = response.headers && typeof response.headers.toJSON === "function" ? response.headers.toJSON() : {}
-
-  //   return {
-  //     data: response.data,
-  //     status: response.status,
-  //     headers: headers as ApiResponse["headers"]
-  //   }
-  // }
 
   // Перехватчик запросов
   client.interceptors.request.use(
@@ -41,12 +28,11 @@ export const createRestClient = (config: RestClientConfig) => {
   client.interceptors.response.use(
     (response: AxiosResponse) => response,
     (error: AxiosError) => {
-      const apiError: RestError = {
-        message: error.message,
-        status: error.response?.status,
-        data: error.response?.data,
-        code: error.code
-      }
+      const data = error?.response?.data as ApiError
+      const message = data?.message || error.message || "Неизвестная ошибка"
+      const statusCode = data?.statusCode || error.response?.status || 500
+      const apiError = new RestError(message, statusCode)
+
       return Promise.reject(apiError)
     }
   )

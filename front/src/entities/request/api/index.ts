@@ -7,7 +7,7 @@ import { toRequestSchema } from "../lib/mappers"
  * @namespace Entities.Request.Api.fetchRequests
  */
 export const fetchRequests = async (): Promise<RequestSchema[]> => {
-  const { data } = await restClient.get("/requests")
+  const { data } = await restClient.get("requests")
 
   return data.map(toRequestSchema)
 }
@@ -17,7 +17,7 @@ export const fetchRequests = async (): Promise<RequestSchema[]> => {
  * @namespace Entities.Request.Api.fetchRequestsByProviderId
  */
 export const fetchRequestsByProviderId = async (providerId: number): Promise<RequestSchema[]> => {
-  const { data } = await restClient.get(`/requests`, { params: { providerId } })
+  const { data } = await restClient.get(`requests`, { params: { providerId } })
 
   return data.map(toRequestSchema)
 }
