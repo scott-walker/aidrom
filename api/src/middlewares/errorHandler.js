@@ -53,10 +53,8 @@ export default (err, req, res, next) => {
 
   // Отправляем ответ клиенту
   res.status(statusCode).json({
-    error: {
-      code,
-      message,
-      statusCode
-    }
+    code,
+    message,
+    statusCode
   })
 }

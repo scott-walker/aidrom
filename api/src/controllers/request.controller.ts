@@ -6,6 +6,7 @@
 import { Request, Response, NextFunction } from "express"
 import { createControllerLogger } from "@utils/logger"
 import * as requestService from "@services/request.service"
+import { ValidationError } from "@utils/errors"
 
 // Создаем логгер для контроллера запросов
 const logger = createControllerLogger("RequestController")
