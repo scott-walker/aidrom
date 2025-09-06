@@ -1,8 +1,8 @@
 /**
  * Схема провайдера
- * @namespace Entities.Provider.Model.ProviderSchema
+ * @namespace Entities.Provider.Lib.Types.Provider
  */
-export interface ProviderSchema {
+export interface Provider {
   id: number
   driver: string
   name: string
@@ -15,10 +15,10 @@ export interface ProviderSchema {
 
 /**
  * Тип для данных запроса списка провайдеров
- * @namespace Entities.Provider.Lib.ProvidersQueryData
+ * @namespace Entities.Provider.Lib.Types.ProvidersQueryData
  */
 export type ProvidersQueryData = {
-  providers: ProviderSchema[]
+  providers: Provider[]
   isLoading: boolean
   error: Error | null
 }

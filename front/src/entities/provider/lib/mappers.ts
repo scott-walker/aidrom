@@ -1,24 +1,23 @@
-import type { ProviderSchema } from "../lib/types"
+import type { Provider } from "../lib/types"
 import type { ProviderRequestDTO, ProviderResponseDTO } from "../api/dto"
 
 /**
  * Маппер из DTO в сущность
- * @namespace Entities.Provider.Model.toProviderSchema
+ * @namespace Entities.Provider.Lib.Mappers.toProviderSchema
  */
-export const toProviderSchema = (dto: ProviderResponseDTO): ProviderSchema => ({
+export const toProviderSchema = (dto: ProviderResponseDTO): Provider => ({
   id: dto.id,
   driver: dto.driver,
   name: dto.name,
   description: dto.description,
   config: dto.config
-  // config: JSON.stringify(dto.config, null, 2)
 })
 
 /**
  * Маппер из сущности в DTO
- * @namespace Entities.Provider.Model.toProviderDTO
+ * @namespace Entities.Provider.Lib.Mappers.toProviderDTO
  */
-export const toProviderDTO = (provider: Partial<ProviderSchema>): Partial<ProviderRequestDTO> => {
+export const toProviderDTO = (provider: Partial<Provider>): Partial<ProviderRequestDTO> => {
   const data = {} as Partial<ProviderRequestDTO>
 
   if (provider.driver) data.driver = provider.driver
