@@ -6,10 +6,10 @@ import { makeClasses } from "@lib/style-api"
 import { Heading } from "@shared/ui/heading"
 
 /**
- * Список агентов
- * @namespace Widgets.AgentList
+ * Информация об агенте
+ * @namespace Widgets.AgentInfo
  */
-export const AgentList = () => {
+export const AgentInfo = () => {
   const classes = makeClasses("flex flex-col")
   // const { agents, isLoading, error } = useAgents()
 
@@ -18,7 +18,7 @@ export const AgentList = () => {
 
   return (
     <div className={classes}>
-      <Heading level={5}>Агенты</Heading>
+      <Heading level={5}>Агент</Heading>
       {/* <AgentListComponent chats={chats} /> */}
     </div>
   )

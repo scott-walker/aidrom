@@ -30,9 +30,8 @@ export const Empty = ({ heading = "Выбирете чат", className = "" }: E
     "gap-6",
     "h-full",
     "text-center",
-    "text-foreground-soft/80",
+    "text-foreground-soft/40",
     "bg-background-hard/40",
-    "rounded-2xl",
     "p-6",
     className
   )
@@ -41,7 +40,7 @@ export const Empty = ({ heading = "Выбирете чат", className = "" }: E
     <div className={classes}>
       <div className="flex flex-col items-center justify-center gap-6 mb-8">
         <div className="text-5xl font-semibold">{heading}</div>
-        <Icon name="message-circle-more" size={100} />
+        <Icon className="text-foreground-soft/20" name="message-circle-more" size={100} />
       </div>
       <Button schema="brand" className="px-6 py-4 rounded-4xl font-bold text-2xl" onClick={createChat}>
         Создать чат

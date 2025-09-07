@@ -15,7 +15,7 @@ export const useCreateNewChat = () => {
    */
   const createChat = () => {
     mutate(
-      { title: "Новый чат", agentId: 1, clientId: 1 },
+      { title: "Новый чат", agentId: 3, clientId: 1 },
       {
         onSuccess: (chat: Chat) => {
           navigate(`/chat/${chat.id}`)

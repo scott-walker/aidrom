@@ -49,6 +49,10 @@ export type ChatListItem = {
   title: string
   agentId: number
   clientId: number
+  agent: {
+    id: number
+    name: string
+  }
   createdAt: Date
   updatedAt: Date
 }
@@ -94,7 +98,7 @@ export type MessageSendResult = {
  * @namespace Entities.Chat.Lib.Types.ChatsQueryData
  */
 export type ChatsQueryData = {
-  chats: Chat[]
+  chats: ChatListItem[]
   isLoading: boolean
   error: Error | null
 }

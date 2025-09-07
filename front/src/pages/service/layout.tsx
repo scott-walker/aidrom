@@ -1,6 +1,7 @@
 import { type ReactNode } from "react"
-import { PageNavbar } from "@widgets/page-navbar"
 import { useTitle } from "@lib/layout-api"
+import { Navbar } from "@ui/navbar"
+import { Container } from "@ui/container"
 
 /**
  * Макет страницы
@@ -16,9 +17,9 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   ]
 
   return (
-    <div className="flex flex-col gap-8">
-      <PageNavbar links={links} />
-      {children}
+    <div className="flex flex-col">
+      <Navbar links={links} />
+      <Container>{children}</Container>
     </div>
   )
 }

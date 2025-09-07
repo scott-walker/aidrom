@@ -3,7 +3,7 @@ import { makeClasses } from "@lib/style-api"
 
 /**
  * Тип ссылки
- * @namespace Widgets.Layouts.UI.PageNavbar.Link
+ * @namespace Widgets.Layouts.UI.Navbar.Link
  */
 export type Link = {
   label: string
@@ -13,17 +13,18 @@ export type Link = {
 
 /**
  * Пропсы для навигации по странице
- * @namespace Widgets.Layouts.UI.PageNavbar.Props
+ * @namespace Widgets.Layouts.UI.Navbar.Props
  */
-export type PageNavbarProps = {
+export type NavbarProps = {
   links: Link[]
 }
 
 /**
  * Навигация по странице
- * @namespace Widgets.Layouts.UI.PageNavbar
+ * @namespace Widgets.Layouts.UI.Navbar
  */
-export const PageNavbar = ({ links }: PageNavbarProps) => {
+export const Navbar = ({ links }: NavbarProps) => {
+  const classes = makeClasses("flex", "items-center", "border-b", "border-border", "px-(--layout-inner-offset-x)")
   const makeLinkClass = ({ isActive }: { isActive: boolean }) => {
     return makeClasses(
       "px-6",
@@ -38,7 +39,7 @@ export const PageNavbar = ({ links }: PageNavbarProps) => {
   }
 
   return (
-    <nav className="flex items-center border-b border-border">
+    <nav className={classes}>
       {links.map(link => (
         <NavLink to={link.path} end={link.end} className={makeLinkClass} key={link.path}>
           {link.label}

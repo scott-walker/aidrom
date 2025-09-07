@@ -18,7 +18,9 @@ export const ChatList = () => {
 
   return (
     <div className={classes}>
-      <Heading level={5}>Чаты</Heading>
+      <header className="px-(--layout-inner-offset-x) pt-(--layout-inner-offset-y) pb-4">
+        <Heading level={5}>Чаты</Heading>
+      </header>
       <ChatListComponent chats={chats} />
     </div>
   )

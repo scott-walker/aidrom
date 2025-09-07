@@ -28,6 +28,7 @@ export const Textarea = ({
     "border-transparent",
     "overflow-hidden",
     "select-none",
+    "hover:border-primary",
     "focus-within:border-primary",
     "focus-within:animate-(--ui-animation-hover)",
     className

@@ -69,6 +69,10 @@ export const toChatListItemSchema = (dto: ChatDTO): ChatListItem => {
     title: dto.title,
     agentId: dto.agentId,
     clientId: dto.clientId,
+    agent: {
+      id: dto.agent.id,
+      name: dto.agent.name
+    },
     createdAt: dto.createdAt,
     updatedAt: dto.updatedAt
   }

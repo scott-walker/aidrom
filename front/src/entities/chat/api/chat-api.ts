@@ -7,13 +7,20 @@ import {
   toChatListItemSchema,
   toMessageSendResultSchema
 } from "../lib/mappers"
-import type { Chat, ChatCreateData, ChatUpdateData, MessageSendData, MessageSendResult } from "../lib/types"
+import type {
+  Chat,
+  ChatListItem,
+  ChatCreateData,
+  ChatUpdateData,
+  MessageSendData,
+  MessageSendResult
+} from "../lib/types"
 
 /**
  * Получение списка чатов
  * @namespace Entities.Chat.Api.ChatApi.fetchChats
  */
-export const fetchChats = async (): Promise<Chat[]> => {
+export const fetchChats = async (): Promise<ChatListItem[]> => {
   const { data } = await restClient.get("chats")
 
   return data.map(toChatListItemSchema)
