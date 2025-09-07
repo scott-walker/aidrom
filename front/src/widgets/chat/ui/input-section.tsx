@@ -7,7 +7,7 @@ import { SendButton } from "@features/chat/send-message/ui/send-button"
  * @namespace Widgets.Chat.UI.InputSection
  */
 export const InputSection = () => {
-  const classes = makeClasses("relative", "flex", "items-center", "justify-end", "gap-2")
+  const classes = makeClasses("relative", "flex", "items-center", "justify-end", "gap-2", "pb-6")
   const sendButtonClasses = makeClasses("absolute", "right-6")
 
   return (

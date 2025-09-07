@@ -17,7 +17,14 @@ type MessageInputProps = {
  */
 export const MessageInput = ({ value = "", onChange = () => {} }: MessageInputProps) => {
   const [inputValue, setInputValue] = useState(value)
-  const classes = makeClasses("w-full", "pr-20", "rounded-2xl")
+  const classes = makeClasses(
+    "w-full",
+    "pr-20",
+    "bg-background-soft",
+    "rounded-2xl",
+    "shadow-md",
+    "focus-within:shadow-lg"
+  )
 
   useEffect(() => {
     setInputValue(value)
@@ -30,5 +37,13 @@ export const MessageInput = ({ value = "", onChange = () => {} }: MessageInputPr
     onChange(target.value)
   }
 
-  return <Textarea value={inputValue} onChange={handleChange} rows={2} className={classes} />
+  return (
+    <Textarea
+      value={inputValue}
+      onChange={handleChange}
+      rows={2}
+      className={classes}
+      placeholder="Спросите что-нибудь..."
+    />
+  )
 }

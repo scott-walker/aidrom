@@ -19,10 +19,11 @@ export const MessageItem = ({ content, role, createdAt }: Message) => {
     "px-6",
     "py-4",
     "min-w-[300px]",
+    "text-lg",
     "rounded-xl",
     "bg-background-soft",
     role === Roles.Client && "bg-background-hard/50",
-    role === Roles.Agent && "text-foreground-hard"
+    role === Roles.Agent && "text-foreground-hard shadow-md/5"
   )
 
   return (

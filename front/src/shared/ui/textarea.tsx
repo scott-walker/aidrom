@@ -1,5 +1,5 @@
 import type { ComponentProps } from "react"
-import { makeClasses } from "@lib/style-api"
+import { makeClasses, makeUiTransition } from "@lib/style-api"
 
 /**
  * Пропсы компонента textarea
@@ -11,8 +11,15 @@ type TextareaProps = ComponentProps<"textarea"> & {}
  * Компонент ввода сообщения
  * @namespace Shared.UI.ChatInput
  */
-export const Textarea = ({ rows = 2, onChange, className = "", ...props }: TextareaProps) => {
+export const Textarea = ({
+  rows = 2,
+  onChange,
+  className = "",
+  placeholder = "Введите текст",
+  ...props
+}: TextareaProps) => {
   const classes = makeClasses(
+    makeUiTransition(),
     "w-full",
     "px-6",
     "py-2",
@@ -22,14 +29,22 @@ export const Textarea = ({ rows = 2, onChange, className = "", ...props }: Texta
     "overflow-hidden",
     "select-none",
     "focus-within:border-primary",
+    "focus-within:animate-(--ui-animation-hover)",
     className
   )
 
-  const textareaClasses = makeClasses("w-full", "resize-none", "text-xl", "font-semibold", "nice-scrollbar")
+  const textareaClasses = makeClasses(
+    "w-full",
+    "resize-none",
+    "text-xl",
+    "font-semibold",
+    "nice-scrollbar",
+    "placeholder:text-foreground-soft/40"
+  )
 
   return (
     <div className={classes}>
-      <textarea onChange={onChange} className={textareaClasses} rows={rows} {...props} />
+      <textarea onChange={onChange} className={textareaClasses} rows={rows} placeholder={placeholder} {...props} />
     </div>
   )
 }

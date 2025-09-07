@@ -27,7 +27,7 @@ export const Chat = ({ chatId }: ChatProps) => {
   const containerClasses = makeClasses("flex flex-col h-full")
   // const headerClasses = makeClasses("flex flex-col gap-2 p-4 bg-background-soft")
   const bodyClasses = makeClasses("flex flex-col flex-1 p-4 overflow-y-auto scrollbar-hide")
-  const inputClasses = makeClasses("flex flex-col gap-2 bg-background-soft rounded-2xl")
+  const inputClasses = makeClasses("flex flex-col")
 
   return (
     <div className={containerClasses}>

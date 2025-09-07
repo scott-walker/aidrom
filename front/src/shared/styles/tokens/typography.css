@@ -3,6 +3,7 @@
 @theme {
   /* Шрифты */
   --font-family-base: "Onest", sans-serif;
+  /* --font-family-base: "Nunito", sans-serif; */
   --font-family-display: "Unbounded", sans-serif;
   --font-family-mono: "JetBrains Mono", monospace;
 
