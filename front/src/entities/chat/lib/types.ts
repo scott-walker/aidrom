@@ -41,6 +41,55 @@ export type Chat = {
 }
 
 /**
+ * Элемент списка чатов
+ * @namespace Entities.Chat.Lib.Types.ChatListItem
+ */
+export type ChatListItem = {
+  id: number
+  title: string
+  agentId: number
+  clientId: number
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Данные для создания чата
+ * @namespace Entities.Chat.Lib.Types.CreateChat
+ */
+export type ChatCreateData = {
+  agentId: number
+  clientId: number
+  title: string
+}
+
+/**
+ * Данные для обновления чата
+ * @namespace Entities.Chat.Lib.Types.ChatUpdateData
+ */
+export type ChatUpdateData = {
+  title: string
+}
+
+/**
+ * Данные для отправки сообщения
+ * @namespace Entities.Chat.Lib.Types.MessageSendData
+ */
+export type MessageSendData = {
+  message: string
+}
+
+/**
+ * Результат отправки сообщения
+ * @namespace Entities.Chat.Lib.Types.MessageSendResult
+ */
+export type MessageSendResult = {
+  chatId: number
+  requestId: number
+  messages: Message[]
+}
+
+/**
  * Данные запроса списка чатов
  * @namespace Entities.Chat.Lib.Types.ChatsQueryData
  */
@@ -55,7 +104,7 @@ export type ChatsQueryData = {
  * @namespace Entities.Chat.Lib.Types.ChatQueryData
  */
 export type ChatQueryData = {
-  chat: Chat
+  chat: Chat | undefined | null
   isLoading: boolean
   error: Error | null
 }

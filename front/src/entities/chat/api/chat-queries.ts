@@ -2,18 +2,20 @@ import { useQuery } from "@tanstack/react-query"
 import { fetchChatById, fetchChats } from "./chat-api"
 import type { ChatsQueryData, ChatQueryData } from "../lib/types"
 
+// 5 минут кеша для списка чатов
+const STALE_CHATS_TIME = 300000
+// 5 минут кеша для чата по ID
+const STALE_CHAT_BY_ID_TIME = 300000
+
 /**
  * Ключи инвалидации для чатов
  * @namespace Entities.Chat.Api.Queries.queryKeys
  */
-const queryKeys = {
+export const queryKeys = {
   all: ["chats"] as const,
   list: (filters: Record<string, string>) => [...queryKeys.all, "list", filters] as const,
   details: (id: number) => [...queryKeys.all, "details", id.toString()] as const
 }
-
-// 5 минут кеша
-const STALE_TIME = 300000
 
 /**
  * Хук для запроса списка чатов
@@ -27,7 +29,7 @@ export const useChats = (): ChatsQueryData => {
   } = useQuery({
     queryKey: queryKeys.list({}),
     queryFn: fetchChats,
-    staleTime: STALE_TIME
+    staleTime: STALE_CHATS_TIME
   })
 
   return { chats, isLoading, error }
@@ -39,17 +41,14 @@ export const useChats = (): ChatsQueryData => {
  */
 export const useChatById = (chatId: number): ChatQueryData => {
   const {
-    data: chat,
+    data: chat = null,
     isLoading,
     error
   } = useQuery({
     queryKey: queryKeys.details(chatId),
-    queryFn: () => fetchChatById(chatId)
+    queryFn: () => fetchChatById(chatId),
+    staleTime: STALE_CHAT_BY_ID_TIME
   })
-
-  if (!chat) {
-    throw new Error(`Чат #${chatId} не найден`)
-  }
 
   return { chat, isLoading, error }
 }

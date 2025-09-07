@@ -1,15 +1,11 @@
-// import { useSubtitle } from "@lib/layout-api/utils"
-// import { Heading } from "@ui/heading"
 import type { ReactNode } from "react"
-import { Chat } from "@widgets/chat"
+import { Empty } from "@features/chat/empty-chat/ui/empty"
 
 /**
- * Главная страница инструментов
- * @namespace Pages.Test.Main
+ * Главная страница чата
+ * @namespace Pages.Chat.Main
  * @returns {ReactNode}
  */
 export const Main = (): ReactNode => {
-  // useSubtitle("Главная")
-
-  return <Chat />
+  return <Empty />
 }

@@ -48,6 +48,43 @@ export const ChatDTOSchema = z.object({
 })
 
 /**
+ * Схема для DTO создания чата
+ * @namespace Entities.Chat.Api.Dto.ChatCreateDTOSchema
+ */
+export const ChatCreateDTOSchema = z.object({
+  agentId: z.number(),
+  clientId: z.number(),
+  title: z.string()
+})
+
+/**
+ * Схема для DTO обновления чата
+ * @namespace Entities.Chat.Api.Dto.ChatUpdateDTOSchema
+ */
+export const ChatUpdateDTOSchema = z.object({
+  title: z.string()
+})
+
+/**
+ * Схема для DTO отправки сообщения
+ * @namespace Entities.Chat.Api.Dto.MessageSendDTOSchema
+ */
+export const MessageSendDTOSchema = z.object({
+  message: z.string()
+})
+
+/**
+ * Схема для DTO результата отправки сообщения
+ * @namespace Entities.Chat.Api.Dto.MessageSendResultDTOSchema
+ */
+export const MessageSendResultDTOSchema = z.object({
+  chatId: z.number(),
+  requestId: z.number(),
+  clientMessage: MessageDTOSchema,
+  agentMessage: MessageDTOSchema
+})
+
+/**
  * Тип для DTO сообщения
  * @namespace Entities.Chat.Api.Dto.MessageDTO
  */
@@ -64,3 +101,27 @@ export type MessagePairDTO = z.infer<typeof MessagePairDTOSchema>
  * @namespace Entities.Chat.Api.Dto.ChatDTO
  */
 export type ChatDTO = z.infer<typeof ChatDTOSchema>
+
+/**
+ * Тип для DTO создания чата
+ * @namespace Entities.Chat.Api.Dto.ChatCreateDTO
+ */
+export type ChatCreateDTO = z.infer<typeof ChatCreateDTOSchema>
+
+/**
+ * Тип для DTO обновления чата
+ * @namespace Entities.Chat.Api.Dto.ChatUpdateDTO
+ */
+export type ChatUpdateDTO = z.infer<typeof ChatUpdateDTOSchema>
+
+/**
+ * Тип для DTO отправки сообщения
+ * @namespace Entities.Chat.Api.Dto.MessageSendDTO
+ */
+export type MessageSendDTO = z.infer<typeof MessageSendDTOSchema>
+
+/**
+ * Тип для DTO результата отправки сообщения
+ * @namespace Entities.Chat.Api.Dto.MessageSendResultDTO
+ */
+export type MessageSendResultDTO = z.infer<typeof MessageSendResultDTOSchema>

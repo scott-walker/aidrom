@@ -2,6 +2,7 @@ import { Outlet } from "react-router"
 import type { PageRoutes } from "@lib/page-api/types"
 import { Layout } from "./layout"
 import { Main } from "./pages/main"
+import { Chat } from "./pages/chat"
 
 /**
  * Маршруты
@@ -18,6 +19,10 @@ export const routes: PageRoutes = {
     {
       index: true,
       element: <Main />
+    },
+    {
+      path: ":chatId",
+      element: <Chat />
     }
   ]
 }

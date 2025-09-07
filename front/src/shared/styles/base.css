@@ -56,3 +56,12 @@
 @utility fill-brand-gradient {
   fill: var(--color-brand-gradient);
 }
+
+/* Скрыть скроллбар */
+@utility scrollbar-hide {
+  -ms-overflow-style: none; /* IE и Edge */
+  scrollbar-width: none; /* Firefox */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+}
