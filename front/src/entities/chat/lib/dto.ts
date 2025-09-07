@@ -31,8 +31,8 @@ export const MessagePairDTOSchema = z.object({
  */
 export const ChatDTOSchema = z.object({
   id: z.number(),
-  // agentId: z.number(),
-  // clientId: z.number(),
+  agentId: z.number(),
+  clientId: z.number(),
   agent: z.object({
     id: z.number(),
     name: z.string()

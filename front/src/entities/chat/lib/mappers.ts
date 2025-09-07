@@ -1,5 +1,5 @@
-import type { ChatDTO, MessagePairDTO } from "../api/dto"
-import { type Chat, type Message, Roles } from "../lib/types"
+import type { ChatDTO, MessagePairDTO } from "./dto"
+import { type Chat, type Message, Roles } from "./types"
 
 /**
  * Маппер из DTO в сущность
@@ -9,10 +9,10 @@ export const toChatSchema = (dto: ChatDTO): Chat => {
   return {
     id: dto.id,
     title: dto.title,
-    // agentId: dto.agentId,
-    // clientId: dto.clientId,
-    agent: dto.agent,
-    client: dto.client,
+    agentId: dto.agentId,
+    agentName: dto.agent.name,
+    clientId: dto.clientId,
+    clientName: dto.client.name,
     messages: dto.messagePairs.map(fromPairToMessagesSchema).flat(),
     createdAt: dto.createdAt,
     updatedAt: dto.updatedAt

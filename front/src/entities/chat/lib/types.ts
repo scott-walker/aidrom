@@ -19,27 +19,9 @@ export type Role = (typeof Roles)[keyof typeof Roles]
  */
 export type Message = {
   id: number
-  content: string
   role: Role
+  content: string
   createdAt: Date
-}
-
-/**
- * Агент
- * @namespace Entities.Chat.Lib.Types.Agent
- */
-export type Agent = {
-  id: number
-  name: string
-}
-
-/**
- * Клиент
- * @namespace Entities.Chat.Lib.Types.Client
- */
-export type Client = {
-  id: number
-  name: string
 }
 
 /**
@@ -49,8 +31,10 @@ export type Client = {
 export type Chat = {
   id: number
   title: string
-  agent: Agent
-  client: Client
+  agentId: number
+  agentName: string
+  clientId: number
+  clientName: string
   messages: Message[]
   createdAt: Date
   updatedAt: Date
@@ -62,6 +46,16 @@ export type Chat = {
  */
 export type ChatsQueryData = {
   chats: Chat[]
+  isLoading: boolean
+  error: Error | null
+}
+
+/**
+ * Данные запроса чата
+ * @namespace Entities.Chat.Lib.Types.ChatQueryData
+ */
+export type ChatQueryData = {
+  chat: Chat
   isLoading: boolean
   error: Error | null
 }
