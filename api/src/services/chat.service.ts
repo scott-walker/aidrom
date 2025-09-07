@@ -46,7 +46,11 @@ export const getChats = async (): Promise<Chat[]> => {
     logger.info("Получение всех чатов из БД")
 
     const items = await db.query.chats.findMany({
-      orderBy: [desc(chats.updatedAt)]
+      orderBy: [desc(chats.updatedAt)],
+      with: {
+        agent: true
+        // client: true
+      }
     })
 
     logger.info("Запрос к БД выполнен успешно", { count: items.length })
