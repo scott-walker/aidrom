@@ -1,11 +1,12 @@
 import type { ReactNode } from "react"
 import { makeClasses } from "@lib/style-api"
-import { Loader } from "@ui/loader"
+import { BlockLoader } from "@ui/block-loader"
 import { Notification } from "@ui/notification"
 import { useChatById } from "@entities/chat/api/chat-queries"
 import type { Chat as ChatType } from "@entities/chat/lib/types"
 import { type Agent, AgentInfo } from "@entities/agent"
 import { ChatDialog } from "@widgets/chat-dialog"
+import { ChatPanel } from "@features/chat/chat-panel"
 
 /**
  * Пропсы для компонента Chat
@@ -40,14 +41,17 @@ export const Chat = ({ chatId }: ChatProps): ReactNode => {
   return (
     <div className={containerClasses}>
       {isLoading ? (
-        <Loader />
+        <BlockLoader />
       ) : error ? (
         <Notification className={notificationClasses} type="error">
           {error.message}
         </Notification>
       ) : (
         <>
-          <ChatDialog className={chatClasses} chat={chat as ChatType} />
+          <ChatDialog className={chatClasses} chat={chat as ChatType}>
+            <ChatPanel chat={chat as ChatType} />
+          </ChatDialog>
+
           <aside className={agentClasses}>
             <AgentInfo agent={agent} />
           </aside>
