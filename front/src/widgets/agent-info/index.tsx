@@ -32,6 +32,7 @@ export const AgentInfo = ({ agent }: AgentInfoProps) => {
     !isOpen && "w-fit"
   )
   const headerClasses = makeClasses("flex", "justify-between", "items-center", "px-6", "py-4")
+  const contentClasses = makeClasses("flex", "flex-col", "overflow-y-auto", "scrollbar-hide")
 
   const toggleOpen = () => {
     localStorage.setItem(LS_KEY, isOpen ? "false" : "true")
@@ -48,7 +49,9 @@ export const AgentInfo = ({ agent }: AgentInfoProps) => {
         </Tooltip>
       </header>
 
-      <AgentInfoComponent agent={agent} className={isOpen ? "" : "hidden"} />
+      <div className={contentClasses}>
+        <AgentInfoComponent agent={agent} className={isOpen ? "" : "hidden"} />
+      </div>
     </div>
   )
 }

@@ -27,6 +27,7 @@ export const ChatList = () => {
     !isOpen && "w-fit"
   )
   const headerClasses = makeClasses("flex", "justify-between", "items-center", "px-6", "py-4")
+  const contentClasses = makeClasses("flex", "flex-col", "overflow-y-auto", "scrollbar-hide")
 
   const toggleOpen = () => {
     localStorage.setItem(LS_KEY, isOpen ? "false" : "true")
@@ -45,7 +46,10 @@ export const ChatList = () => {
           <IconButton icon={isOpen ? "panel-right-open" : "panel-left-open"} iconSize={24} onClick={toggleOpen} />
         </Tooltip>
       </header>
-      <ChatListComponent chats={chats} className={isOpen ? "" : "hidden"} />
+
+      <div className={contentClasses}>
+        <ChatListComponent chats={chats} className={isOpen ? "" : "hidden"} />
+      </div>
     </div>
   )
 }
