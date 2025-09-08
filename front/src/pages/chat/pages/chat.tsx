@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 import { useParams } from "react-router"
-import { Chat as ChatComponent } from "@widgets/chat"
+import { Chat as ChatApp } from "@widgets/chat"
 
 /**
  * Страница чата
@@ -10,5 +10,5 @@ import { Chat as ChatComponent } from "@widgets/chat"
 export const Chat = (): ReactNode => {
   const { chatId } = useParams()
 
-  return <ChatComponent chatId={Number(chatId)} />
+  return <ChatApp chatId={Number(chatId)} />
 }

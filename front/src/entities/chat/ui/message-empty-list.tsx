@@ -2,11 +2,19 @@ import { makeClasses } from "@lib/style-api"
 import { Icon } from "@shared/ui/icon"
 
 /**
- * Пустой список сообщений
- * @namespace Entities.Chat.UI.MessageEmptyList
+ * Пропсы пустого списка сообщений
+ * @namespace Entities.Chat.MessageEmptyListProps
  */
-export const MessageEmptyList = () => {
-  const classes = makeClasses("flex flex-col items-center justify-center gap-8 h-full")
+type MessageEmptyListProps = {
+  className?: string
+}
+
+/**
+ * Пустой список сообщений
+ * @namespace Entities.Chat.MessageEmptyList
+ */
+export const MessageEmptyList = ({ className = "" }: MessageEmptyListProps) => {
+  const classes = makeClasses("flex flex-col items-center justify-center gap-8 h-full", className)
 
   return (
     <div className={classes}>
