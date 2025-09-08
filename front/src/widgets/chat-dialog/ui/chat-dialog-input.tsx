@@ -16,11 +16,24 @@ type ChatDialogInputProps = {
  * @namespace Widgets.Chat
  */
 export const ChatDialogInput = ({ chat, className = "" }: ChatDialogInputProps) => {
-  const containerClasses = makeClasses("flex", "items-center", "justify-center", className)
+  const containerClasses = makeClasses(
+    "absolute",
+    "bottom-0",
+    "left-0",
+    "right-0",
+    "flex",
+    "items-center",
+    "justify-center",
+    "px-8",
+    "py-10",
+    // "bg-background-hard/70",
+    // "shadow-lg",
+    className
+  )
 
   return (
     <div className={containerClasses}>
-      <ChatInput chat={chat} />
+      <ChatInput className="w-2/3" chat={chat} />
     </div>
   )
 }

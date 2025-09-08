@@ -17,7 +17,7 @@ type ChatInputProps = {
  * @namespace Features.ChatInput.UI.ChatInput
  */
 export const ChatInput = ({ chat, className = "" }: ChatInputProps) => {
-  const inputClasses = makeClasses("relative", "flex", "items-center", "justify-end", "gap-2", "pb-6", className)
+  const inputClasses = makeClasses("relative", "flex", "items-center", "justify-center", className)
   const sendButtonClasses = makeClasses("absolute", "right-6")
 
   return (

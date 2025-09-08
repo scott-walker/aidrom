@@ -18,14 +18,14 @@ export const ChatDialogHeader = ({ chat }: ChatDialogHeaderProps) => {
   const chatTitleClasses = makeClasses(
     "w-fit",
     "mx-auto",
-    "bg-background",
+    "bg-background-soft",
     "rounded-bl-xl",
     "rounded-br-xl",
     "px-14",
     "py-2",
     "text-foreground",
     "font-semibold",
-    "shadow-xs"
+    "shadow-md/5"
   )
 
   return (
