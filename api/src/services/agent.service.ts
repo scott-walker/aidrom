@@ -23,7 +23,10 @@ export const getAgents = async (): Promise<Agent[]> => {
     logger.info("Получение всех агентов из БД")
 
     const items = await db.query.agents.findMany({
-      orderBy: [desc(agents.createdAt)]
+      orderBy: [desc(agents.createdAt)],
+      with: {
+        provider: true
+      }
     })
 
     logger.info("Запрос к БД выполнен успешно", { count: items.length })
