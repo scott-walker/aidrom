@@ -16,6 +16,7 @@ export const Textarea = ({
   onChange,
   className = "",
   placeholder = "Введите текст",
+  disabled = false,
   ...props
 }: TextareaProps) => {
   const classes = makeClasses(
@@ -31,6 +32,9 @@ export const Textarea = ({
     "hover:border-primary",
     "focus-within:border-primary",
     "focus-within:animate-(--ui-animation-hover)",
+    disabled && "opacity-50",
+    disabled && "select-none",
+    disabled && "hover:border-transparent",
     className
   )
 
@@ -45,7 +49,14 @@ export const Textarea = ({
 
   return (
     <div className={classes}>
-      <textarea onChange={onChange} className={textareaClasses} rows={rows} placeholder={placeholder} {...props} />
+      <textarea
+        onChange={onChange}
+        className={textareaClasses}
+        rows={rows}
+        placeholder={placeholder}
+        disabled={disabled}
+        {...props}
+      />
     </div>
   )
 }

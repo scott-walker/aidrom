@@ -22,14 +22,22 @@ export type ButtonProps = ComponentProps<"button"> & {
  * Кнопка
  * @namespace Shared.Ui.Button
  */
-export const Button = ({ children, schema = "primary", className = "", ...props }: ButtonProps): ReactNode => {
+export const Button = ({
+  children,
+  schema = "primary",
+  className = "",
+  disabled = false,
+  ...props
+}: ButtonProps): ReactNode => {
   const useSchema = makeVariants({
     beforeClasses: makeClasses(
       makeUiBox(),
       makeUiShadow(),
       makeUiTransition(),
-      makeUiClickable(),
-      makeUiHoverableAnimation()
+      !disabled && makeUiClickable(),
+      !disabled && makeUiHoverableAnimation(),
+      disabled && "cursor-not-allowed",
+      disabled && "opacity-80"
     ),
     afterClasses: className,
     variants: {

@@ -13,6 +13,7 @@ export type IconButtonProps = Omit<ButtonProps, "children"> & {
   iconStrokeWidth?: number
   iconClassName?: string
   circle?: boolean
+  disabled?: boolean
 }
 
 /**
@@ -27,6 +28,7 @@ export const IconButton = ({
   circle = false,
   schema = "ghost",
   className = "",
+  disabled = false,
   ...props
 }: IconButtonProps): ReactNode => {
   const isGhost = schema === "ghost"
@@ -44,7 +46,7 @@ export const IconButton = ({
   iconClassName = makeClasses(!isGhost && "m-2.5", iconClassName)
 
   return (
-    <Button schema={schema} className={classes} {...props}>
+    <Button schema={schema} className={classes} disabled={disabled} {...props}>
       <Icon name={icon} size={iconSize} strokeWidth={iconStrokeWidth} className={iconClassName} />
     </Button>
   )

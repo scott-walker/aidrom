@@ -1,7 +1,8 @@
 import { makeClasses } from "@lib/style-api"
 import type { Chat } from "@entities/chat"
+import { useSendMessage } from "../lib/use-send-message"
 import { MessageInput } from "./message-input"
-import { MessageSendButton } from "./message-send-button"
+import { SendButton } from "./send-button"
 
 /**
  * Пропсы компонента ввода сообщения
@@ -17,13 +18,16 @@ type ChatInputProps = {
  * @namespace Features.ChatInput.UI.ChatInput
  */
 export const ChatInput = ({ chat, className = "" }: ChatInputProps) => {
+  const { sendMessage } = useSendMessage()
+  const onSend = () => sendMessage(chat.id)
+
   const inputClasses = makeClasses("relative", "flex", "items-center", "justify-center", className)
   const sendButtonClasses = makeClasses("absolute", "right-6")
 
   return (
     <div className={inputClasses}>
-      <MessageInput chat={chat} />
-      <MessageSendButton className={sendButtonClasses} chat={chat} />
+      <MessageInput onSend={onSend} />
+      <SendButton className={sendButtonClasses} onSend={onSend} />
     </div>
   )
 }

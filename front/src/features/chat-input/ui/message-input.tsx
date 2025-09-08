@@ -1,7 +1,7 @@
-import { useState, useEffect, type ChangeEvent } from "react"
+import { type ChangeEvent, type KeyboardEvent } from "react"
 import { makeClasses } from "@lib/style-api"
 import { Textarea } from "@ui/textarea"
-import type { Chat } from "@entities/chat"
+import { useChatStore } from "@entities/chat"
 import { PLACEHOLDER_TEXT } from "../lib/constants"
 
 /**
@@ -9,16 +9,15 @@ import { PLACEHOLDER_TEXT } from "../lib/constants"
  * @namespace Features.ChatInput.UI.MessageInputProps
  */
 type MessageInputProps = {
-  chat: Chat
-  onChange?: (value: string) => void
+  onSend: () => void
 }
 
 /**
  * Инпут для ввода сообщения
  * @namespace Features.ChatInput.UI.MessageInput
  */
-export const MessageInput = ({ chat, onChange = () => {} }: MessageInputProps) => {
-  const [value, setValue] = useState<string>("")
+export const MessageInput = ({ onSend }: MessageInputProps) => {
+  const { input, isPending, setInput } = useChatStore()
   const classes = makeClasses(
     "w-full",
     "pr-20",
@@ -28,18 +27,25 @@ export const MessageInput = ({ chat, onChange = () => {} }: MessageInputProps) =
     "focus-within:shadow-lg"
   )
 
-  useEffect(() => {
-    setValue(value)
-
-    return () => setValue("")
-  }, [value])
-
   const handleChange = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
-    console.log(chat)
-
-    setValue(target.value)
-    onChange(target.value)
+    setInput(target.value)
+  }
+  const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (!e.shiftKey && e.key === "Enter") {
+      e.preventDefault()
+      onSend()
+    }
   }
 
-  return <Textarea value={value} onChange={handleChange} rows={2} className={classes} placeholder={PLACEHOLDER_TEXT} />
+  return (
+    <Textarea
+      value={input}
+      disabled={isPending}
+      onChange={handleChange}
+      onKeyDown={handleKeyDown}
+      rows={2}
+      className={classes}
+      placeholder={PLACEHOLDER_TEXT}
+    />
+  )
 }
