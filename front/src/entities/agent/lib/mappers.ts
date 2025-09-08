@@ -10,7 +10,7 @@ export const toAgentSchema = (dto: AgentResponseDTO): Agent => ({
   name: dto.name,
   params: dto.params,
   description: dto.description,
-  providerId: dto.providerId,
+  provider: dto.provider,
   createdAt: dto.createdAt,
   updatedAt: dto.updatedAt
 })
@@ -25,7 +25,7 @@ export const toAgentCreateDTO = (agent: Partial<Agent>): Partial<AgentRequestDTO
   if (agent.name) data.name = agent.name
   if (agent.params) data.params = agent.params as Record<string, never>
   if (agent.description) data.description = agent.description
-  if (agent.providerId) data.providerId = agent.providerId
+  if (agent.provider) data.provider = agent.provider
 
   return data
 }

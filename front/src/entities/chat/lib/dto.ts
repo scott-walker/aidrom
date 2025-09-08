@@ -35,11 +35,21 @@ export const ChatDTOSchema = z.object({
   clientId: z.number(),
   agent: z.object({
     id: z.number(),
-    name: z.string()
+    name: z.string(),
+    params: z.record(z.any(), z.any()),
+    description: z.string(),
+    provider: z.object({
+      id: z.number(),
+      name: z.string()
+    }),
+    createdAt: z.date(),
+    updatedAt: z.date()
   }),
   client: z.object({
     id: z.number(),
-    name: z.string()
+    email: z.string(),
+    createdAt: z.date(),
+    updatedAt: z.date()
   }),
   title: z.string(),
   createdAt: z.date(),

@@ -50,9 +50,19 @@ export const toChatSchema = (dto: ChatDTO): Chat => {
     id: dto.id,
     title: dto.title,
     agentId: dto.agentId,
-    agentName: dto.agent.name,
     clientId: dto.clientId,
-    clientName: dto.client.name,
+    agent: {
+      id: dto.agent.id,
+      name: dto.agent.name,
+      params: dto.agent.params,
+      description: dto.agent.description,
+      provider: {
+        id: dto.agent.provider.id,
+        name: dto.agent.provider.name
+      },
+      createdAt: dto.agent.createdAt,
+      updatedAt: dto.agent.updatedAt
+    },
     messages: dto.messagePairs.map(fromPairToMessagesSchema).flat(),
     createdAt: dto.createdAt,
     updatedAt: dto.updatedAt
@@ -83,8 +93,10 @@ export const toChatListItemSchema = (dto: ChatDTO): ChatListItem => {
  * @namespace Entities.Chat.Lib.Mappers.toMessageSchema
  */
 export const toMessageSchema = (dto: MessageDTO, role: Role): Message => {
+  const uniqueId = `${role}-${dto.id}`
+
   return {
-    id: dto.id,
+    id: uniqueId,
     role,
     content: dto.content,
     createdAt: dto.createdAt

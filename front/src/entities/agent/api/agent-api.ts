@@ -31,3 +31,13 @@ export const fetchAgents = async (): Promise<Agent[]> => {
 
   return data.map(toAgentSchema)
 }
+
+/**
+ * Получить агента по ID
+ * @namespace Entities.Agent.Api.fetchAgentById
+ */
+export const fetchAgentById = async (id: number): Promise<Agent> => {
+  const { data } = await restClient.get(`agents/${id}`)
+
+  return toAgentSchema(data)
+}

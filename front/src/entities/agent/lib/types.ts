@@ -7,7 +7,10 @@ export type Agent = {
   name: string
   params: Record<string, unknown>
   description: string
-  providerId: number
+  provider: {
+    id: number
+    name: string
+  }
   createdAt: Date
   updatedAt: Date
 }
@@ -18,6 +21,16 @@ export type Agent = {
  */
 export type AgentsQueryData = {
   agents: Agent[]
+  isLoading: boolean
+  error: Error | null
+}
+
+/**
+ * Данные запроса агента по ID
+ * @namespace Entities.Agent.Lib.Types.AgentQueryData
+ */
+export type AgentQueryData = {
+  agent: Agent | null
   isLoading: boolean
   error: Error | null
 }

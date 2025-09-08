@@ -18,7 +18,7 @@ export type Role = (typeof Roles)[keyof typeof Roles]
  * @namespace Entities.Chat.Lib.Types.Message
  */
 export type Message = {
-  id: number
+  id: string
   role: Role
   content: string
   createdAt: Date
@@ -32,9 +32,20 @@ export type Chat = {
   id: number
   title: string
   agentId: number
-  agentName: string
   clientId: number
-  clientName: string
+  agent: {
+    id: number
+    name: string
+    params: Record<string, unknown>
+    description: string
+    provider: {
+      id: number
+      name: string
+    }
+    // avatar: string
+    createdAt: Date
+    updatedAt: Date
+  }
   messages: Message[]
   createdAt: Date
   updatedAt: Date

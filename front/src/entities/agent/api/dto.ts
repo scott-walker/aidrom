@@ -9,7 +9,10 @@ export const AgentDTOSchema = z.object({
   name: z.string(),
   params: z.object({}),
   description: z.string(),
-  providerId: z.number(),
+  provider: z.object({
+    id: z.number(),
+    name: z.string()
+  }),
   createdAt: z.date(),
   updatedAt: z.date()
 })
