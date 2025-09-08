@@ -1,5 +1,5 @@
 import { createApiLogger } from "@utils/logger"
-import { DriverAdaptedResponse } from "../types"
+import { DriverResponse } from "../types"
 import { DummyDriver, DummyDriverConfig, DummyDriverRequest } from "./types"
 
 /**
@@ -11,14 +11,14 @@ export const createDummyDriver = (config: DummyDriverConfig): DummyDriver => {
   const logger = createApiLogger("DummyDriver")
 
   const driver: DummyDriver = {
-    async sendRequest(request: DummyDriverRequest): Promise<DriverAdaptedResponse> {
+    async sendRequest(request: DummyDriverRequest): Promise<DriverResponse> {
       logger.info("🚀 Отправка запроса", { request })
 
       await new Promise(resolve => setTimeout(resolve, 1000))
 
       const response = {
         providerRequestId: "dummy",
-        content: "dummy",
+        content: "dummy response",
         requestParams: request,
         responseData: {},
         requestTokens: 0,

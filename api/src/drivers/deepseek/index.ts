@@ -47,7 +47,7 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
 
         return {
           providerRequestId: data.id,
-          requestParams: request,
+          requestParams: driverRequest,
           responseData: data,
           requestTokens: data.usage.prompt_tokens,
           responseTokens: data.usage.completion_tokens,
