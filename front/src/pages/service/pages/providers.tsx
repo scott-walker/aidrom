@@ -1,7 +1,7 @@
 import { useState, useCallback, type ReactNode } from "react"
 import { Card } from "@ui/card"
 import { Heading } from "@ui/heading"
-import type { ProviderSchema } from "@entities/provider/lib/types"
+import type { Provider } from "@entities/provider/lib/types"
 import { RegisterProviderForm } from "@features/provider/register-provider-form/ui/form"
 import { ProvidersDataTable } from "@widgets/providers-data-table/ui/table"
 import { Blocks } from "@shared/ui/blocks"
@@ -15,12 +15,12 @@ import { useSubtitle } from "@shared/lib/layout-api/utils"
 export const Providers = (): ReactNode => {
   useSubtitle("Провайдеры")
 
-  const [provider, setProvider] = useState<Partial<ProviderSchema>>({})
+  const [provider, setProvider] = useState<Partial<Provider>>({})
 
-  const handleSubmit = (provider: Partial<ProviderSchema>) => {
+  const handleSubmit = (provider: Partial<Provider>) => {
     setProvider(provider)
   }
-  const handleChange = useCallback((provider: Partial<ProviderSchema>) => {
+  const handleChange = useCallback((provider: Partial<Provider>) => {
     setProvider(prev => ({ ...prev, ...provider }))
   }, [])
 

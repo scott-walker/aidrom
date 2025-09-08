@@ -1,3 +1,4 @@
+import { Outlet } from "react-router"
 import type { PageRoutes } from "@lib/page-api/types"
 import { ErrorLayout } from "./layout"
 import { NotFound } from "./pages/not-found"
@@ -7,7 +8,11 @@ import { NotFound } from "./pages/not-found"
  * @namespace Pages.Error.Routes
  */
 export const routes: PageRoutes = {
-  element: <ErrorLayout />,
+  element: (
+    <ErrorLayout>
+      <Outlet />
+    </ErrorLayout>
+  ),
   children: [
     {
       path: "*",

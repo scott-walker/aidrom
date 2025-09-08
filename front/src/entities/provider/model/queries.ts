@@ -3,8 +3,8 @@ import { type ProvidersQueryData } from "../lib/types"
 import { fetchProviders } from "../api"
 import { queryKeys } from "../lib/keys"
 
-// 5 минут кеша
-const STALE_TIME = 300000
+// 1 минута кеша
+const STALE_TIME = 60000
 
 /**
  * Хук для запроса списка провайдеров

@@ -1,7 +1,9 @@
-import { Outlet } from "react-router"
+import type { ReactNode } from "react"
 
 /**
  * Макет страницы
  * @namespace Pages.Error.Layout
  */
-export const ErrorLayout = () => <Outlet />
+export const ErrorLayout = ({ children }: { children: ReactNode }) => {
+  return children
+}

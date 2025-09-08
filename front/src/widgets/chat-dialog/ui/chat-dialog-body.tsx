@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react"
 import { makeClasses } from "@lib/style-api"
 import type { Chat, Role } from "@entities/chat"
 import { MessageBubble, useChatStore, ChatPending, Roles } from "@entities/chat"
 import { MessageEmptyList } from "@entities/chat"
+import { useScrollBody } from "../lib/use-scroll-body"
 
 /**
  * Пропсы компонента тела диалога
@@ -19,22 +19,13 @@ type ChatDialogBodyProps = {
  */
 export const ChatDialogBody = ({ chat, className = "" }: ChatDialogBodyProps) => {
   const { isPending, lastClientMessage } = useChatStore()
-  const { messages = [] } = chat
-  const bodyRef = useRef<HTMLDivElement>(null)
+  const messages = lastClientMessage ? [...chat.messages, lastClientMessage] : chat.messages
+  const isEmpty = !messages.length
 
-  // Объединяем реальные сообщения с оптимистичным
-  const allMessages = lastClientMessage ? [...messages, lastClientMessage] : messages
-  const isEmpty = !allMessages.length
-
-  // Прокрутка до конца при изменении сообщений или состояния pending
-  useEffect(() => {
-    if (bodyRef.current) {
-      bodyRef.current.scrollTop = bodyRef.current.scrollHeight
-    }
-  }, [allMessages.length, isPending])
+  const { bodyRef } = useScrollBody(messages.length, isPending)
 
   if (isEmpty) {
-    return <MessageEmptyList />
+    return <MessageEmptyList className="-mt-16" />
   }
 
   const bodyClasses = makeClasses("flex flex-col flex-1 pt-8 pb-64 overflow-y-auto scrollbar-hide", className)
@@ -44,7 +35,7 @@ export const ChatDialogBody = ({ chat, className = "" }: ChatDialogBodyProps) =>
 
   return (
     <div ref={bodyRef} className={bodyClasses}>
-      {allMessages.map(message => (
+      {messages.map(message => (
         <MessageBubble key={message.id} {...message} className={makeMessageClasses(message.role)} />
       ))}
       {isPending && <ChatPending />}
