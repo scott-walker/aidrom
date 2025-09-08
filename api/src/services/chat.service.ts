@@ -74,7 +74,11 @@ export const getChatById = async (chatId: number): Promise<ChatWithRelations> =>
     const chat = await db.query.chats.findFirst({
       where: eq(chats.id, chatId),
       with: {
-        agent: true,
+        agent: {
+          with: {
+            provider: true
+          }
+        },
         client: true,
         messagePairs: {
           with: {
