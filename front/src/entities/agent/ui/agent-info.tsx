@@ -7,14 +7,23 @@ import { Tag } from "@ui/tag"
 import type { Agent } from "../lib/types"
 
 /**
+ * Пропсы для компонента AgentInfo
+ * @namespace Entities.Agent.Ui.AgentInfo.Props
+ */
+type AgentInfoProps = {
+  agent: Agent
+  className?: string
+}
+
+/**
  * Информация о агенте
  * @namespace Entities.Agent.Ui.AgentInfo
  */
-export const AgentInfo = ({ agent }: { agent: Agent }) => {
-  const containerClasses = makeClasses("flex", "flex-col", "items-center", "gap-6")
+export const AgentInfo = ({ agent, className = "" }: AgentInfoProps) => {
+  const containerClasses = makeClasses("flex", "flex-col", "items-center", "gap-6", className)
   const nameClasses = makeClasses("text-lg", "font-bold", "text-center")
   const avatarClasses = makeClasses()
-  const sectionClasses = makeClasses("px-6", "w-full", "text-sm", "text-gray-500")
+  const sectionClasses = makeClasses("px-6", "w-full", "text-sm")
   const sectionTitleClasses = makeClasses("text-lg", "font-bold")
   const sectionContentClasses = makeClasses("mt-2", "text-sm")
 

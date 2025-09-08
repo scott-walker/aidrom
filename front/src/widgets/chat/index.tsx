@@ -4,9 +4,10 @@ import { BlockLoader } from "@ui/block-loader"
 import { Notification } from "@ui/notification"
 import { useChatById } from "@entities/chat/api/chat-queries"
 import type { Chat as ChatType } from "@entities/chat/lib/types"
-import { type Agent, AgentInfo } from "@entities/agent"
-import { ChatDialog } from "@widgets/chat-dialog"
+import { type Agent } from "@entities/agent"
 import { ChatPanel } from "@features/chat/chat-panel"
+import { ChatDialog } from "@widgets/chat-dialog"
+import { AgentInfo } from "@widgets/agent-info"
 
 /**
  * Пропсы для компонента Chat
@@ -27,15 +28,7 @@ export const Chat = ({ chatId }: ChatProps): ReactNode => {
   const containerClasses = makeClasses("flex items-stretch justify-between h-full")
   const chatClasses = makeClasses("flex-1")
   const notificationClasses = makeClasses("flex-1", "justify-center")
-  const agentClasses = makeClasses(
-    "flex",
-    "flex-col",
-    "pt-(--layout-inner-offset-y)",
-    "w-[300px]",
-    "border-l",
-    "border-background-hard",
-    "bg-background-soft"
-  )
+  const agentClasses = makeClasses("border-l", "border-background-hard")
   const agent = chat?.agent as Agent
 
   return (

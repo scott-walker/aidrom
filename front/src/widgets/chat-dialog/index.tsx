@@ -25,7 +25,7 @@ export const ChatDialog = ({ chat, className = "", children = null }: ChatProps)
   const isEmpty = !messages.length
 
   const containerClasses = makeClasses("relative flex flex-col px-8 h-full", className)
-  const headerClasses = makeClasses("absolute top-0 left-0 right-0 py-4 text-center")
+  const headerClasses = makeClasses("absolute top-0 left-0 right-0")
   const bodyClasses = makeClasses("flex flex-col flex-1 py-8 overflow-y-auto scrollbar-hide")
   const inputClasses = makeClasses("relative", "flex", "items-center", "justify-end", "gap-2", "pb-6")
   const sendButtonClasses = makeClasses("absolute", "right-6")

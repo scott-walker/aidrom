@@ -27,7 +27,8 @@ export const ChatPanel = ({ chat }: ChatPanelProps) => {
     "px-4",
     "py-2",
     "bg-background-soft",
-    "rounded-xl",
+    "rounded-bl-xl",
+    "rounded-br-xl",
     "shadow-md/10"
   )
 
