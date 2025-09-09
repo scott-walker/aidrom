@@ -67,27 +67,27 @@
 
     /* Заголовки */
     & h1 {
-      font-size: var(--text-4xl);
+      font-size: var(--text-6xl);
       font-weight: var(--font-weight-bold);
     }
     & h2 {
-      font-size: var(--text-3xl);
+      font-size: var(--text-5xl);
       font-weight: var(--font-weight-bold);
     }
     & h3 {
-      font-size: var(--text-2xl);
+      font-size: var(--text-4xl);
       font-weight: var(--font-weight-bold);
     }
     & h4 {
-      font-size: var(--text-xl);
+      font-size: var(--text-3xl);
       font-weight: var(--font-weight-bold);
     }
     & h5 {
-      font-size: var(--text-lg);
+      font-size: var(--text-2xl);
       font-weight: var(--font-weight-bold);
     }
     & h6 {
-      font-size: var(--text-base);
+      font-size: var(--text-xl);
       font-weight: var(--font-weight-bold);
     }
 
@@ -95,6 +95,13 @@
     & hr {
       margin-block: calc(var(--typo-spacing) * 1.5);
       border: 1px solid var(--typo-color-neutral-3);
+    }
+
+    /* Цитаты */
+    & blockquote {
+      padding: 1rem 1.5rem;
+      border-left: 0.25rem solid var(--typo-color-neutral-4);
+      background-color: var(--typo-color-neutral-3);
     }
 
     /* Списки */
