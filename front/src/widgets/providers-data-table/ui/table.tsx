@@ -2,7 +2,7 @@ import { useProviders } from "@entities/provider/model/queries"
 import { Table } from "@ui/table"
 import { Card } from "@ui/card"
 import { Heading } from "@ui/heading"
-import { Code } from "@ui/code"
+import { Json } from "@ui/json"
 
 /**
  * Таблица провайдеров
@@ -36,7 +36,7 @@ export const ProvidersDataTable = () => {
                 <Table.Cell>{provider.name}</Table.Cell>
                 <Table.Cell>{provider.driver}</Table.Cell>
                 <Table.Cell>
-                  <Code data={provider.config} />
+                  <Json data={provider.config} />
                 </Table.Cell>
               </Table.Row>
             ))}

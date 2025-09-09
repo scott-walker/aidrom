@@ -24,7 +24,7 @@ type FormProps = {
  * Форма регистрации провайдера
  * @namespace Features.Provider.RegisterProviderForm.Ui.RegisterProviderForm
  */
-export const RegisterProviderForm = ({ values, onSubmit, onChange }: FormProps) => {
+export const ProviderRegisterForm = ({ values, onSubmit, onChange }: FormProps) => {
   const {
     register,
     handleSubmit,

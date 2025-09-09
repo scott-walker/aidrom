@@ -23,6 +23,10 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     {
       label: "Markdown",
       path: "/test/markdown"
+    },
+    {
+      label: "JSON",
+      path: "/test/json"
     }
   ]
 

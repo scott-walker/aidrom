@@ -1,5 +1,6 @@
 import ReactMarkdown from "react-markdown"
 import { Typography } from "@ui/typography"
+import { MarkdownEditor } from "./editor"
 
 /**
  * Пропсы компонента для отображения Markdown
@@ -7,6 +8,7 @@ import { Typography } from "@ui/typography"
  */
 type Props = {
   children: string
+  editable?: boolean
 }
 
 /**
@@ -15,10 +17,10 @@ type Props = {
  * @param {Props} props
  * @returns {ReactNode}
  */
-export const Markdown = ({ children }: Props) => {
+export const Markdown = ({ children, editable = false }: Props) => {
   return (
     <Typography>
-      <ReactMarkdown>{children}</ReactMarkdown>
+      {editable ? <MarkdownEditor>{children}</MarkdownEditor> : <ReactMarkdown>{children}</ReactMarkdown>}
     </Typography>
   )
 }

@@ -6,30 +6,33 @@ import { tags } from "@lezer/highlight"
 import { makeClasses } from "@lib/style-api"
 
 /**
- * Пропсы компонента для отображения кода
- * @namespace Ui.Code.Props
+ * Пропсы компонента для отображения JSON
+ * @namespace Ui.Json.Props
  */
 type Props = ComponentProps<"pre"> & {
   data: string | object
   interactive?: boolean
+  editable?: boolean
 }
 
 /**
- * Компонент для отображения кода
- * @namespace Ui.Code
+ * Компонент для отображения JSON
+ * @namespace Ui.Json
  * @param props.data - данные для отображения
  * @param props.interactive - режим интерактивный
+ * @param props.editable - режим редактируемый
  * @param props.className - CSS-классы
  */
-export const Code: FC<Props> = ({ data, interactive = false, className = "" }: Props): ReactNode => {
+export const Json: FC<Props> = ({ data, interactive = false, editable = false, className = "" }: Props): ReactNode => {
   const content = typeof data === "string" ? data : JSON.stringify(data, null, 2)
 
-  if (!interactive) {
-    const classes = makeClasses("px-8", "py-6", "bg-background", "rounded-xl", className)
+  if (!interactive && !editable) {
+    const preClasses = makeClasses("px-8", "py-6", "bg-background", "rounded-xl", className)
+    const codeClasses = makeClasses("p-0", "text-lg", "text-foreground-hard")
 
     return (
-      <pre className={classes}>
-        <code>{content}</code>
+      <pre className={preClasses}>
+        <code className={codeClasses}>{content}</code>
       </pre>
     )
   }
@@ -80,8 +83,8 @@ export const Code: FC<Props> = ({ data, interactive = false, className = "" }: P
         value={content}
         theme={theme}
         extensions={extensions}
-        readOnly={true}
-        editable={false}
+        readOnly={!editable}
+        editable={editable}
         className={classes}
         width="100%"
         height="100%"

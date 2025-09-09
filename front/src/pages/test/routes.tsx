@@ -4,6 +4,7 @@ import { Layout } from "./layout"
 import { Main } from "./pages/main"
 import { Typo } from "./pages/typo"
 import { Markdown } from "./pages/markdown"
+import { Json } from "./pages/json"
 
 /**
  * Маршруты
@@ -28,6 +29,10 @@ export const routes: PageRoutes = {
     {
       path: "markdown",
       element: <Markdown />
+    },
+    {
+      path: "json",
+      element: <Json />
     }
   ]
 }

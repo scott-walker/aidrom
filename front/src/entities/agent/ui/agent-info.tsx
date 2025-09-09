@@ -1,7 +1,7 @@
 import { makeClasses } from "@lib/style-api"
 import { DateTag } from "@ui/date-tag"
 import { Avatar } from "@ui/avatar"
-import { Code } from "@ui/code"
+import { Json } from "@ui/json"
 import { Separator } from "@ui/separator"
 import { Tag } from "@ui/tag"
 import type { Agent } from "../lib/types"
@@ -44,7 +44,7 @@ export const AgentInfo = ({ agent, className = "" }: AgentInfoProps) => {
       <Separator className="bg-background-hard" />
       <section className={sectionClasses}>
         <h6 className={sectionTitleClasses}>Параметры</h6>
-        <Code data={agent.params} className={sectionContentClasses} />
+        <Json data={agent.params} className={sectionContentClasses} />
       </section>
       <Separator className="bg-background-hard" />
       <section className={sectionClasses}>

@@ -1,4 +1,4 @@
-import { type ProviderSchema } from "@entities/provider/lib/types"
+import { type Provider } from "@entities/provider/lib/types"
 import { type RegisterProviderForm } from "./schema"
 
 // /**
@@ -16,9 +16,10 @@ import { type RegisterProviderForm } from "./schema"
  * Маппер из формы в DTO
  * @namespace Features.Provider.RegisterProviderForm.Model.Mappers.toRegisterProviderDTO
  */
-export const toRegisterProviderSchema = (form: RegisterProviderForm): Partial<ProviderSchema> => ({
-  alias: form.alias.trim(),
+export const toRegisterProviderSchema = (form: RegisterProviderForm): Partial<Provider> => ({
+  id: form.id,
+  driver: form.driver.trim(),
   name: form.name.trim(),
-  baseUrl: form.baseUrl.trim(),
-  apiKey: form.apiKey.trim()
+  description: form.description.trim(),
+  config: form.config
 })
