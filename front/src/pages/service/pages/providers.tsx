@@ -2,7 +2,7 @@ import { useState, useCallback, type ReactNode } from "react"
 import { Card } from "@ui/card"
 import { Heading } from "@ui/heading"
 import type { Provider } from "@entities/provider/lib/types"
-import { RegisterProviderForm } from "@features/provider/register-provider-form/ui/form"
+import { ProviderRegisterForm } from "@features/provider-register-form"
 import { ProvidersDataTable } from "@widgets/providers-data-table/ui/table"
 import { Blocks } from "@shared/ui/blocks"
 import { useSubtitle } from "@shared/lib/layout-api/utils"
@@ -28,7 +28,7 @@ export const Providers = (): ReactNode => {
     <Blocks>
       <Blocks.Row>
         <Blocks.Block className="w-4/12">
-          <RegisterProviderForm values={provider} onSubmit={handleSubmit} onChange={handleChange} />
+          <ProviderRegisterForm values={provider} onSubmit={handleSubmit} onChange={handleChange} />
         </Blocks.Block>
 
         <Blocks.Block className="w-8/12">

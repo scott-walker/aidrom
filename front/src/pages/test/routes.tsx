@@ -2,6 +2,8 @@ import { Outlet } from "react-router"
 import type { PageRoutes } from "@lib/page-api/types"
 import { Layout } from "./layout"
 import { Main } from "./pages/main"
+import { Typo } from "./pages/typo"
+import { Markdown } from "./pages/markdown"
 
 /**
  * Маршруты
@@ -18,6 +20,14 @@ export const routes: PageRoutes = {
     {
       index: true,
       element: <Main />
+    },
+    {
+      path: "typo",
+      element: <Typo />
+    },
+    {
+      path: "markdown",
+      element: <Markdown />
     }
   ]
 }

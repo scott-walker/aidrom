@@ -1,89 +1,147 @@
 @import "tailwindcss";
 
 @theme {
-  --typography-spacing: 1.125rem; /* 18px */
-  --line-height-normal: 1.7em;
-  --letter-spacing-normal: 0;
+  --typo-spacing: 1.125rem; /* 18px */
+  --typo-line-height: 1.7em;
+  --typo-font-weight: var(--font-weight-normal);
+  --typo-font-weight-bold: var(--font-weight-semibold);
+  --typo-font-size: var(--text-lg);
+  --typo-font-size-small: var(--text-base);
+  --typo-letter-spacing: 0;
+  --typo-font-family: var(--font-family-base);
+  --typo-font-family-mono: var(--font-family-mono);
+  --typo-color-primary: var(--color-primary);
+  --typo-color-primary-accent: var(--color-primary-accent);
+  --typo-color-neutral-1: var(--color-background);
+  --typo-color-neutral-2: var(--color-background-hard);
+  --typo-color-neutral-3: color-mix(in oklch, var(--color-background-hard) 50%, transparent);
+  --typo-color-neutral-4: var(--color-foreground-hard);
+  --typo-color-neutral-5: var(--color-foreground-soft);
 }
 
 @layer components {
-  .container {
+  .typographyContainer {
+    /* Общие */
+    & * {
+      font-size: var(--typo-font-size);
+      font-weight: var(--typo-font-weight);
+      line-height: var(--typo-line-height);
+      letter-spacing: var(--typo-letter-spacing);
+    }
+
+    /* Блоки */
+    & p,
+    & ul,
+    & ol,
+    & dl,
+    & blockquote,
+    & pre,
+    & h1,
+    & h2,
+    & h3,
+    & h4,
+    & h5,
+    & h6 {
+      margin-bottom: var(--typo-spacing);
+    }
+
+    /* Форматирование текста */
+    & strong {
+      font-weight: var(--typo-font-weight-bold);
+    }
+    & em {
+      font-style: italic;
+      color: var(--typo-color-neutral-5);
+    }
+
+    /* Ссылки */
+    & a {
+      color: var(--typo-color-primary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    & a:hover {
+      color: var(--typo-color-primary-accent);
+      text-decoration: underline;
+    }
+
+    /* Заголовки */
     & h1 {
-      margin-bottom: var(--typography-spacing);
       font-size: var(--text-4xl);
       font-weight: var(--font-weight-bold);
-      line-height: var(--line-height-normal);
-      letter-spacing: var(--letter-spacing-normal);
     }
     & h2 {
-      margin-bottom: var(--typography-spacing);
       font-size: var(--text-3xl);
       font-weight: var(--font-weight-bold);
-      line-height: var(--line-height-normal);
-      letter-spacing: var(--letter-spacing-normal);
     }
     & h3 {
-      margin-bottom: var(--typography-spacing);
       font-size: var(--text-2xl);
       font-weight: var(--font-weight-bold);
-      line-height: var(--line-height-normal);
-      letter-spacing: var(--letter-spacing-normal);
     }
     & h4 {
-      margin-bottom: var(--typography-spacing);
       font-size: var(--text-xl);
       font-weight: var(--font-weight-bold);
-      line-height: var(--line-height-normal);
-      letter-spacing: var(--letter-spacing-normal);
     }
     & h5 {
-      margin-bottom: var(--typography-spacing);
       font-size: var(--text-lg);
       font-weight: var(--font-weight-bold);
-      line-height: var(--line-height-normal);
-      letter-spacing: var(--letter-spacing-normal);
     }
     & h6 {
-      margin-bottom: var(--typography-spacing);
       font-size: var(--text-base);
       font-weight: var(--font-weight-bold);
-      line-height: var(--line-height-normal);
-      letter-spacing: var(--letter-spacing-normal);
     }
+
+    /* Разделитель */
     & hr {
-      margin-block: calc(var(--typography-spacing) * 1.5);
-      border: 1px solid var(--color-border);
+      margin-block: calc(var(--typo-spacing) * 1.5);
+      border: 1px solid var(--typo-color-neutral-3);
     }
-    & p,
-    ul,
-    ol,
-    dl,
-    blockquote,
-    pre,
-    code {
-      margin-bottom: var(--typography-spacing);
-      font-size: var(--text-lg);
-      font-weight: var(--font-weight-normal);
-      line-height: var(--line-height-normal);
+
+    /* Списки */
+    & ul,
+    & ol {
+      padding-left: 2.5rem;
     }
-    & p,
-    ul,
-    ol,
-    blockquote {
-      letter-spacing: calc(var(--letter-spacing-normal) * 1.2);
+    & ul li,
+    & ol li {
+      padding-left: 0.6rem;
     }
+    & ul {
+      list-style: disc;
+    }
+    & ol {
+      list-style: decimal;
+    }
+    & ul ul,
+    & ol ol {
+      list-style: circle;
+    }
+
+    /* Код */
     & code {
       display: inline-block;
-      font-family: var(--font-family-mono);
-      font-weight: var(--font-weight-semibold);
-      line-height: var(--line-height-normal);
-      background-color: var(--color-background);
+      padding: 0 0.7rem;
+      border-radius: 1rem;
+      font-family: var(--typo-font-family-mono);
+      font-weight: var(--typo-font-weight-bold);
+      font-size: var(--typo-font-size-small);
+      background-color: var(--typo-color-neutral-3);
+      color: var(--typo-color-neutral-4);
+    }
+    & pre {
+      display: block;
       padding: 1rem 1.5rem;
-      margin: var(--typography-spacing) 0 calc(var(--typography-spacing) * 2.5);
       border-radius: 0.5rem;
+      border: none;
+      font-family: var(--typo-font-family-mono);
+      background-color: var(--typo-color-neutral-3);
+      color: var(--typo-color-neutral-4);
     }
     & pre > code {
       display: block;
+      background-color: transparent;
+      color: inherit;
+      font-weight: inherit;
     }
   }
 }

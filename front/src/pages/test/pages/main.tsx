@@ -1,6 +1,8 @@
-import { useSubtitle } from "@lib/layout-api/utils"
-import { Heading } from "@ui/heading"
 import type { ReactNode } from "react"
+import { useSubtitle } from "@lib/layout-api/utils"
+import { Card } from "@ui/card"
+import { Container } from "@ui/container"
+import { Heading } from "@shared/ui/heading"
 
 /**
  * Главная страница инструментов
@@ -11,8 +13,12 @@ export const Main = (): ReactNode => {
   useSubtitle("Главная")
 
   return (
-    <div>
-      <Heading>Test</Heading>
-    </div>
+    <Card>
+      <Card.Body>
+        <Container>
+          <Heading>Разработка</Heading>
+        </Container>
+      </Card.Body>
+    </Card>
   )
 }

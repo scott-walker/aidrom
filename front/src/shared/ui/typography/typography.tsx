@@ -16,7 +16,7 @@ type Props = ComponentProps<"div">
  */
 export const Typography: FC<Props> = ({ children, className, ...props }: Props): ReactNode => {
   return (
-    <div className={cn(styles.container, className)} {...props}>
+    <div className={cn(styles.typographyContainer, className)} {...props}>
       {children}
     </div>
   )
