@@ -13,7 +13,7 @@ type TextareaProps = ComponentProps<"textarea"> & {}
  */
 export const Textarea = ({
   rows = 2,
-  onChange,
+  onChange = () => {},
   className = "",
   placeholder = "Введите текст",
   disabled = false,

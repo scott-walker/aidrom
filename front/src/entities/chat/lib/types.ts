@@ -115,7 +115,7 @@ export type ChatsQueryData = {
 }
 
 /**
- * Данные запроса чата
+ * Данные запроса одного чата
  * @namespace Entities.Chat.Lib.Types.ChatQueryData
  */
 export type ChatQueryData = {

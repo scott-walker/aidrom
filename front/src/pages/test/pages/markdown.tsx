@@ -12,46 +12,43 @@ import { Markdown as MarkdownUI } from "@ui/markdown"
 export const Markdown = (): ReactNode => {
   useSubtitle("Markdown")
 
-  const markdown = `
-  ## FSD-архитектура
+  const markdown = `## FSD-архитектура
 
-  **Dependencies**
-  1. Нет кросс-импортов
-  2. Односторонняя связь
-  3. \`shared/\` — общий для всех, но ни от кого не зависит
+**Dependencies**
+1. Нет кросс-импортов
+2. Односторонняя связь
+3. \`shared/\` — общий для всех, но ни от кого не зависит
 
-  ---
-  ##### Текст
-  Тут должен быть текст и он должен быть красивым и удобным для чтения. Этот текст должен быть написан на русском языке. Еще он очень важен и его нужно обязательно прочитать.
+---
+##### Текст
+Тут должен быть текст и он должен быть красивым и удобным для чтения. Этот текст должен быть написан на русском языке. Еще он очень важен и его нужно обязательно прочитать.
 
 
-  **Rules**
-  1. Вниз → Вверх: \`pages\` → \`widgets\` → \`features\` → \`entities\` → \`shared\`
-  2. Фичи не импортируют друг друга
+**Rules**
+1. Вниз → Вверх: \`pages\` → \`widgets\` → \`features\` → \`entities\` → \`shared\`
+2. Фичи не импортируют друг друга
 
-  ## Инструменты
-  \`\`\`
-  npx create-t3-app@latest
-  npx create-next-app@latest
-  npx create-react-app@latest
-  \`\`\`
+## Инструменты
+\`\`\`
+npx create-t3-app@latest
+npx create-next-app@latest
+npx create-react-app@latest
+\`\`\`
 
-  #### Дополнительные инструменты
-  - [Tailwind CSS](https://tailwindcss.com/)
-  - [Styled Components](https://styled-components.com/)
-  - [Emotion](https://emotion.sh/)
-  - [CSS Modules](https://github.com/css-modules/css-modules)
-  - [SASS](https://sass-lang.com/)
-  - [LESS](https://lesscss.org/)
-
-    `
+#### Дополнительные инструменты
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Styled Components](https://styled-components.com/)
+- [Emotion](https://emotion.sh/)
+- [CSS Modules](https://github.com/css-modules/css-modules)
+- [SASS](https://sass-lang.com/)
+- [LESS](https://lesscss.org/)`
 
   return (
     <div className="flex flex-col gap-10">
       <Card>
         <Card.Body>
           <Container>
-            <MarkdownUI>{markdown}</MarkdownUI>
+            <MarkdownUI value={markdown} />
           </Container>
         </Card.Body>
       </Card>
@@ -59,7 +56,7 @@ export const Markdown = (): ReactNode => {
       <Card>
         <Card.Body>
           <Container>
-            <MarkdownUI editable>{markdown}</MarkdownUI>
+            <MarkdownUI editable value={markdown} />
           </Container>
         </Card.Body>
       </Card>

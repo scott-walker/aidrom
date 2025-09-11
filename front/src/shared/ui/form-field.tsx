@@ -25,7 +25,7 @@ export const FormField = ({ label, children, error, className }: FormFieldProps)
 
   return (
     <div className={classes}>
-      <FormFieldLabel text={label} className={labelClasses}>
+      <FormFieldLabel text={label} className={labelClasses} error={!!error}>
         {children}
         {error && <FormFieldError error={error} />}
       </FormFieldLabel>

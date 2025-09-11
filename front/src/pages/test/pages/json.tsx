@@ -2,7 +2,7 @@ import type { ReactNode } from "react"
 import { useSubtitle } from "@lib/layout-api/utils"
 import { Card } from "@ui/card"
 import { Container } from "@ui/container"
-import { Json as JsonUI } from "@ui/json"
+import { Json as JsonUI } from "@shared/ui/json"
 import { Heading } from "@shared/ui/heading"
 
 /**
@@ -25,15 +25,15 @@ export const Json = (): ReactNode => {
         <Container className="flex flex-col gap-6">
           <section>
             <Heading>JSON</Heading>
-            <JsonUI data={json} />
+            <JsonUI value={json} />
           </section>
           <section>
             <Heading>JSON interactive</Heading>
-            <JsonUI data={json} interactive />
+            <JsonUI value={json} interactive />
           </section>
           <section>
             <Heading>JSON editable</Heading>
-            <JsonUI data={json} editable />
+            <JsonUI value={json} editable />
           </section>
         </Container>
       </Card.Body>

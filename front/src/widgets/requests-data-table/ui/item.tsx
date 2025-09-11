@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Table } from "@ui/table"
 import { Heading } from "@ui/heading"
-import { Json } from "@ui/json"
+import { Json } from "@shared/ui/json"
 import type { RequestSchema } from "@entities/request/lib/types"
 import { useRequestById } from "@entities/request/model/queries"
 import { cn } from "@utils/jsxtools"
@@ -36,11 +36,11 @@ export const Item = ({ request }: { request: RequestSchema }) => {
             <div className={detailsInnerClasses}>
               <Heading>Параметры запроса к провайдеру</Heading>
               <div className={detailsCodeClasses}>
-                <Json data={requestDetails.requestParams} interactive />
+                <Json value={requestDetails.requestParams} interactive />
               </div>
               <Heading>Ответ провайдера</Heading>
               <div className={detailsCodeClasses}>
-                <Json data={requestDetails.responseData} interactive />
+                <Json value={requestDetails.responseData} interactive />
               </div>
             </div>
           </Table.Cell>

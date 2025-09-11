@@ -23,9 +23,6 @@ import type {
 export const fetchChats = async (): Promise<ChatListItem[]> => {
   const { data } = await restClient.get("chats")
 
-  // await new Promise(resolve => setTimeout(resolve, 2000))
-  // throw new Error("Error")
-
   return data.map(toChatListItemSchema)
 }
 

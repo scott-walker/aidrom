@@ -9,10 +9,7 @@ export const ProviderDTOSchema = z.object({
   driver: z.string(),
   name: z.string(),
   description: z.string(),
-  config: z.object({
-    baseUrl: z.string(),
-    apiKey: z.string()
-  })
+  config: z.object({})
 })
 
 /**

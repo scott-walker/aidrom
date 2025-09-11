@@ -8,14 +8,23 @@ import { makeClasses } from "@lib/style-api"
 export type FormFieldLabelProps = Omit<ComponentProps<"label">, "size"> & {
   text: string
   children: ReactNode
+  error?: boolean
 }
 
 /**
  * Название поля формы
  * @namespace Shared.UI.FormFieldLabel
  */
-export const FormFieldLabel = ({ text, children, className = "", ...props }: FormFieldLabelProps) => {
-  const classes = makeClasses("flex", "flex-col", "gap-1", "hover:text-primary", className)
+export const FormFieldLabel = ({ text, children, className = "", error = false, ...props }: FormFieldLabelProps) => {
+  const classes = makeClasses(
+    "flex",
+    "flex-col",
+    "gap-1",
+    "hover:text-primary",
+    error && "text-danger",
+    error && "hover:text-danger",
+    className
+  )
   const textClasses = makeClasses("px-(--ui-offset-x)", "text-sm", "font-semibold", "cursor-pointer")
 
   return (

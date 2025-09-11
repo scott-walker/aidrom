@@ -11,7 +11,7 @@ export const useCreateChat = (): UseMutationResult<Chat, Error, ChatCreateData> 
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: (chat: ChatCreateData) => createChat(chat),
+    mutationFn: (data: ChatCreateData) => createChat(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.list({}) })
     }

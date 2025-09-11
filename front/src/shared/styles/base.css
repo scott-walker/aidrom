@@ -7,6 +7,7 @@
   }
   /* Для скроллбаров */
   div,
+  pre,
   .nice-scrollbar {
     /* Chrome, Edge, Safari */
     &::-webkit-scrollbar {

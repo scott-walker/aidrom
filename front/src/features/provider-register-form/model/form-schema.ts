@@ -5,10 +5,17 @@ import { z } from "zod"
  * @namespace Features.Provider.RegisterProviderForm.Model.Schema
  */
 export const registerProviderFormSchema = z.object({
-  alias: z.string().min(2, "Алиас должен содержать минимум 2 символа"),
+  driver: z.string().min(2, "Драйвер должен содержать минимум 2 символа"),
+  config: z.string().refine(value => {
+    try {
+      JSON.parse(value)
+      return true
+    } catch {
+      return false
+    }
+  }, "Конфигурация должна быть в формате JSON"),
   name: z.string().min(2, "Название должно содержать минимум 2 символ"),
-  baseUrl: z.url("URL должен быть валидным"),
-  apiKey: z.string().min(8, "API ключ должно содержать минимум 8 символов")
+  description: z.string().optional()
 })
 
 /**
@@ -16,9 +23,3 @@ export const registerProviderFormSchema = z.object({
  * @namespace Features.Provider.RegisterProviderForm.Model.Schema
  */
 export type RegisterProviderForm = z.infer<typeof registerProviderFormSchema>
-
-/**
- * Тип для частично заполненной формы регистрации провайдера
- * @namespace Features.Provider.RegisterProviderForm.Model.Schema
- */
-export type RegisterProviderFormPartial = Partial<RegisterProviderForm>

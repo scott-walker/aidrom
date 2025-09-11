@@ -1,26 +1,31 @@
-import ReactMarkdown from "react-markdown"
-import { Typography } from "@ui/typography"
 import { MarkdownEditor } from "./editor"
+import { MarkdownReader } from "./reader"
 
 /**
  * Пропсы компонента для отображения Markdown
  * @namespace Shared.UI.Markdown.Props
  */
 type Props = {
-  children: string
+  value: string | undefined | null
   editable?: boolean
+  onChange?: (value: string) => void
+  [key: string]: unknown
 }
 
 /**
  * Компонент для отображения Markdown
  * @namespace Shared.UI.Markdown
- * @param {Props} props
- * @returns {ReactNode}
  */
-export const Markdown = ({ children, editable = false }: Props) => {
+export const Markdown = ({ value, editable = false, onChange = () => {}, ...props }: Props) => {
+  value = value ?? ""
+
   return (
-    <Typography>
-      {editable ? <MarkdownEditor>{children}</MarkdownEditor> : <ReactMarkdown>{children}</ReactMarkdown>}
-    </Typography>
+    <>
+      {editable ? (
+        <MarkdownEditor {...props} value={value} onChange={onChange} />
+      ) : (
+        <MarkdownReader {...props} value={value} />
+      )}
+    </>
   )
 }

@@ -1,43 +1,65 @@
-import type { ComponentProps, FC, ReactNode } from "react"
+import type { FC, ReactNode } from "react"
 import CodeMirror, { EditorView } from "@uiw/react-codemirror"
 import { createTheme } from "@uiw/codemirror-themes"
 import { json } from "@codemirror/lang-json"
 import { tags } from "@lezer/highlight"
 import { makeClasses } from "@lib/style-api"
+import type { Value } from "./types"
+import { normalizeValue } from "./utils"
 
 /**
  * Пропсы компонента для отображения JSON
  * @namespace Ui.Json.Props
  */
-type Props = ComponentProps<"pre"> & {
-  data: string | object
+type Props = {
+  value: Value
   interactive?: boolean
   editable?: boolean
+  error?: boolean
+  onChange?: (value: Value) => void
+  className?: string
 }
 
 /**
  * Компонент для отображения JSON
  * @namespace Ui.Json
- * @param props.data - данные для отображения
+ * @param props.value - данные для отображения
  * @param props.interactive - режим интерактивный
  * @param props.editable - режим редактируемый
+ * @param props.error - режим ошибки
  * @param props.className - CSS-классы
  */
-export const Json: FC<Props> = ({ data, interactive = false, editable = false, className = "" }: Props): ReactNode => {
-  const content = typeof data === "string" ? data : JSON.stringify(data, null, 2)
+export const Json: FC<Props> = ({
+  value,
+  interactive = false,
+  editable = false,
+  error = false,
+  className = "",
+  onChange = () => {}
+}: Props): ReactNode => {
+  value = normalizeValue(value)
 
   if (!interactive && !editable) {
-    const preClasses = makeClasses("px-8", "py-6", "bg-background", "rounded-xl", className)
+    const preClasses = makeClasses(
+      "px-8",
+      "py-6",
+      "w-full",
+      "bg-background",
+      "rounded-xl",
+      "overflow-x-auto",
+      "overflow-y-auto",
+      className
+    )
     const codeClasses = makeClasses("p-0", "text-lg", "text-foreground-hard")
 
     return (
       <pre className={preClasses}>
-        <code className={codeClasses}>{content}</code>
+        <code className={codeClasses}>{value}</code>
       </pre>
     )
   }
 
-  const classes = makeClasses("overflow-x-auto", "overflow-y-auto", className)
+  const classes = makeClasses("overflow-x-auto", "overflow-y-auto", "cursor-text", className)
   const theme = createTheme({
     theme: "light",
     settings: {
@@ -63,6 +85,19 @@ export const Json: FC<Props> = ({ data, interactive = false, editable = false, c
     ]
   })
   const viewTheme = EditorView.theme({
+    "&.cm-editor": {
+      border: `2px solid ${error ? "var(--color-danger)" : "transparent"}`,
+      borderRadius: "var(--ui-rounded)",
+      outline: "none",
+      transition: "border-color var(--ui-transition-border-duration) ease-in-out"
+    },
+    "&.cm-editor.cm-focused, &.cm-editor:hover": {
+      borderColor: error ? "var(--color-danger)" : "var(--color-primary)"
+    },
+    ".cm-scroller": {
+      borderRadius: "var(--ui-rounded)"
+    },
+    ".cm-content, .cm-gutter": { minHeight: "158px" },
     ".cm-foldPlaceholder": {
       backgroundColor: "var(--color-background)",
       color: "var(--color-primary)",
@@ -77,15 +112,21 @@ export const Json: FC<Props> = ({ data, interactive = false, editable = false, c
   })
   const extensions = [json(), viewTheme]
 
+  const handleChange = (value: string) => {
+    // onChange(JSON.parse(value))
+    onChange(value)
+  }
+
   return (
     <div className={classes}>
       <CodeMirror
-        value={content}
+        value={value}
         theme={theme}
         extensions={extensions}
         readOnly={!editable}
         editable={editable}
         className={classes}
+        onChange={handleChange}
         width="100%"
         height="100%"
       />
