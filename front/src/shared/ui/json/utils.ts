@@ -16,12 +16,12 @@ export const formatValue = (value: Value) => {
   }
 }
 
-/**
- * Нормализовать значение
- * @namespace Shared.UI.Json.Utils.normalizeValue
- */
-export const normalizeValue = (value: Value) => {
-  value = typeof value === "undefined" ? "" : value
+// /**
+//  * Нормализовать значение
+//  * @namespace Shared.UI.Json.Utils.normalizeValue
+//  */
+// export const normalizeValue = (value: Value) => {
+//   value = typeof value === "undefined" ? "" : value
 
-  return JSON.stringify(value, null, 2)
-}
+//   return typeof value === "string" ? value : JSON.stringify(value, null, 2)
+// }

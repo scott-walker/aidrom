@@ -26,7 +26,7 @@ export const ProviderCard = ({ provider, children }: Props) => {
   const toggleDetails = () => setDetails(!details)
   const onUpdated = () => setEdit(false)
 
-  const trigger = <IconButton icon="edit" iconSize={26} />
+  const trigger = <IconButton className="ml-2" icon="edit" iconSize={26} />
 
   return (
     <BaseProviderCard provider={provider} details={details} className=" select-none">

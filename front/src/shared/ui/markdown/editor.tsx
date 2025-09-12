@@ -13,7 +13,7 @@ type Props = {
   value: string
   error?: boolean
   minHeight?: string
-  maxHeight?: string
+  maxHeight?: string | undefined
   className?: string
   onChange?: (value: string) => void
 }
@@ -27,7 +27,7 @@ export const MarkdownEditor = ({
   error = false,
   onChange = () => {},
   minHeight = "158px",
-  maxHeight = "158px",
+  maxHeight,
   className = ""
 }: Props) => {
   const classes = makeClasses("cursor-text", className)
@@ -82,6 +82,7 @@ export const MarkdownEditor = ({
     ".cm-scroller": {
       borderRadius: "var(--ui-rounded)"
     },
+    ".cm-content, .cm-gutter": { minHeight },
     ".cm-foldPlaceholder": {
       backgroundColor: "var(--color-background)",
       color: "var(--color-primary)",
@@ -106,7 +107,6 @@ export const MarkdownEditor = ({
         className={classes}
         onChange={onChange}
         width="100%"
-        minHeight={minHeight}
         maxHeight={maxHeight}
       />
     </div>

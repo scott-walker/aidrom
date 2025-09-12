@@ -5,7 +5,7 @@ import { json } from "@codemirror/lang-json"
 import { tags } from "@lezer/highlight"
 import { makeClasses } from "@lib/style-api"
 import type { Value } from "./types"
-import { formatValue, normalizeValue } from "./utils"
+import { formatValue } from "./utils"
 
 /**
  * Пропсы компонента для отображения JSON
@@ -115,7 +115,7 @@ export const Json: FC<Props> = ({
   return (
     <div className={classes}>
       <CodeMirror
-        value={normalizeValue(value)}
+        value={formatValue(value)}
         theme={theme}
         extensions={extensions}
         readOnly={!editable}

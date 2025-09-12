@@ -10,7 +10,7 @@ import { Icon } from "@ui/icon"
 type ModalProps = {
   children: ReactNode
   trigger: ReactNode
-  open?: boolean
+  open?: boolean | undefined
   title?: string
   onOpenChange?: (open: boolean) => void
   onClose?: () => void
@@ -23,7 +23,7 @@ type ModalProps = {
 export const Modal = ({
   children,
   trigger,
-  open = false,
+  open,
   title = "",
   onOpenChange = () => {},
   onClose = () => {}
