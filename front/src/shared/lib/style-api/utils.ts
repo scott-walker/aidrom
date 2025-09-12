@@ -5,7 +5,7 @@ import type { MakerClassesProps, MakerVariants } from "./types"
  * Сделать классы (сделай классы, детка 😁🤦‍♀️)
  * @namespace Shared.Lib.StyleApi.makeUiClasses
  */
-export const makeClasses = (...classes: MakerClassesProps) => {
+export const makeClasses = (...classes: MakerClassesProps[]) => {
   return cn(...classes)
 }
 
@@ -47,7 +47,7 @@ export const makeUiTransition = () => {
  * @namespace Shared.Lib.StyleApi.makeUiClickable
  */
 export const makeUiClickable = () => {
-  return makeClasses("cursor-pointer", "select-none", "active:scale-90")
+  return makeClasses("cursor-pointer", "select-none", "active:scale-95")
 }
 
 /**
