@@ -12,10 +12,16 @@ export const countLines = (value: string) => {
  * Преобразовать значение в строку
  * @namespace Shared.UI.Json.Utils.toString
  */
-export const toString = (value: Value) => {
+export const formatValue = (value: Value) => {
   value = typeof value === "undefined" ? "" : value
 
-  return typeof value === "string" ? value : JSON.stringify(value, null, 2)
+  try {
+    value = typeof value === "string" ? JSON.parse(value) : value
+
+    return JSON.stringify(value, null, 2)
+  } catch {
+    return value?.toString() ?? ""
+  }
 }
 
 /**
@@ -23,7 +29,7 @@ export const toString = (value: Value) => {
  * @namespace Shared.UI.Json.Utils.normalizeValue
  */
 export const normalizeValue = (value: Value) => {
-  value = toString(value)
+  value = typeof value === "undefined" ? "" : value
 
   // const MIN_LINES = 3
   // const lines = countLines(value)
@@ -32,5 +38,5 @@ export const normalizeValue = (value: Value) => {
   //   return value + "\n".repeat(MIN_LINES - lines)
   // }
 
-  return value
+  return value?.toString() ?? ""
 }

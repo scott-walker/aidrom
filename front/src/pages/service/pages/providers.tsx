@@ -2,7 +2,7 @@ import { type ReactNode } from "react"
 import { useSubtitle } from "@lib/layout-api/utils"
 import { Blocks } from "@ui/blocks"
 import { ProviderRegisterForm } from "@features/provider-register-form"
-import { ProvidersDataTable } from "@widgets/providers-data-table/ui/table"
+import { ProviderList } from "@widgets/provider-list"
 
 /**
  * Страница сервиса - провайдеры
@@ -15,6 +15,9 @@ export const Providers = (): ReactNode => {
   return (
     <Blocks>
       <Blocks.Row>
+        <Blocks.Block>
+          <ProviderList />
+        </Blocks.Block>
         <Blocks.Block>
           <ProviderRegisterForm />
         </Blocks.Block>
@@ -35,11 +38,11 @@ export const Providers = (): ReactNode => {
         </Blocks.Block>
       </Blocks.Row> */}
 
-      <Blocks.Row>
+      {/* <Blocks.Row>
         <Blocks.Block>
-          <ProvidersDataTable />
+          <ProviderList />
         </Blocks.Block>
-      </Blocks.Row>
+      </Blocks.Row> */}
     </Blocks>
   )
 }

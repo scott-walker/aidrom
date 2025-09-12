@@ -5,7 +5,7 @@ import { json } from "@codemirror/lang-json"
 import { tags } from "@lezer/highlight"
 import { makeClasses } from "@lib/style-api"
 import type { Value } from "./types"
-import { normalizeValue } from "./utils"
+import { formatValue, normalizeValue } from "./utils"
 
 /**
  * Пропсы компонента для отображения JSON
@@ -37,12 +37,12 @@ export const Json: FC<Props> = ({
   className = "",
   onChange = () => {}
 }: Props): ReactNode => {
-  value = normalizeValue(value)
-
   if (!interactive && !editable) {
+    value = formatValue(value)
+
     const preClasses = makeClasses(
-      "px-8",
-      "py-6",
+      "px-4",
+      "py-2",
       "w-full",
       "bg-background",
       "rounded-xl",
@@ -50,7 +50,7 @@ export const Json: FC<Props> = ({
       "overflow-y-auto",
       className
     )
-    const codeClasses = makeClasses("p-0", "text-lg", "text-foreground-hard")
+    const codeClasses = makeClasses("p-0", "text-base", "text-foreground-hard")
 
     return (
       <pre className={preClasses}>
@@ -112,21 +112,16 @@ export const Json: FC<Props> = ({
   })
   const extensions = [json(), viewTheme]
 
-  const handleChange = (value: string) => {
-    // onChange(JSON.parse(value))
-    onChange(value)
-  }
-
   return (
     <div className={classes}>
       <CodeMirror
-        value={value}
+        value={normalizeValue(value)}
         theme={theme}
         extensions={extensions}
         readOnly={!editable}
         editable={editable}
         className={classes}
-        onChange={handleChange}
+        onChange={onChange}
         width="100%"
         height="100%"
       />

@@ -8,7 +8,7 @@ import { cva } from "@utils/jsxtools"
  */
 type Props = {
   children: ReactNode
-  level?: 1 | 2 | 3 | 4 | 5 | 6
+  level?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
   className?: string
 }
 
@@ -27,7 +27,10 @@ export const Heading = ({ children, level = 6, className = "" }: Props): ReactNo
         3: "text-3xl",
         4: "text-2xl",
         5: "text-xl",
-        6: "text-lg"
+        6: "text-lg",
+        7: "text-base",
+        8: "text-sm",
+        9: "text-xs"
       }
     },
     defaultVariants: {
