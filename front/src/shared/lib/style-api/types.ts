@@ -4,7 +4,7 @@ import type { ClassValue } from "@utils/jsxtools"
  * Пропсы для создателя классов
  * @namespace Shared.Lib.StyleApi.MakerClassesProps
  */
-export type MakerClassesProps = ClassValue[] | string
+export type MakerClassesProps = ClassValue[] | string | undefined | null | boolean
 
 /**
  * Пропсы для создания вариантов

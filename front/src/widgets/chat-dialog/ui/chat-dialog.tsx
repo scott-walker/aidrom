@@ -1,5 +1,7 @@
 import { makeClasses } from "@lib/style-api"
-import type { Chat } from "@entities/chat"
+import { LoaderBlock } from "@ui/loader-block"
+import { ErrorBlock } from "@ui/error-block"
+import { useChatById, type Chat } from "@entities/chat"
 import { ChatDialogHeader } from "./chat-dialog-header"
 import { ChatDialogInput } from "./chat-dialog-input"
 import { ChatDialogBody } from "./chat-dialog-body"
@@ -9,21 +11,27 @@ import { ChatDialogBody } from "./chat-dialog-body"
  * @namespace Widgets.Chat.ChatProps
  */
 type ChatDialogProps = {
-  chat: Chat
+  chatId: number
+  className?: string
 }
 
 /**
  * Диалог чата
  * @namespace Widgets.Chat
  */
-export const ChatDialog = ({ chat }: ChatDialogProps) => {
-  const containerClasses = makeClasses("relative flex flex-col px-8 w-full h-full")
+export const ChatDialog = ({ chatId, className = "" }: ChatDialogProps) => {
+  const { chat, isLoading, error } = useChatById(chatId)
+
+  const containerClasses = makeClasses("relative flex flex-col px-8 w-full h-full", className)
+
+  if (isLoading) return <LoaderBlock />
+  if (error) return <ErrorBlock error={error} />
 
   return (
     <div className={containerClasses}>
-      <ChatDialogHeader chat={chat} />
-      <ChatDialogBody chat={chat} />
-      <ChatDialogInput chat={chat} />
+      <ChatDialogHeader chat={chat as Chat} />
+      <ChatDialogBody chat={chat as Chat} />
+      <ChatDialogInput chat={chat as Chat} />
     </div>
   )
 }

@@ -10,7 +10,9 @@ import { Icon } from "@ui/icon"
 type ModalProps = {
   children: ReactNode
   trigger: ReactNode
+  open?: boolean
   title?: string
+  onOpenChange?: (open: boolean) => void
   onClose?: () => void
 }
 
@@ -18,7 +20,14 @@ type ModalProps = {
  * Модальное окно
  * @namespace Shared.UI.Modal
  */
-export const Modal = ({ children, trigger, title = "", onClose = () => {} }: ModalProps) => {
+export const Modal = ({
+  children,
+  trigger,
+  open = false,
+  title = "",
+  onOpenChange = () => {},
+  onClose = () => {}
+}: ModalProps) => {
   const overlayClasses = makeClasses("fixed", "inset-0", "bg-background-hard/30")
   const windowClasses = makeClasses(
     "fixed",
@@ -27,13 +36,10 @@ export const Modal = ({ children, trigger, title = "", onClose = () => {} }: Mod
     "transform",
     "-translate-x-1/2",
     "-translate-y-1/2",
-    // "inset-0",
     "flex",
     "flex-col",
     "items-center",
     "justify-center"
-    // "w-full",
-    // "h-full"
   )
   const contentClasses = makeClasses(
     "flex",
@@ -60,21 +66,21 @@ export const Modal = ({ children, trigger, title = "", onClose = () => {} }: Mod
   const closeClasses = makeClasses("text-foreground-soft", "cursor-pointer", "hover:text-primary")
 
   return (
-    <Dialog.Root>
-      <Dialog.Trigger>{trigger}</Dialog.Trigger>
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
+      <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className={overlayClasses} />
-        <Dialog.Content className={windowClasses}>
+        <div className={windowClasses}>
           <div className={contentClasses}>
             <div className={headerClasses}>
-              {title && <Dialog.Title className={titleClasses}>{title}</Dialog.Title>}
+              {title && <div className={titleClasses}>{title}</div>}
               <Dialog.Close asChild className={closeClasses} onClick={onClose}>
                 <Icon name="x" size={18} />
               </Dialog.Close>
             </div>
-            <Dialog.Description className={bodyClasses}>{children}</Dialog.Description>
+            <div className={bodyClasses}>{children}</div>
           </div>
-        </Dialog.Content>
+        </div>
       </Dialog.Portal>
     </Dialog.Root>
   )

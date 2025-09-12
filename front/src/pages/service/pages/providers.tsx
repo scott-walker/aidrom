@@ -1,8 +1,9 @@
 import { type ReactNode } from "react"
 import { useSubtitle } from "@lib/layout-api/utils"
 import { Blocks } from "@ui/blocks"
-import { ProviderRegisterForm } from "@features/provider-register-form"
 import { ProviderList } from "@widgets/provider-list"
+import { ProviderRegister } from "@widgets/provider-register"
+import { Heading } from "@shared/ui/heading"
 
 /**
  * Страница сервиса - провайдеры
@@ -15,34 +16,24 @@ export const Providers = (): ReactNode => {
   return (
     <Blocks>
       <Blocks.Row>
-        <Blocks.Block>
-          <ProviderList />
-        </Blocks.Block>
-        <Blocks.Block>
-          <ProviderRegisterForm />
+        <Blocks.Block className="w-full">
+          <ProviderRegister />
         </Blocks.Block>
       </Blocks.Row>
-
-      {/* <Blocks.Row>
-        <Blocks.Block>
-          <Card>
-            <Card.Header>
-              <Heading>Информация</Heading>
-            </Card.Header>
-            <Card.Body>
-              <Card.Section>
-                <Json value={{}} />
-              </Card.Section>
-            </Card.Body>
-          </Card>
+      <Blocks.Row>
+        <Blocks.Block className="w-1/2">
+          <Heading level={3}>Зарегистрированные провайдеры</Heading>
+          <div className="mt-6">
+            <ProviderList />
+          </div>
         </Blocks.Block>
-      </Blocks.Row> */}
-
-      {/* <Blocks.Row>
-        <Blocks.Block>
-          <ProviderList />
-        </Blocks.Block>
-      </Blocks.Row> */}
+        {/* <Blocks.Block className="w-1/2">
+          <Heading level={3}>Зарегистрированные провайдеры</Heading>
+          <div className="mt-6">
+            <ProviderList />
+          </div>
+        </Blocks.Block> */}
+      </Blocks.Row>
     </Blocks>
   )
 }

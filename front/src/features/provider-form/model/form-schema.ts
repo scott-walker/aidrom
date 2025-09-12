@@ -1,10 +1,10 @@
 import { z } from "zod"
 
 /**
- * Схема для формы регистрации провайдера
- * @namespace Features.Provider.RegisterProviderForm.Model.Schema
+ * Схема для формы провайдера
+ * @namespace Features.ProviderForm.Model.providerFormSchema
  */
-export const registerProviderFormSchema = z.object({
+export const providerFormSchema = z.object({
   driver: z.string().min(2, "Драйвер должен содержать минимум 2 символа"),
   config: z.string().refine(value => {
     try {
@@ -19,7 +19,7 @@ export const registerProviderFormSchema = z.object({
 })
 
 /**
- * Тип для формы регистрации провайдера
- * @namespace Features.Provider.RegisterProviderForm.Model.Schema
+ * Тип для формы провайдера
+ * @namespace Features.ProviderForm.Model.ProviderFormSchema
  */
-export type RegisterProviderForm = z.infer<typeof registerProviderFormSchema>
+export type ProviderForm = z.infer<typeof providerFormSchema>

@@ -1,7 +1,7 @@
 import { makeClasses } from "@lib/style-api"
-import { Avatar } from "@ui/avatar"
 import { DateTag } from "@ui/date-tag"
 import type { Chat } from "../lib/types"
+import { AgentAvatar } from "@entities/agent/ui/agent-avatar"
 
 /**
  * Пропсы для компонента ChatCard
@@ -31,7 +31,7 @@ export const ChatCard = ({ chat, className = "" }: ChatCardProps) => {
 
   return (
     <div className={cardClasses}>
-      <Avatar initials={chat.agent.name} />
+      <AgentAvatar agent={chat.agent} />
       <div className="flex flex-col">
         <h3 className="text-foreground-hard text-lg group-hover:text-primary">{chat.title}</h3>
         <DateTag date={chat.updatedAt} />

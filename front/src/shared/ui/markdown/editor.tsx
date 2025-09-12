@@ -12,6 +12,8 @@ import CodeMirror from "@uiw/react-codemirror"
 type Props = {
   value: string
   error?: boolean
+  minHeight?: string
+  maxHeight?: string
   className?: string
   onChange?: (value: string) => void
 }
@@ -20,8 +22,15 @@ type Props = {
  * Компонент для редактирования Markdown
  * @namespace Shared.UI.MarkdownEditor
  */
-export const MarkdownEditor = ({ value, error = false, onChange = () => {}, className = "" }: Props) => {
-  const classes = makeClasses("overflow-x-auto", "overflow-y-auto", "cursor-text", className)
+export const MarkdownEditor = ({
+  value,
+  error = false,
+  onChange = () => {},
+  minHeight = "158px",
+  maxHeight = "158px",
+  className = ""
+}: Props) => {
+  const classes = makeClasses("cursor-text", className)
   const theme = createTheme({
     theme: "light",
     settings: {
@@ -73,7 +82,6 @@ export const MarkdownEditor = ({ value, error = false, onChange = () => {}, clas
     ".cm-scroller": {
       borderRadius: "var(--ui-rounded)"
     },
-    ".cm-content, .cm-gutter": { minHeight: "158px" },
     ".cm-foldPlaceholder": {
       backgroundColor: "var(--color-background)",
       color: "var(--color-primary)",
@@ -98,7 +106,8 @@ export const MarkdownEditor = ({ value, error = false, onChange = () => {}, clas
         className={classes}
         onChange={onChange}
         width="100%"
-        height="100%"
+        minHeight={minHeight}
+        maxHeight={maxHeight}
       />
     </div>
   )

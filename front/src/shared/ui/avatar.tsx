@@ -52,7 +52,7 @@ export const Avatar = ({
   return (
     <div className={classes(size)} {...props}>
       {src ? (
-        <img src={src} className="w-full h-full object-cover" />
+        <img src={src} className="w-3/4 h-3/4 object-cover" />
       ) : initials ? (
         <span className="font-bold uppercase">{initials.slice(0, 2)}</span>
       ) : (

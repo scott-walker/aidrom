@@ -1,8 +1,8 @@
 import { makeClasses } from "@lib/style-api"
 import { DateTag } from "@ui/date-tag"
-import { Avatar } from "@ui/avatar"
 import { Tag } from "@ui/tag"
 import type { Agent } from "../lib/types"
+import { AgentAvatar } from "./agent-avatar"
 
 /**
  * Пропсы для компонента
@@ -38,7 +38,7 @@ export const AgentCard = ({ agent, className = "" }: AgentCardProps) => {
   return (
     <div className={containerClasses}>
       <section className={avatarClasses}>
-        <Avatar initials={agent.name} size="xl" />
+        <AgentAvatar agent={agent} size="xl" />
       </section>
       <section>
         <div className={nameClasses}>{agent.name}</div>
