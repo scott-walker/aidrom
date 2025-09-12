@@ -57,7 +57,7 @@ export const Modal = ({ children, trigger, title = "", onClose = () => {} }: Mod
   )
   const titleClasses = makeClasses("text-lg", "font-bold")
   const bodyClasses = makeClasses("px-4", "py-2", "w-full", "h-full")
-  const closeClasses = makeClasses("text-sm", "text-foreground-soft", "cursor-pointer", "hover:text-primary")
+  const closeClasses = makeClasses("text-foreground-soft", "cursor-pointer", "hover:text-primary")
 
   return (
     <Dialog.Root>
