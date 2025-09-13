@@ -16,7 +16,8 @@ export const AgentList = () => {
     "border-3",
     "border-transparent",
     "hover:border-primary",
-    "transition-colors duration-200"
+    "transition-colors duration-200",
+    "w-full"
   )
 
   if (isLoading) return <LoaderBlock />

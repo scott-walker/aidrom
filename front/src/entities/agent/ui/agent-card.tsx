@@ -22,7 +22,7 @@ export const AgentCard = ({ agent, className = "" }: AgentCardProps) => {
     "flex",
     "items-center",
     "gap-6",
-    "p-6",
+    "p-3",
     "w-full",
     "bg-background-soft",
     "rounded-lg",

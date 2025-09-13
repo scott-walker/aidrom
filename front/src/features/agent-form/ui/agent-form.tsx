@@ -19,7 +19,7 @@ import { useForm } from "../lib/use-form"
 type FormProps = {
   children: ReactNode
   values?: Partial<AgentFormType>
-  onSubmit?: (agent: AgentFormType) => void
+  onSubmit?: (agent: AgentFormType, reset: () => void) => void
 }
 
 /**
@@ -36,11 +36,16 @@ export const AgentForm = ({ children, values, onSubmit = () => {} }: FormProps) 
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors }
   } = useForm(values)
 
+  const onSubmitForm = (data: AgentFormType) => {
+    onSubmit(data, reset)
+  }
+
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleSubmit(data => onSubmit(data))}>
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit(data => onSubmitForm(data))}>
       <div className="flex flex-col gap-4">
         <section>
           <Controller

@@ -1,8 +1,11 @@
 import type { ReactNode } from "react"
 import { Blocks } from "@ui/blocks"
 
-import { AgentCreate } from "@widgets/agent-create"
+// import { AgentCreate } from "@widgets/agent-create"
 import { AgentList } from "@widgets/agent-list"
+import { AgentCreateForm } from "@features/agent-form"
+import { Card } from "@shared/ui/card"
+import { Heading } from "@shared/ui/heading"
 
 /**
  * Главная страница
@@ -11,15 +14,25 @@ import { AgentList } from "@widgets/agent-list"
 export const Main = (): ReactNode => {
   return (
     <Blocks>
-      <Blocks.Row>
+      {/* <Blocks.Row>
         <Blocks.Block className="w-full">
           <AgentCreate />
         </Blocks.Block>
-      </Blocks.Row>
+      </Blocks.Row> */}
 
       <Blocks.Row>
-        <Blocks.Block className="w-full">
+        <Blocks.Block className="w-3/5">
           <AgentList />
+        </Blocks.Block>
+        <Blocks.Block className="w-2/5">
+          <Card>
+            <Card.Header>
+              <Heading>Создание агента</Heading>
+            </Card.Header>
+            <Card.Body>
+              <AgentCreateForm />
+            </Card.Body>
+          </Card>
         </Blocks.Block>
       </Blocks.Row>
     </Blocks>

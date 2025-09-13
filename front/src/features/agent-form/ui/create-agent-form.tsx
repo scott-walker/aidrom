@@ -22,14 +22,12 @@ type CreateAgentFormProps = {
 export const CreateAgentForm = ({ onCreated = () => {} }: CreateAgentFormProps) => {
   const { mutate: createAgent, isPending, error } = useCreateAgent()
 
-  const onSubmit = (data: AgentFormType) => {
-    console.log({
-      data,
-      dto: toAgentCreateDTO(data)
-    })
-
+  const onSubmit = (data: AgentFormType, resetForm: () => void) => {
     createAgent(toAgentCreateDTO(data), {
-      onSuccess: () => onCreated(data)
+      onSuccess: () => {
+        onCreated(data)
+        resetForm()
+      }
     })
   }
 
