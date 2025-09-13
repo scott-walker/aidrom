@@ -35,7 +35,7 @@ export const AgentAddRule = ({ agent, className = "" }: AgentAddRuleProps) => {
   } = useForm()
 
   const cardClasses = makeClasses("flex", "items-center", "gap-2", className)
-  const trigger = <IconButton schema="primary" circle icon="plus" iconSize={22} iconClassName="m-0.5" />
+  const trigger = <IconButton schema="primary" circle icon="plus" iconSize={22} />
 
   const onSubmit = (data: AgentRulesForm) => {
     addAgentRule(

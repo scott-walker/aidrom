@@ -22,7 +22,7 @@ export type IconButtonProps = Omit<ButtonProps, "children"> & {
  */
 export const IconButton = ({
   icon,
-  iconSize = 36,
+  iconSize = 28,
   iconStrokeWidth = 2,
   iconClassName = "",
   circle = false,
@@ -43,7 +43,7 @@ export const IconButton = ({
     className
   )
 
-  iconClassName = makeClasses(!isGhost && "m-2.5", iconClassName)
+  iconClassName = makeClasses(!isGhost && "m-0.5", iconClassName)
 
   return (
     <Button schema={schema} className={classes} disabled={disabled} {...props}>

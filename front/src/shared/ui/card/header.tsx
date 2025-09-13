@@ -20,11 +20,13 @@ export const CardHeader = ({ children, hasOffset = true, className = "" }: CardH
     "flex",
     "align-center",
     "justify-center",
-    "gap-(--ui-card-gap)",
+    "gap-4",
     hasOffset && "px-(--ui-card-offset-x)",
     hasOffset && "py-(--ui-card-offset-y)",
     "border-b-2",
     "border-(--ui-card-border)",
+    "h-12",
+    "overflow-hidden",
     className
   )
 

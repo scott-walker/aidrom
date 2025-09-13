@@ -18,7 +18,7 @@ type AgentRulesProps = {
 export const AgentRules = ({ agent }: AgentRulesProps) => {
   return (
     <Card>
-      <Card.Header className="gap-4">
+      <Card.Header>
         <Heading>Правила</Heading>
         <AgentAddRule agent={agent as AgentType} />
       </Card.Header>
