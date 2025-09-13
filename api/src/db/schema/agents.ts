@@ -12,6 +12,7 @@ export const agents = pgTable(
   table => ({
     id: table.serial("id").primaryKey(),
     name: table.varchar("name", { length: 255 }).notNull(),
+    avatar: table.text("avatar"),
     params: table.json("params").notNull(),
     description: table.text("description"),
     providerId: table
