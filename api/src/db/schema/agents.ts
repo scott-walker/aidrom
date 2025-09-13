@@ -36,5 +36,5 @@ export const agentsRelations = relations(agents, ({ many, one }) => ({
     references: [providers.id]
   }),
   chats: many(chats),
-  agentRules: many(agentRules)
+  rules: many(agentRules)
 }))

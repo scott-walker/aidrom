@@ -9,5 +9,7 @@ router.get("/:agentId", agentController.getAgent)
 router.post("/", agentController.createAgent)
 router.put("/:agentId", agentController.updateAgent)
 router.delete("/:agentId", agentController.deleteAgent)
+router.post("/:agentId/rules", agentController.addRule)
+router.delete("/rules/:ruleId", agentController.deleteRule)
 
 export { router as agentRouter }

@@ -4,7 +4,17 @@
  */
 
 import { eq, desc } from "drizzle-orm"
-import { db, agents, Agent, CreateAgentData, UpdateAgentData, CreateRequestData, RequestWithResponseContent } from "@db"
+import {
+  db,
+  agents,
+  Agent,
+  CreateAgentData,
+  UpdateAgentData,
+  RequestWithResponseContent,
+  CreateAgentRuleData,
+  AgentRule,
+  agentRules
+} from "@db"
 import { DriverResponse } from "@drivers"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
@@ -52,7 +62,8 @@ export const getAgentById = async (agentId: number): Promise<Agent> => {
     const agent = await db.query.agents.findFirst({
       where: eq(agents.id, agentId),
       with: {
-        provider: true
+        provider: true,
+        rules: true
       }
     })
 
@@ -185,6 +196,49 @@ export const sendRequest = async (
     return { ...request, responseContent: response.content }
   } catch (error) {
     logger.error("Ошибка при создании нового запроса к AI агенту", { error: error.message })
+
+    throw error
+  }
+}
+
+/**
+ * Добавить правило агенту
+ * @namespace Agent.Service.addRule
+ */
+export const addRule = async (agentId: number, data: CreateAgentRuleData): Promise<AgentRule> => {
+  try {
+    logger.info("Добавление правила агента в БД", { agentId, data })
+
+    const [rule] = await db
+      .insert(agentRules)
+      .values({ ...data, agentId })
+      .returning()
+
+    logger.info("Правило агента успешно добавлено", { agentId })
+
+    return rule
+  } catch (error) {
+    logger.error("Ошибка при добавлении правила агента в БД", { error: error.message, agentId, data })
+
+    throw error
+  }
+}
+
+/**
+ * Удалить правило агента
+ * @namespace Agent.Service.deleteRule
+ */
+export const deleteRule = async (ruleId: number): Promise<AgentRule> => {
+  try {
+    logger.info("Удаление правила агента в БД", { ruleId })
+
+    const [rule] = await db.delete(agentRules).where(eq(agentRules.id, ruleId)).returning()
+
+    logger.info("Правило агента успешно удалено", { ruleId })
+
+    return rule
+  } catch (error) {
+    logger.error("Ошибка при удалении правила агента в БД", { error: error.message, ruleId })
 
     throw error
   }

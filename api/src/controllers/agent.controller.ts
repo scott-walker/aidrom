@@ -115,3 +115,47 @@ export const deleteAgent = async (req: Request, res: Response, next: NextFunctio
     next(err)
   }
 }
+
+/**
+ * Добавить правило агента
+ * @namespace Agent.Controller.addRule
+ */
+export const addRule = async (req: Request, res: Response, next: NextFunction) => {
+  const agentId = parseInt(req.params.agentId)
+
+  try {
+    logger.info("Добавление правила агента", { agentId, data: req.body })
+
+    const rule = await agentService.addRule(agentId, req.body)
+
+    logger.info("Правило агента успешно добавлено", { agentId })
+
+    res.json(rule)
+  } catch (err) {
+    logger.error("Ошибка при добавлении правила агента", { error: err.message, agentId })
+
+    next(err)
+  }
+}
+
+/**
+ * Удалить правило агента
+ * @namespace Agent.Controller.deleteRule
+ */
+export const deleteRule = async (req: Request, res: Response, next: NextFunction) => {
+  const ruleId = parseInt(req.params.ruleId)
+
+  try {
+    logger.info("Удаление правила агента", { ruleId })
+
+    const rule = await agentService.deleteRule(ruleId)
+
+    logger.info("Правило агента успешно удалено", { ruleId })
+
+    res.json(rule)
+  } catch (err) {
+    logger.error("Ошибка при удалении правила агента", { error: err.message, ruleId })
+
+    next(err)
+  }
+}
