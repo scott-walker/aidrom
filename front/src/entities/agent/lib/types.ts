@@ -12,8 +12,19 @@ export type Agent = {
     id: number
     name: string
   }
+  rules: AgentRule[]
   createdAt: Date
   updatedAt: Date
+}
+
+/**
+ * Тип для правила агента
+ * @namespace Entities.Agent.Lib.Types.AgentRule
+ */
+export type AgentRule = {
+  id: number
+  content: string
+  priority: number
 }
 
 /**

@@ -10,7 +10,7 @@ type DateTagProps = ComponentProps<"div"> & {
  * @namespace Shared.UI.DateTag
  */
 export const DateTag = ({ date, className = "", ...props }: DateTagProps) => {
-  const classes = makeClasses("text-sm", "text-foreground-soft/50", "font-bold", className)
+  const classes = makeClasses("text-sm", "text-foreground-soft/60", "font-bold", className)
 
   return (
     <div className={classes} {...props}>

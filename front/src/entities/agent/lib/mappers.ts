@@ -12,6 +12,7 @@ export const toAgentSchema = (dto: AgentResponseDTO): Agent => ({
   params: dto.params,
   description: dto.description,
   provider: dto.provider,
+  rules: dto.rules,
   createdAt: dto.createdAt,
   updatedAt: dto.updatedAt
 })

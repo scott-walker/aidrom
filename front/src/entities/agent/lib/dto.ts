@@ -14,6 +14,13 @@ export const AgentDTOResponseSchema = z.object({
     id: z.number(),
     name: z.string()
   }),
+  rules: z.array(
+    z.object({
+      id: z.number(),
+      content: z.string(),
+      priority: z.number()
+    })
+  ),
   createdAt: z.date(),
   updatedAt: z.date()
 })

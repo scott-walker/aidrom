@@ -16,6 +16,7 @@ import {
   AgentFaceInfo,
   AgentModifyInfo
 } from "@entities/agent"
+import { AgentRules } from "@widgets/agent-rules"
 
 /**
  * Страница агента
@@ -63,13 +64,7 @@ export const Agent = (): ReactNode => {
             </Card.Body>
           </Card>
 
-          <Card>
-            <Card.Header>
-              <Heading>Правила</Heading>
-            </Card.Header>
-            {/* <Card.Body>
-            </Card.Body> */}
-          </Card>
+          <AgentRules rules={agent?.rules ?? []} />
         </Blocks.Block>
       </Blocks.Row>
     </Blocks>

@@ -5,6 +5,7 @@ import { Container } from "@ui/container"
 import { Heading } from "@ui/heading"
 import { Modal } from "@ui/modal"
 import { Button } from "@ui/button"
+import { Popover } from "@ui/popover"
 
 /**
  * Главная страница инструментов
@@ -25,6 +26,13 @@ export const Main = (): ReactNode => {
               <p>Еще очередной текст для проверки работы модального окна</p>
             </div>
           </Modal>
+
+          <Popover trigger={<Button>Открыть поповер</Button>}>
+            <div>
+              <p>Это поповер</p>
+              <p>Еще очередной текст для проверки работы поповера</p>
+            </div>
+          </Popover>
         </Container>
       </Card.Body>
     </Card>
