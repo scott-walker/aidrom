@@ -1,5 +1,5 @@
 import { makeClasses } from "@lib/style-api"
-import { DateTag } from "@ui/date-tag"
+// import { DateTag } from "@ui/date-tag"
 import { Tag } from "@ui/tag"
 import type { Agent } from "../lib/types"
 import { AgentAvatar } from "./agent-avatar"
@@ -31,9 +31,8 @@ export const AgentCard = ({ agent, className = "" }: AgentCardProps) => {
   )
   const nameClasses = makeClasses("text-lg", "font-bold", "text-center")
   const avatarClasses = makeClasses()
-  const sectionClasses = makeClasses("px-6", "w-full", "text-sm")
-  const sectionTitleClasses = makeClasses("text-lg", "font-bold")
-  const sectionContentClasses = makeClasses("mt-2", "text-sm")
+  // const sectionClasses = makeClasses("px-6", "w-full", "text-sm")
+  // const sectionContentClasses = makeClasses("mt-2", "text-sm")
 
   return (
     <div className={containerClasses}>
@@ -44,10 +43,12 @@ export const AgentCard = ({ agent, className = "" }: AgentCardProps) => {
         <div className={nameClasses}>{agent.name}</div>
         <Tag>{agent.provider.name}</Tag>
       </section>
-      <section className={sectionClasses}>
-        <h6 className={sectionTitleClasses}>Обновлен</h6>
-        <DateTag date={agent.updatedAt} className={sectionContentClasses} />
-      </section>
+      {/* <section className={sectionClasses}>
+        <div className="flex items-end gap-3">
+          <h6>Обновлен</h6>
+          <DateTag date={agent.updatedAt} className={sectionContentClasses} />
+        </div>
+      </section> */}
     </div>
   )
 }

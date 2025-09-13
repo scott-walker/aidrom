@@ -47,7 +47,7 @@ export const Avatar = ({
     }
   })
 
-  const iconSizes = { sm: 32, md: 38, lg: 42, xl: 48 }
+  const iconSizes = { sm: 26, md: 32, lg: 38, xl: 48 }
 
   return (
     <div className={classes(size)} {...props}>
