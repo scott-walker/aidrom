@@ -14,5 +14,5 @@ type AgentAvatarProps = AvatarProps & {
  * @namespace Entities.Agent.UI.AgentAvatar
  */
 export const AgentAvatar = ({ agent, ...props }: AgentAvatarProps) => {
-  return <Avatar src="https://api.dicebear.com/9.x/bottts/svg?seed=Robert" {...props} />
+  return <Avatar src={agent.avatar} {...props} />
 }

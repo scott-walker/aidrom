@@ -1,4 +1,4 @@
-import type { ComponentProps } from "react"
+import type { ComponentProps, ReactNode } from "react"
 import * as RadixSelect from "@radix-ui/react-select"
 import { type SelectContentProps } from "@radix-ui/react-select"
 import { makeClasses, makeUiBox, makeUiClickable, makeUiHoverableAnimation, makeUiTransition } from "@lib/style-api"
@@ -15,29 +15,41 @@ export type SelectProps = Omit<ComponentProps<"select">, "size"> & {
   placeholder?: string
   className?: string
   onChangeValue?: (value: string) => void
+  renderItem?: (item: { label: string; value: string }) => ReactNode
+  error?: boolean
 }
 
 /**
  * Компонент выбора (селект)
  * @namespace Shared.UI.Select
  */
-export const Select = ({ items, value, defaultValue, placeholder, className, onChangeValue }: SelectProps) => {
+export const Select = ({
+  items,
+  value,
+  defaultValue,
+  placeholder,
+  className,
+  onChangeValue,
+  error,
+  renderItem
+}: SelectProps) => {
   const triggerClasses = makeClasses(
     makeUiBox(),
     makeUiClickable(),
     makeUiTransition(),
     makeUiHoverableAnimation(),
 
-    "data-[state=open]:border-primary",
-    "hover:border-primary",
-
-    "w-max",
-    "w-min-[170px]",
+    "justify-between",
+    "w-full",
 
     "bg-background",
-    "border-background",
     "text-soft-foreground",
     "fill-background",
+
+    error ? "border-danger" : "border-background",
+    error ? "hover:border-danger" : "hover:border-primary",
+    error ? "data-[state=open]:border-danger" : "data-[state=open]:border-primary",
+
     className
   )
   const contentClasses = makeClasses(
@@ -74,20 +86,10 @@ export const Select = ({ items, value, defaultValue, placeholder, className, onC
           <RadixSelect.Viewport>
             {items.map(({ label, value }) => (
               <RadixSelect.Item value={value} key={value} className={itemClasses}>
-                <RadixSelect.ItemText>{label}</RadixSelect.ItemText>
+                <RadixSelect.ItemText>{renderItem ? renderItem({ label, value }) : label}</RadixSelect.ItemText>
                 <RadixSelect.ItemIndicator />
               </RadixSelect.Item>
             ))}
-
-            {/* <RadixSelect.Group>
-              <RadixSelect.Label />
-              {items.map(({ label, value }) => (
-                <RadixSelect.Item value={value}>
-                  <RadixSelect.ItemText>{label}</RadixSelect.ItemText>
-                  <RadixSelect.ItemIndicator />
-                </RadixSelect.Item>
-              ))}
-            </RadixSelect.Group> */}
 
             <RadixSelect.Separator />
           </RadixSelect.Viewport>

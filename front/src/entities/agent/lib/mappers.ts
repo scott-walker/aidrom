@@ -1,5 +1,5 @@
-import type { AgentResponseDTO, AgentRequestDTO } from "../api/dto"
-import type { Agent } from "./types"
+import type { AgentResponseDTO, AgentRequestDTO } from "./dto"
+import type { Agent, AgentCreateData, AgentUpdateData } from "./types"
 
 /**
  * Маппер из DTO в сущность
@@ -8,6 +8,7 @@ import type { Agent } from "./types"
 export const toAgentSchema = (dto: AgentResponseDTO): Agent => ({
   id: dto.id,
   name: dto.name,
+  avatar: dto.avatar ? atob(dto.avatar) : "",
   params: dto.params,
   description: dto.description,
   provider: dto.provider,
@@ -19,27 +20,28 @@ export const toAgentSchema = (dto: AgentResponseDTO): Agent => ({
  * Маппер из сущности в DTO (для создания агента)
  * @namespace Entities.Agent.Model.toAgentDTO
  */
-export const toAgentCreateDTO = (agent: Partial<Agent>): Partial<AgentRequestDTO> => {
-  const data = {} as Partial<AgentRequestDTO>
-
-  if (agent.name) data.name = agent.name
-  if (agent.params) data.params = agent.params as Record<string, never>
-  if (agent.description) data.description = agent.description
-  if (agent.provider) data.provider = agent.provider
-
-  return data
+export const toAgentCreateDTO = (data: AgentCreateData): AgentRequestDTO => {
+  return {
+    name: data.name,
+    avatar: data.avatar ? btoa(data.avatar) : "",
+    params: data.params as Record<string, never>,
+    description: data.description,
+    providerId: data.providerId
+  }
 }
 
 /**
  * Маппер из сущности в DTO (для обновления агента)
  * @namespace Entities.Agent.Model.toAgentUpdateDTO
  */
-export const toAgentUpdateDTO = (agent: Partial<Agent>): Partial<AgentRequestDTO> => {
-  const data = {} as Partial<AgentRequestDTO>
+export const toAgentUpdateDTO = (agent: AgentUpdateData): AgentRequestDTO => {
+  const data = {} as AgentRequestDTO
 
   if (agent.name) data.name = agent.name
+  if (agent.avatar) data.avatar = agent.avatar ? btoa(agent.avatar) : ""
   if (agent.params) data.params = agent.params as Record<string, never>
   if (agent.description) data.description = agent.description
+  if (agent.providerId) data.providerId = agent.providerId
 
   return data
 }

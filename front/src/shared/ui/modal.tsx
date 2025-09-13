@@ -12,6 +12,7 @@ type ModalProps = {
   trigger: ReactNode
   open?: boolean | undefined
   title?: string
+  description?: string
   onOpenChange?: (open: boolean) => void
   onClose?: () => void
 }
@@ -24,7 +25,8 @@ export const Modal = ({
   children,
   trigger,
   open,
-  title = "",
+  title = "Диалоговое окно",
+  description,
   onOpenChange = () => {},
   onClose = () => {}
 }: ModalProps) => {
@@ -62,6 +64,7 @@ export const Modal = ({
     "border-background-hard"
   )
   const titleClasses = makeClasses("text-lg", "font-bold")
+  const descriptionClasses = makeClasses("text-sm", "text-foreground-soft", "px-4", "py-2")
   const bodyClasses = makeClasses("px-4", "py-2", "w-full", "h-full")
   const closeClasses = makeClasses("text-foreground-soft", "cursor-pointer", "hover:text-primary")
 
@@ -70,17 +73,18 @@ export const Modal = ({
       <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className={overlayClasses} />
-        <div className={windowClasses}>
+        <Dialog.Content className={windowClasses} aria-describedby={description ? undefined : undefined}>
           <div className={contentClasses}>
             <div className={headerClasses}>
-              {title && <div className={titleClasses}>{title}</div>}
+              <Dialog.Title className={titleClasses}>{title}</Dialog.Title>
               <Dialog.Close asChild className={closeClasses} onClick={onClose}>
                 <Icon name="x" size={18} />
               </Dialog.Close>
             </div>
+            {description && <Dialog.Description className={descriptionClasses}>{description}</Dialog.Description>}
             <div className={bodyClasses}>{children}</div>
           </div>
-        </div>
+        </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
   )

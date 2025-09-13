@@ -10,8 +10,8 @@ export const AGENT_QUERY_KEY = "agent"
  */
 export const queryKeys = {
   all: [AGENT_QUERY_KEY] as const,
-  lists: (filters: Record<string, string>) => [AGENT_QUERY_KEY, "list", filters] as const,
-  items: (id: number) => [AGENT_QUERY_KEY, id] as const
+  list: (filters: Record<string, string>) => [AGENT_QUERY_KEY, "list", filters] as const,
+  details: (id: number) => [AGENT_QUERY_KEY, id] as const
 }
 
 // 5 минут кеша для списка агентов
@@ -25,7 +25,7 @@ export const STALE_AGENT_BY_ID_TIME = 300000
  */
 export const useAgents = (): AgentsQueryData => {
   const { data, isLoading, error } = useQuery({
-    queryKey: queryKeys.lists({}),
+    queryKey: queryKeys.list({}),
     queryFn: fetchAgents,
     staleTime: STALE_AGENTS_TIME
   })
@@ -43,7 +43,7 @@ export const useAgents = (): AgentsQueryData => {
  */
 export const useAgentById = (id: number): AgentQueryData => {
   const { data, isLoading, error } = useQuery({
-    queryKey: queryKeys.items(id),
+    queryKey: queryKeys.details(id),
     queryFn: () => fetchAgentById(id),
     enabled: !!id
   })

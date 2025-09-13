@@ -20,7 +20,7 @@ export type AvatarProps = ComponentProps<"div"> & {
 export const Avatar = ({
   size = "md",
   src,
-  icon = "user",
+  icon = "bot-message-square",
   initials,
   className = "",
   ...props
@@ -30,7 +30,7 @@ export const Avatar = ({
       "inline-flex",
       "items-center",
       "justify-center",
-      "bg-primary",
+      "bg-brand-gradient",
       "text-primary-foreground",
       "overflow-hidden",
       "shrink-0",
@@ -47,7 +47,7 @@ export const Avatar = ({
     }
   })
 
-  const iconSizes = { sm: 16, md: 20, lg: 24, xl: 28 }
+  const iconSizes = { sm: 32, md: 38, lg: 42, xl: 48 }
 
   return (
     <div className={classes(size)} {...props}>
