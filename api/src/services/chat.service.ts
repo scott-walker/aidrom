@@ -185,7 +185,7 @@ export const sendMessage = async (chatId: number, message: string): Promise<Send
     const chat = await getChatById(chatId)
 
     // Отправляем запрос к API
-    const request: RequestWithResponseContent = await sendRequest(chat.agent.id, message)
+    const request: RequestWithResponseContent = await sendRequest(chat.agent.id, chat.client.id, message)
 
     // Создаем сообщение клиента
     logger.info("Создание сообщения клиента")

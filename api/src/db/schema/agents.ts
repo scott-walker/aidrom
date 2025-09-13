@@ -2,6 +2,7 @@ import { pgTable, index } from "drizzle-orm/pg-core"
 import { relations } from "drizzle-orm"
 import { chats } from "./chats"
 import { providers } from "./providers"
+import { agentRules } from "./agentRules"
 
 /**
  * Агенты
@@ -34,5 +35,6 @@ export const agentsRelations = relations(agents, ({ many, one }) => ({
     fields: [agents.providerId],
     references: [providers.id]
   }),
-  chats: many(chats)
+  chats: many(chats),
+  agentRules: many(agentRules)
 }))

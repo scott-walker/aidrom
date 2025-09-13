@@ -149,9 +149,13 @@ export const deleteAgent = async (agentId: number): Promise<Agent> => {
  * Отправить запрос к AI агенту
  * @namespace Agent.Service.sendRequest
  */
-export const sendRequest = async (agentId: number, message: string): Promise<RequestWithResponseContent> => {
+export const sendRequest = async (
+  agentId: number,
+  clientId: number,
+  message: string
+): Promise<RequestWithResponseContent> => {
   try {
-    logger.info("Отправка запроса к AI агенту", { agentId, message })
+    logger.info("Отправка запроса к AI агенту", { agentId, clientId, message })
 
     const agent = await getAgentById(agentId)
 
@@ -161,12 +165,14 @@ export const sendRequest = async (agentId: number, message: string): Promise<Req
       params: agent.params
     })
 
-    logger.info("Запрос к API успешно отправлен", { agentId })
+    logger.info("Запрос к API успешно отправлен", { agentId, clientId })
     logger.info("Сохранение нового запроса в БД")
 
     // Сохраняем запрос в БД
     const request = await createRequest({
       providerId: agent.providerId,
+      agentId: agent.id,
+      clientId,
       providerRequestId: response.providerRequestId,
       requestParams: response.requestParams,
       responseData: response.responseData,

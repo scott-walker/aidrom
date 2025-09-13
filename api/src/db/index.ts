@@ -18,6 +18,8 @@ export type {
   Agent,
   CreateAgentData,
   UpdateAgentData,
+  AgentRule,
+  CreateAgentRuleData,
 
   // Клиенты
   Client,

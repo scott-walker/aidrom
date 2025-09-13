@@ -1,5 +1,6 @@
 export { providers, providersRelations } from "./providers"
 export { agents, agentsRelations } from "./agents"
+export { agentRules, agentRulesRelations } from "./agentRules"
 export { clients, clientsRelations } from "./clients"
 export { chats, chatsRelations } from "./chats"
 export { messagePairs, messagePairsRelations } from "./messagePairs"

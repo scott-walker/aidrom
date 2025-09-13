@@ -1,5 +1,15 @@
 import { InferSelectModel, InferInsertModel } from "drizzle-orm"
-import { providers, agents, clients, chats, messagePairs, clientMessages, agentMessages, requests } from "./schema"
+import {
+  providers,
+  agents,
+  agentRules,
+  clients,
+  chats,
+  messagePairs,
+  clientMessages,
+  agentMessages,
+  requests
+} from "./schema"
 
 // Типы для провайдера
 export type Provider = InferSelectModel<typeof providers>
@@ -10,6 +20,10 @@ export type UpdateProviderData = Partial<CreateProviderData>
 export type Agent = InferSelectModel<typeof agents>
 export type CreateAgentData = InferInsertModel<typeof agents>
 export type UpdateAgentData = Partial<CreateAgentData>
+
+// Типы для правила агента
+export type AgentRule = InferSelectModel<typeof agentRules>
+export type CreateAgentRuleData = InferInsertModel<typeof agentRules>
 
 // Типы для клиента
 export type Client = InferSelectModel<typeof clients>
