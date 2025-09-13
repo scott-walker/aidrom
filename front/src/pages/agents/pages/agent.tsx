@@ -62,6 +62,14 @@ export const Agent = (): ReactNode => {
               <AgentDescriptionInfo agent={agent as AgentType} />
             </Card.Body>
           </Card>
+
+          <Card>
+            <Card.Header>
+              <Heading>Правила</Heading>
+            </Card.Header>
+            {/* <Card.Body>
+            </Card.Body> */}
+          </Card>
         </Blocks.Block>
       </Blocks.Row>
     </Blocks>

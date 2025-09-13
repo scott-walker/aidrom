@@ -6,7 +6,7 @@ import { Input } from "@ui/input"
 import { Json } from "@ui/json"
 import { Markdown } from "@ui/markdown"
 import { Select } from "@ui/select"
-import { SelectAvatar } from "@shared/ui/select-avatar"
+import { SelectAvatar } from "@ui/select-avatar"
 import { useProviders } from "@entities/provider"
 
 import { type AgentForm as AgentFormType } from "../model/form-schema"
@@ -55,6 +55,7 @@ export const AgentForm = ({ children, values, onSubmit = () => {} }: FormProps) 
           <FormField label="Название" error={errors.name} className="flex-1">
             <Input {...register("name")} placeholder="Введите название провайдера" error={!!errors.name} />
           </FormField>
+
           <FormField label="Провайдер" error={errors.providerId} className="flex-1">
             <Controller
               name="providerId"
