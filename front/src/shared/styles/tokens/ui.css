@@ -29,12 +29,13 @@
   /* Карточка */
   --ui-card-gap: 10px;
   --ui-card-offset-x: 10px;
-  --ui-card-offset-y: 13px;
+  --ui-card-offset-y: 9px;
   /* --ui-card-background: color-mix(in srgb, var(--color-background-soft) 70%, transparent); */
   --ui-card-background: var(--color-background-soft);
   --ui-card-border: var(--color-background);
   --ui-card-rounded: 10px;
-  --ui-card-shadow: 0px 2px 34px 0px var(--color-ghost-base);
+  /* --ui-card-shadow: 0px 2px 6px 0px var(--color-ghost-base); */
+  --ui-card-shadow: none;
 
   /* Таблица */
   --ui-table-offset-x: 20px;

@@ -1,6 +1,14 @@
 /* https://www.cssportal.com/css-loader-generator/ */
 
 .loader {
+  width: 40px;
+  height: 40px;
+  background: var(--color-primary);
+  transform: perspective(150px) rotateX(0);
+  animation: f1 1s infinite;
+}
+
+/* .loader {
   width: 12px;
   height: 12px;
   border-radius: 50%;
@@ -9,8 +17,15 @@
   box-shadow: -60px 15px, -60px 15px, -60px 15px;
   transform: translateY(-15px);
   animation: d9 1s infinite linear;
+} */
+
+@keyframes f1 {
+  100% {
+    transform: perspective(150px) rotateX(180deg);
+  }
 }
 
+/* 
 @keyframes d9 {
   16.67% {
     box-shadow: -60px 15px, -60px 15px, 19px 15px;
@@ -31,4 +46,4 @@
   100% {
     box-shadow: 60px 15px, 60px 15px, 60px 15px;
   }
-}
+} */
