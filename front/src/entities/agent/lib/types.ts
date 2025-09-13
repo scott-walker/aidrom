@@ -74,3 +74,12 @@ export type AgentRuleCreateData = {
   content: string
   priority?: number
 }
+
+/**
+ * Тип для данных запроса сортировки правил агента
+ * @namespace Entities.Agent.Lib.Types.AgentRuleSortData
+ */
+export type AgentRuleSortData = {
+  agentId: number
+  ruleIds: number[]
+}

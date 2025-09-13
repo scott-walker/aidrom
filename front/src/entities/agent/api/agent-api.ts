@@ -1,5 +1,12 @@
 import { restClient } from "@shared/api"
-import type { Agent, AgentCreateData, AgentRule, AgentRuleCreateData, AgentUpdateData } from "../lib/types"
+import type {
+  Agent,
+  AgentCreateData,
+  AgentRule,
+  AgentRuleCreateData,
+  AgentRuleSortData,
+  AgentUpdateData
+} from "../lib/types"
 import {
   toAgentSchema,
   toAgentCreateDTO,
@@ -46,6 +53,16 @@ export const deleteAgentRule = async (ruleId: number): Promise<AgentRule> => {
   const { data } = await restClient.delete(`agents/rules/${ruleId}`)
 
   return toAgentRuleSchema(data)
+}
+
+/**
+ * Сортировать правила агента
+ * @namespace Entities.Agent.Api.sortAgentRules
+ */
+export const sortAgentRules = async (agentId: number, ruleIds: number[]): Promise<AgentRuleSortData> => {
+  await restClient.put(`agents/${agentId}/rules-sort`, { ruleIds })
+
+  return { agentId, ruleIds }
 }
 
 /**

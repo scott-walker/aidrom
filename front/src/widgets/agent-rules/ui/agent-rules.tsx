@@ -20,10 +20,10 @@ export const AgentRules = ({ agent }: AgentRulesProps) => {
     <Card>
       <Card.Header className="gap-4">
         <Heading>Правила</Heading>
-        <AgentAddRule agentId={agent.id} />
+        <AgentAddRule agent={agent as AgentType} />
       </Card.Header>
       <Card.Body>
-        <AgentRulesList rules={agent.rules} />
+        <AgentRulesList agent={agent as AgentType} />
       </Card.Body>
     </Card>
   )

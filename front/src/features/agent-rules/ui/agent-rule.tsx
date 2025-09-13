@@ -31,7 +31,7 @@ export const AgentRule = ({ rule, children, className = "" }: AgentRuleProps) =>
   )
 
   return (
-    <div className={cardClasses}>
+    <div className={cardClasses} data-id={rule.id}>
       <div>{rule.content}</div>
       <div className="ml-auto flex items-center gap-4">{children}</div>
     </div>

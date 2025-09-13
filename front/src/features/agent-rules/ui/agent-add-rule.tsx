@@ -6,7 +6,7 @@ import { Popover } from "@ui/popover"
 import { Textarea } from "@ui/textarea"
 import { ErrorBlock } from "@ui/error-block"
 
-import { useAddAgentRule } from "@entities/agent"
+import { useAddAgentRule, type Agent as AgentType } from "@entities/agent"
 
 import { useForm } from "../lib/use-form"
 import { type AgentRulesForm } from "../model/form-schema"
@@ -16,7 +16,7 @@ import { type AgentRulesForm } from "../model/form-schema"
  * @namespace Features.AgentRules.Ui.AgentAddRule.Props
  */
 type AgentAddRuleProps = {
-  agentId: number
+  agent: AgentType
   className?: string
 }
 
@@ -24,7 +24,7 @@ type AgentAddRuleProps = {
  * Компонент AgentAddRule
  * @namespace Features.AgentRules.Ui.AgentAddRule
  */
-export const AgentAddRule = ({ agentId, className = "" }: AgentAddRuleProps) => {
+export const AgentAddRule = ({ agent, className = "" }: AgentAddRuleProps) => {
   const [open, setOpen] = useState(false)
   const { mutate: addAgentRule, isPending, error } = useAddAgentRule()
   const {
@@ -39,7 +39,7 @@ export const AgentAddRule = ({ agentId, className = "" }: AgentAddRuleProps) => 
 
   const onSubmit = (data: AgentRulesForm) => {
     addAgentRule(
-      { agentId, data },
+      { agentId: agent.id, data },
       {
         onSuccess: () => {
           setOpen(false)
