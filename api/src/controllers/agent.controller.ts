@@ -159,3 +159,26 @@ export const deleteRule = async (req: Request, res: Response, next: NextFunction
     next(err)
   }
 }
+
+/**
+ * Сортировать правила агента
+ * @namespace Agent.Controller.sortRules
+ */
+export const sortRules = async (req: Request, res: Response, next: NextFunction) => {
+  const agentId = parseInt(req.params.agentId)
+  const ruleIds = req.body.ruleIds
+
+  try {
+    logger.info("Сортировка правил агента", { agentId, ruleIds })
+
+    await agentService.sortRules(agentId, ruleIds)
+
+    logger.info("Правила агента успешно отсортированы", { agentId })
+
+    res.json({ message: "Правила агента успешно отсортированы" })
+  } catch (err) {
+    logger.error("Ошибка при сортировке правил агента", { error: err.message, agentId })
+
+    next(err)
+  }
+}

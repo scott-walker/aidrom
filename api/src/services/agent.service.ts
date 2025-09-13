@@ -3,7 +3,7 @@
  * @namespace Agent.Service
  */
 
-import { eq, desc } from "drizzle-orm"
+import { eq, desc, asc } from "drizzle-orm"
 import {
   db,
   agents,
@@ -63,7 +63,9 @@ export const getAgentById = async (agentId: number): Promise<Agent> => {
       where: eq(agents.id, agentId),
       with: {
         provider: true,
-        rules: true
+        rules: {
+          orderBy: [asc(agentRules.priority)]
+        }
       }
     })
 
@@ -239,6 +241,26 @@ export const deleteRule = async (ruleId: number): Promise<AgentRule> => {
     return rule
   } catch (error) {
     logger.error("Ошибка при удалении правила агента в БД", { error: error.message, ruleId })
+
+    throw error
+  }
+}
+
+/**
+ * Сортировать правила агента
+ * @namespace Agent.Service.sortRules
+ */
+export const sortRules = async (agentId: number, ruleIds: number[]): Promise<void> => {
+  try {
+    logger.info("Сортировка правил агента в БД", { agentId, ruleIds })
+
+    ruleIds.forEach(async (ruleId, index) => {
+      await db.update(agentRules).set({ priority: index }).where(eq(agentRules.id, ruleId))
+    })
+
+    logger.info("Правила агента успешно отсортированы", { agentId })
+  } catch (error) {
+    logger.error("Ошибка при сортировке правил агента в БД", { error: error.message, agentId, ruleIds })
 
     throw error
   }
