@@ -1,5 +1,5 @@
 import { AgentAddRule, AgentRules as AgentRulesList } from "@features/agent-rules"
-import { type AgentRule as AgentRuleType } from "@entities/agent"
+import { type Agent as AgentType } from "@entities/agent"
 import { Card } from "@shared/ui/card"
 import { Heading } from "@shared/ui/heading"
 
@@ -8,22 +8,22 @@ import { Heading } from "@shared/ui/heading"
  * @namespace Widgets.AgentRules.Ui.AgentRules.Props
  */
 type AgentRulesProps = {
-  rules: AgentRuleType[]
+  agent: AgentType
 }
 
 /**
  * Компонент правил агента
  * @namespace Widgets.AgentRules.Ui.AgentRules
  */
-export const AgentRules = ({ rules }: AgentRulesProps) => {
+export const AgentRules = ({ agent }: AgentRulesProps) => {
   return (
     <Card>
       <Card.Header className="gap-4">
         <Heading>Правила</Heading>
-        <AgentAddRule />
+        <AgentAddRule agentId={agent.id} />
       </Card.Header>
       <Card.Body>
-        <AgentRulesList rules={rules} />
+        <AgentRulesList rules={agent.rules} />
       </Card.Body>
     </Card>
   )

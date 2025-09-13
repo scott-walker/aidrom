@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient, type UseMutationResult } from "@tanstack/react-query"
 import { queryKeys } from "./agent-queries"
-import { createAgent, updateAgent } from "./agent-api"
-import type { Agent, AgentCreateData, AgentUpdateData } from "../lib/types"
+import { addAgentRule, createAgent, deleteAgentRule, updateAgent } from "./agent-api"
+import type { Agent, AgentCreateData, AgentRule, AgentRuleCreateData, AgentUpdateData } from "../lib/types"
 
 /**
  * Хук для создания агента
@@ -32,6 +32,40 @@ export const useUpdateAgent = (): UseMutationResult<Agent, Error, { agentId: num
     onSuccess: (updatedAgent: Agent) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.list({}) })
       queryClient.invalidateQueries({ queryKey: queryKeys.details(updatedAgent.id) })
+    }
+  })
+}
+
+/**
+ * Хук для добавления правила агента
+ * @namespace Entities.Agent.Api.useAddAgentRule
+ */
+export const useAddAgentRule = (): UseMutationResult<
+  AgentRule,
+  Error,
+  { agentId: number; data: AgentRuleCreateData }
+> => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: ({ agentId, data }: { agentId: number; data: AgentRuleCreateData }) => addAgentRule(agentId, data),
+    onSuccess: (data: AgentRule) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.details(data.agentId) })
+    }
+  })
+}
+
+/**
+ * Хук для удаления правила агента
+ * @namespace Entities.Agent.Api.useDeleteAgentRule
+ */
+export const useDeleteAgentRule = (): UseMutationResult<AgentRule, Error, { ruleId: number }> => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: ({ ruleId }: { ruleId: number }) => deleteAgentRule(ruleId),
+    onSuccess: (data: AgentRule) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.details(data.agentId) })
     }
   })
 }

@@ -5,7 +5,9 @@ import { makeClasses, makeUiTransition } from "@lib/style-api"
  * Пропсы компонента textarea
  * @namespace Shared.UI.ChatInput.TextareaProps
  */
-type TextareaProps = ComponentProps<"textarea"> & {}
+type TextareaProps = ComponentProps<"textarea"> & {
+  error?: boolean
+}
 
 /**
  * Компонент ввода сообщения
@@ -17,6 +19,7 @@ export const Textarea = ({
   className = "",
   placeholder = "Введите текст",
   disabled = false,
+  error = false,
   ...props
 }: TextareaProps) => {
   const classes = makeClasses(
@@ -35,6 +38,9 @@ export const Textarea = ({
     disabled && "opacity-50",
     disabled && "select-none",
     disabled && "hover:border-transparent",
+    error && "border-danger",
+    error && "hover:border-danger",
+    error && "focus-within:border-danger",
     className
   )
 

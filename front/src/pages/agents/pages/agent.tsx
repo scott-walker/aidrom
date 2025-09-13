@@ -64,7 +64,7 @@ export const Agent = (): ReactNode => {
             </Card.Body>
           </Card>
 
-          <AgentRules rules={agent?.rules ?? []} />
+          <AgentRules agent={agent as AgentType} />
         </Blocks.Block>
       </Blocks.Row>
     </Blocks>

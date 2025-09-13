@@ -27,7 +27,6 @@ export const AgentRule = ({ rule, children, className = "" }: AgentRuleProps) =>
     "text-foreground-soft",
     "font-semibold",
     "rounded-lg",
-    "shadow-md/5",
     className
   )
 

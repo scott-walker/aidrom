@@ -1,6 +1,6 @@
 export type { Agent, AgentCreateData, AgentUpdateData, AgentRule } from "./lib/types"
 export { useAgents, useAgentById } from "./api/agent-queries"
-export { useCreateAgent, useUpdateAgent } from "./api/agent-mutations"
+export { useCreateAgent, useUpdateAgent, useAddAgentRule, useDeleteAgentRule } from "./api/agent-mutations"
 
 export { AgentInfo } from "./ui/agent-info"
 export { AgentCard } from "./ui/agent-card"

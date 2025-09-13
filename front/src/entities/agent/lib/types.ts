@@ -25,6 +25,7 @@ export type AgentRule = {
   id: number
   content: string
   priority: number
+  agentId: number
 }
 
 /**
@@ -64,3 +65,12 @@ export type AgentCreateData = {
  * @namespace Entities.Agent.Lib.Types.AgentUpdateData
  */
 export type AgentUpdateData = Partial<AgentCreateData>
+
+/**
+ * Тип для данных запроса добавления правила агента
+ * @namespace Entities.Agent.Lib.Types.AgentRuleCreateData
+ */
+export type AgentRuleCreateData = {
+  content: string
+  priority?: number
+}

@@ -1,5 +1,5 @@
-import type { AgentResponseDTO, AgentRequestDTO } from "./dto"
-import type { Agent, AgentCreateData, AgentUpdateData } from "./types"
+import type { AgentResponseDTO, AgentRequestDTO, AgentRuleRequestDTO, AgentRuleResponseDTO } from "./dto"
+import type { Agent, AgentCreateData, AgentRule, AgentRuleCreateData, AgentUpdateData } from "./types"
 
 /**
  * Маппер из DTO в сущность
@@ -15,6 +15,17 @@ export const toAgentSchema = (dto: AgentResponseDTO): Agent => ({
   rules: dto.rules,
   createdAt: dto.createdAt,
   updatedAt: dto.updatedAt
+})
+
+/**
+ * Маппер из DTO в сущность (для правила агента)
+ * @namespace Entities.Agent.Model.toAgentRuleSchema
+ */
+export const toAgentRuleSchema = (dto: AgentRuleResponseDTO): AgentRule => ({
+  id: dto.id,
+  content: dto.content,
+  priority: dto.priority,
+  agentId: dto.agentId
 })
 
 /**
@@ -45,4 +56,15 @@ export const toAgentUpdateDTO = (agent: AgentUpdateData): AgentRequestDTO => {
   if (agent.providerId) data.providerId = agent.providerId
 
   return data
+}
+
+/**
+ * Маппер из сущности в DTO (для добавления правила агента)
+ * @namespace Entities.Agent.Model.toAgentRuleCreateDTO
+ */
+export const toAgentRuleCreateDTO = (data: AgentRuleCreateData): AgentRuleRequestDTO => {
+  return {
+    content: data.content,
+    priority: data.priority ?? 0
+  }
 }
