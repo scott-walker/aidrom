@@ -39,6 +39,7 @@ export const AgentRules = ({ agent }: AgentRulesProps) => {
   }
 
   if (error) return <ErrorBlock error={error} />
+  if (rules.length === 0) return <div>Правил нет</div>
 
   return (
     <ReactSortable

@@ -25,7 +25,7 @@ export const Textarea = ({
   const classes = makeClasses(
     makeUiTransition(),
     "w-full",
-    "px-6",
+    "px-4",
     "py-2",
     "rounded-lg",
     "border-2",
