@@ -3,8 +3,8 @@ import { Card } from "@ui/card"
 import { Heading } from "@ui/heading"
 import { IconButton } from "@ui/icon-button"
 import { Markdown } from "@ui/markdown"
-import { ErrorBlock } from "@ui/error-block"
 import { type Agent as AgentType, AgentDescriptionInfo, useUpdateAgent } from "@entities/agent"
+import { useToast } from "@features/toasts"
 
 /**
  * Пропсы для компонента AgentEditableDescription
@@ -21,17 +21,27 @@ type AgentEditableDescriptionProps = {
 export const AgentEditableDescription = ({ agent }: AgentEditableDescriptionProps) => {
   const [edit, setEdit] = useState(false)
   const [description, setDescription] = useState(agent.description)
-  const { mutate: updateAgent, isPending, error } = useUpdateAgent()
+  const { mutate: updateAgent, isPending } = useUpdateAgent()
+  const toast = useToast()
 
   const onCancel = () => {
     setEdit(false)
     setDescription(agent.description)
   }
   const onSave = () => {
-    updateAgent({ agentId: agent.id, data: { description } }, { onSuccess: () => setEdit(false) })
+    updateAgent(
+      { agentId: agent.id, data: { description } },
+      {
+        onSuccess: () => {
+          setEdit(false)
+          toast.success("Описание успешно сохранено")
+        },
+        onError: ({ message }) => {
+          toast.error("Произошла ошибка при сохранении описания", message)
+        }
+      }
+    )
   }
-
-  if (error) return <ErrorBlock error={error} />
 
   return (
     <Card>

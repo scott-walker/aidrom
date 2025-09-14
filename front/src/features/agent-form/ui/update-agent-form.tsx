@@ -1,7 +1,7 @@
 import { Button } from "@ui/button"
-import { ErrorBlock } from "@ui/error-block"
 import { LoaderBlock } from "@ui/loader-block"
 import { useAgentById, useUpdateAgent, type Agent } from "@entities/agent"
+import { useToast } from "@features/toasts"
 
 import { AgentForm } from "./agent-form"
 import { type AgentForm as AgentFormType } from "../model/form-schema"
@@ -21,16 +21,27 @@ type UpdateAgentFormProps = {
  * @namespace Features.AgentForm.Ui.UpdateAgentForm
  */
 export const UpdateAgentForm = ({ agentId, onUpdated = () => {} }: UpdateAgentFormProps) => {
-  const { agent, isLoading, error: fetchError } = useAgentById(agentId)
-  const { mutate: updateAgent, isPending, error: updateError } = useUpdateAgent()
+  const { agent, isLoading } = useAgentById(agentId)
+  const { mutate: updateAgent } = useUpdateAgent()
   const values = toAgentDTOForm(agent as Agent)
+  const toast = useToast()
 
   const onSubmit = (data: AgentFormType) => {
-    updateAgent({ agentId, data: toAgentUpdateDTO(data) }, { onSuccess: () => onUpdated(data) })
+    updateAgent(
+      { agentId, data: toAgentUpdateDTO(data) },
+      {
+        onSuccess: () => {
+          onUpdated(data)
+          toast.success("Агент успешно обновлен")
+        },
+        onError: ({ message }) => {
+          toast.error("Произошла ошибка при обновлении агента", message)
+        }
+      }
+    )
   }
 
-  if (isLoading || isPending) return <LoaderBlock />
-  if (fetchError || updateError) return <ErrorBlock error={(fetchError || updateError) as Error} />
+  if (isLoading) return <LoaderBlock />
 
   return (
     <AgentForm onSubmit={onSubmit} values={values}>

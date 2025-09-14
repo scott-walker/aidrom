@@ -1,5 +1,4 @@
 import { useToastStore } from "../model/toast-store"
-import type { Toast } from "./types"
 
 /**
  * Хук для работы с уведомлениями
@@ -10,17 +9,17 @@ export const useToast = () => {
   const defaultDuration = 4000
 
   return {
-    success: (message: string, options?: Partial<Toast>) => {
-      addToast({ type: "success", message, duration: defaultDuration, ...options })
+    success: (message: string, description?: string) => {
+      addToast({ type: "success", message, duration: defaultDuration, description })
     },
-    error: (message: string, options?: Partial<Toast>) => {
-      addToast({ type: "error", message, duration: defaultDuration, ...options })
+    error: (message: string, description?: string) => {
+      addToast({ type: "error", message, duration: defaultDuration, description })
     },
-    warning: (message: string, options?: Partial<Toast>) => {
-      addToast({ type: "warning", message, duration: defaultDuration, ...options })
+    warning: (message: string, description?: string) => {
+      addToast({ type: "warning", message, duration: defaultDuration, description })
     },
-    info: (message: string, options?: Partial<Toast>) => {
-      addToast({ type: "info", message, duration: defaultDuration, ...options })
+    info: (message: string, description?: string) => {
+      addToast({ type: "info", message, duration: defaultDuration, description })
     },
     remove: removeToast,
     clear: clearToasts

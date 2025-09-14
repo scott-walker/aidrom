@@ -48,16 +48,14 @@ export const Main = (): ReactNode => {
           </div>
 
           <div className="flex gap-6">
-            <Button onClick={() => toast.success("Все произошло успешно", { title: "Уведомление" })}>
+            <Button onClick={() => toast.success("Все произошло успешно", "Уведомление")}>Уведомление</Button>
+            <Button schema="brand" onClick={() => toast.error("Произошла ошибка", "Уведомление")}>
               Уведомление
             </Button>
-            <Button schema="brand" onClick={() => toast.error("Произошла ошибка", { title: "Уведомление" })}>
+            <Button schema="hard" onClick={() => toast.warning("Внимание", "Уведомление")}>
               Уведомление
             </Button>
-            <Button schema="hard" onClick={() => toast.warning("Внимание", { title: "Уведомление" })}>
-              Уведомление
-            </Button>
-            <Button schema="soft" onClick={() => toast.info("Информация", { title: "Уведомление" })}>
+            <Button schema="soft" onClick={() => toast.info("Информация", "Уведомление")}>
               Уведомление
             </Button>
             <Button onClick={() => toast.clear()}>Очистить уведомления</Button>

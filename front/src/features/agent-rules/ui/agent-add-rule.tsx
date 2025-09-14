@@ -4,9 +4,9 @@ import { Button } from "@ui/button"
 import { IconButton } from "@ui/icon-button"
 import { Popover } from "@ui/popover"
 import { Textarea } from "@ui/textarea"
-import { ErrorBlock } from "@ui/error-block"
 
 import { useAddAgentRule, type Agent as AgentType } from "@entities/agent"
+import { useToast } from "@features/toasts"
 
 import { useForm } from "../lib/use-form"
 import { type AgentRulesForm } from "../model/form-schema"
@@ -26,14 +26,14 @@ type AgentAddRuleProps = {
  */
 export const AgentAddRule = ({ agent, className = "" }: AgentAddRuleProps) => {
   const [open, setOpen] = useState(false)
-  const { mutate: addAgentRule, isPending, error } = useAddAgentRule()
+  const { mutate: addAgentRule, isPending } = useAddAgentRule()
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset
   } = useForm()
-
+  const toast = useToast()
   const cardClasses = makeClasses("flex", "items-center", "gap-2", className)
   const trigger = <IconButton schema="primary" circle icon="plus" iconSize={22} />
 
@@ -44,12 +44,14 @@ export const AgentAddRule = ({ agent, className = "" }: AgentAddRuleProps) => {
         onSuccess: () => {
           setOpen(false)
           reset()
+          toast.success("Правило успешно добавлено")
+        },
+        onError: ({ message }) => {
+          toast.error("Произошла ошибка при добавлении правила", message)
         }
       }
     )
   }
-
-  if (error) return <ErrorBlock error={error} />
 
   return (
     <div className={cardClasses}>

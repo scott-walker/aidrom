@@ -11,7 +11,7 @@ import type { ToastType } from "./types"
 type ToastProps = {
   type: ToastType
   message: string
-  title?: string
+  description?: string
   onClose?: () => void
 }
 
@@ -19,7 +19,7 @@ type ToastProps = {
  * Уведомление
  * @namespace Shared.Ui.Toasts.Toast.Toast
  */
-export const Toast = ({ type, title, message, onClose = () => {} }: ToastProps): ReactNode => {
+export const Toast = ({ type, message, description, onClose = () => {} }: ToastProps): ReactNode => {
   const getVariant = makeVariants({
     beforeClasses: [
       "flex",
@@ -31,9 +31,8 @@ export const Toast = ({ type, title, message, onClose = () => {} }: ToastProps):
       "rounded-lg",
       "shadow-lg",
       "border",
-      "max-w-sm",
+      "max-w-lg",
       "w-full",
-      "text-lg",
       "font-display",
       "cursor-pointer",
       "transition-transform",
@@ -59,9 +58,8 @@ export const Toast = ({ type, title, message, onClose = () => {} }: ToastProps):
       <Icon name={iconMap[type] as IconName} size={32} className="mt-0.5 flex-shrink-0" />
 
       <div className="flex-1 min-w-0">
-        {title && <p className="font-semibold text-lg">{title}</p>}
-
-        <p className="text-base">{message}</p>
+        <p className="font-semibold text-lg leading-5">{message}</p>
+        {description && <p className="mt-3 text-base leading-5">{description}</p>}
       </div>
     </div>
   )

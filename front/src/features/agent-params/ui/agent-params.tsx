@@ -6,11 +6,12 @@ import { FormField } from "@ui/form-field"
 import { Select } from "@ui/select"
 import { Slider } from "@ui/slider"
 import { LoaderBlock } from "@ui/loader-block"
-import { ErrorBlock } from "@ui/error-block"
 import { Button } from "@ui/button"
 
 import { type Agent, useUpdateAgent } from "@entities/agent"
 import { type ProviderWithDriverParamsConfig, useProviderById } from "@entities/provider"
+import { useToast } from "@features/toasts"
+
 import type { AgentParamsForm } from "../model/form-schema"
 import { useForm } from "../lib/use-form"
 
@@ -27,17 +28,14 @@ type AgentParamsProps = {
  * @namespace Features.AgentParams.Ui.AgentParams
  */
 export const AgentParams = ({ agent }: AgentParamsProps) => {
-  const { provider, isLoading, error } = useProviderById(agent.provider.id)
-  const { mutate: updateAgent, error: updateError } = useUpdateAgent()
+  const { provider, isLoading } = useProviderById(agent.provider.id)
+  const { mutate: updateAgent } = useUpdateAgent()
+  const toast = useToast()
   const {
     handleSubmit,
     control,
     formState: { errors }
   } = useForm(agent.params as AgentParamsForm)
-
-  if (isLoading) return <LoaderBlock />
-  if (error) return <ErrorBlock error={error} />
-  if (updateError) return <ErrorBlock error={updateError} />
 
   const onSubmit = (data: AgentParamsForm) => {
     updateAgent(
@@ -45,9 +43,18 @@ export const AgentParams = ({ agent }: AgentParamsProps) => {
         agentId: agent.id,
         data: { params: data as AgentParamsForm }
       },
-      { onSuccess: () => {} }
+      {
+        onSuccess: () => {
+          toast.success("Параметры успешно сохранены")
+        },
+        onError: ({ message }) => {
+          toast.error("Произошла ошибка при сохранении параметров", message)
+        }
+      }
     )
   }
+
+  if (isLoading) return <LoaderBlock />
 
   const paramsConfig = (provider as ProviderWithDriverParamsConfig).driverParamsConfig
   const models = paramsConfig.model.map(model => ({ label: model, value: model }))

@@ -3,8 +3,9 @@ import { LoaderBlock } from "@ui/loader-block"
 import { ErrorBlock } from "@ui/error-block"
 
 import { type ProviderUpdateData, useUpdateProvider, useProviderById } from "@entities/provider"
-import { type ProviderForm as ProviderFormType } from "../model/form-schema"
+import { useToast } from "@features/toasts"
 
+import { type ProviderForm as ProviderFormType } from "../model/form-schema"
 import { ProviderForm } from "./provider-form"
 
 /**
@@ -23,11 +24,20 @@ type ProviderUpdateFormProps = {
 export const ProviderUpdateForm = ({ providerId, onUpdated = () => {} }: ProviderUpdateFormProps) => {
   const { provider, isLoading, error: fetchError } = useProviderById(providerId)
   const { mutate: updateProvider, isPending, error: updateError } = useUpdateProvider()
+  const toast = useToast()
 
   const onSubmit = (data: ProviderFormType) => {
     updateProvider(
       { providerId, data: data as ProviderUpdateData },
-      { onSuccess: data => onUpdated(data as ProviderFormType) }
+      {
+        onSuccess: data => {
+          onUpdated(data)
+          toast.success("Провайдер успешно обновлен")
+        },
+        onError: ({ message }) => {
+          toast.error("Произошла ошибка при обновлении провайдера", message)
+        }
+      }
     )
   }
 
