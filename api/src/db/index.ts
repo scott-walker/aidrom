@@ -11,6 +11,7 @@ export * from "./schema"
 export type {
   // Провайдеры
   Provider,
+  ProviderWithDriver,
   CreateProviderData,
   UpdateProviderData,
 

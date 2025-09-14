@@ -1,5 +1,5 @@
 import { createRestClient } from "@utils/api"
-import { Driver, DriverRequest, DriverResponse } from "../types"
+import { Driver, DriverRequest, DriverRequestParamsConfig, DriverResponse } from "../types"
 import {
   DeepseekDriverConfig,
   DeepseekDriverModel,
@@ -24,6 +24,37 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
 
   const driver: Driver = {
     /**
+     * Получение конфигурации параметров запроса к драйверу
+     * @namespace Drivers.Deepseek.getParams
+     */
+    getParamsConfig: async (): Promise<DriverRequestParamsConfig> => {
+      return {
+        // model: await restClient.get("models").then(res => res.data.map((item: any) => item.id)),
+        model: [DeepseekDriverModel.DEEPSEEK_CHAT, DeepseekDriverModel.DEEPSEEK_REASONER],
+        frequencyPenalty: {
+          min: 0,
+          max: 1
+        },
+        presencePenalty: {
+          min: 0,
+          max: 1
+        },
+        maxTokens: {
+          min: 1,
+          max: 1000
+        },
+        temperature: {
+          min: 0,
+          max: 1
+        },
+        topP: {
+          min: 0,
+          max: 1
+        }
+      }
+    },
+
+    /**
      * Отправка запроса к API Deepseek
      * @namespace Drivers.Deepseek.sendRequest
      */
@@ -31,14 +62,22 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
       logger.info("🚀 Отправка запроса", { request })
 
       try {
-        const params = request.params ?? {}
+        // Сформировать сообщение пользователя
+        const userMessage = { role: DeepseekDriverRole.USER, content: request.message }
+        // Сформировать системные сообщения
+        const systemMessages = (request.systemMessages ?? []).map(message => ({
+          role: DeepseekDriverRole.SYSTEM,
+          content: message
+        }))
+        // Сформировать запрос к API
         const driverRequest: DeepseekDriverRequest = {
-          model: DeepseekDriverModel.DEEPSEEK_CHAT,
-          messages: [
-            { role: DeepseekDriverRole.SYSTEM, content: "Отвечай одним предложением" },
-            { role: DeepseekDriverRole.USER, content: request.message }
-          ],
-          ...params
+          model: request.params.model as DeepseekDriverModel,
+          messages: [...systemMessages, userMessage],
+          frequency_penalty: request.params.frequencyPenalty,
+          presence_penalty: request.params.presencePenalty,
+          max_tokens: request.params.maxTokens,
+          temperature: request.params.temperature,
+          top_p: request.params.topP
         }
 
         const data: DeepseekDriverResponse = await restClient.post("chat/completions", driverRequest)

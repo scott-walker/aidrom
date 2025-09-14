@@ -1,17 +1,27 @@
 import { createApiLogger } from "@utils/logger"
-import { DriverResponse } from "../types"
-import { DummyDriver, DummyDriverConfig, DummyDriverRequest } from "./types"
+import { Driver, DriverRequest, DriverResponse } from "../types"
+import { DummyDriverConfig } from "./types"
 
 /**
  * Фабрика драйвера "заглушка" (для тестирования)
  * @namespace Drivers.Dummy.createDummyDriver
  * @param {DummyDriverConfig} config Конфигурация драйвера
  */
-export const createDummyDriver = (config: DummyDriverConfig): DummyDriver => {
+export const createDummyDriver = (config: DummyDriverConfig): Driver => {
   const logger = createApiLogger("DummyDriver")
 
-  const driver: DummyDriver = {
-    async sendRequest(request: DummyDriverRequest): Promise<DriverResponse> {
+  const driver: Driver = {
+    /**
+     * Получение моделей "заглушки"
+     * @namespace Drivers.Dummy.getModels
+     */
+    getModels: async () => ["dummy1", "dummy2"],
+
+    /**
+     * Отправка запроса к API драйвера "заглушка"
+     * @namespace Drivers.Dummy.sendRequest
+     */
+    async sendRequest(request: DriverRequest): Promise<DriverResponse> {
       logger.info("🚀 Отправка запроса", { request })
 
       await new Promise(resolve => setTimeout(resolve, 1000))

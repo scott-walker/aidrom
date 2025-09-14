@@ -4,10 +4,10 @@
  */
 
 import { eq, desc } from "drizzle-orm"
-import { db, providers, Provider, CreateProviderData, UpdateProviderData } from "@db"
+import { db, providers, Provider, CreateProviderData, UpdateProviderData, ProviderWithDriver } from "@db"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
-import { initDriver, DriverConfig, DriverRequest, DriverResponse } from "@drivers"
+import { initDriver, DriverConfig, DriverRequest, DriverResponse, Driver } from "@drivers"
 
 // Создаем логгер для сервиса провайдеров
 const logger = createServiceLogger("ProviderService")
@@ -38,7 +38,7 @@ export const getProviders = async (): Promise<Provider[]> => {
  * Получить провайдера по его идентификатору
  * @namespace Provider.Service.getProviderById
  */
-export const getProviderById = async (providerId: number): Promise<Provider> => {
+export const getProviderById = async (providerId: number): Promise<ProviderWithDriver> => {
   try {
     logger.info("Получение провайдера по ID", { providerId })
 
@@ -50,9 +50,12 @@ export const getProviderById = async (providerId: number): Promise<Provider> => 
       throw new NotFoundError(`Провайдер с ID #${providerId} не найден`)
     }
 
+    const driver = initDriver(providerItem.driver, providerItem.config as DriverConfig) as Driver
+    const driverParamsConfig = await driver.getParamsConfig()
+
     logger.info("Провайдер по ID успешно найден", { providerId })
 
-    return providerItem
+    return { ...providerItem, driverParamsConfig }
   } catch (error) {
     logger.error("Ошибка при получении провайдера по ID", { error: error.message, providerId })
 

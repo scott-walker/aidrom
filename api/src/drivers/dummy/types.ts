@@ -3,14 +3,7 @@
  * @namespace Drivers.Dummy
  */
 
-import {
-  Driver,
-  DriverConfig,
-  DriverRequest,
-  DriverResponse,
-  DriverAdaptedResponse,
-  DriverSendRequestMethod
-} from "../types"
+import { DriverConfig, DriverRequest, DriverResponse } from "../types"
 
 /**
  * Интерфейс запроса к драйверу "заглушка"
@@ -29,19 +22,3 @@ export interface DummyDriverResponse extends DriverResponse {}
  * @namespace Drivers.Dummy.DummyDriverConfig
  */
 export interface DummyDriverConfig extends DriverConfig {}
-
-/**
- * Интерфейс метода отправки запроса к API драйвера "заглушка"
- * @namespace Drivers.Dummy.DummyDriverSendRequestMethod
- */
-export interface DummyDriverSendRequestMethod extends DriverSendRequestMethod {
-  (request: DummyDriverRequest): Promise<DriverAdaptedResponse>
-}
-
-/**
- * Интерфейс драйвера "заглушка"
- * @namespace Drivers.Dummy.DummyDriver
- */
-export interface DummyDriver extends Driver {
-  sendRequest: DummyDriverSendRequestMethod
-}

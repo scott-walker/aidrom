@@ -9,9 +9,35 @@
  */
 export interface DriverRequest {
   message: string
-  params: {
-    [key: string]: any
-  }
+  systemMessages: string[]
+  params: DriverRequestParams
+}
+
+/**
+ * Интерфейс параметров запроса к драйверу
+ * @namespace Drivers.DriverRequestParams
+ */
+export interface DriverRequestParams {
+  model: string
+  maxTokens: number
+  topP: number
+  temperature: number
+  frequencyPenalty: number
+  presencePenalty: number
+}
+
+/**
+ * Интерфейс конфигурации параметров запроса к драйверу
+ * (позволяет получить диапазон значений для параметров)
+ * @namespace Drivers.DriverRequestParamsConfig
+ */
+export interface DriverRequestParamsConfig {
+  model: string[]
+  maxTokens: { min: number; max: number }
+  topP: { min: number; max: number }
+  temperature: { min: number; max: number }
+  frequencyPenalty: { min: number; max: number }
+  presencePenalty: { min: number; max: number }
 }
 
 /**
@@ -41,19 +67,12 @@ export interface DriverConfig {
 }
 
 /**
- * Интерфейс метода отправки запроса к API
- * @namespace Drivers.DriverSendRequestMethod
- */
-export interface DriverSendRequestMethod {
-  (request: DriverRequest): Promise<DriverResponse>
-}
-
-/**
  * Интерфейс драйвера
  * @namespace Drivers.Driver
  */
 export interface Driver {
-  sendRequest: DriverSendRequestMethod
+  getParamsConfig: () => Promise<DriverRequestParamsConfig>
+  sendRequest: (request: DriverRequest) => Promise<DriverResponse>
 }
 
 /**
