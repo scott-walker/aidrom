@@ -7,7 +7,7 @@ import type { Toast } from "./types"
  */
 export const useToast = () => {
   const { addToast, removeToast, clearToasts } = useToastStore()
-  const defaultDuration = 40000
+  const defaultDuration = 4000
 
   return {
     success: (message: string, options?: Partial<Toast>) => {

@@ -17,9 +17,9 @@ type ToastsProps = {
  */
 export const Toasts = ({ toasts, onClose = () => {} }: ToastsProps): ReactNode => {
   return (
-    <div className="fixed top-4 right-4 z-50 flex flex-col gap-2">
+    <div className="fixed top-4 right-1/2 translate-x-1/2 z-50 flex flex-col gap-2">
       {toasts.map(toast => (
-        <div key={toast.id} className="animate-in slide-in-from-right-full duration-300">
+        <div key={toast.id} className="animate-in slide-in-from-top-full duration-300">
           <Toast type={toast.type} title={toast.title} message={toast.message} onClose={() => onClose(toast.id)} />
         </div>
       ))}
