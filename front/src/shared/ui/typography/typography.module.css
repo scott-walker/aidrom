@@ -148,7 +148,7 @@
       font-weight: var(--typo-font-weight-bold);
       font-size: var(--typo-font-size-small);
       background-color: var(--typo-color-neutral-3);
-      color: var(--typo-color-neutral-4);
+      color: var(--typo-color-neutral-5);
     }
     & pre {
       display: block;
@@ -157,13 +157,14 @@
       border: none;
       font-family: var(--typo-font-family-mono);
       background-color: var(--typo-color-neutral-3);
-      color: var(--typo-color-neutral-4);
+      color: var(--typo-color-neutral-5);
     }
     & pre > code {
       display: block;
       background-color: transparent;
       color: inherit;
-      font-weight: inherit;
+      font-weight: var(--typo-font-weight-bold);
+      padding: 0;
     }
   }
 }
