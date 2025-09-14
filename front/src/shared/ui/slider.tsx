@@ -11,7 +11,7 @@ type SliderProps = {
   max: number
   step: number
   onChange: (value: number[]) => void
-  error: boolean
+  error?: boolean
   className?: string
 }
 

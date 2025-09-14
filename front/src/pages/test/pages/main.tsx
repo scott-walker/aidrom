@@ -7,6 +7,7 @@ import { Modal } from "@ui/modal"
 import { Button } from "@ui/button"
 import { Popover } from "@ui/popover"
 import { Slider } from "@ui/slider"
+import { useToast } from "@features/toasts"
 
 /**
  * Главная страница инструментов
@@ -15,6 +16,7 @@ import { Slider } from "@ui/slider"
  */
 export const Main = (): ReactNode => {
   const [sliderValue, setSliderValue] = useState<number[]>([0])
+  const toast = useToast()
 
   useSubtitle("Главная")
 
@@ -43,6 +45,22 @@ export const Main = (): ReactNode => {
           <div className="flex gap-6">
             <p>Температура: {sliderValue.join(", ")}</p>
             <Slider value={sliderValue} min={0} max={2} step={0.1} onChange={setSliderValue} />
+          </div>
+
+          <div className="flex gap-6">
+            <Button onClick={() => toast.success("Все произошло успешно", { title: "Уведомление" })}>
+              Уведомление
+            </Button>
+            <Button schema="brand" onClick={() => toast.error("Произошла ошибка", { title: "Уведомление" })}>
+              Уведомление
+            </Button>
+            <Button schema="hard" onClick={() => toast.warning("Внимание", { title: "Уведомление" })}>
+              Уведомление
+            </Button>
+            <Button schema="soft" onClick={() => toast.info("Информация", { title: "Уведомление" })}>
+              Уведомление
+            </Button>
+            <Button onClick={() => toast.clear()}>Очистить уведомления</Button>
           </div>
         </Container>
       </Card.Body>

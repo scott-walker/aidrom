@@ -1,3 +1,4 @@
+import { Toasts } from "@features/toasts"
 import { LayoutProvider } from "./layout-provider"
 import { QueryProvider } from "./query-provider"
 
@@ -8,7 +9,10 @@ import { QueryProvider } from "./query-provider"
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <QueryProvider>
-      <LayoutProvider>{children}</LayoutProvider>
+      <LayoutProvider>
+        {children}
+        <Toasts />
+      </LayoutProvider>
     </QueryProvider>
   )
 }
