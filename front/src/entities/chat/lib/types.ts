@@ -36,13 +36,13 @@ export type Chat = {
   agent: {
     id: number
     name: string
+    avatar: string
     params: Record<string, unknown>
     description: string
     provider: {
       id: number
       name: string
     }
-    // avatar: string
     createdAt: Date
     updatedAt: Date
   }
@@ -63,6 +63,7 @@ export type ChatListItem = {
   agent: {
     id: number
     name: string
+    avatar: string
   }
   createdAt: Date
   updatedAt: Date

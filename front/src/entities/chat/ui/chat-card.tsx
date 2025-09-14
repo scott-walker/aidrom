@@ -1,7 +1,7 @@
 import { makeClasses } from "@lib/style-api"
 import { DateTag } from "@ui/date-tag"
 import type { Chat } from "../lib/types"
-import { AgentAvatar } from "@entities/agent/ui/agent-avatar"
+import { AgentAvatar, type Agent } from "@entities/agent"
 
 /**
  * Пропсы для компонента ChatCard
@@ -31,9 +31,9 @@ export const ChatCard = ({ chat, className = "" }: ChatCardProps) => {
 
   return (
     <div className={cardClasses}>
-      <AgentAvatar agent={chat.agent} />
+      <AgentAvatar agent={chat.agent as Agent} />
       <div className="flex flex-col">
-        <h3 className="text-foreground-hard text-lg group-hover:text-primary">{chat.title}</h3>
+        <h3 className="text-foreground-hard text-lg leading-none group-hover:text-primary">{chat.title}</h3>
         <DateTag date={chat.updatedAt} />
       </div>
     </div>

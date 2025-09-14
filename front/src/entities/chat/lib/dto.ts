@@ -36,6 +36,7 @@ export const ChatDTOSchema = z.object({
   agent: z.object({
     id: z.number(),
     name: z.string(),
+    avatar: z.string(),
     params: z.record(z.any(), z.any()),
     description: z.string(),
     provider: z.object({

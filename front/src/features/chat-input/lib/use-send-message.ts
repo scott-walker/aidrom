@@ -1,6 +1,7 @@
 import { useChatStore } from "@entities/chat"
 import { makeLastClientMessage } from "@entities/chat"
 import { useSendMessage as useApiSendMessage } from "@entities/chat/api/chat-mutations"
+import { useToast } from "@features/toasts"
 
 /**
  * Хук для отправки сообщения
@@ -9,6 +10,7 @@ import { useSendMessage as useApiSendMessage } from "@entities/chat/api/chat-mut
 export const useSendMessage = () => {
   const { input, isPending, setInput, setPending, setLastClientMessage } = useChatStore()
   const { mutate: send } = useApiSendMessage()
+  const toast = useToast()
 
   const sendMessage = async (chatId: number) => {
     if (!input.trim() || isPending) return
@@ -16,8 +18,6 @@ export const useSendMessage = () => {
     setLastClientMessage(makeLastClientMessage(input))
     setPending(true)
     setInput("")
-
-    // Отправить сообщение
     send(
       { chatId, data: { message: input } },
       {
@@ -25,9 +25,9 @@ export const useSendMessage = () => {
           setLastClientMessage(null)
           setPending(false)
         },
-        onError: (error: Error) => {
+        onError: ({ message }) => {
           setPending(false)
-          console.error(error)
+          toast.error("Произошла ошибка при отправке сообщения", message)
         }
       }
     )

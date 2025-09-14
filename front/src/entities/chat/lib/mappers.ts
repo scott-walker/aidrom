@@ -54,6 +54,7 @@ export const toChatSchema = (dto: ChatDTO): Chat => {
     agent: {
       id: dto.agent.id,
       name: dto.agent.name,
+      avatar: dto.agent.avatar ? atob(dto.agent.avatar) : "",
       params: dto.agent.params,
       description: dto.agent.description,
       provider: {
@@ -81,7 +82,8 @@ export const toChatListItemSchema = (dto: ChatDTO): ChatListItem => {
     clientId: dto.clientId,
     agent: {
       id: dto.agent.id,
-      name: dto.agent.name
+      name: dto.agent.name,
+      avatar: dto.agent.avatar ? atob(dto.agent.avatar) : ""
     },
     createdAt: dto.createdAt,
     updatedAt: dto.updatedAt

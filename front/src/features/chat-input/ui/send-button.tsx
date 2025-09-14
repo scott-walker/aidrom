@@ -24,9 +24,11 @@ export const SendButton = ({ onSend, className = "" }: SendButtonProps) => {
     <IconButton
       schema="primary"
       circle={true}
-      iconSize={16}
+      iconSize={20}
       icon="send"
+      iconStrokeWidth={2.2}
       className={classes}
+      iconClassName="m-3"
       disabled={disabled}
       onClick={onSend}
     />
