@@ -17,6 +17,7 @@ export type {
 
   // Агенты
   Agent,
+  AgentWithRules,
   CreateAgentData,
   UpdateAgentData,
   AgentRule,

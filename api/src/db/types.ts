@@ -10,7 +10,7 @@ import {
   agentMessages,
   requests
 } from "./schema"
-import { DriverRequestParamsConfig } from "@drivers"
+import { DriverRequestParams, DriverRequestParamsConfig } from "@drivers"
 
 // Типы для провайдера
 export type Provider = InferSelectModel<typeof providers>
@@ -22,6 +22,9 @@ export type UpdateProviderData = Partial<CreateProviderData>
 
 // Типы для агента
 export type Agent = InferSelectModel<typeof agents>
+export type AgentWithRules = Agent & {
+  rules: AgentRule[]
+}
 export type CreateAgentData = InferInsertModel<typeof agents>
 export type UpdateAgentData = Partial<CreateAgentData>
 

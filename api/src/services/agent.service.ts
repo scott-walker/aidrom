@@ -13,9 +13,10 @@ import {
   RequestWithResponseContent,
   CreateAgentRuleData,
   AgentRule,
-  agentRules
+  agentRules,
+  AgentWithRules
 } from "@db"
-import { DriverResponse } from "@drivers"
+import { DriverRequestParams, DriverResponse } from "@drivers"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
 import { processRequest } from "./provider.service"
@@ -55,7 +56,7 @@ export const getAgents = async (): Promise<Agent[]> => {
  * Получить агента по его идентификатору
  * @namespace Agent.Service.getAgentById
  */
-export const getAgentById = async (agentId: number): Promise<Agent> => {
+export const getAgentById = async (agentId: number): Promise<AgentWithRules> => {
   try {
     logger.info("Получение агента по ID", { agentId })
 
@@ -175,7 +176,8 @@ export const sendRequest = async (
     // Отправляем запрос к API
     const response: DriverResponse = await processRequest(agent.providerId, {
       message,
-      params: agent.params
+      systemMessages: agent.rules.map(rule => rule.content),
+      params: agent.params as DriverRequestParams
     })
 
     logger.info("Запрос к API успешно отправлен", { agentId, clientId })

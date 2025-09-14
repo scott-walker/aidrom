@@ -31,25 +31,25 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
       return {
         // model: await restClient.get("models").then(res => res.data.map((item: any) => item.id)),
         model: [DeepseekDriverModel.DEEPSEEK_CHAT, DeepseekDriverModel.DEEPSEEK_REASONER],
-        frequencyPenalty: {
-          min: 0,
-          max: 1
-        },
-        presencePenalty: {
-          min: 0,
-          max: 1
-        },
         maxTokens: {
           min: 1,
-          max: 1000
+          max: 4000
         },
         temperature: {
           min: 0,
-          max: 1
+          max: 2
         },
         topP: {
           min: 0,
           max: 1
+        },
+        frequencyPenalty: {
+          min: -2,
+          max: 2
+        },
+        presencePenalty: {
+          min: -2,
+          max: 2
         }
       }
     },
@@ -59,7 +59,7 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
      * @namespace Drivers.Deepseek.sendRequest
      */
     async sendRequest(request: DriverRequest): Promise<DriverResponse> {
-      logger.info("🚀 Отправка запроса", { request })
+      logger.info("🚀 Отправка запроса", { action: "sendRequest", request })
 
       try {
         // Сформировать сообщение пользователя
@@ -82,7 +82,12 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
 
         const data: DeepseekDriverResponse = await restClient.post("chat/completions", driverRequest)
 
-        logger.info("Получен ответ", { id: data.id, model: data.model, usage: data.usage })
+        logger.info("Получен ответ", {
+          action: "sendRequest",
+          id: data.id,
+          model: data.model,
+          usage: data.usage
+        })
 
         return {
           providerRequestId: data.id,
@@ -93,7 +98,7 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
           content: data.choices[0].message.content
         }
       } catch (error) {
-        logger.error("Ошибка при обработке запроса", { error })
+        logger.error("Ошибка при обработке запроса", { action: "sendRequest", error })
 
         throw error
       }
