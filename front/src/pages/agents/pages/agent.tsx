@@ -49,8 +49,8 @@ export const Agent = (): ReactNode => {
           </Card>
         </Blocks.Block>
         <Blocks.Block className="w-2/3 flex flex-col gap-8">
-          <AgentEditableDescription agent={agent as AgentType} />
           <AgentRules agent={agent as AgentType} />
+          <AgentEditableDescription agent={agent as AgentType} />
         </Blocks.Block>
       </Blocks.Row>
     </Blocks>

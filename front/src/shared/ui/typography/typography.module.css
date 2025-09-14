@@ -19,6 +19,15 @@
   --typo-color-neutral-5: var(--color-foreground-soft);
 }
 
+/* 🌙  */
+/* body.theme-dark {
+  --typo-color-neutral-1: var(--color-background);
+  --typo-color-neutral-2: var(--color-background-hard);
+  --typo-color-neutral-3: color-mix(in oklch, var(--color-background-hard) 50%, transparent);
+  --typo-color-neutral-4: var(--color-foreground-hard);
+  --typo-color-neutral-5: var(--color-foreground-soft);
+} */
+
 @layer components {
   .typographyContainer {
     /* Общие */

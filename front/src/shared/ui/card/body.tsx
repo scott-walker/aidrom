@@ -19,7 +19,6 @@ export const CardBody = ({ children, hasOffset = true, className = "" }: CardBod
   const classes = makeClasses(
     "flex",
     "flex-col",
-    "gap-(--ui-card-gap)",
     hasOffset && "px-(--ui-card-offset-x)",
     hasOffset && "py-(--ui-card-offset-y)",
     className

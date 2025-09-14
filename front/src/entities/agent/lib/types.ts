@@ -17,6 +17,15 @@ export type Agent = {
   updatedAt: Date
 }
 
+export type AgentParams = {
+  model: string
+  max_tokens: number
+  top_p: number
+  temperature: number
+  frequency_penalty: number
+  presence_penalty: number
+}
+
 /**
  * Тип для правила агента
  * @namespace Entities.Agent.Lib.Types.AgentRule

@@ -2,8 +2,6 @@ import type { ReactNode, FC, JSX } from "react"
 import { makeClasses } from "@lib/style-api"
 import { CardHeader } from "./header"
 import { CardBody } from "./body"
-import { CardSection } from "./section"
-import { CardFooter } from "./footer"
 
 /**
  * Пропсы карточки
@@ -23,8 +21,6 @@ type CardProps = {
 type CardComponent = FC<CardProps> & {
   Header: typeof CardHeader
   Body: typeof CardBody
-  Section: typeof CardSection
-  Footer: typeof CardFooter
 }
 
 /**
@@ -50,5 +46,3 @@ export const Card: CardComponent = ({ children, as: Component = "article", class
 
 Card.Header = CardHeader
 Card.Body = CardBody
-Card.Section = CardSection
-Card.Footer = CardFooter

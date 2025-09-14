@@ -18,14 +18,14 @@ type CardHeaderProps = {
 export const CardHeader = ({ children, hasOffset = true, className = "" }: CardHeaderProps) => {
   const classes = makeClasses(
     "flex",
-    "align-center",
+    "items-center",
     "justify-center",
-    "gap-4",
+    "gap-(--ui-card-header-gap)",
+    "h-(--ui-card-header-height)",
     hasOffset && "px-(--ui-card-offset-x)",
     hasOffset && "py-(--ui-card-offset-y)",
     "border-b-2",
     "border-(--ui-card-border)",
-    "h-12",
     "overflow-hidden",
     className
   )

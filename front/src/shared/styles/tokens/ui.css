@@ -27,10 +27,10 @@
   --ui-placeholder-text-size: 14px;
 
   /* Карточка */
-  --ui-card-gap: 10px;
   --ui-card-offset-x: 15px;
   --ui-card-offset-y: 10px;
-  /* --ui-card-background: color-mix(in srgb, var(--color-background-soft) 70%, transparent); */
+  --ui-card-header-height: 48px;
+  --ui-card-header-gap: 10px;
   --ui-card-background: var(--color-background-soft);
   --ui-card-border: var(--color-background);
   --ui-card-rounded: 10px;
