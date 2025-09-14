@@ -1,5 +1,5 @@
 import type { AgentResponseDTO, AgentRequestDTO, AgentRuleRequestDTO, AgentRuleResponseDTO } from "./dto"
-import type { Agent, AgentCreateData, AgentRule, AgentRuleCreateData, AgentUpdateData } from "./types"
+import type { Agent, AgentCreateData, AgentParams, AgentRule, AgentRuleCreateData, AgentUpdateData } from "./types"
 
 /**
  * Маппер из DTO в сущность
@@ -9,7 +9,14 @@ export const toAgentSchema = (dto: AgentResponseDTO): Agent => ({
   id: dto.id,
   name: dto.name,
   avatar: dto.avatar ? atob(dto.avatar) : "",
-  params: dto.params,
+  params: {
+    model: dto.params.model,
+    maxTokens: dto.params.maxTokens,
+    topP: dto.params.topP,
+    temperature: dto.params.temperature,
+    frequencyPenalty: dto.params.frequencyPenalty,
+    presencePenalty: dto.params.presencePenalty
+  },
   description: dto.description,
   provider: dto.provider,
   rules: dto.rules,
@@ -36,7 +43,14 @@ export const toAgentCreateDTO = (data: AgentCreateData): AgentRequestDTO => {
   return {
     name: data.name,
     avatar: data.avatar ? btoa(data.avatar) : "",
-    params: data.params as Record<string, never>,
+    params: {
+      model: "",
+      maxTokens: 0,
+      topP: 0,
+      temperature: 0,
+      frequencyPenalty: 0,
+      presencePenalty: 0
+    },
     description: data.description,
     providerId: data.providerId
   }
@@ -51,7 +65,7 @@ export const toAgentUpdateDTO = (agent: AgentUpdateData): AgentRequestDTO => {
 
   if (agent.name) data.name = agent.name
   if (agent.avatar) data.avatar = agent.avatar ? btoa(agent.avatar) : ""
-  if (agent.params) data.params = agent.params as Record<string, never>
+  if (agent.params) data.params = agent.params as AgentParams
   if (agent.description) data.description = agent.description
   if (agent.providerId) data.providerId = agent.providerId
 

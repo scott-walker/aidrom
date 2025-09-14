@@ -8,9 +8,10 @@ import { ErrorBlock } from "@ui/error-block"
 import { Card } from "@ui/card"
 import { Heading } from "@ui/heading"
 
-import { type Agent as AgentType, useAgentById, AgentParamsInfo, AgentFaceInfo, AgentModifyInfo } from "@entities/agent"
+import { type Agent as AgentType, useAgentById, AgentFaceInfo, AgentModifyInfo } from "@entities/agent"
 import { AgentRules } from "@widgets/agent-rules"
 import { AgentEditableDescription } from "@features/agent-editable-description"
+import { AgentParams } from "@features/agent-params"
 
 /**
  * Страница агента
@@ -39,14 +40,7 @@ export const Agent = (): ReactNode => {
             </Card.Body>
           </Card>
 
-          <Card>
-            <Card.Header>
-              <Heading>Параметры</Heading>
-            </Card.Header>
-            <Card.Body>
-              <AgentParamsInfo agent={agent as AgentType} />
-            </Card.Body>
-          </Card>
+          <AgentParams agent={agent as AgentType} />
         </Blocks.Block>
         <Blocks.Block className="w-2/3 flex flex-col gap-8">
           <AgentRules agent={agent as AgentType} />

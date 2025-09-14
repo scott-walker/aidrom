@@ -37,7 +37,14 @@ export const AgentDTOResponseSchema = z.object({
 export const AgentDTORequestSchema = z.object({
   name: z.string(),
   avatar: z.string(),
-  params: z.object({}),
+  params: z.object({
+    model: z.string(),
+    maxTokens: z.number(),
+    topP: z.number(),
+    temperature: z.number(),
+    frequencyPenalty: z.number(),
+    presencePenalty: z.number()
+  }),
   description: z.string(),
   providerId: z.number()
 })

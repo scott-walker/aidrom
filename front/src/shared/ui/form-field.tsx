@@ -20,15 +20,12 @@ type FormFieldProps = {
  * @namespace Shared.UI.FormField
  */
 export const FormField = ({ label, children, error, className }: FormFieldProps) => {
-  const classes = makeClasses(className)
-  const labelClasses = makeClasses(error && "text-danger")
+  const labelClasses = makeClasses("flex", "flex-col", "gap-1", error && "text-danger", className)
 
   return (
-    <div className={classes}>
-      <FormFieldLabel text={label} className={labelClasses} error={!!error}>
-        {children}
-        {error && <FormFieldError error={error} />}
-      </FormFieldLabel>
-    </div>
+    <FormFieldLabel text={label} className={labelClasses} error={!!error}>
+      {children}
+      {error && <FormFieldError error={error} />}
+    </FormFieldLabel>
   )
 }

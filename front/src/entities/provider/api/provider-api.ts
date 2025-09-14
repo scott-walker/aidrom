@@ -1,6 +1,11 @@
 import { restClient } from "@shared/api"
-import type { Provider, ProviderCreateData, ProviderUpdateData } from "../lib/types"
-import { toProviderCreateDTO, toProviderSchema, toProviderUpdateDTO } from "../lib/mappers"
+import type { Provider, ProviderCreateData, ProviderUpdateData, ProviderWithDriverParamsConfig } from "../lib/types"
+import {
+  toProviderSchema,
+  toProviderWithDriverParamsConfigSchema,
+  toProviderCreateDTO,
+  toProviderUpdateDTO
+} from "../lib/mappers"
 
 /**
  * Создать провайдера
@@ -36,8 +41,8 @@ export const fetchProviders = async (): Promise<Provider[]> => {
  * Получить провайдера по ID
  * @namespace Entities.Provider.Api.fetchProviderById
  */
-export const fetchProviderById = async (providerId: number): Promise<Provider> => {
+export const fetchProviderById = async (providerId: number): Promise<ProviderWithDriverParamsConfig> => {
   const { data } = await restClient.get(`providers/${providerId}`)
 
-  return toProviderSchema(data)
+  return toProviderWithDriverParamsConfigSchema(data)
 }

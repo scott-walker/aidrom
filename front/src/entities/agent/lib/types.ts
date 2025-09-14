@@ -6,7 +6,7 @@ export type Agent = {
   id: number
   name: string
   avatar: string
-  params: Record<string, unknown>
+  params: AgentParams
   description: string
   provider: {
     id: number
@@ -17,13 +17,17 @@ export type Agent = {
   updatedAt: Date
 }
 
+/**
+ * Параметры агента
+ * @namespace Entities.Agent.Lib.Types.AgentParams
+ */
 export type AgentParams = {
   model: string
-  max_tokens: number
-  top_p: number
+  maxTokens: number
+  topP: number
   temperature: number
-  frequency_penalty: number
-  presence_penalty: number
+  frequencyPenalty: number
+  presencePenalty: number
 }
 
 /**
@@ -66,7 +70,7 @@ export type AgentCreateData = {
   name: string
   avatar: string
   description: string
-  params: Record<string, unknown>
+  params: AgentParams
 }
 
 /**

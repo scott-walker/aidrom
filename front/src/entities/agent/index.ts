@@ -1,4 +1,4 @@
-export type { Agent, AgentCreateData, AgentUpdateData, AgentRule } from "./lib/types"
+export type { Agent, AgentCreateData, AgentUpdateData, AgentRule, AgentParams } from "./lib/types"
 export { useAgents, useAgentById } from "./api/agent-queries"
 export {
   useCreateAgent,

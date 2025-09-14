@@ -11,6 +11,27 @@ export interface Provider {
 }
 
 /**
+ * Схема провайдера с конфигурацией параметров драйвера
+ * @namespace Entities.Provider.Lib.Types.ProviderWithDriverParamsConfig
+ */
+export interface ProviderWithDriverParamsConfig extends Provider {
+  driverParamsConfig: DriverRequestParamsConfig
+}
+
+/**
+ * Схема конфигурации параметров драйвера
+ * @namespace Entities.Provider.Lib.Types.DriverRequestParamsConfig
+ */
+export interface DriverRequestParamsConfig {
+  model: string[]
+  maxTokens: { min: number; max: number }
+  topP: { min: number; max: number }
+  temperature: { min: number; max: number }
+  frequencyPenalty: { min: number; max: number }
+  presencePenalty: { min: number; max: number }
+}
+
+/**
  * Тип для данных запроса списка провайдеров
  * @namespace Entities.Provider.Lib.Types.ProvidersQueryData
  */
@@ -25,7 +46,7 @@ export type ProvidersQueryData = {
  * @namespace Entities.Provider.Lib.Types.ProviderQueryData
  */
 export type ProviderQueryData = {
-  provider: Provider | undefined | null
+  provider: ProviderWithDriverParamsConfig | undefined | null
   isLoading: boolean
   error: Error | null
 }
