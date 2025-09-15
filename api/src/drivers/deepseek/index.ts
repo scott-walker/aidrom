@@ -40,7 +40,7 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
           max: 2
         },
         topP: {
-          min: 0,
+          min: 0.1,
           max: 1
         },
         frequencyPenalty: {
