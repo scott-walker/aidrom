@@ -15,7 +15,7 @@ export interface ProviderDTO {
   }
   name: string
   description: string
-  config: object
+  config: Record<string, unknown>
 }
 
 /**
@@ -26,7 +26,7 @@ export interface ProviderCreateDTO {
   driver: string
   name: string
   description: string
-  config: object
+  config: Record<string, unknown>
 }
 
 /**
@@ -37,5 +37,5 @@ export interface ProviderUpdateDTO {
   driver?: string
   name?: string
   description?: string
-  config?: object
+  config?: Record<string, unknown>
 }

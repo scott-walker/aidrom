@@ -1,6 +1,6 @@
 import axios, { type AxiosInstance, type AxiosResponse, type AxiosError } from "axios"
 import type { RestClientConfig, ApiError } from "./types"
-import { RestError } from "@shared/api/rest-error"
+import { RestError } from "./rest-error"
 
 /**
  * REST-клиент для выполнения запросов к API

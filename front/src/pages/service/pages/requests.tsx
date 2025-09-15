@@ -1,7 +1,7 @@
 import { type ReactNode } from "react"
-import { Blocks } from "@shared/ui/blocks"
-import { RequestsDataTable } from "@widgets/requests-data-table/ui/table"
-import { useSubtitle } from "@shared/lib/layout-api/utils"
+import { useSubtitle } from "@lib/layout-api"
+import { Blocks } from "@ui/blocks"
+import { RequestsDataTable } from "@widgets/requests-data-table"
 
 /**
  * Страница сервиса - запросы

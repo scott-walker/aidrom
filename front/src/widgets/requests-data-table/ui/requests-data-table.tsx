@@ -1,13 +1,13 @@
-import { useRequests } from "@entities/request/model/queries"
+import { useRequests } from "@entities/request/api/request-queries"
 import { Table } from "@ui/table"
 import { Card } from "@ui/card"
 import { Heading } from "@ui/heading"
 import { Loader } from "@shared/ui/loader"
 import { Notification } from "@shared/ui/notification"
-import { Item } from "./item"
+import { RequestsDataTableItem } from "./requests-data-item"
 
 /**
- * Виджет. Таблица запросов к провайдерам
+ * Таблица запросов к провайдерам
  * @namespace Widgets.RequestsDataTable.Ui.RequestsDataTable
  */
 export const RequestsDataTable = () => {
@@ -36,7 +36,7 @@ export const RequestsDataTable = () => {
             </Table.Header>
             <Table.Body>
               {requests.map(request => (
-                <Item key={request.id} request={request} />
+                <RequestsDataTableItem key={request.id} request={request} />
               ))}
             </Table.Body>
           </Table>

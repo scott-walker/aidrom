@@ -1,36 +1,22 @@
-import type { RestError } from "@shared/api/rest-error"
+import type { RestError } from "@shared/api"
+import type { Request } from "./schema"
 
 /**
- * Схема запроса
- * @namespace Entities.Request.Model.RequestSchema
+ * Тип для данных списка "запросов к провайдерам"
+ * @namespace Entities.Request.Lib.RequestListQueryData
  */
-export interface RequestSchema {
-  id: number
-  provider: string
-  providerRequestId: string
-  requestParams: Record<string, unknown>
-  responseData: Record<string, unknown>
-  requestTokens: number
-  responseTokens: number
-  createdAt: Date
-}
-
-/**
- * Тип для данных "запроса к провайдеру"
- * @namespace Entities.Request.Lib.RequestQueryData
- */
-export type RequestQueryData = {
-  request: RequestSchema | null
+export type RequestListQueryData = {
+  requests: Request[]
   isLoading: boolean
   error: RestError | null
 }
 
 /**
- * Тип для данных списка "запросов к провайдерам"
- * @namespace Entities.Request.Lib.RequestsQueryData
+ * Тип для данных "запроса к провайдеру"
+ * @namespace Entities.Request.Lib.RequestDetailQueryData
  */
-export type RequestsQueryData = {
-  requests: RequestSchema[]
+export type RequestDetailQueryData = {
+  request: Request | null
   isLoading: boolean
   error: RestError | null
 }

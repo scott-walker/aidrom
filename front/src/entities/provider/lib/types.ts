@@ -1,3 +1,4 @@
+import type { RestError } from "@shared/api"
 import type { Provider } from "./schema"
 
 /**
@@ -7,7 +8,7 @@ import type { Provider } from "./schema"
 export type ProviderListQueryData = {
   providers: Provider[]
   isLoading: boolean
-  error: Error | null
+  error: RestError | null
 }
 
 /**
@@ -15,9 +16,9 @@ export type ProviderListQueryData = {
  * @namespace Entities.Provider.Lib.Types.ProviderDetailQueryData
  */
 export type ProviderDetailQueryData = {
-  provider: Provider | undefined | null
+  provider: Provider | null
   isLoading: boolean
-  error: Error | null
+  error: RestError | null
 }
 
 /**

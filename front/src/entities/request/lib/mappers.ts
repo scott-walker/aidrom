@@ -1,17 +1,17 @@
-import type { RequestDTO } from "../api/dto"
-import type { RequestSchema } from "./types"
+import type { RequestDTO } from "./dto"
+import type { Request } from "./schema"
 
 /**
  * Маппер из DTO в сущность
- * @namespace Entities.Request.Model.toRequestSchema
+ * @namespace Entities.Request.Model.toRequest
  */
-export const toRequestSchema = (dto: RequestDTO): RequestSchema => ({
+export const toRequest = (dto: RequestDTO): Request => ({
   id: dto.id,
-  provider: dto.provider.name,
+  provider: dto.provider,
   providerRequestId: dto.providerRequestId,
   requestParams: dto.requestParams,
   responseData: dto.responseData,
   requestTokens: dto.requestTokens,
   responseTokens: dto.responseTokens,
-  createdAt: dto.createdAt
+  createdAt: new Date(dto.createdAt)
 })
