@@ -7,6 +7,7 @@ import { createConnection } from "./connection"
 
 export const db = createConnection()
 export * from "./schema"
+export * from "./mappers"
 
 export type {
   // Провайдеры
@@ -17,7 +18,7 @@ export type {
 
   // Агенты
   Agent,
-  AgentWithRules,
+  AgentParams,
   CreateAgentData,
   UpdateAgentData,
   AgentRule,

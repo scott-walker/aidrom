@@ -104,11 +104,11 @@ export const deleteAgent = async (req: Request, res: Response, next: NextFunctio
   try {
     logger.info("Удаление агента", { agentId })
 
-    const agent = await agentService.deleteAgent(agentId)
+    await agentService.deleteAgent(agentId)
 
     logger.info("Агент успешно удален", { agentId })
 
-    res.json(agent)
+    res.json({ message: "Агент успешно удален" })
   } catch (err) {
     logger.error("Ошибка при удалении агента", { error: err.message, agentId })
 

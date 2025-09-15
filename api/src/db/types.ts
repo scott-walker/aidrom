@@ -21,10 +21,13 @@ export type CreateProviderData = InferInsertModel<typeof providers>
 export type UpdateProviderData = Partial<CreateProviderData>
 
 // Типы для агента
-export type Agent = InferSelectModel<typeof agents>
-export type AgentWithRules = Agent & {
-  rules: AgentRule[]
+export type Agent = InferSelectModel<typeof agents> & {
+  params: AgentParams
+  provider?: Provider
+  rules?: AgentRule[]
+  isActive?: boolean
 }
+export type AgentParams = DriverRequestParams
 export type CreateAgentData = InferInsertModel<typeof agents>
 export type UpdateAgentData = Partial<CreateAgentData>
 

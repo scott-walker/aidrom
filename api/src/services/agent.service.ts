@@ -14,7 +14,7 @@ import {
   CreateAgentRuleData,
   AgentRule,
   agentRules,
-  AgentWithRules
+  mapAgent
 } from "@db"
 import { DriverRequestParams, DriverResponse } from "@drivers"
 import { createServiceLogger } from "@utils/logger"
@@ -33,16 +33,19 @@ export const getAgents = async (): Promise<Agent[]> => {
   try {
     logger.info("Получение всех агентов из БД")
 
-    const items = await db.query.agents.findMany({
+    const items = (await db.query.agents.findMany({
       orderBy: [desc(agents.createdAt)],
       with: {
-        provider: true
+        provider: true,
+        rules: {
+          orderBy: [asc(agentRules.priority)]
+        }
       }
-    })
+    })) as Agent[]
 
     logger.info("Запрос к БД выполнен успешно", { count: items.length })
 
-    return items
+    return items.map(mapAgent)
   } catch (error) {
     logger.error("Ошибка при получении всех агентов из БД", {
       error: error.message
@@ -56,11 +59,11 @@ export const getAgents = async (): Promise<Agent[]> => {
  * Получить агента по его идентификатору
  * @namespace Agent.Service.getAgentById
  */
-export const getAgentById = async (agentId: number): Promise<AgentWithRules> => {
+export const getAgentById = async (agentId: number): Promise<Agent> => {
   try {
     logger.info("Получение агента по ID", { agentId })
 
-    const agent = await db.query.agents.findFirst({
+    const agent = (await db.query.agents.findFirst({
       where: eq(agents.id, agentId),
       with: {
         provider: true,
@@ -68,7 +71,7 @@ export const getAgentById = async (agentId: number): Promise<AgentWithRules> => 
           orderBy: [asc(agentRules.priority)]
         }
       }
-    })
+    })) as Agent
 
     if (!agent) {
       throw new NotFoundError(`Агент с ID #${agentId} не найден`)
@@ -76,7 +79,7 @@ export const getAgentById = async (agentId: number): Promise<AgentWithRules> => 
 
     logger.info("Агент по ID успешно найден", { agentId })
 
-    return agent
+    return mapAgent(agent)
   } catch (error) {
     logger.error("Ошибка при получении агента по ID", { error: error.message, agentId })
 
@@ -96,7 +99,7 @@ export const createAgent = async (data: CreateAgentData): Promise<Agent> => {
 
     logger.info("Агент успешно создан", { agentId: agent.id })
 
-    return agent
+    return getAgentById(agent.id)
   } catch (error) {
     logger.error("Ошибка при создании агента", { error: error.message, data })
 
@@ -127,7 +130,7 @@ export const updateAgent = async (agentId: number, data: UpdateAgentData): Promi
 
     logger.info("Агент успешно обновлен", { agentId })
 
-    return agent
+    return getAgentById(agent.id)
   } catch (error) {
     logger.error("Ошибка при обновлении агента", { error: error.message, agentId, data })
 
@@ -139,7 +142,7 @@ export const updateAgent = async (agentId: number, data: UpdateAgentData): Promi
  * Удалить агента
  * @namespace Agent.Service.deleteAgent
  */
-export const deleteAgent = async (agentId: number): Promise<Agent> => {
+export const deleteAgent = async (agentId: number): Promise<void> => {
   try {
     logger.info("Удаление агента из БД", { agentId })
 
@@ -150,8 +153,6 @@ export const deleteAgent = async (agentId: number): Promise<Agent> => {
     }
 
     logger.info("Агент успешно удален", { agentId })
-
-    return agent
   } catch (error) {
     logger.error("Ошибка при удалении агента", { error: error.message, agentId })
 
