@@ -75,13 +75,13 @@ export const getChatById = async (chatId: number): Promise<ChatWithRelations> =>
     const chat = await db.query.chats.findFirst({
       where: eq(chats.id, chatId),
       with: {
-        agent: {
-          with: {
-            provider: true,
-            rules: true
-          }
-        },
-        client: true,
+        // agent: {
+        //   with: {
+        //     provider: true,
+        //     rules: true
+        //   }
+        // },
+        // client: true,
         messagePairs: {
           with: {
             clientMessage: true,
@@ -97,7 +97,7 @@ export const getChatById = async (chatId: number): Promise<ChatWithRelations> =>
 
     logger.info("Чат по ID успешно найден", { chatId })
 
-    chat.agent = mapAgent(chat.agent as Agent)
+    // chat.agent = mapAgent(chat.agent as Agent)
 
     return chat as ChatWithRelations
   } catch (error) {
