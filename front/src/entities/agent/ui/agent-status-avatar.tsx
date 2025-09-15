@@ -1,6 +1,6 @@
 import { makeClasses } from "@lib/style-api"
 import { Avatar, type AvatarProps } from "@ui/avatar"
-import type { Agent } from "../lib/types"
+import type { Agent } from "../lib/schema"
 import { AgentStatus } from "./agent-status"
 
 /**

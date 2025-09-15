@@ -1,35 +1,46 @@
-import type { AgentResponseDTO, AgentRequestDTO, AgentRuleRequestDTO, AgentRuleResponseDTO } from "./dto"
-import type { Agent, AgentCreateData, AgentParams, AgentRule, AgentRuleCreateData, AgentUpdateData } from "./types"
+import type {
+  AgentCreateDTO,
+  AgentDTO,
+  AgentParamsDTO,
+  AgentRuleCreateDTO,
+  AgentRuleDTO,
+  AgentRuleSortDTO,
+  AgentUpdateDTO
+} from "./dto"
+import type { Agent, AgentParams, AgentRule } from "./schema"
+import type { AgentCreateData, AgentRuleCreateData, AgentRuleSortData, AgentUpdateData } from "./types"
 
 /**
- * Маппер из DTO в сущность
- * @namespace Entities.Agent.Model.toAgentSchema
+ * Маппер из DTO в сущность "параметры агента"
+ * @namespace Entities.Agent.Model.toAgentParams
  */
-export const toAgentSchema = (dto: AgentResponseDTO): Agent => ({
-  id: dto.id,
-  name: dto.name,
-  avatar: dto.avatar ? atob(dto.avatar) : "",
-  params: {
-    model: dto.params.model,
-    maxTokens: dto.params.maxTokens,
-    topP: dto.params.topP,
-    temperature: dto.params.temperature,
-    frequencyPenalty: dto.params.frequencyPenalty,
-    presencePenalty: dto.params.presencePenalty
-  },
-  description: dto.description,
-  provider: dto.provider,
-  rules: dto.rules,
-  isActive: dto.isActive,
-  createdAt: dto.createdAt,
-  updatedAt: dto.updatedAt
+export const toAgentParams = (dto: AgentParamsDTO): AgentParams => ({
+  model: dto.model,
+  maxTokens: dto.maxTokens,
+  topP: dto.topP,
+  temperature: dto.temperature,
+  frequencyPenalty: dto.frequencyPenalty,
+  presencePenalty: dto.presencePenalty
 })
 
 /**
- * Маппер из DTO в сущность (для правила агента)
- * @namespace Entities.Agent.Model.toAgentRuleSchema
+ * Маппер из данных запроса в DTO параметров агента
+ * @namespace Entities.Agent.Model.toAgentParamsDTO
  */
-export const toAgentRuleSchema = (dto: AgentRuleResponseDTO): AgentRule => ({
+export const toAgentParamsDTO = (data: AgentParams): AgentParamsDTO => ({
+  model: data.model,
+  maxTokens: data.maxTokens,
+  topP: data.topP,
+  temperature: data.temperature,
+  frequencyPenalty: data.frequencyPenalty,
+  presencePenalty: data.presencePenalty
+})
+
+/**
+ * Маппер из DTO в сущность "правило агента"
+ * @namespace Entities.Agent.Model.toAgentRule
+ */
+export const toAgentRule = (dto: AgentRuleDTO): AgentRule => ({
   id: dto.id,
   content: dto.content,
   priority: dto.priority,
@@ -37,49 +48,64 @@ export const toAgentRuleSchema = (dto: AgentRuleResponseDTO): AgentRule => ({
 })
 
 /**
- * Маппер из сущности в DTO (для создания агента)
- * @namespace Entities.Agent.Model.toAgentDTO
+ * Маппер из DTO в сущность
+ * @namespace Entities.Agent.Model.toAgent
  */
-export const toAgentCreateDTO = (data: AgentCreateData): AgentRequestDTO => {
+export const toAgent = (dto: AgentDTO): Agent => ({
+  id: dto.id,
+  name: dto.name,
+  avatar: dto.avatar ? atob(dto.avatar) : "",
+  params: toAgentParams(dto.params),
+  description: dto.description,
+  provider: dto.provider,
+  rules: dto.rules.map(toAgentRule),
+  isActive: dto.isActive,
+  createdAt: new Date(dto.createdAt),
+  updatedAt: new Date(dto.updatedAt)
+})
+
+/**
+ * Маппер из данных запроса в DTO создания агента
+ * @namespace Entities.Agent.Model.toAgentCreateDTO
+ */
+export const toAgentCreateDTO = (data: AgentCreateData): AgentCreateDTO => {
   return {
     name: data.name,
     avatar: data.avatar ? btoa(data.avatar) : "",
-    params: {
-      model: "",
-      maxTokens: 0,
-      topP: 0,
-      temperature: 0,
-      frequencyPenalty: 0,
-      presencePenalty: 0
-    },
-    description: data.description,
     providerId: data.providerId
   }
 }
 
 /**
- * Маппер из сущности в DTO (для обновления агента)
+ * Маппер из данных запроса в DTO обновления агента
  * @namespace Entities.Agent.Model.toAgentUpdateDTO
  */
-export const toAgentUpdateDTO = (agent: AgentUpdateData): AgentRequestDTO => {
-  const data = {} as AgentRequestDTO
+export const toAgentUpdateDTO = (data: AgentUpdateData): AgentUpdateDTO => {
+  const dto = {} as AgentUpdateDTO
 
-  if (agent.name) data.name = agent.name
-  if (agent.avatar) data.avatar = agent.avatar ? btoa(agent.avatar) : ""
-  if (agent.params) data.params = agent.params as AgentParams
-  if (agent.description) data.description = agent.description
-  if (agent.providerId) data.providerId = agent.providerId
+  if (data.name) dto.name = data.name
+  if (data.params) dto.params = toAgentParamsDTO(data.params)
+  if (data.description) dto.description = data.description
 
-  return data
+  return dto
 }
 
 /**
- * Маппер из сущности в DTO (для добавления правила агента)
+ * Маппер из данных запроса в DTO создания правила агента
  * @namespace Entities.Agent.Model.toAgentRuleCreateDTO
  */
-export const toAgentRuleCreateDTO = (data: AgentRuleCreateData): AgentRuleRequestDTO => {
+export const toAgentRuleCreateDTO = (data: AgentRuleCreateData): AgentRuleCreateDTO => {
   return {
-    content: data.content,
-    priority: data.priority ?? 0
+    content: data.content
+  }
+}
+
+/**
+ * Маппер из данных запроса в DTO сортировки правил агента
+ * @namespace Entities.Agent.Model.toAgentRuleSortDTO
+ */
+export const toAgentRuleSortDTO = (data: AgentRuleSortData): AgentRuleSortDTO => {
+  return {
+    ruleIds: data.ruleIds
   }
 }

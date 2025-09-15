@@ -29,7 +29,7 @@ export type ProviderCreateData = {
   driver: string
   name: string
   description: string
-  config: object
+  config: Record<string, unknown>
 }
 
 /**
@@ -40,5 +40,5 @@ export type ProviderUpdateData = {
   driver?: string
   name?: string
   description?: string
-  config: object
+  config: Record<string, unknown>
 }

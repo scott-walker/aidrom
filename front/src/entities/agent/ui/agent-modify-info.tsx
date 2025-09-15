@@ -1,6 +1,6 @@
 import { makeClasses } from "@lib/style-api"
 import { DateTag } from "@ui/date-tag"
-import type { Agent } from "../lib/types"
+import type { Agent } from "../lib/schema"
 
 /**
  * Пропсы для компонента AgentModifyInfo

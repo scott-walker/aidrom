@@ -1,4 +1,9 @@
-export type { Agent, AgentCreateData, AgentUpdateData, AgentRule, AgentParams } from "./lib/types"
+// Lib
+export type { Agent, AgentParams, AgentRule } from "./lib/schema"
+export type { AgentCreateDTO, AgentUpdateDTO, AgentRuleSortDTO, AgentRuleCreateDTO } from "./lib/dto"
+export type { AgentCreateData, AgentUpdateData, AgentRuleSortData, AgentRuleCreateData } from "./lib/types"
+
+// API
 export { useAgents, useAgentById } from "./api/agent-queries"
 export {
   useCreateAgent,
@@ -8,6 +13,7 @@ export {
   useSortAgentRules
 } from "./api/agent-mutations"
 
+// UI
 export { AgentInfo } from "./ui/agent-info"
 export { AgentCard } from "./ui/agent-card"
 export { AgentParamsInfo } from "./ui/agent-params-info"

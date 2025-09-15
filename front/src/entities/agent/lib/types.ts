@@ -1,92 +1,52 @@
-/**
- * Агент
- * @namespace Entities.Agent.Lib.Types.Agent
- */
-export type Agent = {
-  id: number
-  name: string
-  avatar: string
-  params: AgentParams
-  description: string
-  provider: {
-    id: number
-    name: string
-  }
-  rules: AgentRule[]
-  isActive: boolean
-  createdAt: Date
-  updatedAt: Date
-}
+import type { RestError } from "@shared/api"
+import type { Agent, AgentParams } from "./schema"
 
 /**
- * Параметры агента
- * @namespace Entities.Agent.Lib.Types.AgentParams
- */
-export type AgentParams = {
-  model: string
-  maxTokens: number
-  topP: number
-  temperature: number
-  frequencyPenalty: number
-  presencePenalty: number
-}
-
-/**
- * Тип для правила агента
- * @namespace Entities.Agent.Lib.Types.AgentRule
- */
-export type AgentRule = {
-  id: number
-  content: string
-  priority: number
-  agentId: number
-}
-
-/**
- * Данные запроса списка агентов
+ * Тип данных для запроса списка агентов
  * @namespace Entities.Agent.Lib.Types.AgentsQueryData
  */
-export type AgentsQueryData = {
+export type AgentListQueryData = {
   agents: Agent[]
   isLoading: boolean
-  error: Error | null
+  error: RestError | null
 }
 
 /**
- * Данные запроса агента по ID
+ * Тип данных для запроса агента по ID
  * @namespace Entities.Agent.Lib.Types.AgentQueryData
  */
-export type AgentQueryData = {
+export type AgentDetailQueryData = {
   agent: Agent | null
   isLoading: boolean
-  error: Error | null
+  error: RestError | null
 }
 
 /**
- * Тип для данных запроса создания агента
+ * Тип данных для запроса на создание агента
  * @namespace Entities.Agent.Lib.Types.AgentCreateData
  */
 export type AgentCreateData = {
-  providerId: number
-  name: string
   avatar: string
-  description: string
-  params: AgentParams
+  name: string
+  providerId: number
 }
 
 /**
- * Тип для данных запроса обновления агента
+ * Тип данных для запроса на обновление агента
  * @namespace Entities.Agent.Lib.Types.AgentUpdateData
  */
-export type AgentUpdateData = Partial<AgentCreateData>
+export type AgentUpdateData = {
+  name?: string
+  params?: AgentParams
+  description?: string
+}
 
 /**
- * Тип для данных запроса добавления правила агента
+ * Тип данных для запроса на добавление правила агента
  * @namespace Entities.Agent.Lib.Types.AgentRuleCreateData
  */
 export type AgentRuleCreateData = {
   content: string
-  priority?: number
 }
 
 /**
@@ -94,6 +54,5 @@ export type AgentRuleCreateData = {
  * @namespace Entities.Agent.Lib.Types.AgentRuleSortData
  */
 export type AgentRuleSortData = {
-  agentId: number
   ruleIds: number[]
 }

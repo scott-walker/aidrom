@@ -30,17 +30,17 @@ export const queryKeys = {
  * @namespace Entities.Request.Model.Queries.useRequests
  */
 export const useRequests = (): RequestListQueryData => {
-  const {
-    data: requests = [],
-    isLoading,
-    error
-  } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: queryKeys.list({}),
     queryFn: fetchRequests,
     staleTime: STALE_TIME
   })
 
-  return { requests, isLoading, error: error as RestError | null }
+  return {
+    requests: data || [],
+    isLoading,
+    error: error as RestError | null
+  }
 }
 
 /**
@@ -48,16 +48,16 @@ export const useRequests = (): RequestListQueryData => {
  * @namespace Entities.Request.Model.Queries.useRequestById
  */
 export const useRequestById = (requestId: number | null): RequestDetailQueryData => {
-  const {
-    data: request = null,
-    isLoading,
-    error
-  } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: queryKeys.details(requestId || 0),
     queryFn: () => fetchRequestsByProviderId(requestId || 0),
     staleTime: STALE_TIME,
     enabled: requestId !== null
   })
 
-  return { request, isLoading, error: error as RestError | null }
+  return {
+    request: data || null,
+    isLoading,
+    error: error as RestError | null
+  }
 }

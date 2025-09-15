@@ -1,6 +1,6 @@
 import { makeClasses } from "@lib/style-api"
-import type { Agent } from "../lib/types"
-import { Tooltip } from "@shared/ui/tooltip"
+import { Tooltip } from "@ui/tooltip"
+import type { Agent } from "../lib/schema"
 
 /**
  * Пропсы для компонента AgentStatus

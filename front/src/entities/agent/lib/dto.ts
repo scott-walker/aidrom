@@ -1,84 +1,78 @@
-import { z } from "zod"
+import type { ProviderDTO } from "@entities/provider"
 
 /**
- * Схема для DTO правила агента (DTO ответа)
- * @namespace Entities.Agent.Model.AgentRuleDTOSchema
+ * DTO агента
+ * @namespace Entities.Agent.Model.AgentDTO
  */
-export const AgentRuleDTOSchema = z.object({
-  id: z.number(),
-  content: z.string(),
-  priority: z.number(),
-  agentId: z.number()
-})
+export interface AgentDTO {
+  id: number
+  name: string
+  avatar: string
+  params: AgentParamsDTO
+  description: string
+  provider: ProviderDTO
+  rules: AgentRuleDTO[]
+  isActive: boolean
+  createdAt: string
+  updatedAt: string
+}
 
 /**
- * Схема для DTO агента (DTO ответа)
- * @namespace Entities.Agent.Model.AgentDTOSchema
+ * DTO параметров агента
+ * @namespace Entities.Agent.Model.AgentParamsDTO
  */
-export const AgentDTOResponseSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  avatar: z.string(),
-  params: z.object({}),
-  description: z.string(),
-  provider: z.object({
-    id: z.number(),
-    name: z.string()
-  }),
-  rules: z.array(AgentRuleDTOSchema),
-  isActive: z.boolean(),
-  createdAt: z.date(),
-  updatedAt: z.date()
-})
+export interface AgentParamsDTO {
+  model: string
+  maxTokens: number
+  topP: number
+  temperature: number
+  frequencyPenalty: number
+  presencePenalty: number
+}
 
 /**
- * Схема для DTO агента (DTO запроса)
- * @namespace Entities.Agent.Model.AgentDTORequestSchema
+ * DTO правила агента
+ * @namespace Entities.Agent.Model.AgentRuleDTO
  */
-export const AgentDTORequestSchema = z.object({
-  name: z.string(),
-  avatar: z.string(),
-  params: z.object({
-    model: z.string(),
-    maxTokens: z.number(),
-    topP: z.number(),
-    temperature: z.number(),
-    frequencyPenalty: z.number(),
-    presencePenalty: z.number()
-  }),
-  description: z.string(),
-  providerId: z.number()
-})
+export interface AgentRuleDTO {
+  id: number
+  content: string
+  priority: number
+  agentId: number
+}
 
 /**
- * Схема для DTO правила агента (DTO запроса)
- * @namespace Entities.Agent.Model.AgentRuleRequestDTO
+ * DTO создания агента
+ * @namespace Entities.Agent.Model.AgentCreateDTO
  */
-export const AgentRuleRequestSchema = z.object({
-  content: z.string(),
-  priority: z.number()
-})
+export interface AgentCreateDTO {
+  name: string
+  avatar: string
+  providerId: number
+}
 
 /**
- * Тип для DTO агента (DTO ответа)
- * @namespace Entities.Agent.Model.AgentResponseDTO
+ * DTO обновления агента
+ * @namespace Entities.Agent.Model.AgentUpdateDTO
  */
-export type AgentResponseDTO = z.infer<typeof AgentDTOResponseSchema>
+export interface AgentUpdateDTO {
+  name?: string
+  params?: AgentParamsDTO
+  description?: string
+}
 
 /**
- * Тип для DTO агента (DTO запроса)
- * @namespace Entities.Agent.Model.AgentRequestDTO
+ * DTO создания правила агента
+ * @namespace Entities.Agent.Model.AgentRuleCreateDTO
  */
-export type AgentRequestDTO = z.infer<typeof AgentDTORequestSchema>
+export interface AgentRuleCreateDTO {
+  content: string
+}
 
 /**
- * Тип для DTO правила агента (DTO ответа)
- * @namespace Entities.Agent.Model.AgentRuleResponseDTO
+ * DTO сортировки правил агента
+ * @namespace Entities.Agent.Model.AgentRuleSortDTO
  */
-export type AgentRuleResponseDTO = z.infer<typeof AgentRuleDTOSchema>
-
-/**
- * Тип для DTO правила агента (DTO запроса)
- * @namespace Entities.Agent.Model.AgentRuleRequestDTO
- */
-export type AgentRuleRequestDTO = z.infer<typeof AgentRuleRequestSchema>
+export interface AgentRuleSortDTO {
+  ruleIds: number[]
+}

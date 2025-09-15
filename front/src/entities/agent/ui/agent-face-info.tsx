@@ -1,6 +1,6 @@
 import { makeClasses } from "@lib/style-api"
 import { Tag } from "@ui/tag"
-import type { Agent } from "../lib/types"
+import type { Agent } from "../lib/schema"
 import { AgentStatusAvatar } from "./agent-status-avatar"
 
 /**

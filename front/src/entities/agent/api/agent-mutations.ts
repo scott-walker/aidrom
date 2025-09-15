@@ -1,14 +1,8 @@
 import { useMutation, useQueryClient, type UseMutationResult } from "@tanstack/react-query"
 import { queryKeys } from "./agent-queries"
 import { addAgentRule, createAgent, deleteAgentRule, sortAgentRules, updateAgent } from "./agent-api"
-import type {
-  Agent,
-  AgentCreateData,
-  AgentRule,
-  AgentRuleCreateData,
-  AgentRuleSortData,
-  AgentUpdateData
-} from "../lib/types"
+import type { Agent, AgentRule } from "../lib/schema"
+import type { AgentCreateData, AgentRuleCreateData, AgentRuleSortData, AgentUpdateData } from "../lib/types"
 
 /**
  * Хук для создания агента
@@ -36,9 +30,8 @@ export const useUpdateAgent = (): UseMutationResult<Agent, Error, { agentId: num
     mutationFn: ({ agentId, data }: { agentId: number; data: AgentUpdateData }) => {
       return updateAgent(agentId, data)
     },
-    onSuccess: (updatedAgent: Agent) => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.list({}) })
-      queryClient.invalidateQueries({ queryKey: queryKeys.details(updatedAgent.id) })
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.all })
     }
   })
 }
@@ -56,8 +49,8 @@ export const useAddAgentRule = (): UseMutationResult<
 
   return useMutation({
     mutationFn: ({ agentId, data }: { agentId: number; data: AgentRuleCreateData }) => addAgentRule(agentId, data),
-    onSuccess: (data: AgentRule) => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.details(data.agentId) })
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.all })
     }
   })
 }
@@ -66,13 +59,13 @@ export const useAddAgentRule = (): UseMutationResult<
  * Хук для удаления правила агента
  * @namespace Entities.Agent.Api.useDeleteAgentRule
  */
-export const useDeleteAgentRule = (): UseMutationResult<AgentRule, Error, { ruleId: number }> => {
+export const useDeleteAgentRule = (): UseMutationResult<void, Error, { ruleId: number }> => {
   const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: ({ ruleId }: { ruleId: number }) => deleteAgentRule(ruleId),
-    onSuccess: (data: AgentRule) => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.details(data.agentId) })
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.all })
     }
   })
 }
@@ -81,13 +74,13 @@ export const useDeleteAgentRule = (): UseMutationResult<AgentRule, Error, { rule
  * Хук для сортировки правил агента
  * @namespace Entities.Agent.Api.useSortAgentRules
  */
-export const useSortAgentRules = (): UseMutationResult<AgentRuleSortData, Error, AgentRuleSortData> => {
+export const useSortAgentRules = (): UseMutationResult<void, Error, { agentId: number; data: AgentRuleSortData }> => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ agentId, ruleIds }: AgentRuleSortData) => sortAgentRules(agentId, ruleIds),
-    onSuccess: ({ agentId }: AgentRuleSortData) => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.details(agentId) })
+    mutationFn: ({ agentId, data }: { agentId: number; data: AgentRuleSortData }) => sortAgentRules(agentId, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.all })
     }
   })
 }

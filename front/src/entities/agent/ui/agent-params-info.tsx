@@ -1,6 +1,6 @@
 import { makeClasses } from "@lib/style-api"
 import { Json } from "@ui/json"
-import type { Agent } from "../lib/types"
+import type { Agent } from "../lib/schema"
 
 /**
  * Пропсы для компонента AgentParamsInfo

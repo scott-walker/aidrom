@@ -1,9 +1,9 @@
 import { makeClasses } from "@lib/style-api"
 import { DateTag } from "@ui/date-tag"
-import { Json } from "@shared/ui/json"
+import { Json } from "@ui/json"
 import { Separator } from "@ui/separator"
 import { Tag } from "@ui/tag"
-import type { Agent } from "../lib/types"
+import type { Agent } from "../lib/schema"
 import { AgentAvatar } from "./agent-avatar"
 
 /**

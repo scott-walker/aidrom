@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
+import type { RestError } from "@shared/api"
 import type { ProviderListQueryData, ProviderDetailQueryData } from "../lib/types"
 import { fetchProviderById, fetchProviders } from "./provider-api"
 
@@ -29,17 +30,17 @@ export const queryKeys = {
  * @namespace Entities.Provider.Api.useProviders
  */
 export const useProviders = (): ProviderListQueryData => {
-  const {
-    data: providers = [],
-    isLoading,
-    error
-  } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: queryKeys.list({}),
     queryFn: fetchProviders,
     staleTime: STALE_TIME
   })
 
-  return { providers, isLoading, error }
+  return {
+    providers: data || [],
+    isLoading,
+    error: error as RestError | null
+  }
 }
 
 /**
@@ -47,14 +48,14 @@ export const useProviders = (): ProviderListQueryData => {
  * @namespace Entities.Provider.Api.useProviderById
  */
 export const useProviderById = (providerId: number): ProviderDetailQueryData => {
-  const {
-    data: provider,
-    isLoading,
-    error
-  } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: queryKeys.details(providerId),
     queryFn: () => fetchProviderById(providerId)
   })
 
-  return { provider, isLoading, error }
+  return {
+    provider: data || null,
+    isLoading,
+    error: error as RestError | null
+  }
 }

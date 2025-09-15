@@ -4,7 +4,7 @@ import type { ProviderCreateData, ProviderUpdateData } from "./types"
 
 /**
  * Маппер из DTO в сущность
- * @namespace Entities.Provider.Lib.Mappers.toProviderSchema
+ * @namespace Entities.Provider.Lib.Mappers.toProvider
  */
 export const toProvider = (dto: ProviderDTO): Provider => ({
   id: dto.id,

@@ -2,7 +2,7 @@ import type { Provider } from "@entities/provider"
 
 /**
  * Схема сущности "запрос к провайдеру"
- * @namespace Entities.Request.Model.RequestSchema
+ * @namespace Entities.Request.Lib.Schema.Request
  */
 export interface Request {
   id: number

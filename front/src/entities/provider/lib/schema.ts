@@ -1,6 +1,6 @@
 /**
  * Схема провайдера
- * @namespace Entities.Provider.Lib.Types.Provider
+ * @namespace Entities.Provider.Lib.Schema.Provider
  */
 export interface Provider {
   id: number
@@ -13,7 +13,7 @@ export interface Provider {
 
 /**
  * Схема конфигурации параметров драйвера
- * @namespace Entities.Provider.Lib.Types.DriverParamsConfig
+ * @namespace Entities.Provider.Lib.Schema.DriverParamsConfig
  */
 export interface DriverParamsConfig {
   model: string[]

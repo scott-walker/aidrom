@@ -1,6 +1,6 @@
 import { makeClasses } from "@lib/style-api"
 import { Markdown } from "@ui/markdown"
-import type { Agent } from "../lib/types"
+import type { Agent } from "../lib/schema"
 
 /**
  * Пропсы для компонента AgentDescriptionInfo

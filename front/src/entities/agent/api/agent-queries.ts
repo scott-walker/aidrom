@@ -1,7 +1,12 @@
 import { useQuery } from "@tanstack/react-query"
+import type { RestError } from "@shared/api"
 import { fetchAgentById, fetchAgents } from "./agent-api"
-import type { AgentQueryData, AgentsQueryData } from "../lib/types"
+import type { AgentListQueryData, AgentDetailQueryData } from "../lib/types"
 
+/**
+ * Ключ запроса для агентов
+ * @namespace Entities.Agent.Api.AGENT_QUERY_KEY
+ */
 export const AGENT_QUERY_KEY = "agent"
 
 /**
@@ -23,7 +28,7 @@ export const STALE_AGENT_BY_ID_TIME = 300000
  * Получить список агентов
  * @namespace Entities.Agent.Api.useAgents
  */
-export const useAgents = (): AgentsQueryData => {
+export const useAgents = (): AgentListQueryData => {
   const { data, isLoading, error } = useQuery({
     queryKey: queryKeys.list({}),
     queryFn: fetchAgents,
@@ -33,7 +38,7 @@ export const useAgents = (): AgentsQueryData => {
   return {
     agents: data || [],
     isLoading,
-    error
+    error: error as RestError | null
   }
 }
 
@@ -41,7 +46,7 @@ export const useAgents = (): AgentsQueryData => {
  * Получить агента по ID
  * @namespace Entities.Agent.Api.useAgentById
  */
-export const useAgentById = (id: number): AgentQueryData => {
+export const useAgentById = (id: number): AgentDetailQueryData => {
   const { data, isLoading, error } = useQuery({
     queryKey: queryKeys.details(id),
     queryFn: () => fetchAgentById(id),
@@ -51,6 +56,6 @@ export const useAgentById = (id: number): AgentQueryData => {
   return {
     agent: data || null,
     isLoading,
-    error
+    error: error as RestError | null
   }
 }
