@@ -11,7 +11,6 @@ export { useCreateChat, useUpdateChat, useSendMessage } from "./api/chat-mutatio
 export { useChatStore } from "./model/chat-store"
 
 // UI
-export { ChatCard } from "./ui/chat-card"
 export { ChatPending } from "./ui/chat-pending"
 export { MessageBubble } from "./ui/message-bubble"
 export { MessageEmptyList } from "./ui/message-empty-list"

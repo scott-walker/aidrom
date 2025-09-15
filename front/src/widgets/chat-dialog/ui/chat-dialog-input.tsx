@@ -1,5 +1,5 @@
 import { makeClasses } from "@lib/style-api"
-import type { Chat } from "@entities/chat/lib/types"
+import type { Chat } from "@entities/chat"
 import { ChatInput } from "@features/chat-input"
 
 /**
@@ -26,8 +26,6 @@ export const ChatDialogInput = ({ chat, className = "" }: ChatDialogInputProps) 
     "justify-center",
     "px-8",
     "py-10",
-    // "bg-background-hard/70",
-    // "shadow-lg",
     className
   )
 

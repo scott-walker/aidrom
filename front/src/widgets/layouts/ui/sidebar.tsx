@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 import { useLayout } from "@scottwalker/lucent"
-import { cn } from "@utils/jsxtools"
+import { makeClasses } from "@lib/style-api"
 import { Menu, type MenuItems } from "@ui/menu"
 import { Brand } from "@ui/brand"
 import { Separator } from "@ui/separator"
@@ -51,18 +51,18 @@ const developmentMenuItems: MenuItems = [
  */
 export const SidebarHeader = (): ReactNode => {
   const collapsed = useLayout().isSidebarCollapsed
-  const classes = cn(
+  const classes = makeClasses(
     "flex",
     "items-center",
     "justify-center",
-    "h-[var(--layout-header-height)]",
+    "h-[var(--layout-sidebar-header-height)]",
     "border-b",
     "border-border"
   )
 
   return (
     <div className={classes}>
-      <Brand size="md" compact={collapsed} />
+      <Brand size="sm" compact={collapsed} />
     </div>
   )
 }
@@ -74,7 +74,7 @@ export const SidebarHeader = (): ReactNode => {
  */
 export const SidebarBody = (): ReactNode => {
   const collapsed = useLayout().isSidebarCollapsed
-  const classes = cn(
+  const classes = makeClasses(
     "flex-1",
     "h-[calc(100vh-var(--layout-header-height)-var(--layout-footer-height))]",
     "w-full",
@@ -109,7 +109,7 @@ export const SidebarBody = (): ReactNode => {
  */
 export const SidebarFooter = (): ReactNode => {
   const collapsed = useLayout().isSidebarCollapsed
-  const classes = cn(
+  const classes = makeClasses(
     "flex",
     "items-center",
     "justify-center",
@@ -140,7 +140,15 @@ export const SidebarFooter = (): ReactNode => {
  * @returns {ReactNode}
  */
 export const Sidebar = (): ReactNode => {
-  const classes = cn("h-full", "w-full", "shadow-2xl", "overflow-hidden")
+  const classes = makeClasses(
+    "h-full",
+    "w-full",
+    "bg-background-soft",
+    "shadow-2xl/5",
+    // "border-r-1",
+    // "border-border",
+    "overflow-hidden"
+  )
 
   return (
     <div className={classes}>

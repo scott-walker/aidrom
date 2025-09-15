@@ -8,7 +8,7 @@ import { ChatList } from "@widgets/chat-list"
  * @namespace Pages.Chat.Layout
  */
 export const Layout = ({ children }: { children: ReactNode }) => {
-  useTitle("Чат")
+  useTitle("Чаты")
 
   const containerClasses = makeClasses("flex items-stretch justify-between h-full")
   const chatListClasses = makeClasses("flex", "flex-col", "w-fit", "border-r", "border-background-hard")
@@ -17,7 +17,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <div className={containerClasses}>
       <aside className={chatListClasses}>
-        <ChatList />
+        <ChatList width="300px" />
       </aside>
       <div className={chatClasses}>{children}</div>
     </div>

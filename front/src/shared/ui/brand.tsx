@@ -1,5 +1,5 @@
 import type { ComponentProps, FC, ReactNode } from "react"
-import { cn } from "@utils/jsxtools"
+import { makeClasses } from "@lib/style-api"
 import { Icon } from "@ui/icon"
 
 /**
@@ -10,6 +10,7 @@ import { Icon } from "@ui/icon"
  */
 type Props = ComponentProps<"div"> & {
   compact?: boolean
+  withIcon?: boolean
   size?: "sm" | "md" | "lg"
 }
 
@@ -19,54 +20,68 @@ type Props = ComponentProps<"div"> & {
  * @param {Props} props
  * @returns {ReactNode}
  */
-export const Brand: FC<Props> = ({ compact = false, size = "md", className = "", ...props }: Props): ReactNode => {
-  const containerClasses = cn(
+export const Brand: FC<Props> = ({
+  compact = false,
+  withIcon = true,
+  size = "md",
+  className = "",
+  ...props
+}: Props): ReactNode => {
+  const containerClasses = makeClasses(
     "relative",
     "flex",
     "items-center",
     "justify-center",
     "select-none",
-    // compact && "bg-brand-gradient w-full h-full",
     compact && "rounded-xl bg-brand-gradient",
     className
   )
 
   const iconName = "bot-message-square"
   const iconStroke = 2.5
-  const iconClasses = cn("p-2", "w-fit", "h-fit", "text-primary-foreground", "rounded-xl", {
-    "bg-brand-gradient": !compact,
-    "bg-none": compact
-  })
+  const iconClasses = makeClasses(
+    "p-2",
+    "w-fit",
+    "h-fit",
+    "text-primary-foreground",
+    "rounded-xl",
+    !compact && "bg-brand-gradient",
+    compact && "bg-none"
+  )
 
   const iconSizeVariants = (size: "sm" | "md" | "lg"): number => {
     const map = {
-      sm: 8,
+      sm: 32,
       md: 38,
-      lg: 22
+      lg: 42
     }
 
     return map[size] || map.md
   }
 
-  const labelClasses = cn(
+  const labelClasses = makeClasses(
     "flex",
     "flex-col",
     "items-start",
     "justify-center",
-    "ml-3.5",
+    withIcon && "ml-3.5",
     "font-family-display",
     compact && "hidden"
   )
-  const titleClasses = cn("font-mega-bold", "text-foreground-hard", {
-    "text-lg": size === "sm",
-    "text-2xl": size === "md",
-    "text-5xl": size === "lg"
-  })
-  const subtitleClasses = cn("relative text-foreground -top-1 text-xs")
+  const titleClasses = makeClasses(
+    "font-mega-bold",
+    "text-foreground-hard",
+    size === "sm" && "text-lg",
+    size === "md" && "text-2xl",
+    size === "lg" && "text-5xl"
+  )
+  const subtitleClasses = makeClasses("relative text-foreground -top-1 text-xs")
 
   return (
     <div className={containerClasses} {...props}>
-      <Icon name={iconName} className={iconClasses} strokeWidth={iconStroke} size={iconSizeVariants(size)} />
+      {withIcon && (
+        <Icon name={iconName} className={iconClasses} strokeWidth={iconStroke} size={iconSizeVariants(size)} />
+      )}
 
       <div className={labelClasses}>
         <span className={titleClasses}>AIDrom</span>

@@ -20,7 +20,7 @@ export const Chat = (): ReactNode => {
     <div className={containerClasses}>
       <ChatDialog className={chatClasses} chatId={chatId} />
       <aside className={agentClasses}>
-        <ChatInfo chatId={chatId} />
+        <ChatInfo chatId={chatId} width="400px" />
       </aside>
     </div>
   )

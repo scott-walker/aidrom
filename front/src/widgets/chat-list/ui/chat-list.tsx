@@ -1,48 +1,50 @@
 import { makeClasses } from "@lib/style-api"
-import { LoaderBlock } from "@ui/loader-block"
-import { ErrorBlock } from "@ui/error-block"
-import { useChats } from "@entities/chat/api/chat-queries"
-import type { ChatListItem } from "@entities/chat"
-import { useToggleChatList } from "@features/chat-list-toggle"
-import { ChatListHeader } from "./chat-list-header"
-import { ChatListItems } from "./chat-list-items"
+import { Heading } from "@ui/heading"
+import { ChatListTrigger, useToggleChatList } from "@features/chat-list-toggle"
+import { ChatAgentList } from "@features/chat-agent-list"
+
+/**
+ * Пропсы для компонента ChatList
+ * @namespace Widgets.ChatList.UI.ChatListProps
+ */
+type ChatListProps = {
+  width?: string
+}
 
 /**
  * Список чатов
  * @namespace Widgets.ChatList
  */
-export const ChatList = () => {
+export const ChatList = ({ width = "300px" }: ChatListProps) => {
   const { isVisible } = useToggleChatList()
-  const { chats, isLoading, error } = useChats()
-
   const containerClasses = makeClasses(
     "flex",
     "flex-col",
     "h-full",
     // isVisible
-    isVisible && "w-[300px]",
+    "bg-background-hard/30",
+    isVisible && `w-[${width}]`,
     !isVisible && "w-fit"
   )
-
-  if (isLoading) {
-    return (
-      <div className={containerClasses}>
-        <LoaderBlock />
-      </div>
-    )
-  }
-  if (error) {
-    return (
-      <div className={containerClasses}>
-        <ErrorBlock error={error} />
-      </div>
-    )
-  }
+  const headerClasses = makeClasses("flex", "justify-between", "items-center", "px-6", "py-4")
+  const listClasses = makeClasses(
+    "flex",
+    "flex-col",
+    "w-full",
+    "overflow-y-auto",
+    "scrollbar-hide",
+    !isVisible && "hidden"
+  )
 
   return (
     <div className={containerClasses}>
-      <ChatListHeader />
-      <ChatListItems chats={chats as ChatListItem[]} />
+      <header className={headerClasses}>
+        {isVisible && <Heading level={5}>Чаты</Heading>}
+        <ChatListTrigger />
+      </header>
+      <div className={listClasses}>
+        <ChatAgentList />
+      </div>
     </div>
   )
 }

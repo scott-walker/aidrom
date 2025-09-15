@@ -1,16 +1,21 @@
 import type { ReactNode } from "react"
-import { Lucent, type LayoutConfig, type LayoutSidebarMode, type LayoutThemeMode } from "@scottwalker/lucent"
-import { getLayoutTheme, getLayoutSidebar, LayoutProvider as LayoutAdapterProvider } from "@lib/layout-api"
+import {
+  Lucent,
+  SIDEBAR_MODE_COLLAPSED,
+  type LayoutConfig,
+  // type LayoutSidebarMode,
+  type LayoutThemeMode
+} from "@scottwalker/lucent"
+import { getLayoutTheme, LayoutProvider as LayoutAdapterProvider } from "@lib/layout-api"
 
 /**
  * Провайдер макета
  * @namespace App.Provider
  */
 export const LayoutProvider = ({ children }: { children: ReactNode }): ReactNode => {
-  // console.log("AppProvider")
-
   const theme = getLayoutTheme() as LayoutThemeMode
-  const sidebar = getLayoutSidebar() as LayoutSidebarMode
+  // const sidebar = getLayoutSidebar() as LayoutSidebarMode
+  const sidebar = SIDEBAR_MODE_COLLAPSED
 
   // Конфигурация Lucent макета
   const layoutConfig: LayoutConfig = {

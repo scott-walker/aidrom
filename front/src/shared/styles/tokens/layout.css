@@ -1,15 +1,16 @@
 /* Токены макета */
 
 @theme {
-  --layout-header-height: 5rem;
+  --layout-header-height: 4.5rem;
   --layout-footer-height: 0rem;
   --layout-sidebar-width: 16rem;
   --layout-sidebar-collapsed-width: 5rem;
+  --layout-sidebar-header-height: 4.5rem;
   --layout-infobar-width: 0rem;
   --layout-infobar-collapsed-width: 0rem;
   --layout-transition-duration: 125ms;
-  --layout-inner-offset-x: 3.125rem;
-  --layout-inner-offset-y: 1.875rem;
+  --layout-inner-offset-x: 30px;
+  --layout-inner-offset-y: 20px;
 
   --layout-blocks-gap: 30px;
 }

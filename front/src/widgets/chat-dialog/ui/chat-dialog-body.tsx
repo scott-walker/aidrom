@@ -1,5 +1,5 @@
 import { makeClasses } from "@lib/style-api"
-import type { Chat, Role } from "@entities/chat"
+import type { Chat } from "@entities/chat"
 import { MessageBubble, useChatStore, ChatPending, Roles } from "@entities/chat"
 import { MessageEmptyList } from "@entities/chat"
 import { useScrollBody } from "../lib/use-scroll-body"
@@ -29,7 +29,7 @@ export const ChatDialogBody = ({ chat, className = "" }: ChatDialogBodyProps) =>
   }
 
   const bodyClasses = makeClasses("flex flex-col flex-1 pt-8 pb-64 overflow-y-auto scrollbar-hide", className)
-  const makeMessageClasses = (role: Role) => {
+  const makeMessageClasses = (role: Roles) => {
     return makeClasses(role === Roles.Agent && "items-start", role === Roles.Client && "items-end")
   }
 
