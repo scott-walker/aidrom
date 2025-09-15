@@ -148,11 +148,11 @@ export const deleteRule = async (req: Request, res: Response, next: NextFunction
   try {
     logger.info("Удаление правила агента", { ruleId })
 
-    const rule = await agentService.deleteRule(ruleId)
+    await agentService.deleteRule(ruleId)
 
     logger.info("Правило агента успешно удалено", { ruleId })
 
-    res.json(rule)
+    res.json({ message: "Правило агента успешно удалено" })
   } catch (err) {
     logger.error("Ошибка при удалении правила агента", { error: err.message, ruleId })
 

@@ -233,15 +233,13 @@ export const addRule = async (agentId: number, data: CreateAgentRuleData): Promi
  * Удалить правило агента
  * @namespace Agent.Service.deleteRule
  */
-export const deleteRule = async (ruleId: number): Promise<AgentRule> => {
+export const deleteRule = async (ruleId: number): Promise<void> => {
   try {
     logger.info("Удаление правила агента в БД", { ruleId })
 
-    const [rule] = await db.delete(agentRules).where(eq(agentRules.id, ruleId)).returning()
+    await db.delete(agentRules).where(eq(agentRules.id, ruleId)).returning()
 
     logger.info("Правило агента успешно удалено", { ruleId })
-
-    return rule
   } catch (error) {
     logger.error("Ошибка при удалении правила агента в БД", { error: error.message, ruleId })
 
