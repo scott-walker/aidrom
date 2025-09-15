@@ -59,11 +59,11 @@ export const useAddAgentRule = (): UseMutationResult<
  * Хук для удаления правила агента
  * @namespace Entities.Agent.Api.useDeleteAgentRule
  */
-export const useDeleteAgentRule = (): UseMutationResult<void, Error, { ruleId: number }> => {
+export const useDeleteAgentRule = (): UseMutationResult<void, Error, { agentId: number; ruleId: number }> => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ ruleId }: { ruleId: number }) => deleteAgentRule(ruleId),
+    mutationFn: ({ agentId, ruleId }: { agentId: number; ruleId: number }) => deleteAgentRule(agentId, ruleId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.all })
     }

@@ -20,7 +20,7 @@ export const AgentRule = ({ rule, children, className = "" }: AgentRuleProps) =>
   const cardClasses = makeClasses(
     "flex",
     "items-center",
-    "gap-2",
+    "gap-6",
     "px-6",
     "py-4",
     "bg-background",
@@ -29,9 +29,24 @@ export const AgentRule = ({ rule, children, className = "" }: AgentRuleProps) =>
     "rounded-lg",
     className
   )
+  const priorityClasses = makeClasses(
+    "shrink-0",
+    "flex",
+    "items-center",
+    "justify-center",
+    "w-10",
+    "h-10",
+    "text-lg",
+    "font-mega-bold",
+    "rounded-full",
+    "border-2",
+    "border-foreground-soft/30",
+    "text-foreground-soft/70"
+  )
 
   return (
     <div className={cardClasses} data-id={rule.id}>
+      <div className={priorityClasses}>{rule.priority + 1}</div>
       <div>{rule.content}</div>
       <div className="ml-auto flex items-center gap-4">{children}</div>
     </div>

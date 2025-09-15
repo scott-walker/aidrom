@@ -44,8 +44,8 @@ export const addAgentRule = async (agentId: number, data: AgentRuleCreateData): 
  * Удалить правило агента
  * @namespace Entities.Agent.Api.deleteAgentRule
  */
-export const deleteAgentRule = async (ruleId: number): Promise<void> => {
-  await restClient.delete(`agents/rules/${ruleId}`)
+export const deleteAgentRule = async (agentId: number, ruleId: number): Promise<void> => {
+  await restClient.delete(`agents/${agentId}/rules/${ruleId}`)
 }
 
 /**

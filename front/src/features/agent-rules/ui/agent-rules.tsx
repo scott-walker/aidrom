@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react"
-import { ReactSortable, type SortableEvent } from "react-sortablejs"
-import { ErrorBlock } from "@ui/error-block"
+import { ReactSortable } from "react-sortablejs"
+
 import { IconButton } from "@ui/icon-button"
-import { useDeleteAgentRule, useSortAgentRules, type Agent as AgentType } from "@entities/agent"
+import { type Agent as AgentType } from "@entities/agent"
+
 import { AgentRule } from "./agent-rule"
+import { useDeleteRule } from "../lib/use-delete"
+import { useSortRules } from "../lib/use-sort"
 
 /**
  * Пропсы для компонента AgentRules
@@ -19,26 +22,12 @@ type AgentRulesProps = {
  */
 export const AgentRules = ({ agent }: AgentRulesProps) => {
   const [rules, setRules] = useState(agent.rules)
-  const { mutate: deleteAgentRule, isPending, error } = useDeleteAgentRule()
-  const { mutate: sortAgentRules, isPending: isSorting } = useSortAgentRules()
+  const { onDelete, isDeleting } = useDeleteRule(agent.id)
+  const { onSort, isSorting } = useSortRules(agent.id)
 
+  // Для обновления списка правил при изменении коллекции правил в схеме агента
   useEffect(() => setRules(agent.rules), [agent.rules])
 
-  const onDelete = (ruleId: number) => {
-    deleteAgentRule({ ruleId })
-  }
-  const onSort = (evt: SortableEvent) => {
-    requestAnimationFrame(() => {
-      const sortableElement = evt.to
-      const ruleIds = Array.from(sortableElement.children).map(item => {
-        return parseInt(item.getAttribute("data-id") || "0")
-      })
-
-      sortAgentRules({ agentId: agent.id, ruleIds })
-    })
-  }
-
-  if (error) return <ErrorBlock error={error} />
   if (rules.length === 0) return <div>Правил нет</div>
 
   return (
@@ -52,7 +41,7 @@ export const AgentRules = ({ agent }: AgentRulesProps) => {
     >
       {rules.map(rule => (
         <AgentRule key={rule.id} rule={rule}>
-          <IconButton icon="trash" iconSize={22} onClick={() => onDelete(rule.id)} disabled={isPending} />
+          <IconButton icon="trash" iconSize={22} onClick={() => onDelete(rule.id)} disabled={isDeleting} />
           <IconButton icon="grip" iconSize={22} className="cursor-grab sortable-handle" disabled={isSorting} />
         </AgentRule>
       ))}
