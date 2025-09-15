@@ -171,7 +171,7 @@ export const updateClientBalance = async (clientId: number, balance: number): Pr
     const [client] = await db
       .update(clients)
       .set({
-        balance,
+        // balance,
         updatedAt: new Date()
       })
       .where(eq(clients.id, clientId))
