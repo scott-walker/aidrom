@@ -4,7 +4,7 @@ import { Agent, AgentParams } from "../types"
  * Маппер для агента
  * @namespace Db.Mappers.AgentMapper
  */
-export const mapAgent = (agent: Agent): Agent => {
+export const mapAgent = (agent: Partial<Agent>): Agent => {
   const params: AgentParams = {
     model: agent.params.model ?? "",
     maxTokens: agent.params.maxTokens ?? 0,
@@ -17,5 +17,5 @@ export const mapAgent = (agent: Agent): Agent => {
   const rules = agent.rules ?? []
   const isActive = !!agent.params.model
 
-  return { ...agent, provider, params, rules, isActive }
+  return { ...agent, provider, params, rules, isActive } as Agent
 }

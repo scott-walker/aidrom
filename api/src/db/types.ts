@@ -23,9 +23,9 @@ export type UpdateProviderData = Partial<CreateProviderData>
 // Типы для агента
 export type Agent = InferSelectModel<typeof agents> & {
   params: AgentParams
-  provider?: Provider
-  rules?: AgentRule[]
-  isActive?: boolean
+  provider: Provider
+  rules: AgentRule[]
+  isActive: boolean
 }
 export type AgentParams = DriverRequestParams
 export type CreateAgentData = InferInsertModel<typeof agents>
@@ -45,8 +45,8 @@ export type Chat = InferSelectModel<typeof chats>
 export type CreateChatData = InferInsertModel<typeof chats>
 export type UpdateChatData = Partial<CreateChatData>
 export type ChatWithRelations = Chat & {
-  agent: any
-  client: any
+  agent: Agent
+  client: Client
   messagePairs: (MessagePair & {
     clientMessage: ClientMessage
     agentMessage: AgentMessage

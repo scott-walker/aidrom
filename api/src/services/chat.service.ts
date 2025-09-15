@@ -10,10 +10,12 @@ import {
   messagePairs,
   clientMessages,
   agentMessages,
+  mapAgent,
+  Agent,
   Chat,
+  ChatWithRelations,
   CreateChatData,
   UpdateChatData,
-  ChatWithRelations,
   ClientMessage,
   AgentMessage,
   RequestWithResponseContent
@@ -49,7 +51,6 @@ export const getChats = async (): Promise<Chat[]> => {
       orderBy: [desc(chats.updatedAt)],
       with: {
         agent: true
-        // client: true
       }
     })
 
@@ -76,7 +77,8 @@ export const getChatById = async (chatId: number): Promise<ChatWithRelations> =>
       with: {
         agent: {
           with: {
-            provider: true
+            provider: true,
+            rules: true
           }
         },
         client: true,
@@ -94,6 +96,8 @@ export const getChatById = async (chatId: number): Promise<ChatWithRelations> =>
     }
 
     logger.info("Чат по ID успешно найден", { chatId })
+
+    chat.agent = mapAgent(chat.agent as Agent)
 
     return chat as ChatWithRelations
   } catch (error) {
