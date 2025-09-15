@@ -12,10 +12,17 @@ export const createDummyDriver = (config: DummyDriverConfig): Driver => {
 
   const driver: Driver = {
     /**
-     * Получение моделей "заглушки"
+     * Получение конфигурации параметров запроса к драйверу "заглушка"
      * @namespace Drivers.Dummy.getModels
      */
-    getModels: async () => ["dummy1", "dummy2"],
+    getParamsConfig: async () => ({
+      model: ["dummy1", "dummy2"],
+      maxTokens: { min: 1, max: 100 },
+      topP: { min: 0, max: 1 },
+      temperature: { min: 0, max: 1 },
+      frequencyPenalty: { min: 0, max: 1 },
+      presencePenalty: { min: 0, max: 1 }
+    }),
 
     /**
      * Отправка запроса к API драйвера "заглушка"
@@ -30,7 +37,10 @@ export const createDummyDriver = (config: DummyDriverConfig): Driver => {
         providerRequestId: "dummy",
         content: "dummy response",
         requestParams: request,
-        responseData: {},
+        responseData: {
+          request,
+          config
+        },
         requestTokens: 0,
         responseTokens: 0
       }
