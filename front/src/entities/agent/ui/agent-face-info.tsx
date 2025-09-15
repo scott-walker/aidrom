@@ -18,6 +18,7 @@ type AgentFaceInfoProps = {
  */
 export const AgentFaceInfo = ({ agent, className = "" }: AgentFaceInfoProps) => {
   const containerClasses = makeClasses("flex", "flex-col", "items-center", "gap-3", className)
+  const sectionClasses = makeClasses("flex", "flex-col", "items-center", "gap-2", "text-center")
   const avatarClasses = makeClasses()
   const nameClasses = makeClasses("text-lg", "font-bold", "text-center")
 
@@ -30,7 +31,7 @@ export const AgentFaceInfo = ({ agent, className = "" }: AgentFaceInfoProps) => 
         <div>ID:</div>
         <div>{agent.id}</div>
       </div>
-      <section>
+      <section className={sectionClasses}>
         <div className={nameClasses}>{agent.name}</div>
         <Tag>{agent.provider.name}</Tag>
       </section>
