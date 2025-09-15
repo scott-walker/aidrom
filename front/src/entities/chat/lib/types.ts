@@ -1,11 +1,5 @@
 import type { RestError } from "@shared/api"
-import type { Message, Chat } from "./schema"
-
-/**
- * Элемент списка чатов
- * @namespace Entities.Chat.Lib.Types.ChatListItem
- */
-export type ChatListItem = Omit<Chat, "client" | "messages">
+import type { Message, Chat, ChatListItem } from "./schema"
 
 /**
  * Данные для создания чата

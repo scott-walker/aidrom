@@ -1,5 +1,5 @@
 import type { Agent } from "@entities/agent"
-import type { Client } from "@entities/client"
+// import type { Client } from "@entities/client"
 
 /**
  * Роли отправляющих сообщения
@@ -30,9 +30,25 @@ export interface Chat {
   title: string
   agentId: number
   clientId: number
-  agent: Agent
-  client: Client
+  // agent: Agent
+  // client: Client
   messages: Message[]
   createdAt: Date
   updatedAt: Date
+}
+
+/**
+ * Элемент списка чатов
+ * @namespace Entities.Chat.Lib.Schema.ChatListItem
+ */
+export interface ChatListItem extends Omit<Chat, "messages"> {
+  agent: Agent | null
+}
+
+/**
+ * Чат с агентом
+ * @namespace Entities.Chat.Lib.Schema.ChatWithAgent
+ */
+export interface ChatWithAgent extends Chat {
+  agent: Agent | null
 }

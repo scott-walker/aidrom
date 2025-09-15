@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import type { RestError } from "@shared/api"
+// import { useAgents } from "@entities/agent"
 import type { ChatListQueryData, ChatDetailQueryData } from "../lib/types"
 import { fetchChatById, fetchChats } from "./chat-api"
 
@@ -41,6 +42,28 @@ export const useChats = (): ChatListQueryData => {
     error: error as RestError | null
   }
 }
+
+// /**
+//  * Хук для запроса списка чатов с агентами
+//  * @namespace Entities.Chat.Api.Queries.useChatsWithAgents
+//  */
+// export const useChatsWithAgents = (): ChatListQueryData => {
+//   const { chats, isLoading: isChatsLoading, error: chatsError } = useChats()
+//   const { agents, isLoading: isAgentsLoading, error: agentsError } = useAgents()
+
+//   return {
+//     chats: chats.map(chat => {
+//       const agent = agents.find(agent => agent.id === chat.agentId)
+
+//       return {
+//         ...chat,
+//         agent: agent ?? null
+//       }
+//     }),
+//     isLoading: isChatsLoading || isAgentsLoading,
+//     error: chatsError || agentsError
+//   }
+// }
 
 /**
  * Хук для запроса чата по ID

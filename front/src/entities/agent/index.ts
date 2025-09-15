@@ -15,7 +15,6 @@ export {
 } from "./api/agent-mutations"
 
 // UI
-export { AgentInfo } from "./ui/agent-info"
 export { AgentCard } from "./ui/agent-card"
 export { AgentParamsInfo } from "./ui/agent-params-info"
 export { AgentDescriptionInfo } from "./ui/agent-description-info"

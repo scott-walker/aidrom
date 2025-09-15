@@ -24,8 +24,20 @@ export const ChatList = () => {
     !isVisible && "w-fit"
   )
 
-  if (isLoading) return <LoaderBlock />
-  if (error) return <ErrorBlock error={error} />
+  if (isLoading) {
+    return (
+      <div className={containerClasses}>
+        <LoaderBlock />
+      </div>
+    )
+  }
+  if (error) {
+    return (
+      <div className={containerClasses}>
+        <ErrorBlock error={error} />
+      </div>
+    )
+  }
 
   return (
     <div className={containerClasses}>

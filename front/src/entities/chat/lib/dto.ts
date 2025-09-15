@@ -1,5 +1,5 @@
 import type { AgentDTO } from "@entities/agent"
-import type { ClientDTO } from "@entities/client"
+// import type { ClientDTO } from "@entities/client"
 
 /**
  * DTO сообщения
@@ -35,11 +35,19 @@ export interface ChatDTO {
   agentId: number
   clientId: number
   title: string
-  agent: AgentDTO
-  client: ClientDTO
+  // agent: AgentDTO
+  // client: ClientDTO
   messagePairs: MessagePairDTO[]
   createdAt: string
   updatedAt: string
+}
+
+/**
+ * DTO элемента списка чатов
+ * @namespace Entities.Chat.Model.ChatListItemDTO
+ */
+export interface ChatListItemDTO extends ChatDTO {
+  agent: AgentDTO
 }
 
 /**

@@ -1,6 +1,6 @@
 import { makeClasses } from "@lib/style-api"
 import { DateTag } from "@ui/date-tag"
-import type { ChatListItem } from "../lib/types"
+import type { ChatListItem } from "../lib/schema"
 import { AgentAvatar, type Agent } from "@entities/agent"
 
 /**
