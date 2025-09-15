@@ -1,11 +1,11 @@
-import type { DriverRequestParamsConfig } from "@entities/provider"
+import type { DriverParamsConfig } from "@entities/provider"
 
 /**
  * Хук для параметров агента
  * @namespace Features.AgentParams.Lib.useParams
  */
 export const useParams = () => {
-  const parseParams = (paramsConfig: DriverRequestParamsConfig) => {
+  const parseParams = (paramsConfig: DriverParamsConfig) => {
     const models = paramsConfig.model.map(model => ({ label: model, value: model }))
     const maxTokens = paramsConfig.maxTokens
     const topP = paramsConfig.topP

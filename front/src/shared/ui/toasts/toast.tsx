@@ -40,7 +40,8 @@ export const Toast = ({ type, message, description, onClose = () => {} }: ToastP
       "hover:scale-110"
     ],
     variants: {
-      success: "bg-primary/80 border-primary text-primary-foreground",
+      // success: "bg-primary/80 border-primary text-primary-foreground",
+      success: "bg-positive/80 border-positive text-positive-foreground",
       error: "bg-danger/80 border-danger text-danger-foreground",
       warning: "bg-warning/80 border-warning text-warning-foreground",
       info: "bg-foreground-hard/80 border-foreground-hard text-background-soft"

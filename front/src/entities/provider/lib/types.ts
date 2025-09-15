@@ -1,62 +1,43 @@
-/**
- * Схема провайдера
- * @namespace Entities.Provider.Lib.Types.Provider
- */
-export interface Provider {
-  id: number
-  driver: string
-  driverParamsConfig: DriverRequestParamsConfig
-  name: string
-  description: string
-  config: string
-}
+import type { Provider } from "./schema"
 
 /**
- * Схема конфигурации параметров драйвера
- * @namespace Entities.Provider.Lib.Types.DriverRequestParamsConfig
+ * Тип данных для запроса списка провайдеров
+ * @namespace Entities.Provider.Lib.Types.ProviderListQueryData
  */
-export interface DriverRequestParamsConfig {
-  model: string[]
-  maxTokens: { min: number; max: number }
-  topP: { min: number; max: number }
-  temperature: { min: number; max: number }
-  frequencyPenalty: { min: number; max: number }
-  presencePenalty: { min: number; max: number }
-}
-
-/**
- * Тип для данных запроса списка провайдеров
- * @namespace Entities.Provider.Lib.Types.ProvidersQueryData
- */
-export type ProvidersQueryData = {
+export type ProviderListQueryData = {
   providers: Provider[]
   isLoading: boolean
   error: Error | null
 }
 
 /**
- * Тип для данных запроса одного провайдера
- * @namespace Entities.Provider.Lib.Types.ProviderQueryData
+ * Тип данных для запроса одного провайдера
+ * @namespace Entities.Provider.Lib.Types.ProviderDetailQueryData
  */
-export type ProviderQueryData = {
+export type ProviderDetailQueryData = {
   provider: Provider | undefined | null
   isLoading: boolean
   error: Error | null
 }
 
 /**
- * Тип для данных запроса создания провайдера
+ * Тип данных для запроса на создание провайдера
  * @namespace Entities.Provider.Lib.Types.ProviderCreateData
  */
 export type ProviderCreateData = {
   driver: string
   name: string
   description: string
-  config: string
+  config: object
 }
 
 /**
- * Тип для данных запроса обновления провайдера
+ * Тип данных для запроса на обновление провайдера
  * @namespace Entities.Provider.Lib.Types.ProviderUpdateData
  */
-export type ProviderUpdateData = Partial<ProviderCreateData>
+export type ProviderUpdateData = {
+  driver?: string
+  name?: string
+  description?: string
+  config: object
+}

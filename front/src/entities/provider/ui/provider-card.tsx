@@ -1,18 +1,20 @@
 import type { ReactNode } from "react"
+
+import { makeClasses } from "@lib/style-api"
 import { Card } from "@ui/card"
 import { Heading } from "@ui/heading"
 import { Tag } from "@ui/tag"
-import type { Provider } from "../lib/types"
 import { Json } from "@ui/json"
 import { Markdown } from "@ui/markdown"
 import { Separator } from "@ui/separator"
-import { makeClasses } from "@shared/lib/style-api"
+
+import type { Provider } from "../lib/schema"
 
 /**
  * Пропсы карточки провайдера
  * @namespace Entities.Provider.ProviderCard.Props
  */
-type Props = {
+type ProviderCardProps = {
   provider: Provider
   children?: ReactNode
   details?: boolean
@@ -24,7 +26,13 @@ type Props = {
  * Карточка провайдера
  * @namespace Entities.Provider.ProviderCard
  */
-export const ProviderCard = ({ provider, children, details = false, className = "", onClick = () => {} }: Props) => {
+export const ProviderCard = ({
+  provider,
+  children,
+  details = false,
+  className = "",
+  onClick = () => {}
+}: ProviderCardProps) => {
   const classes = makeClasses("flex flex-row items-center gap-2 px-4 py-1", className)
 
   return (

@@ -1,43 +1,44 @@
-import type { Provider, ProviderCreateData } from "./types"
-import type { ProviderRequestDTO, ProviderResponseDTO } from "./dto"
+import type { Provider } from "./schema"
+import type { ProviderCreateDTO, ProviderUpdateDTO, ProviderDTO } from "./dto"
+import type { ProviderCreateData, ProviderUpdateData } from "./types"
 
 /**
  * Маппер из DTO в сущность
  * @namespace Entities.Provider.Lib.Mappers.toProviderSchema
  */
-export const toProviderSchema = (dto: ProviderResponseDTO): Provider => ({
+export const toProvider = (dto: ProviderDTO): Provider => ({
   id: dto.id,
   driver: dto.driver,
   driverParamsConfig: dto.driverParamsConfig,
   name: dto.name,
   description: dto.description,
-  config: JSON.stringify(dto.config)
+  config: dto.config
 })
 
 /**
- * Маппер из сущности в DTO создания провайдера
+ * Маппер из данных запроса в DTO создания провайдера
  * @namespace Entities.Provider.Lib.Mappers.toProviderCreateDTO
  */
-export const toProviderCreateDTO = (provider: ProviderCreateData): ProviderRequestDTO => {
+export const toProviderCreateDTO = (data: ProviderCreateData): ProviderCreateDTO => {
   return {
-    driver: provider.driver,
-    name: provider.name,
-    description: provider.description,
-    config: JSON.parse(provider.config)
+    driver: data.driver,
+    name: data.name,
+    description: data.description,
+    config: data.config
   }
 }
 
 /**
- * Маппер из сущности в DTO обновления провайдера
+ * Маппер из данных запроса в DTO обновления провайдера
  * @namespace Entities.Provider.Lib.Mappers.toProviderUpdateDTO
  */
-export const toProviderUpdateDTO = (provider: Partial<Provider>): Partial<ProviderRequestDTO> => {
-  const data = {} as Partial<ProviderRequestDTO>
+export const toProviderUpdateDTO = (data: ProviderUpdateData): ProviderUpdateDTO => {
+  const dto = {} as ProviderUpdateDTO
 
-  if (provider.driver) data.driver = provider.driver
-  if (provider.name) data.name = provider.name
-  if (provider.description) data.description = provider.description
-  if (provider.config) data.config = JSON.parse(provider.config)
+  if (data.driver !== undefined) dto.driver = data.driver
+  if (data.name !== undefined) dto.name = data.name
+  if (data.description !== undefined) dto.description = data.description
+  if (data.config !== undefined) dto.config = data.config
 
-  return data
+  return dto
 }

@@ -1,6 +1,12 @@
 import { useQuery } from "@tanstack/react-query"
-import type { ProvidersQueryData, ProviderQueryData } from "../lib/types"
+import type { ProviderListQueryData, ProviderDetailQueryData } from "../lib/types"
 import { fetchProviderById, fetchProviders } from "./provider-api"
+
+/**
+ * Ключ запроса для провайдеров
+ * @namespace Entities.Provider.Api.PROVIDER_QUERY_KEY
+ */
+export const PROVIDER_QUERY_KEY = "provider"
 
 /**
  * Время кеширования в миллисекундах
@@ -13,7 +19,7 @@ const STALE_TIME = 60000
  * @namespace Entities.Provider.Api.queryKeys
  */
 export const queryKeys = {
-  all: ["providers"] as const,
+  all: [PROVIDER_QUERY_KEY] as const,
   list: (filters: Record<string, string>) => [...queryKeys.all, "list", filters] as const,
   details: (id: number) => [...queryKeys.all, "details", id] as const
 }
@@ -22,7 +28,7 @@ export const queryKeys = {
  * Хук для запроса списка провайдеров
  * @namespace Entities.Provider.Api.useProviders
  */
-export const useProviders = (): ProvidersQueryData => {
+export const useProviders = (): ProviderListQueryData => {
   const {
     data: providers = [],
     isLoading,
@@ -40,7 +46,7 @@ export const useProviders = (): ProvidersQueryData => {
  * Хук для запроса провайдера по ID
  * @namespace Entities.Provider.Api.useProviderById
  */
-export const useProviderById = (providerId: number): ProviderQueryData => {
+export const useProviderById = (providerId: number): ProviderDetailQueryData => {
   const {
     data: provider,
     isLoading,

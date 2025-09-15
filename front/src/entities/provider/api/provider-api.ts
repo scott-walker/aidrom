@@ -1,25 +1,26 @@
 import { restClient } from "@shared/api"
-import type { Provider, ProviderCreateData, ProviderUpdateData } from "../lib/types"
-import { toProviderSchema, toProviderCreateDTO, toProviderUpdateDTO } from "../lib/mappers"
+import type { Provider } from "../lib/schema"
+import type { ProviderCreateData, ProviderUpdateData } from "../lib/types"
+import { toProviderCreateDTO, toProviderUpdateDTO, toProvider } from "../lib/mappers"
 
 /**
  * Создать провайдера
  * @namespace Entities.Provider.Api.createProvider
  */
-export const createProvider = async (provider: ProviderCreateData): Promise<Provider> => {
-  const { data } = await restClient.post("providers", toProviderCreateDTO(provider))
+export const createProvider = async (data: ProviderCreateData): Promise<Provider> => {
+  const { data: dto } = await restClient.post("providers", toProviderCreateDTO(data))
 
-  return toProviderSchema(data)
+  return toProvider(dto)
 }
 
 /**
  * Обновить провайдера
  * @namespace Entities.Provider.Api.updateProvider
  */
-export const updateProvider = async (providerId: number, provider: ProviderUpdateData): Promise<Provider> => {
-  const { data } = await restClient.put(`providers/${providerId}`, toProviderUpdateDTO(provider))
+export const updateProvider = async (providerId: number, data: ProviderUpdateData): Promise<Provider> => {
+  const { data: dto } = await restClient.put(`providers/${providerId}`, toProviderUpdateDTO(data))
 
-  return toProviderSchema(data)
+  return toProvider(dto)
 }
 
 /**
@@ -27,9 +28,9 @@ export const updateProvider = async (providerId: number, provider: ProviderUpdat
  * @namespace Entities.Provider.Api.fetchProviders
  */
 export const fetchProviders = async (): Promise<Provider[]> => {
-  const { data } = await restClient.get("providers")
+  const { data: dtos } = await restClient.get("providers")
 
-  return data.map(toProviderSchema)
+  return dtos.map(toProvider)
 }
 
 /**
@@ -37,7 +38,7 @@ export const fetchProviders = async (): Promise<Provider[]> => {
  * @namespace Entities.Provider.Api.fetchProviderById
  */
 export const fetchProviderById = async (providerId: number): Promise<Provider> => {
-  const { data } = await restClient.get(`providers/${providerId}`)
+  const { data: dto } = await restClient.get(`providers/${providerId}`)
 
-  return toProviderSchema(data)
+  return toProvider(dto)
 }

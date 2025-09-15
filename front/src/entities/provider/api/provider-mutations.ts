@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient, type UseMutationResult } from "@tanstack/react-query"
 import { queryKeys } from "./provider-queries"
 import { createProvider, updateProvider } from "./provider-api"
-import type { Provider, ProviderCreateData, ProviderUpdateData } from "../lib/types"
+import type { ProviderCreateData, ProviderUpdateData } from "../lib/types"
+import type { Provider } from "../lib/schema"
 
 /**
  * Хук для создания провайдера
@@ -33,9 +34,9 @@ export const useUpdateProvider = (): UseMutationResult<
     mutationFn: ({ providerId, data }: { providerId: number; data: ProviderUpdateData }) => {
       return updateProvider(providerId, data)
     },
-    onSuccess: (updatedProvider: Provider) => {
+    onSuccess: (provider: Provider) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.list({}) })
-      queryClient.invalidateQueries({ queryKey: queryKeys.details(updatedProvider.id) })
+      queryClient.invalidateQueries({ queryKey: queryKeys.details(provider.id) })
     }
   })
 }

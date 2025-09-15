@@ -1,39 +1,41 @@
-import { z } from "zod"
+/**
+ * DTO провайдера
+ * @namespace Entities.Provider.Model.ProviderDTO
+ */
+export interface ProviderDTO {
+  id: number
+  driver: string
+  driverParamsConfig: {
+    model: string[]
+    maxTokens: { min: number; max: number }
+    topP: { min: number; max: number }
+    temperature: { min: number; max: number }
+    frequencyPenalty: { min: number; max: number }
+    presencePenalty: { min: number; max: number }
+  }
+  name: string
+  description: string
+  config: object
+}
 
 /**
- * Схема для DTO конфигурации параметров драйвера
- * @namespace Entities.Provider.Model.DriverRequestParamsConfigDTOSchema
+ * DTO создания провайдера
+ * @namespace Entities.Provider.Model.ProviderCreateDTO
  */
-export const ProviderParamsConfigDTOSchema = z.object({
-  model: z.array(z.string()),
-  maxTokens: z.object({ min: z.number(), max: z.number() }),
-  topP: z.object({ min: z.number(), max: z.number() }),
-  temperature: z.object({ min: z.number(), max: z.number() }),
-  frequencyPenalty: z.object({ min: z.number(), max: z.number() }),
-  presencePenalty: z.object({ min: z.number(), max: z.number() })
-})
+export interface ProviderCreateDTO {
+  driver: string
+  name: string
+  description: string
+  config: object
+}
 
 /**
- * Схема для DTO провайдера
- * @namespace Entities.Provider.Model.ProviderDTOSchema
+ * DTO обновления провайдера
+ * @namespace Entities.Provider.Model.ProviderUpdateDTO
  */
-export const ProviderDTOSchema = z.object({
-  id: z.number(),
-  driver: z.string(),
-  driverParamsConfig: ProviderParamsConfigDTOSchema,
-  name: z.string(),
-  description: z.string(),
-  config: z.object({})
-})
-
-/**
- * Тип для DTO провайдера (DTO запроса)
- * @namespace Entities.Provider.Model.ProviderRequestDTO
- */
-export type ProviderRequestDTO = Omit<z.infer<typeof ProviderDTOSchema>, "id" | "driverParamsConfig">
-
-/**
- * Тип для DTO провайдера (DTO ответа)
- * @namespace Entities.Provider.Model.ProviderResponseDTO
- */
-export type ProviderResponseDTO = z.infer<typeof ProviderDTOSchema>
+export interface ProviderUpdateDTO {
+  driver?: string
+  name?: string
+  description?: string
+  config?: object
+}
