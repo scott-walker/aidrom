@@ -1,14 +1,12 @@
-import { Roles, type Message } from "./types"
+import { Roles, type Message } from "./schema"
 
 /**
  * Создать последнее сообщение клиента
  * @namespace Entities.Chat.Lib.Utils.makeLastClientMessage
  */
 export const makeLastClientMessage = (content: string): Message => {
-  const id = `${Roles.Client}_${Date.now()}`
-
   return {
-    id,
+    id: crypto.randomUUID(),
     role: Roles.Client,
     content,
     createdAt: new Date()

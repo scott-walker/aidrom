@@ -1,6 +1,6 @@
 import { makeClasses } from "@lib/style-api"
 import { DateTag } from "@ui/date-tag"
-import type { Chat } from "../lib/types"
+import type { ChatListItem } from "../lib/types"
 import { AgentAvatar, type Agent } from "@entities/agent"
 
 /**
@@ -8,7 +8,7 @@ import { AgentAvatar, type Agent } from "@entities/agent"
  * @namespace Entities.Chat.UI.ChatCard.Props
  */
 type ChatCardProps = {
-  chat: Chat
+  chat: ChatListItem
   className?: string
 }
 

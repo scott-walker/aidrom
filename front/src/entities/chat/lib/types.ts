@@ -1,73 +1,11 @@
-/**
- * Роли отправляющих сообщения
- * @namespace Entities.Chat.Lib.Types.Roles
- */
-export const Roles = {
-  Client: "client",
-  Agent: "agent"
-} as const
-
-/**
- * Роли отправляющих сообщения
- * @namespace Entities.Chat.Lib.Types.Role
- */
-export type Role = (typeof Roles)[keyof typeof Roles]
-
-/**
- * Сообщение
- * @namespace Entities.Chat.Lib.Types.Message
- */
-export type Message = {
-  id: string
-  role: Role
-  content: string
-  createdAt: Date
-}
-
-/**
- * Чат
- * @namespace Entities.Chat.Lib.Types.Chat
- */
-export type Chat = {
-  id: number
-  title: string
-  agentId: number
-  clientId: number
-  agent: {
-    id: number
-    name: string
-    avatar: string
-    params: Record<string, unknown>
-    description: string
-    provider: {
-      id: number
-      name: string
-    }
-    createdAt: Date
-    updatedAt: Date
-  }
-  messages: Message[]
-  createdAt: Date
-  updatedAt: Date
-}
+import type { RestError } from "@shared/api"
+import type { Message, Chat } from "./schema"
 
 /**
  * Элемент списка чатов
  * @namespace Entities.Chat.Lib.Types.ChatListItem
  */
-export type ChatListItem = {
-  id: number
-  title: string
-  agentId: number
-  clientId: number
-  agent: {
-    id: number
-    name: string
-    avatar: string
-  }
-  createdAt: Date
-  updatedAt: Date
-}
+export type ChatListItem = Omit<Chat, "client" | "messages">
 
 /**
  * Данные для создания чата
@@ -107,20 +45,20 @@ export type MessageSendResult = {
 
 /**
  * Данные запроса списка чатов
- * @namespace Entities.Chat.Lib.Types.ChatsQueryData
+ * @namespace Entities.Chat.Lib.Types.ChatListQueryData
  */
-export type ChatsQueryData = {
+export type ChatListQueryData = {
   chats: ChatListItem[]
   isLoading: boolean
-  error: Error | null
+  error: RestError | null
 }
 
 /**
  * Данные запроса одного чата
- * @namespace Entities.Chat.Lib.Types.ChatQueryData
+ * @namespace Entities.Chat.Lib.Types.ChatDetailQueryData
  */
-export type ChatQueryData = {
-  chat: Chat | undefined | null
+export type ChatDetailQueryData = {
+  chat: Chat | null
   isLoading: boolean
-  error: Error | null
+  error: RestError | null
 }

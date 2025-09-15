@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import type { Message } from "../lib/types"
+import type { Message } from "../lib/schema"
 
 /**
  * Интерфейс хранилища состояния чата

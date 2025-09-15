@@ -1,6 +1,13 @@
 import { useQuery } from "@tanstack/react-query"
+import type { RestError } from "@shared/api"
+import type { ChatListQueryData, ChatDetailQueryData } from "../lib/types"
 import { fetchChatById, fetchChats } from "./chat-api"
-import type { ChatsQueryData, ChatQueryData } from "../lib/types"
+
+/**
+ * Ключ запроса списка чатов
+ * @namespace Entities.Chat.Api.Queries.CHATS_QUERY_KEY
+ */
+const CHATS_QUERY_KEY = "chats"
 
 // 5 минут кеша для списка чатов
 const STALE_CHATS_TIME = 300000
@@ -12,7 +19,7 @@ const STALE_CHAT_BY_ID_TIME = 300000
  * @namespace Entities.Chat.Api.Queries.queryKeys
  */
 export const queryKeys = {
-  all: ["chats"] as const,
+  all: [CHATS_QUERY_KEY] as const,
   list: (filters: Record<string, string>) => [...queryKeys.all, "list", filters] as const,
   details: (id: number) => [...queryKeys.all, "details", id.toString()] as const
 }
@@ -21,34 +28,34 @@ export const queryKeys = {
  * Хук для запроса списка чатов
  * @namespace Entities.Chat.Api.Queries.useChats
  */
-export const useChats = (): ChatsQueryData => {
-  const {
-    data: chats = [],
-    isLoading,
-    error
-  } = useQuery({
+export const useChats = (): ChatListQueryData => {
+  const { data, isLoading, error } = useQuery({
     queryKey: queryKeys.list({}),
     queryFn: fetchChats,
     staleTime: STALE_CHATS_TIME
   })
 
-  return { chats, isLoading, error }
+  return {
+    chats: data ?? [],
+    isLoading,
+    error: error as RestError | null
+  }
 }
 
 /**
  * Хук для запроса чата по ID
  * @namespace Entities.Chat.Api.Queries.useChatById
  */
-export const useChatById = (chatId: number): ChatQueryData => {
-  const {
-    data: chat = null,
-    isLoading,
-    error
-  } = useQuery({
+export const useChatById = (chatId: number): ChatDetailQueryData => {
+  const { data, isLoading, error } = useQuery({
     queryKey: queryKeys.details(chatId),
     queryFn: () => fetchChatById(chatId),
     staleTime: STALE_CHAT_BY_ID_TIME
   })
 
-  return { chat, isLoading, error }
+  return {
+    chat: data ?? null,
+    isLoading,
+    error: error as RestError | null
+  }
 }

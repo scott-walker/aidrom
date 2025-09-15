@@ -1,6 +1,6 @@
 import { NavLink } from "react-router"
 import { makeClasses } from "@lib/style-api"
-import { ChatCard, type Chat } from "@entities/chat"
+import { ChatCard, type ChatListItem } from "@entities/chat"
 import { useToggleChatList } from "@features/chat-list-toggle"
 
 /**
@@ -8,7 +8,7 @@ import { useToggleChatList } from "@features/chat-list-toggle"
  * @namespace Widgets.ChatList.ChatListItems.Props
  */
 type ChatListItemsProps = {
-  chats: Chat[]
+  chats: ChatListItem[]
 }
 
 /**
@@ -24,7 +24,7 @@ export const ChatListItems = ({ chats }: ChatListItemsProps) => {
     <div className={containerClasses}>
       {chats.map(chat => (
         <NavLink key={chat.id} to={`/chat/${chat.id}`} className={linkClasses}>
-          <ChatCard chat={chat as Chat} />
+          <ChatCard chat={chat as ChatListItem} />
         </NavLink>
       ))}
     </div>

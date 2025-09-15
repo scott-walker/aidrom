@@ -1,26 +1,90 @@
 import type {
-  ChatCreateDTO,
   ChatDTO,
+  ChatCreateDTO,
   ChatUpdateDTO,
   MessageDTO,
   MessagePairDTO,
   MessageSendDTO,
   MessageSendResultDTO
 } from "./dto"
+import { Roles, type Chat, type Message } from "./schema"
+import type { ChatCreateData, ChatListItem, ChatUpdateData, MessageSendData, MessageSendResult } from "./types"
 
-import {
-  Roles,
-  type Role,
-  type Chat,
-  type Message,
-  type MessageSendResult,
-  type ChatCreateData,
-  type ChatUpdateData,
-  type ChatListItem
-} from "./types"
+import { toAgent } from "@entities/agent"
+import { toClient } from "@entities/client"
 
 /**
- * Маппер из сущности в DTO создания чата
+ * Маппер из DTO в сущность чата
+ * @namespace Entities.Chat.Lib.Mappers.toChat
+ */
+export const toChat = (dto: ChatDTO): Chat => {
+  return {
+    id: dto.id,
+    title: dto.title,
+    agentId: dto.agentId,
+    clientId: dto.clientId,
+    agent: toAgent(dto.agent),
+    client: toClient(dto.client),
+    messages: dto.messagePairs.map(fromPairToMessages).flat(),
+    createdAt: new Date(dto.createdAt),
+    updatedAt: new Date(dto.updatedAt)
+  }
+}
+
+/**
+ * Маппер из DTO чата в сущность элемента списка чатов
+ * @namespace Entities.Chat.Lib.Mappers.toChatListItem
+ */
+export const toChatListItem = (dto: ChatDTO): ChatListItem => {
+  return {
+    id: dto.id,
+    title: dto.title,
+    agentId: dto.agentId,
+    clientId: dto.clientId,
+    agent: toAgent({ ...dto.agent, rules: [] }),
+    createdAt: new Date(dto.createdAt),
+    updatedAt: new Date(dto.updatedAt)
+  }
+}
+
+/**
+ * Маппер из DTO сообщения в сущность сообщения
+ * @namespace Entities.Chat.Lib.Mappers.toMessage
+ */
+export const toMessage = (dto: MessageDTO, role: Roles): Message => {
+  return {
+    id: crypto.randomUUID(),
+    role,
+    content: dto.content,
+    createdAt: new Date(dto.createdAt)
+  }
+}
+
+/**
+ * Маппер из пары сообщений в кортеж сообщений
+ * @namespace Entities.Chat.Lib.Mappers.fromPairToMessages
+ */
+export const fromPairToMessages = ({ clientMessage, agentMessage }: MessagePairDTO): Message[] => {
+  return [toMessage(clientMessage, Roles.Client), toMessage(agentMessage, Roles.Agent)]
+}
+
+/**
+ * Маппер из DTO результата отправки сообщения в сущность чата
+ * @namespace Entities.Chat.Lib.Mappers.toMessageSendResult
+ */
+export const toMessageSendResult = (dto: MessageSendResultDTO): MessageSendResult => {
+  return {
+    chatId: dto.chatId,
+    requestId: dto.requestId,
+    messages: fromPairToMessages({
+      clientMessage: dto.clientMessage,
+      agentMessage: dto.agentMessage
+    } as MessagePairDTO)
+  }
+}
+
+/**
+ * Маппер из данных запроса в DTO создания чата
  * @namespace Entities.Chat.Lib.Mappers.toChatCreateDTO
  */
 export const toChatCreateDTO = (chat: ChatCreateData): ChatCreateDTO => {
@@ -32,7 +96,7 @@ export const toChatCreateDTO = (chat: ChatCreateData): ChatCreateDTO => {
 }
 
 /**
- * Маппер из сущности в DTO обновления чата
+ * Маппер из данных запроса в DTO обновления чата
  * @namespace Entities.Chat.Lib.Mappers.toChatUpdateDTO
  */
 export const toChatUpdateDTO = (chat: ChatUpdateData): ChatUpdateDTO => {
@@ -42,95 +106,11 @@ export const toChatUpdateDTO = (chat: ChatUpdateData): ChatUpdateDTO => {
 }
 
 /**
- * Маппер из DTO чата в сущность чата
- * @namespace Entities.Chat.Lib.Mappers.toChatSchema
- */
-export const toChatSchema = (dto: ChatDTO): Chat => {
-  return {
-    id: dto.id,
-    title: dto.title,
-    agentId: dto.agentId,
-    clientId: dto.clientId,
-    agent: {
-      id: dto.agent.id,
-      name: dto.agent.name,
-      avatar: dto.agent.avatar ? atob(dto.agent.avatar) : "",
-      params: dto.agent.params,
-      description: dto.agent.description,
-      provider: {
-        id: dto.agent.provider.id,
-        name: dto.agent.provider.name
-      },
-      createdAt: dto.agent.createdAt,
-      updatedAt: dto.agent.updatedAt
-    },
-    messages: dto.messagePairs.map(fromPairToMessagesSchema).flat(),
-    createdAt: dto.createdAt,
-    updatedAt: dto.updatedAt
-  }
-}
-
-/**
- * Маппер из DTO чата в сущность элемента списка чатов
- * @namespace Entities.Chat.Lib.Mappers.toChatListItemSchema
- */
-export const toChatListItemSchema = (dto: ChatDTO): ChatListItem => {
-  return {
-    id: dto.id,
-    title: dto.title,
-    agentId: dto.agentId,
-    clientId: dto.clientId,
-    agent: {
-      id: dto.agent.id,
-      name: dto.agent.name,
-      avatar: dto.agent.avatar ? atob(dto.agent.avatar) : ""
-    },
-    createdAt: dto.createdAt,
-    updatedAt: dto.updatedAt
-  }
-}
-
-/**
- * Маппер из DTO сообщения в сущность сообщения
- * @namespace Entities.Chat.Lib.Mappers.toMessageSchema
- */
-export const toMessageSchema = (dto: MessageDTO, role: Role): Message => {
-  const uniqueId = `${role}-${dto.id}`
-
-  return {
-    id: uniqueId,
-    role,
-    content: dto.content,
-    createdAt: dto.createdAt
-  }
-}
-
-/**
- * Маппер из пары сообщений в массив сообщений
- * @namespace Entities.Chat.Lib.Mappers.fromPairToMessagesSchema
- */
-export const fromPairToMessagesSchema = ({ clientMessage, agentMessage }: MessagePairDTO): Message[] => {
-  return [toMessageSchema(clientMessage, Roles.Client), toMessageSchema(agentMessage, Roles.Agent)]
-}
-
-/**
- * Маппер из сущности в DTO отправки сообщения
+ * Маппер из данных запроса в DTO отправки сообщения
  * @namespace Entities.Chat.Lib.Mappers.toMessageSendDTO
  */
-export const toMessageSendDTO = ({ message }: { message: string }): MessageSendDTO => {
+export const toMessageSendDTO = ({ message }: MessageSendData): MessageSendDTO => {
   return {
     message
-  }
-}
-
-/**
- * Маппер из DTO результата отправки сообщения в сущность чата
- * @namespace Entities.Chat.Lib.Mappers.toMessageSendResultSchema
- */
-export const toMessageSendResultSchema = (dto: MessageSendResultDTO): MessageSendResult => {
-  return {
-    chatId: dto.chatId,
-    requestId: dto.requestId,
-    messages: [toMessageSchema(dto.clientMessage, Roles.Client), toMessageSchema(dto.agentMessage, Roles.Agent)]
   }
 }

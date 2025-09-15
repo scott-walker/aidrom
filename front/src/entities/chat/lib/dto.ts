@@ -1,138 +1,80 @@
-import { z } from "zod"
+import type { AgentDTO } from "@entities/agent"
+import type { ClientDTO } from "@entities/client"
 
 /**
- * Схема для DTO сообщения
- * @namespace Entities.Chat.Api.Dto.MessageDTOSchema
+ * DTO сообщения
+ * @namespace Entities.Chat.Model.MessageDTO
  */
-export const MessageDTOSchema = z.object({
-  id: z.number(),
-  content: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date()
-})
+export interface MessageDTO {
+  id: number
+  content: string
+  createdAt: Date
+  updatedAt: Date
+}
 
 /**
- * Схема для DTO пары сообщений
- * @namespace Entities.Chat.Api.Dto.MessagePairDTOSchema
+ * DTO пары сообщений
+ * @namespace Entities.Chat.Model.MessagePairDTO
  */
-export const MessagePairDTOSchema = z.object({
-  id: z.number(),
-  chatId: z.number(),
-  requestId: z.number(),
-  clientMessage: MessageDTOSchema,
-  agentMessage: MessageDTOSchema,
-  createdAt: z.date(),
-  updatedAt: z.date()
-})
+export interface MessagePairDTO {
+  id: number
+  chatId: number
+  requestId: number
+  clientMessage: MessageDTO
+  agentMessage: MessageDTO
+  createdAt: string
+  updatedAt: string
+}
 
 /**
- * Схема для DTO чата
- * @namespace Entities.Chat.Api.Dto.ChatDTOSchema
+ * DTO чата
+ * @namespace Entities.Chat.Model.ChatDTO
  */
-export const ChatDTOSchema = z.object({
-  id: z.number(),
-  agentId: z.number(),
-  clientId: z.number(),
-  agent: z.object({
-    id: z.number(),
-    name: z.string(),
-    avatar: z.string(),
-    params: z.record(z.any(), z.any()),
-    description: z.string(),
-    provider: z.object({
-      id: z.number(),
-      name: z.string()
-    }),
-    createdAt: z.date(),
-    updatedAt: z.date()
-  }),
-  client: z.object({
-    id: z.number(),
-    email: z.string(),
-    createdAt: z.date(),
-    updatedAt: z.date()
-  }),
-  title: z.string(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
-  messagePairs: z.array(MessagePairDTOSchema)
-})
+export interface ChatDTO {
+  id: number
+  agentId: number
+  clientId: number
+  title: string
+  agent: AgentDTO
+  client: ClientDTO
+  messagePairs: MessagePairDTO[]
+  createdAt: string
+  updatedAt: string
+}
 
 /**
- * Схема для DTO создания чата
- * @namespace Entities.Chat.Api.Dto.ChatCreateDTOSchema
+ * DTO создания чата
+ * @namespace Entities.Chat.Model.ChatCreateDTO
  */
-export const ChatCreateDTOSchema = z.object({
-  agentId: z.number(),
-  clientId: z.number(),
-  title: z.string()
-})
+export interface ChatCreateDTO {
+  agentId: number
+  clientId: number
+  title: string
+}
 
 /**
- * Схема для DTO обновления чата
- * @namespace Entities.Chat.Api.Dto.ChatUpdateDTOSchema
+ * DTO обновления чата
+ * @namespace Entities.Chat.Model.ChatUpdateDTO
  */
-export const ChatUpdateDTOSchema = z.object({
-  title: z.string()
-})
+export interface ChatUpdateDTO {
+  title: string
+}
 
 /**
- * Схема для DTO отправки сообщения
- * @namespace Entities.Chat.Api.Dto.MessageSendDTOSchema
+ * DTO отправки сообщения
+ * @namespace Entities.Chat.Model.MessageSendDTO
  */
-export const MessageSendDTOSchema = z.object({
-  message: z.string()
-})
+export interface MessageSendDTO {
+  message: string
+}
 
 /**
- * Схема для DTO результата отправки сообщения
- * @namespace Entities.Chat.Api.Dto.MessageSendResultDTOSchema
+ * DTO результата отправки сообщения
+ * @namespace Entities.Chat.Model.MessageSendResultDTO
  */
-export const MessageSendResultDTOSchema = z.object({
-  chatId: z.number(),
-  requestId: z.number(),
-  clientMessage: MessageDTOSchema,
-  agentMessage: MessageDTOSchema
-})
-
-/**
- * Тип для DTO сообщения
- * @namespace Entities.Chat.Api.Dto.MessageDTO
- */
-export type MessageDTO = z.infer<typeof MessageDTOSchema>
-
-/**
- * Тип для DTO пары сообщений
- * @namespace Entities.Chat.Api.Dto.MessagePairDTO
- */
-export type MessagePairDTO = z.infer<typeof MessagePairDTOSchema>
-
-/**
- * Тип для DTO чата
- * @namespace Entities.Chat.Api.Dto.ChatDTO
- */
-export type ChatDTO = z.infer<typeof ChatDTOSchema>
-
-/**
- * Тип для DTO создания чата
- * @namespace Entities.Chat.Api.Dto.ChatCreateDTO
- */
-export type ChatCreateDTO = z.infer<typeof ChatCreateDTOSchema>
-
-/**
- * Тип для DTO обновления чата
- * @namespace Entities.Chat.Api.Dto.ChatUpdateDTO
- */
-export type ChatUpdateDTO = z.infer<typeof ChatUpdateDTOSchema>
-
-/**
- * Тип для DTO отправки сообщения
- * @namespace Entities.Chat.Api.Dto.MessageSendDTO
- */
-export type MessageSendDTO = z.infer<typeof MessageSendDTOSchema>
-
-/**
- * Тип для DTO результата отправки сообщения
- * @namespace Entities.Chat.Api.Dto.MessageSendResultDTO
- */
-export type MessageSendResultDTO = z.infer<typeof MessageSendResultDTOSchema>
+export interface MessageSendResultDTO {
+  chatId: number
+  requestId: number
+  clientMessage: MessageDTO
+  agentMessage: MessageDTO
+}

@@ -1,4 +1,4 @@
-import { Roles, type Role } from "../lib/types"
+import { Roles } from "../lib/schema"
 import { makeClasses } from "@lib/style-api"
 import { DateTag } from "@ui/date-tag"
 
@@ -8,7 +8,7 @@ import { DateTag } from "@ui/date-tag"
  */
 type MessageBubbleProps = {
   content: string
-  role: Role
+  role: Roles
   createdAt: Date
   className?: string
 }

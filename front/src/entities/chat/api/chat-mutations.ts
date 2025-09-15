@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient, type UseMutationResult } from "@tanstack/react-query"
 import { createChat, updateChat, sendMessage } from "./chat-api"
+import type { Chat } from "../lib/schema"
+import type { ChatCreateData, ChatUpdateData, MessageSendData, MessageSendResult } from "../lib/types"
 import { queryKeys } from "./chat-queries"
-import type { Chat, ChatCreateData, ChatUpdateData, MessageSendData, MessageSendResult } from "../lib/types"
 
 /**
  * Хук для создания чата
@@ -15,9 +16,6 @@ export const useCreateChat = (): UseMutationResult<Chat, Error, ChatCreateData> 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.list({}) })
     }
-    // onError: (error) => {
-    //   throw new Error(error.message)
-    // }
   })
 }
 
@@ -25,18 +23,14 @@ export const useCreateChat = (): UseMutationResult<Chat, Error, ChatCreateData> 
  * Хук для обновления чата
  * @namespace Entities.Chat.Api.ChatMutations.useUpdateChat
  */
-export const useUpdateChat = (): UseMutationResult<Chat, Error, { chatId: number; chat: ChatUpdateData }> => {
+export const useUpdateChat = (): UseMutationResult<Chat, Error, { chatId: number; data: ChatUpdateData }> => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ chatId, chat }: { chatId: number; chat: ChatUpdateData }) => updateChat(chatId, chat),
-    onSuccess: (updatedChat: Chat) => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.list({}) })
-      queryClient.invalidateQueries({ queryKey: queryKeys.details(updatedChat.id) })
+    mutationFn: ({ chatId, data }: { chatId: number; data: ChatUpdateData }) => updateChat(chatId, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.all })
     }
-    // onError: (error) => {
-    //   throw new Error(error.message)
-    // }
   })
 }
 
@@ -56,8 +50,5 @@ export const useSendMessage = (): UseMutationResult<
     onSuccess: ({ chatId }: MessageSendResult) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.details(chatId) })
     }
-    // onError: (error) => {
-    //   throw new Error(error.message)
-    // }
   })
 }

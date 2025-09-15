@@ -1,29 +1,23 @@
 import { restClient } from "@shared/api"
+import type { Chat } from "../lib/schema"
+import type { ChatCreateData, ChatListItem, ChatUpdateData, MessageSendData, MessageSendResult } from "../lib/types"
 import {
+  toChat,
+  toChatListItem,
+  toMessageSendResult,
   toChatCreateDTO,
   toChatUpdateDTO,
-  toMessageSendDTO,
-  toChatSchema,
-  toChatListItemSchema,
-  toMessageSendResultSchema
+  toMessageSendDTO
 } from "../lib/mappers"
-import type {
-  Chat,
-  ChatListItem,
-  ChatCreateData,
-  ChatUpdateData,
-  MessageSendData,
-  MessageSendResult
-} from "../lib/types"
 
 /**
  * Получение списка чатов
  * @namespace Entities.Chat.Api.ChatApi.fetchChats
  */
 export const fetchChats = async (): Promise<ChatListItem[]> => {
-  const { data } = await restClient.get("chats")
+  const { data: dtos } = await restClient.get("chats")
 
-  return data.map(toChatListItemSchema)
+  return dtos.map(toChatListItem)
 }
 
 /**
@@ -31,29 +25,29 @@ export const fetchChats = async (): Promise<ChatListItem[]> => {
  * @namespace Entities.Chat.Api.ChatApi.fetchChatById
  */
 export const fetchChatById = async (chatId: number): Promise<Chat> => {
-  const { data } = await restClient.get(`chats/${chatId}`)
+  const { data: dto } = await restClient.get(`chats/${chatId}`)
 
-  return toChatSchema(data)
+  return toChat(dto)
 }
 
 /**
  * Создание чата
  * @namespace Entities.Chat.Api.ChatApi.createChat
  */
-export const createChat = async (chat: ChatCreateData): Promise<Chat> => {
-  const { data } = await restClient.post("chats", toChatCreateDTO(chat))
+export const createChat = async (data: ChatCreateData): Promise<Chat> => {
+  const { data: dto } = await restClient.post("chats", toChatCreateDTO(data))
 
-  return toChatSchema(data)
+  return toChat(dto)
 }
 
 /**
  * Обновление чата по ID
  * @namespace Entities.Chat.Api.updateChat
  */
-export const updateChat = async (chatId: number, chat: ChatUpdateData): Promise<Chat> => {
-  const { data } = await restClient.put(`chats/${chatId}`, toChatUpdateDTO(chat))
+export const updateChat = async (chatId: number, data: ChatUpdateData): Promise<Chat> => {
+  const { data: dto } = await restClient.put(`chats/${chatId}`, toChatUpdateDTO(data))
 
-  return toChatSchema(data)
+  return toChat(dto)
 }
 
 /**
@@ -61,7 +55,7 @@ export const updateChat = async (chatId: number, chat: ChatUpdateData): Promise<
  * @namespace Entities.Chat.Api.sendMessage
  */
 export const sendMessage = async (chatId: number, { message }: MessageSendData): Promise<MessageSendResult> => {
-  const { data } = await restClient.post(`chats/${chatId}/send`, toMessageSendDTO({ message }))
+  const { data: dto } = await restClient.post(`chats/${chatId}/send`, toMessageSendDTO({ message }))
 
-  return toMessageSendResultSchema(data)
+  return toMessageSendResult(dto)
 }

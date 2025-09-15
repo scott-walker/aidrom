@@ -1,11 +1,11 @@
 import type {
-  AgentCreateDTO,
   AgentDTO,
+  AgentCreateDTO,
+  AgentUpdateDTO,
   AgentParamsDTO,
-  AgentRuleCreateDTO,
   AgentRuleDTO,
-  AgentRuleSortDTO,
-  AgentUpdateDTO
+  AgentRuleCreateDTO,
+  AgentRuleSortDTO
 } from "./dto"
 import type { Agent, AgentParams, AgentRule } from "./schema"
 import type { AgentCreateData, AgentRuleCreateData, AgentRuleSortData, AgentUpdateData } from "./types"
@@ -21,19 +21,6 @@ export const toAgentParams = (dto: AgentParamsDTO): AgentParams => ({
   temperature: dto.temperature,
   frequencyPenalty: dto.frequencyPenalty,
   presencePenalty: dto.presencePenalty
-})
-
-/**
- * Маппер из данных запроса в DTO параметров агента
- * @namespace Entities.Agent.Model.toAgentParamsDTO
- */
-export const toAgentParamsDTO = (data: AgentParams): AgentParamsDTO => ({
-  model: data.model,
-  maxTokens: data.maxTokens,
-  topP: data.topP,
-  temperature: data.temperature,
-  frequencyPenalty: data.frequencyPenalty,
-  presencePenalty: data.presencePenalty
 })
 
 /**
@@ -62,6 +49,19 @@ export const toAgent = (dto: AgentDTO): Agent => ({
   isActive: dto.isActive,
   createdAt: new Date(dto.createdAt),
   updatedAt: new Date(dto.updatedAt)
+})
+
+/**
+ * Маппер из данных запроса в DTO параметров агента
+ * @namespace Entities.Agent.Model.toAgentParamsDTO
+ */
+export const toAgentParamsDTO = (data: AgentParams): AgentParamsDTO => ({
+  model: data.model,
+  maxTokens: data.maxTokens,
+  topP: data.topP,
+  temperature: data.temperature,
+  frequencyPenalty: data.frequencyPenalty,
+  presencePenalty: data.presencePenalty
 })
 
 /**

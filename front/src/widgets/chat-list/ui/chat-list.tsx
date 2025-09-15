@@ -2,7 +2,7 @@ import { makeClasses } from "@lib/style-api"
 import { LoaderBlock } from "@ui/loader-block"
 import { ErrorBlock } from "@ui/error-block"
 import { useChats } from "@entities/chat/api/chat-queries"
-import type { Chat } from "@entities/chat"
+import type { ChatListItem } from "@entities/chat"
 import { useToggleChatList } from "@features/chat-list-toggle"
 import { ChatListHeader } from "./chat-list-header"
 import { ChatListItems } from "./chat-list-items"
@@ -24,10 +24,13 @@ export const ChatList = () => {
     !isVisible && "w-fit"
   )
 
+  if (isLoading) return <LoaderBlock />
+  if (error) return <ErrorBlock error={error} />
+
   return (
     <div className={containerClasses}>
       <ChatListHeader />
-      {isLoading ? <LoaderBlock /> : error ? <ErrorBlock error={error} /> : <ChatListItems chats={chats as Chat[]} />}
+      <ChatListItems chats={chats as ChatListItem[]} />
     </div>
   )
 }
