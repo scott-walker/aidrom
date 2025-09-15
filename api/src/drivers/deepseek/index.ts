@@ -65,10 +65,13 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
         // Сформировать сообщение пользователя
         const userMessage = { role: DeepseekDriverRole.USER, content: request.message }
         // Сформировать системные сообщения
-        const systemMessages = (request.systemMessages ?? []).map(message => ({
-          role: DeepseekDriverRole.SYSTEM,
-          content: message
-        }))
+        const systemMessages = (request.systemMessages ?? [])
+          .map(message => ({
+            role: DeepseekDriverRole.SYSTEM,
+            content: message
+          }))
+          .reverse()
+
         // Сформировать запрос к API
         const driverRequest: DeepseekDriverRequest = {
           model: request.params.model as DeepseekDriverModel,

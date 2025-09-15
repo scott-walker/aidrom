@@ -143,18 +143,19 @@ export const addRule = async (req: Request, res: Response, next: NextFunction) =
  * @namespace Agent.Controller.deleteRule
  */
 export const deleteRule = async (req: Request, res: Response, next: NextFunction) => {
+  const agentId = parseInt(req.params.agentId)
   const ruleId = parseInt(req.params.ruleId)
 
   try {
-    logger.info("Удаление правила агента", { ruleId })
+    logger.info("Удаление правила агента", { agentId, ruleId })
 
-    await agentService.deleteRule(ruleId)
+    await agentService.deleteRule(agentId, ruleId)
 
-    logger.info("Правило агента успешно удалено", { ruleId })
+    logger.info("Правило агента успешно удалено", { agentId, ruleId })
 
     res.json({ message: "Правило агента успешно удалено" })
   } catch (err) {
-    logger.error("Ошибка при удалении правила агента", { error: err.message, ruleId })
+    logger.error("Ошибка при удалении правила агента", { error: err.message, agentId, ruleId })
 
     next(err)
   }

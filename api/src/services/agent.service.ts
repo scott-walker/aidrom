@@ -3,7 +3,7 @@
  * @namespace Agent.Service
  */
 
-import { eq, desc, asc } from "drizzle-orm"
+import { eq, desc, asc, max, and } from "drizzle-orm"
 import {
   db,
   agents,
@@ -214,9 +214,21 @@ export const addRule = async (agentId: number, data: CreateAgentRuleData): Promi
   try {
     logger.info("Добавление правила агента в БД", { agentId, data })
 
+    const [{ max: maxPriority }] = await db
+      .select({ max: max(agentRules.priority) })
+      .from(agentRules)
+      .where(eq(agentRules.agentId, agentId))
+      .execute()
+
+    logger.info("Максимальный приоритет правил агента", { maxPriority })
+
+    const priority = maxPriority ? maxPriority + 1 : 0
+
+    logger.info("Приоритет правила агента успешно вычислен", { priority })
+
     const [rule] = await db
       .insert(agentRules)
-      .values({ ...data, agentId })
+      .values({ ...data, agentId, priority })
       .returning()
 
     logger.info("Правило агента успешно добавлено", { agentId })
@@ -233,15 +245,31 @@ export const addRule = async (agentId: number, data: CreateAgentRuleData): Promi
  * Удалить правило агента
  * @namespace Agent.Service.deleteRule
  */
-export const deleteRule = async (ruleId: number): Promise<void> => {
+export const deleteRule = async (agentId: number, ruleId: number): Promise<void> => {
   try {
-    logger.info("Удаление правила агента в БД", { ruleId })
+    logger.info("Удаление правила агента в БД", { agentId, ruleId })
 
-    await db.delete(agentRules).where(eq(agentRules.id, ruleId)).returning()
+    await db
+      .delete(agentRules)
+      .where(and(eq(agentRules.id, ruleId), eq(agentRules.agentId, agentId)))
+      .returning()
 
-    logger.info("Правило агента успешно удалено", { ruleId })
+    logger.info("Пересчет приоритетов правил агента", { agentId })
+
+    const rules = await db
+      .select()
+      .from(agentRules)
+      .where(eq(agentRules.agentId, agentId))
+      .orderBy(asc(agentRules.priority))
+      .execute()
+
+    rules.forEach(async (rule, index) => {
+      await db.update(agentRules).set({ priority: index }).where(eq(agentRules.id, rule.id))
+    })
+
+    logger.info("Правило агента успешно удалено", { agentId, ruleId })
   } catch (error) {
-    logger.error("Ошибка при удалении правила агента в БД", { error: error.message, ruleId })
+    logger.error("Ошибка при удалении правила агента в БД", { error: error.message, agentId, ruleId })
 
     throw error
   }
