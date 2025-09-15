@@ -3,8 +3,6 @@ import { Controller } from "react-hook-form"
 
 import { FormField } from "@ui/form-field"
 import { Input } from "@ui/input"
-import { Json } from "@ui/json"
-import { Markdown } from "@ui/markdown"
 import { Select } from "@ui/select"
 import { SelectAvatar } from "@ui/select-avatar"
 import { useProviders } from "@entities/provider"
@@ -78,33 +76,9 @@ export const AgentForm = ({ children, values, onSubmit = () => {} }: FormProps) 
             />
           </FormField>
         </section>
-
-        <section>
-          <FormField label="Параметры" error={errors.params} className="flex-1">
-            <Controller
-              name="params"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Json editable value={field.value} onChange={field.onChange} error={!!fieldState.error} />
-              )}
-            />
-          </FormField>
-        </section>
-
-        <section>
-          <FormField label="Описание" error={errors.description} className="flex-1">
-            <Controller
-              name="description"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Markdown editable value={field.value} onChange={field.onChange} error={!!fieldState.error} />
-              )}
-            />
-          </FormField>
-        </section>
       </div>
 
-      <div>{children}</div>
+      <div className="flex justify-center">{children}</div>
     </form>
   )
 }

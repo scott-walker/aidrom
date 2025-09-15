@@ -1,32 +1,25 @@
+import { useNavigate } from "react-router"
 import { Button } from "@ui/button"
-import { useCreateAgent } from "@entities/agent"
+import { useCreateAgent, type Agent } from "@entities/agent"
+import { useToast } from "@features/toasts"
 
 import { AgentForm } from "./agent-form"
 import { type AgentForm as AgentFormType } from "../model/form-schema"
 import { toAgentCreateDTO } from "../model/mappers"
-import { useToast } from "@features/toasts"
-
-/**
- * Пропсы формы создания агента
- * @namespace Features.AgentForm.Ui.CreateAgentForm.Props
- */
-type CreateAgentFormProps = {
-  onCreated?: (agent: AgentFormType) => void
-}
 
 /**
  * Форма создания агента
  * @namespace Features.AgentForm.Ui.CreateAgentForm
  */
-export const CreateAgentForm = ({ onCreated = () => {} }: CreateAgentFormProps) => {
+export const CreateAgentForm = () => {
   const { mutate: createAgent } = useCreateAgent()
+  const navigate = useNavigate()
   const toast = useToast()
 
-  const onSubmit = (data: AgentFormType, resetForm: () => void) => {
+  const onSubmit = (data: AgentFormType) => {
     createAgent(toAgentCreateDTO(data), {
-      onSuccess: () => {
-        onCreated(data)
-        resetForm()
+      onSuccess: (agent: Agent) => {
+        navigate(`/agents/${agent.id}`)
         toast.success("Агент успешно создан")
       },
       onError: ({ message }) => {

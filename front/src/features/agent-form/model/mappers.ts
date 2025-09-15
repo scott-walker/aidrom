@@ -7,10 +7,8 @@ import type { AgentForm } from "./form-schema"
  */
 export const toAgentDTOForm = (form: Agent): AgentForm => ({
   providerId: form.provider.id.toString(),
-  params: JSON.stringify(form.params),
   name: form.name,
-  avatar: form.avatar,
-  description: form.description
+  avatar: form.avatar
 })
 
 /**
@@ -21,8 +19,15 @@ export const toAgentCreateDTO = (form: AgentForm): AgentCreateData => ({
   providerId: Number(form.providerId),
   name: form.name.trim(),
   avatar: form.avatar?.trim() ?? "",
-  params: JSON.parse(form.params),
-  description: form.description?.trim() ?? ""
+  params: {
+    model: "",
+    maxTokens: 0,
+    topP: 0,
+    temperature: 0,
+    frequencyPenalty: 0,
+    presencePenalty: 0
+  },
+  description: ""
 })
 
 /**

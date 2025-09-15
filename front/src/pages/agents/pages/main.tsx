@@ -21,10 +21,10 @@ export const Main = (): ReactNode => {
       </Blocks.Row> */}
 
       <Blocks.Row>
-        <Blocks.Block className="w-3/5">
+        <Blocks.Block className="w-4/6">
           <AgentList />
         </Blocks.Block>
-        <Blocks.Block className="w-2/5">
+        <Blocks.Block className="w-2/6">
           <Card>
             <Card.Header>
               <Heading>Создание агента</Heading>

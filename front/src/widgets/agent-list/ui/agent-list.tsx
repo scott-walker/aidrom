@@ -12,12 +12,12 @@ export const AgentList = () => {
   const { agents, isLoading, error } = useAgents()
 
   const containerClasses = makeClasses("flex items-start justify-start flex-wrap gap-8")
+  const linkClasses = makeClasses("min-w-[300px]")
   const cardClasses = makeClasses(
     "border-3",
     "border-transparent",
     "hover:border-primary",
-    "transition-colors duration-200",
-    "w-full"
+    "transition-colors duration-200"
   )
 
   if (isLoading) return <LoaderBlock />
@@ -26,7 +26,7 @@ export const AgentList = () => {
   return (
     <div className={containerClasses}>
       {agents.map(agent => (
-        <Link key={agent.id} to={`/agents/${agent.id}`}>
+        <Link key={agent.id} to={`/agents/${agent.id}`} className={linkClasses}>
           <AgentCard agent={agent} className={cardClasses} />
         </Link>
       ))}

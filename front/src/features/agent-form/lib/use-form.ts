@@ -13,10 +13,8 @@ export const useForm = (defaultValues?: Partial<AgentForm>) => {
     resolver: zodResolver(agentFormSchema),
     defaultValues: {
       providerId: defaultValues.providerId ?? undefined,
-      params: defaultValues.params ?? "{}",
       name: defaultValues.name ?? "",
-      avatar: defaultValues.avatar ?? "",
-      description: defaultValues.description ?? ""
+      avatar: defaultValues.avatar ?? ""
     }
   })
 }

@@ -1,49 +1,18 @@
 /* https://www.cssportal.com/css-loader-generator/ */
 
 .loader {
-  width: 40px;
-  height: 40px;
-  background: var(--color-primary);
-  transform: perspective(150px) rotateX(0);
-  animation: f1 1s infinite;
-}
-
-/* .loader {
-  width: 12px;
-  height: 12px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
-  clip-path: inset(-45px);
-  color: var(--color-primary);
-  box-shadow: -60px 15px, -60px 15px, -60px 15px;
-  transform: translateY(-15px);
-  animation: d9 1s infinite linear;
-} */
-
-@keyframes f1 {
-  100% {
-    transform: perspective(150px) rotateX(180deg);
-  }
+  border: 8px solid;
+  border-color: var(--color-background-hard);
+  border-right-color: var(--color-primary);
+  animation: s2 0.5s infinite linear;
+  user-select: none;
 }
 
-/* 
-@keyframes d9 {
-  16.67% {
-    box-shadow: -60px 15px, -60px 15px, 19px 15px;
+@keyframes s2 {
+  to {
+    transform: rotate(1turn);
   }
-  33.33% {
-    box-shadow: -60px 15px, 0px 15px, 19px 15px;
-  }
-  40%,
-  60% {
-    box-shadow: -19px 15px, 0px 15px, 19px 15px;
-  }
-  66.67% {
-    box-shadow: -19px 15px, 0px 15px, 60px 15px;
-  }
-  83.33% {
-    box-shadow: -19px 15px, 60px 15px, 60px 15px;
-  }
-  100% {
-    box-shadow: 60px 15px, 60px 15px, 60px 15px;
-  }
-} */
+}

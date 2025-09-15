@@ -7,6 +7,7 @@ import { Modal } from "@ui/modal"
 import { Button } from "@ui/button"
 import { Popover } from "@ui/popover"
 import { Slider } from "@ui/slider"
+import { Loader } from "@ui/loader"
 import { useToast } from "@features/toasts"
 
 /**
@@ -59,6 +60,10 @@ export const Main = (): ReactNode => {
               Уведомление
             </Button>
             <Button onClick={() => toast.clear()}>Очистить уведомления</Button>
+          </div>
+
+          <div className="flex gap-6">
+            <Loader />
           </div>
         </Container>
       </Card.Body>

@@ -8,6 +8,7 @@ import { makeClasses } from "@lib/style-api"
 type TagProps = {
   children: ReactNode
   className?: string
+  schema?: "soft" | "hard"
 }
 
 /**
@@ -16,17 +17,21 @@ type TagProps = {
  * @param {TagProps} props
  * @returns {ReactNode}
  */
-export const Tag = ({ children, className = "" }: TagProps): ReactNode => {
+export const Tag = ({ schema = "soft", children, className = "" }: TagProps): ReactNode => {
   const classes = makeClasses(
     "inline-flex",
     "items-center",
     "justify-center",
     "gap-2",
     "px-3",
-    "py-0",
+    "py-1",
     "rounded-xl",
-    "bg-primary-ghost-hard",
-    "text-primary/60",
+    "text-sm",
+    "font-bold",
+    schema === "soft" && "bg-primary-ghost-hard",
+    schema === "soft" && "text-primary/60",
+    schema === "hard" && "bg-secondary",
+    schema === "hard" && "text-secondary-foreground",
     className
   )
 
