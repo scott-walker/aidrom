@@ -29,15 +29,17 @@ export const ChatAgentCard = ({ agent, className = "" }: ChatAgentCardProps) => 
     "flex",
     "items-center",
     "border-b",
-    "border-background-hard",
+    "border-background-hard/70",
     "gap-4",
-    "px-4",
-    "py-3",
+    "px-6",
+    "py-4",
     "cursor-pointer",
-    "hover:bg-background-hard/50",
     "transition-colors",
     "duration-200",
-    isOpen && "bg-background-hard/50"
+    "hover:bg-background-soft/70",
+    isOpen && "bg-background-soft/70"
+    // "hover:bg-background-hard/50",
+    // isOpen && "bg-background-hard/50"
   )
 
   return (

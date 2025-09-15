@@ -22,7 +22,7 @@ export const ChatList = ({ width = "300px" }: ChatListProps) => {
     "flex-col",
     "h-full",
     // isVisible
-    "bg-background-hard/30",
+    // "bg-background-hard/30",
     isVisible && `w-[${width}]`,
     !isVisible && "w-fit"
   )
