@@ -1,7 +1,7 @@
 import { makeClasses } from "@lib/style-api"
 import { Tag } from "@ui/tag"
 import type { Agent } from "../lib/types"
-import { AgentAvatar } from "./agent-avatar"
+import { AgentStatusAvatar } from "./agent-status-avatar"
 
 /**
  * Пропсы для компонента AgentFaceInfo
@@ -24,8 +24,12 @@ export const AgentFaceInfo = ({ agent, className = "" }: AgentFaceInfoProps) => 
   return (
     <div className={containerClasses}>
       <section className={avatarClasses}>
-        <AgentAvatar agent={agent} size="xl" />
+        <AgentStatusAvatar agent={agent} size="xl" />
       </section>
+      <div className="flex items-center gap-2 text-sm text-foreground-soft font-bold">
+        <div>ID:</div>
+        <div>{agent.id}</div>
+      </div>
       <section>
         <div className={nameClasses}>{agent.name}</div>
         <Tag>{agent.provider.name}</Tag>

@@ -5,17 +5,10 @@
 export interface Provider {
   id: number
   driver: string
+  driverParamsConfig: DriverRequestParamsConfig
   name: string
   description: string
   config: string
-}
-
-/**
- * Схема провайдера с конфигурацией параметров драйвера
- * @namespace Entities.Provider.Lib.Types.ProviderWithDriverParamsConfig
- */
-export interface ProviderWithDriverParamsConfig extends Provider {
-  driverParamsConfig: DriverRequestParamsConfig
 }
 
 /**
@@ -46,7 +39,7 @@ export type ProvidersQueryData = {
  * @namespace Entities.Provider.Lib.Types.ProviderQueryData
  */
 export type ProviderQueryData = {
-  provider: ProviderWithDriverParamsConfig | undefined | null
+  provider: Provider | undefined | null
   isLoading: boolean
   error: Error | null
 }

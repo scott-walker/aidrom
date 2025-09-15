@@ -6,14 +6,15 @@ import { FormField } from "@ui/form-field"
 import { Select } from "@ui/select"
 import { Slider } from "@ui/slider"
 import { LoaderBlock } from "@ui/loader-block"
-import { Button } from "@ui/button"
+import { IconButton } from "@ui/icon-button"
 
 import { type Agent, useUpdateAgent } from "@entities/agent"
-import { type ProviderWithDriverParamsConfig, useProviderById } from "@entities/provider"
+import { type Provider, useProviderById } from "@entities/provider"
 import { useToast } from "@features/toasts"
 
 import type { AgentParamsForm } from "../model/form-schema"
 import { useForm } from "../lib/use-form"
+import { useParams } from "../lib/use-params"
 
 /**
  * Пропсы для компонента AgentParams
@@ -36,6 +37,7 @@ export const AgentParams = ({ agent }: AgentParamsProps) => {
     control,
     formState: { errors }
   } = useForm(agent.params as AgentParamsForm)
+  const { parseParams } = useParams()
 
   const onSubmit = (data: AgentParamsForm) => {
     updateAgent(
@@ -56,24 +58,20 @@ export const AgentParams = ({ agent }: AgentParamsProps) => {
 
   if (isLoading) return <LoaderBlock />
 
-  const paramsConfig = (provider as ProviderWithDriverParamsConfig).driverParamsConfig
-  const models = paramsConfig.model.map(model => ({ label: model, value: model }))
-  const maxTokens = paramsConfig.maxTokens
-  const topP = paramsConfig.topP
-  const temperature = paramsConfig.temperature
-  const frequencyPenalty = paramsConfig.frequencyPenalty
-  const presencePenalty = paramsConfig.presencePenalty
-
+  const { models, maxTokens, topP, temperature, frequencyPenalty, presencePenalty } = parseParams(
+    (provider as Provider).driverParamsConfig
+  )
   const fieldsClasses = makeClasses("flex", "flex-col", "gap-2")
-  const sliderClasses = makeClasses("px-2")
+  const sliderClasses = makeClasses("px-3")
 
   return (
     <Card>
-      <Card.Header>
-        <Heading>Параметры</Heading>
-      </Card.Header>
-      <Card.Body>
-        <form onSubmit={handleSubmit(data => onSubmit(data))} className="flex flex-col gap-4">
+      <form onSubmit={handleSubmit(data => onSubmit(data))}>
+        <Card.Header>
+          <Heading>Параметры</Heading>
+          <IconButton type="submit" schema="primary" circle icon="check" iconSize={20} />
+        </Card.Header>
+        <Card.Body className="flex flex-col gap-4 pt-4 pb-8">
           <FormField label="Модель" error={errors.model} className="flex-1">
             <Controller
               name="model"
@@ -179,12 +177,8 @@ export const AgentParams = ({ agent }: AgentParamsProps) => {
               )}
             />
           </FormField>
-
-          <div className="flex justify-center p-2">
-            <Button type="submit">Сохранить</Button>
-          </div>
-        </form>
-      </Card.Body>
+        </Card.Body>
+      </form>
     </Card>
   )
 }

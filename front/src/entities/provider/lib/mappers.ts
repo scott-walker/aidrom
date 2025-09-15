@@ -1,5 +1,5 @@
-import type { Provider, ProviderCreateData, ProviderWithDriverParamsConfig } from "./types"
-import type { ProviderRequestDTO, ProviderResponseDTO, ProviderWithDriverParamsConfigDTOSchema } from "./dto"
+import type { Provider, ProviderCreateData } from "./types"
+import type { ProviderRequestDTO, ProviderResponseDTO } from "./dto"
 
 /**
  * Маппер из DTO в сущность
@@ -8,24 +8,10 @@ import type { ProviderRequestDTO, ProviderResponseDTO, ProviderWithDriverParamsC
 export const toProviderSchema = (dto: ProviderResponseDTO): Provider => ({
   id: dto.id,
   driver: dto.driver,
+  driverParamsConfig: dto.driverParamsConfig,
   name: dto.name,
   description: dto.description,
   config: JSON.stringify(dto.config)
-})
-
-/**
- * Маппер из DTO в сущность с конфигурацией параметров драйвера
- * @namespace Entities.Provider.Lib.Mappers.toProviderWithDriverParamsConfigSchema
- */
-export const toProviderWithDriverParamsConfigSchema = (
-  dto: ProviderWithDriverParamsConfigDTOSchema
-): ProviderWithDriverParamsConfig => ({
-  id: dto.id,
-  driver: dto.driver,
-  name: dto.name,
-  description: dto.description,
-  config: JSON.stringify(dto.config),
-  driverParamsConfig: dto.driverParamsConfig
 })
 
 /**

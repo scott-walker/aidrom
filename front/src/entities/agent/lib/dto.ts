@@ -26,6 +26,7 @@ export const AgentDTOResponseSchema = z.object({
     name: z.string()
   }),
   rules: z.array(AgentRuleDTOSchema),
+  isActive: z.boolean(),
   createdAt: z.date(),
   updatedAt: z.date()
 })

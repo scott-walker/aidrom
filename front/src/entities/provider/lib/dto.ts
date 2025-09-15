@@ -20,38 +20,20 @@ export const ProviderParamsConfigDTOSchema = z.object({
 export const ProviderDTOSchema = z.object({
   id: z.number(),
   driver: z.string(),
+  driverParamsConfig: ProviderParamsConfigDTOSchema,
   name: z.string(),
   description: z.string(),
   config: z.object({})
 })
 
 /**
- * Схема для DTO провайдера с конфигурацией параметров драйвера
- * @namespace Entities.Provider.Model.ProviderWithDriverParamsConfigDTOSchema
- */
-export const ProviderWithDriverParamsConfigDTOSchema = z.object({
-  id: z.number(),
-  driver: z.string(),
-  name: z.string(),
-  description: z.string(),
-  config: z.object({}),
-  driverParamsConfig: ProviderParamsConfigDTOSchema
-})
-
-/**
  * Тип для DTO провайдера (DTO запроса)
  * @namespace Entities.Provider.Model.ProviderRequestDTO
  */
-export type ProviderRequestDTO = Omit<z.infer<typeof ProviderDTOSchema>, "id">
+export type ProviderRequestDTO = Omit<z.infer<typeof ProviderDTOSchema>, "id" | "driverParamsConfig">
 
 /**
  * Тип для DTO провайдера (DTO ответа)
  * @namespace Entities.Provider.Model.ProviderResponseDTO
  */
 export type ProviderResponseDTO = z.infer<typeof ProviderDTOSchema>
-
-/**
- * Тип для DTO провайдера с конфигурацией параметров драйвера (DTO ответа)
- * @namespace Entities.Provider.Model.ProviderWithDriverParamsConfigDTOSchema
- */
-export type ProviderWithDriverParamsConfigDTOSchema = z.infer<typeof ProviderWithDriverParamsConfigDTOSchema>

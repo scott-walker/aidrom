@@ -11,6 +11,7 @@ export type AvatarProps = ComponentProps<"div"> & {
   src?: string
   icon?: IconName
   initials?: string
+  children?: ReactNode
 }
 
 /**
@@ -23,10 +24,12 @@ export const Avatar = ({
   icon = "bot-message-square",
   initials,
   className = "",
+  children,
   ...props
 }: AvatarProps): ReactNode => {
-  const classes = makeVariants({
+  const getVariant = makeVariants({
     beforeClasses: makeClasses(
+      "relative",
       "inline-flex",
       "items-center",
       "justify-center",
@@ -50,7 +53,7 @@ export const Avatar = ({
   const iconSizes = { sm: 26, md: 32, lg: 38, xl: 48 }
 
   return (
-    <div className={classes(size)} {...props}>
+    <div className={getVariant(size)} {...props}>
       {src ? (
         <img src={src} className="w-3/4 h-3/4 object-cover" />
       ) : initials ? (
@@ -58,6 +61,7 @@ export const Avatar = ({
       ) : (
         <Icon name={icon} size={iconSizes[size]} />
       )}
+      {children}
     </div>
   )
 }

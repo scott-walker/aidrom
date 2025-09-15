@@ -18,20 +18,26 @@
   --color-primary-ghost-soft: color-mix(in oklch, var(--color-primary) 1%, transparent);
   --color-primary-ghost-hard: color-mix(in oklch, var(--color-primary) 10%, transparent);
   --color-primary-accent: var(--color-violet-700);
-  --color-primary-foreground: var(--color-white);
-  --color-primary-foreground-accent: var(--color-white);
+  --color-primary-foreground: var(--color-absolute-soft);
+  --color-primary-foreground-accent: var(--color-absolute-soft);
 
   /* Secondary */
   --color-secondary: var(--color-fuchsia-600);
   --color-secondary-accent: var(--color-fuchsia-700);
-  --color-secondary-foreground: var(--color-white);
-  --color-secondary-foreground-accent: var(--color-white);
+  --color-secondary-foreground: var(--color-absolute-soft);
+  --color-secondary-foreground-accent: var(--color-absolute-soft);
+
+  /* Positive */
+  --color-positive: var(--color-lime-400);
+  --color-positive-accent: var(--color-lime-300);
+  --color-positive-foreground: var(--color-lime-900);
+  --color-positive-foreground-accent: var(--color-lime-800);
 
   /* Warning */
   --color-warning: var(--color-amber-400);
   --color-warning-accent: var(--color-amber-300);
-  --color-warning-foreground: var(--color-foreground);
-  --color-warning-foreground-accent: var(--color-foreground);
+  --color-warning-foreground: var(--color-absolute-hard);
+  --color-warning-foreground-accent: var(--color-absolute-hard);
 
   /* Danger */
   --color-danger: var(--color-red-600);
@@ -76,7 +82,7 @@ body.theme-dark {
   --color-background-hard: oklch(22.508% 0.04354 272.772);
   --color-foreground: var(--color-slate-100);
   --color-foreground-soft: var(--color-gray-300);
-  --color-foreground-hard: var(--color-white);
+  --color-foreground-hard: var(--color-absolute-soft);
 
   /* Warning */
   --color-warning-foreground: var(--color-background);

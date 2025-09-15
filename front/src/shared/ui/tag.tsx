@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { makeClasses } from "@lib/style-api"
+import { makeClasses, makeVariants } from "@lib/style-api"
 
 /**
  * Пропсы тега
@@ -8,7 +8,7 @@ import { makeClasses } from "@lib/style-api"
 type TagProps = {
   children: ReactNode
   className?: string
-  schema?: "soft" | "hard"
+  schema?: "soft" | "hard" | "positive" | "danger"
 }
 
 /**
@@ -18,22 +18,26 @@ type TagProps = {
  * @returns {ReactNode}
  */
 export const Tag = ({ schema = "soft", children, className = "" }: TagProps): ReactNode => {
-  const classes = makeClasses(
-    "inline-flex",
-    "items-center",
-    "justify-center",
-    "gap-2",
-    "px-3",
-    "py-1",
-    "rounded-xl",
-    "text-sm",
-    "font-bold",
-    schema === "soft" && "bg-primary-ghost-hard",
-    schema === "soft" && "text-primary/60",
-    schema === "hard" && "bg-secondary",
-    schema === "hard" && "text-secondary-foreground",
-    className
-  )
+  const getVariant = makeVariants({
+    beforeClasses: makeClasses(
+      "inline-flex",
+      "items-center",
+      "justify-center",
+      "gap-2",
+      "px-3",
+      "py-1",
+      "rounded-xl",
+      "text-sm",
+      "font-bold"
+    ),
+    afterClasses: className,
+    variants: {
+      soft: makeClasses("bg-primary-ghost-hard", "text-primary/60"),
+      hard: makeClasses("bg-secondary", "text-secondary-foreground"),
+      positive: makeClasses("bg-positive", "text-positive-foreground"),
+      danger: makeClasses("bg-danger", "text-danger-foreground")
+    }
+  })
 
-  return <div className={classes}>{children}</div>
+  return <div className={getVariant(schema)}>{children}</div>
 }

@@ -2,7 +2,7 @@ import { makeClasses } from "@lib/style-api"
 import { DateTag } from "@ui/date-tag"
 import { Tag } from "@ui/tag"
 import type { Agent } from "../lib/types"
-import { AgentAvatar } from "./agent-avatar"
+import { AgentStatusAvatar } from "./agent-status-avatar"
 
 /**
  * Пропсы для компонента
@@ -33,7 +33,6 @@ export const AgentCard = ({ agent, className = "" }: AgentCardProps) => {
     className
   )
   const nameClasses = makeClasses("text-lg", "leading-5", "font-bold")
-  const avatarClasses = makeClasses()
   const providerTagClasses = makeClasses("absolute", "-top-3", "-right-3")
 
   return (
@@ -41,8 +40,8 @@ export const AgentCard = ({ agent, className = "" }: AgentCardProps) => {
       <Tag schema="hard" className={providerTagClasses}>
         {agent.provider.name}
       </Tag>
-      <section className={avatarClasses}>
-        <AgentAvatar agent={agent} size="xl" />
+      <section className="relative">
+        <AgentStatusAvatar agent={agent} size="xl" />
       </section>
       <section>
         <div className="flex items-center gap-2 text-sm text-foreground-soft font-bold">

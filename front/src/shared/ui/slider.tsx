@@ -36,8 +36,28 @@ export const Slider = ({ value, min, max, step, onChange, error = false, classNa
     "justify-center",
     "text-sm"
   )
-  const minIndicatorClasses = makeClasses("absolute", "top-2", "left-1", "text-sm")
-  const maxIndicatorClasses = makeClasses("absolute", "top-2", "right-1", "text-sm")
+  const minIndicatorClasses = makeClasses(
+    "absolute",
+    "top-2",
+    "left-0",
+    "flex",
+    "items-center",
+    "justify-center",
+    "h-6",
+    "w-4",
+    "text-sm"
+  )
+  const maxIndicatorClasses = makeClasses(
+    "absolute",
+    "top-2",
+    "right-0",
+    "flex",
+    "items-center",
+    "justify-center",
+    "h-6",
+    "w-4",
+    "text-sm"
+  )
 
   return (
     <div className={containerClasses}>

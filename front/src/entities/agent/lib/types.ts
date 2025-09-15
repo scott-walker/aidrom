@@ -13,6 +13,7 @@ export type Agent = {
     name: string
   }
   rules: AgentRule[]
+  isActive: boolean
   createdAt: Date
   updatedAt: Date
 }
