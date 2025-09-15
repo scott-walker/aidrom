@@ -46,12 +46,13 @@ export const ProviderCard = ({
         </div>
         {details && (
           <>
-            <Separator />
-            <div className="flex flex-col gap-4 px-4 py-2">
+            <div className="flex flex-col gap-6 px-4 py-6">
+              <Separator />
               <section className="flex flex-col gap-2">
                 <Heading level={7}>Конфигурация</Heading>
-                <Json value={provider.config} />
+                <Json value={provider.config} interactive minHeight="auto" />
               </section>
+              <Separator />
               <section className="flex flex-col gap-2">
                 <Heading level={7}>Описание</Heading>
                 {provider.description ? (

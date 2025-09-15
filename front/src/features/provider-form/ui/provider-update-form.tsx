@@ -2,10 +2,9 @@ import { Button } from "@ui/button"
 import { LoaderBlock } from "@ui/loader-block"
 import { ErrorBlock } from "@ui/error-block"
 
-import { type ProviderUpdateData, useUpdateProvider, useProviderById } from "@entities/provider"
+import { type ProviderUpdateData, useUpdateProvider, useProviderById, type Provider } from "@entities/provider"
 import { useToast } from "@features/toasts"
 
-import { type ProviderForm as ProviderFormType } from "../model/form-schema"
 import { ProviderForm } from "./provider-form"
 
 /**
@@ -14,7 +13,7 @@ import { ProviderForm } from "./provider-form"
  */
 type ProviderUpdateFormProps = {
   providerId: number
-  onUpdated?: (data: ProviderFormType) => void
+  onUpdated?: (provider: Provider) => void
 }
 
 /**
@@ -26,12 +25,12 @@ export const ProviderUpdateForm = ({ providerId, onUpdated = () => {} }: Provide
   const { mutate: updateProvider, isPending, error: updateError } = useUpdateProvider()
   const toast = useToast()
 
-  const onSubmit = (data: ProviderFormType) => {
+  const onSubmit = (data: Partial<Provider>) => {
     updateProvider(
       { providerId, data: data as ProviderUpdateData },
       {
-        onSuccess: data => {
-          onUpdated(data)
+        onSuccess: (provider: Provider) => {
+          onUpdated(provider)
           toast.success("Провайдер успешно обновлен")
         },
         onError: ({ message }) => {
@@ -45,7 +44,7 @@ export const ProviderUpdateForm = ({ providerId, onUpdated = () => {} }: Provide
   if (fetchError || updateError) return <ErrorBlock error={(fetchError || updateError) as Error} />
 
   return (
-    <ProviderForm onSubmit={onSubmit} values={provider as Partial<ProviderFormType>}>
+    <ProviderForm onSubmit={onSubmit} provider={provider as Provider}>
       <Button type="submit" schema="primary" className="w-full">
         Обновить
       </Button>

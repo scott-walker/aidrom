@@ -14,7 +14,7 @@ export const ProviderList = () => {
   if (error) return <ErrorBlock error={error} />
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       {providers?.map(provider => (
         <ProviderCard key={provider.id} provider={provider} />
       ))}

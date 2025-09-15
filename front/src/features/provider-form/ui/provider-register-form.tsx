@@ -1,22 +1,20 @@
 import { Button } from "@ui/button"
 import { LoaderBlock } from "@ui/loader-block"
-import { ErrorBlock } from "@ui/error-block"
 
-import { type ProviderCreateData, useCreateProvider } from "@entities/provider"
+import { type Provider, type ProviderCreateData, useCreateProvider } from "@entities/provider"
 import { useToast } from "@features/toasts"
 
-import { type ProviderForm as ProviderFormType } from "../model/form-schema"
 import { ProviderForm } from "./provider-form"
 
 /**
  * Форма регистрации провайдера
- * @namespace Features.Provider.RegisterProviderForm.Ui.RegisterProviderForm
+ * @namespace Features.ProviderForm.Ui.ProviderRegisterForm
  */
 export const ProviderRegisterForm = () => {
-  const { mutate: createProvider, isPending, error } = useCreateProvider()
+  const { mutate: createProvider, isPending } = useCreateProvider()
   const toast = useToast()
 
-  const onSubmit = (data: ProviderFormType) => {
+  const onSubmit = (data: Partial<Provider>) => {
     createProvider(data as ProviderCreateData, {
       onSuccess: () => {
         toast.success("Провайдер успешно зарегистрирован")
@@ -28,7 +26,6 @@ export const ProviderRegisterForm = () => {
   }
 
   if (isPending) return <LoaderBlock />
-  if (error) return <ErrorBlock error={error} />
 
   return (
     <ProviderForm onSubmit={onSubmit}>

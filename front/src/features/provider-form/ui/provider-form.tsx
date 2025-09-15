@@ -1,3 +1,4 @@
+import type { ReactNode } from "react"
 import { Controller } from "react-hook-form"
 
 import { Input } from "@ui/input"
@@ -5,34 +6,40 @@ import { FormField } from "@ui/form-field"
 import { Json } from "@ui/json"
 import { Markdown } from "@ui/markdown"
 
+import type { Provider } from "@entities/provider"
 import { type ProviderForm as ProviderFormType } from "../model/form-schema"
+import { toProvider } from "../model/mapper"
 import { useForm } from "../lib/use-form"
-import type { ReactNode } from "react"
 
 /**
- * Пропсы формы обновления провайдера
- * @namespace Features.ProviderForm.Ui.ProviderUpdateFormProps
+ * Пропсы формы провайдера
+ * @namespace Features.ProviderForm.Ui.ProviderFormProps
  */
-type FormProps = {
+type ProviderFormProps = {
   children: ReactNode
-  values?: Partial<ProviderFormType>
-  onSubmit?: (provider: ProviderFormType) => void
+  provider?: Partial<Provider>
+  onSubmit?: (data: Partial<Provider>) => void
 }
 
 /**
  * Форма провайдера
  * @namespace Features.ProviderForm.Ui.ProviderForm
  */
-export const ProviderForm = ({ children, values, onSubmit = () => {} }: FormProps) => {
+export const ProviderForm = ({ children, provider, onSubmit = () => {} }: ProviderFormProps) => {
   const {
     register,
     handleSubmit,
     control,
     formState: { errors }
-  } = useForm(values)
+  } = useForm(provider)
+
+  const onInnerSubmit = (data: ProviderFormType) => {
+    const provider = toProvider(data) as Partial<Provider>
+    onSubmit(provider)
+  }
 
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleSubmit(data => onSubmit(data))}>
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit(onInnerSubmit)}>
       <div className="flex flex-col gap-4">
         <section className="flex gap-4">
           <FormField label="Название" error={errors.name} className="flex-1">
@@ -68,7 +75,7 @@ export const ProviderForm = ({ children, values, onSubmit = () => {} }: FormProp
         </section>
       </div>
 
-      <div>{children}</div>
+      {children}
     </form>
   )
 }

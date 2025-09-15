@@ -1,16 +1,17 @@
 import { useState, type ReactNode } from "react"
+
 import { Icon } from "@ui/icon"
-import type { Provider } from "@entities/provider/lib/types"
-import { ProviderCard as BaseProviderCard } from "@entities/provider/ui/provider-card"
-import { IconButton } from "@shared/ui/icon-button"
-import { Modal } from "@shared/ui/modal"
+import { IconButton } from "@ui/icon-button"
+import { Modal } from "@ui/modal"
+
+import { type Provider, ProviderCard as BaseProviderCard } from "@entities/provider"
 import { ProviderUpdateForm } from "@features/provider-form"
 
 /**
  * Пропсы карточки провайдера
  * @namespace Features.ProviderCard.Props
  */
-type Props = {
+type ProviderCardProps = {
   provider: Provider
   children?: ReactNode
 }
@@ -19,7 +20,7 @@ type Props = {
  * Карточка провайдера
  * @namespace Features.ProviderCard
  */
-export const ProviderCard = ({ provider, children }: Props) => {
+export const ProviderCard = ({ provider, children }: ProviderCardProps) => {
   const [details, setDetails] = useState(false)
   const [edit, setEdit] = useState(false)
 

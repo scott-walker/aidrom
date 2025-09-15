@@ -16,6 +16,7 @@ type Props = {
   interactive?: boolean
   editable?: boolean
   error?: boolean
+  minHeight?: string
   onChange?: (value: Value) => void
   className?: string
 }
@@ -35,6 +36,7 @@ export const Json: FC<Props> = ({
   editable = false,
   error = false,
   className = "",
+  minHeight = "158px",
   onChange = () => {}
 }: Props): ReactNode => {
   if (!interactive && !editable) {
@@ -97,7 +99,7 @@ export const Json: FC<Props> = ({
     ".cm-scroller": {
       borderRadius: "var(--ui-rounded)"
     },
-    ".cm-content, .cm-gutter": { minHeight: "158px" },
+    ".cm-content, .cm-gutter": { minHeight },
     ".cm-foldPlaceholder": {
       backgroundColor: "var(--color-background)",
       color: "var(--color-primary)",

@@ -2,8 +2,9 @@ import { type ReactNode } from "react"
 import { useSubtitle } from "@lib/layout-api/utils"
 import { Blocks } from "@ui/blocks"
 import { ProviderList } from "@widgets/provider-list"
-import { ProviderRegister } from "@widgets/provider-register"
 import { Heading } from "@shared/ui/heading"
+import { ProviderRegisterForm } from "@features/provider-form"
+import { Card } from "@shared/ui/card"
 
 /**
  * Страница сервиса - провайдеры
@@ -16,23 +17,19 @@ export const Providers = (): ReactNode => {
   return (
     <Blocks>
       <Blocks.Row>
-        <Blocks.Block className="w-full">
-          <ProviderRegister />
+        <Blocks.Block className="w-4/6">
+          <ProviderList />
         </Blocks.Block>
-      </Blocks.Row>
-      <Blocks.Row>
-        <Blocks.Block className="w-1/2">
-          <Heading level={3}>Зарегистрированные провайдеры</Heading>
-          <div className="mt-6">
-            <ProviderList />
-          </div>
+        <Blocks.Block className="w-2/6">
+          <Card>
+            <Card.Header>
+              <Heading>Зарегистрировать провайдера</Heading>
+            </Card.Header>
+            <Card.Body>
+              <ProviderRegisterForm />
+            </Card.Body>
+          </Card>
         </Blocks.Block>
-        {/* <Blocks.Block className="w-1/2">
-          <Heading level={3}>Зарегистрированные провайдеры</Heading>
-          <div className="mt-6">
-            <ProviderList />
-          </div>
-        </Blocks.Block> */}
       </Blocks.Row>
     </Blocks>
   )
