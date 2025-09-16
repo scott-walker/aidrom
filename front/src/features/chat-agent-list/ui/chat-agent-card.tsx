@@ -2,7 +2,7 @@ import { makeClasses } from "@lib/style-api"
 import { pluralize } from "@utils/pluralize"
 import { AgentAvatar } from "@entities/agent"
 import type { AgentChats } from "../model/schema"
-import { ChatList } from "./chat-list"
+import { ChatListItems } from "./chat-list-items"
 import { useChatAgentListStore } from "../model/store"
 
 /**
@@ -74,7 +74,7 @@ export const ChatAgentCard = ({ agent, className = "" }: ChatAgentCardProps) => 
       </section>
       <div className={chatListClasses}>
         <div className="overflow-hidden">
-          <ChatList chats={agent.chats} />
+          <ChatListItems agentId={agent.id} chats={agent.chats} />
         </div>
       </div>
     </div>

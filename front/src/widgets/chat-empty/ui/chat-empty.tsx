@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 import { makeClasses } from "@lib/style-api"
 import { Icon } from "@ui/icon"
-import { ChatCreateButton } from "@features/chat-create/ui/chat-create-button"
+// import { ChatCreateButton } from "@features/chat-create/ui/chat-create-nice-button"
 
 /**
  * Пустой чат
@@ -27,7 +27,7 @@ export const ChatEmpty = (): ReactNode => {
         <div className="text-5xl font-semibold">Выбирете чат</div>
         <Icon className="text-foreground-soft/20" name="message-circle-more" size={100} />
       </div>
-      <ChatCreateButton />
+      {/* <ChatCreateButton /> */}
     </div>
   )
 }
