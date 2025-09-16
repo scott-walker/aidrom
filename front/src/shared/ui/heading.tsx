@@ -39,5 +39,5 @@ export const Heading = ({ children, level = 6, className = "" }: Props): ReactNo
   })
   const classes = makeClasses(variants({ level }), className)
 
-  return createElement(`h${level}`, { className: classes }, children)
+  return createElement(`h${Math.min(level, 6)}`, { className: classes }, children)
 }

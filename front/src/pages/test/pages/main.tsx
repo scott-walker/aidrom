@@ -8,6 +8,7 @@ import { Button } from "@ui/button"
 import { Popover } from "@ui/popover"
 import { Slider } from "@ui/slider"
 import { Loader } from "@ui/loader"
+import { InputLight } from "@ui/input-light"
 import { useToast } from "@features/toasts"
 
 /**
@@ -64,6 +65,14 @@ export const Main = (): ReactNode => {
 
           <div className="flex gap-6">
             <Loader />
+          </div>
+
+          <div className="flex gap-6">
+            <InputLight autoFocus />
+            <InputLight value="test" maxLength={10} />
+            {/* <InputLight value="test" minLength={10} />
+            <InputLight value="test" minLength={10} maxLength={10} />
+            <InputLight value="test" minLength={10} maxLength={10} placeholder="test" /> */}
           </div>
         </Container>
       </Card.Body>
