@@ -26,6 +26,7 @@ export const ChatRename = ({ chat }: ChatRenameProps) => {
         <InputLight
           value={chat.title}
           autoFocus
+          autoSelect
           onChange={handleChange}
           onEnter={handleSave}
           maxLength={40}

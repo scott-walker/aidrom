@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState, type ComponentProps, type KeyboardEvent, type RefObject } from "react"
 import { makeClasses } from "@lib/style-api"
-import { useAutoFocus } from "./hooks"
+import { useAutoFocus, useAutoSelect } from "./hooks"
 
 /**
  * Сдвиг ширины поля
@@ -25,6 +25,7 @@ export type InputLightProps = Omit<ComponentProps<"div">, "onChange" | "onInput"
   onBlur?: (value: string) => void
   onEnter?: (value: string) => void
   autoFocus?: boolean
+  autoSelect?: boolean
   disabled?: boolean
 }
 
@@ -40,6 +41,7 @@ export const InputLight = ({
   onBlur,
   onEnter,
   autoFocus = false,
+  autoSelect = false,
   disabled = false,
   maxLength,
   className = "",
@@ -125,6 +127,7 @@ export const InputLight = ({
   }, [value])
   useEffect(() => updateWidth(currentValue), [minLength])
   useAutoFocus(autoFocus, editableRef as RefObject<HTMLDivElement>)
+  useAutoSelect(autoSelect, editableRef as RefObject<HTMLDivElement>)
 
   const classes = makeClasses(
     "inline-block",
