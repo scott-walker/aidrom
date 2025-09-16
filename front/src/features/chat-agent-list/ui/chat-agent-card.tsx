@@ -1,6 +1,7 @@
 import { makeClasses } from "@lib/style-api"
 import { pluralize } from "@utils/pluralize"
-import { AgentAvatar } from "@entities/agent"
+import { AgentStatusAvatar } from "@entities/agent"
+import { ChatCreateRegularButton } from "@features/chat-create"
 import type { AgentChats } from "../model/schema"
 import { ChatListItems } from "./chat-list-items"
 import { useChatAgentListStore } from "../model/store"
@@ -63,7 +64,7 @@ export const ChatAgentCard = ({ agent, className = "" }: ChatAgentCardProps) => 
   return (
     <div className={containerClasses}>
       <section className={agentCardClasses} onClick={toggleChatList}>
-        <AgentAvatar agent={agent} />
+        <AgentStatusAvatar agent={agent} />
         <div className="flex flex-col">
           <h3 className="text-foreground-hard text-base leading-none font-bold">{agent.name}</h3>
           <div className="text-xs text-primary font-bold font-family-display">{agent.provider.name}</div>
@@ -73,8 +74,14 @@ export const ChatAgentCard = ({ agent, className = "" }: ChatAgentCardProps) => 
         </div>
       </section>
       <div className={chatListClasses}>
-        <div className="overflow-hidden">
-          <ChatListItems agentId={agent.id} chats={agent.chats} />
+        <div className="flex flex-col items-center overflow-hidden bg-background-soft">
+          <ChatCreateRegularButton
+            agentId={agent.id}
+            disabled={!agent.isActive}
+            disabledText="Необходимо активировать агента"
+            className="mt-3"
+          />
+          <ChatListItems chats={agent.chats} />
         </div>
       </div>
     </div>

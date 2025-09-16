@@ -1,14 +1,12 @@
 import { NavLink } from "react-router"
 import { makeClasses } from "@lib/style-api"
 import type { ChatListItem } from "@entities/chat"
-import { ChatCreateRegularButton } from "@features/chat-create"
 
 /**
  * Пропсы списка чатов
  * @namespace Features.ChatAgentList.UI.ChatListItemsProps
  */
 type ChatListItemsProps = {
-  agentId: number
   chats: ChatListItem[]
   className?: string
 }
@@ -17,13 +15,12 @@ type ChatListItemsProps = {
  * Список чатов
  * @namespace Features.ChatAgentList.UI.ChatListItems
  */
-export const ChatListItems = ({ agentId, chats, className = "" }: ChatListItemsProps) => {
+export const ChatListItems = ({ chats, className = "" }: ChatListItemsProps) => {
   const containerClasses = makeClasses(
     "flex",
     "flex-col",
     "items-center",
     "w-full",
-    "bg-background-soft",
     "rounded-bl-xl",
     "rounded-br-xl",
     "py-2",
@@ -49,8 +46,6 @@ export const ChatListItems = ({ agentId, chats, className = "" }: ChatListItemsP
 
   return (
     <div className={containerClasses}>
-      <ChatCreateRegularButton agentId={agentId} />
-
       {chats.map(chat => (
         <NavLink to={`/chat/${chat.id}`} className={linkClasses} key={chat.id}>
           {chat.title}
