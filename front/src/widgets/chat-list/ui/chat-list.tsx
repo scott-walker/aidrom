@@ -30,6 +30,7 @@ export const ChatList = ({ width = "300px" }: ChatListProps) => {
   const listClasses = makeClasses(
     "flex",
     "flex-col",
+    "h-full",
     "w-full",
     "overflow-y-auto",
     "scrollbar-hide",

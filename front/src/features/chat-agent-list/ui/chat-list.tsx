@@ -20,12 +20,31 @@ export const ChatList = ({ chats, className = "" }: ChatListProps) => {
   const containerClasses = makeClasses(
     "flex",
     "flex-col",
+    "items-center",
     "w-full",
-    "bg-background-soft/70",
-    "border-b",
-    "border-background-hard/70",
+    "bg-background-soft",
+    "rounded-bl-xl",
+    "rounded-br-xl",
     "py-2",
     className
+  )
+  const createChatLinkClasses = makeClasses(
+    "flex",
+    "items-center",
+    "justify-center",
+    "gap-1",
+    "px-3",
+    "py-1",
+    "my-2",
+    "w-fit",
+    "text-sm",
+    "font-bold",
+    "bg-primary",
+    "text-primary-foreground",
+    "hover:bg-primary-accent",
+    "hover:text-primary-foreground-accent",
+    "select-none",
+    "rounded-2xl"
   )
   const linkClasses = ({ isActive }: { isActive: boolean }) => {
     return makeClasses(
@@ -38,26 +57,21 @@ export const ChatList = ({ chats, className = "" }: ChatListProps) => {
       "w-full",
       "text-base",
       "text-foreground-hard",
-      "font-normal",
-      isActive && "text-primary",
       isActive && "font-bold",
-      "hover:text-primary",
+      "hover:bg-background/50",
+      "hover:text-foreground-hard",
       "select-none"
     )
   }
 
   return (
     <div className={containerClasses}>
+      <a href="/chat/new" className={createChatLinkClasses}>
+        <Icon name="plus" size={20} strokeWidth={2} /> Создать чат
+      </a>
       {chats.map(chat => (
         <NavLink to={`/chat/${chat.id}`} className={linkClasses} key={chat.id}>
-          {({ isActive }) => {
-            return (
-              <>
-                {isActive && <Icon name="chevron-right" size={20} strokeWidth={2} />}
-                {chat.title}
-              </>
-            )
-          }}
+          {chat.title}
         </NavLink>
       ))}
     </div>

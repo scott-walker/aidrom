@@ -10,7 +10,7 @@ import { useAgentChats } from "../lib/use-agent-chats"
  */
 export const ChatAgentList = () => {
   const { agentChats, isLoading, error } = useAgentChats()
-  const containerClasses = makeClasses("flex", "flex-col")
+  const containerClasses = makeClasses("flex", "flex-col", "gap-3", "px-6", "py-2", "h-full")
 
   if (isLoading) {
     return (
