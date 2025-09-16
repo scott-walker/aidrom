@@ -1,6 +1,7 @@
 import { makeClasses } from "@lib/style-api"
 import type { Chat } from "@entities/chat"
 import { ChatRename } from "@features/chat-rename"
+import { ChatDelete } from "@features/chat-delete"
 
 /**
  * Пропсы чата
@@ -17,6 +18,8 @@ type ChatDialogHeaderProps = {
 export const ChatDialogHeader = ({ chat }: ChatDialogHeaderProps) => {
   const headerClasses = makeClasses("absolute top-0 left-0 right-0")
   const panelClasses = makeClasses(
+    "flex",
+    "gap-3",
     "w-fit",
     "mx-auto",
     "bg-background-soft",
@@ -33,6 +36,7 @@ export const ChatDialogHeader = ({ chat }: ChatDialogHeaderProps) => {
     <header className={headerClasses}>
       <div className={panelClasses}>
         <ChatRename chat={chat} />
+        <ChatDelete chat={chat} />
       </div>
     </header>
   )

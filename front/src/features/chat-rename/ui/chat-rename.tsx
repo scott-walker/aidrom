@@ -17,7 +17,7 @@ type ChatRenameProps = {
  * @namespace Features.ChatRename.UI.ChatRename
  */
 export const ChatRename = ({ chat }: ChatRenameProps) => {
-  const trigger = <IconButton icon="pencil-line" />
+  const trigger = <IconButton icon="pencil-line" iconSize={20} />
   const { isOpen, setIsOpen, handleChange, handleSave, handleCancel, isPending } = useRename(chat)
 
   return (

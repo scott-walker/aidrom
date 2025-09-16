@@ -11,7 +11,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   useTitle("Чаты")
 
   const containerClasses = makeClasses("flex items-stretch justify-between h-full")
-  const asideClasses = makeClasses("w-[360px]", "h-full", "border-r", "border-background-hard")
+  const asideClasses = makeClasses("h-full", "border-r", "border-background-hard")
   const chatClasses = makeClasses("flex-1 flex flex-col w-full")
 
   return (

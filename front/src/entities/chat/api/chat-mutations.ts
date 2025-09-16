@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient, type UseMutationResult } from "@tanstack/react-query"
-import { createChat, updateChat, sendMessage } from "./chat-api"
+import { createChat, updateChat, sendMessage, deleteChat } from "./chat-api"
 import type { Chat } from "../lib/schema"
 import type { ChatCreateData, ChatUpdateData, MessageSendData, MessageSendResult } from "../lib/types"
 import { queryKeys } from "./chat-queries"
@@ -28,6 +28,21 @@ export const useUpdateChat = (): UseMutationResult<Chat, Error, { chatId: number
 
   return useMutation({
     mutationFn: ({ chatId, data }: { chatId: number; data: ChatUpdateData }) => updateChat(chatId, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.all })
+    }
+  })
+}
+
+/**
+ * Хук для удаления чата
+ * @namespace Entities.Chat.Api.ChatMutations.useDeleteChat
+ */
+export const useDeleteChat = (): UseMutationResult<void, Error, number> => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (chatId: number) => deleteChat(chatId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.all })
     }

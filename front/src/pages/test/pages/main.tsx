@@ -10,6 +10,7 @@ import { Slider } from "@ui/slider"
 import { Loader } from "@ui/loader"
 import { InputLight } from "@ui/input-light"
 import { useToast } from "@features/toasts"
+import { ModalConfirm } from "@shared/ui/modal-confirm"
 
 /**
  * Главная страница инструментов
@@ -36,6 +37,18 @@ export const Main = (): ReactNode => {
               </div>
             </Modal>
 
+            <Modal nearTrigger trigger={<Button>Меню</Button>}>
+              Содержимое меню
+            </Modal>
+
+            <ModalConfirm
+              trigger={<Button schema="hard">Удалить</Button>}
+              title="Удаление всего и вся"
+              description="Вы уверены, что хотите удалить всего и вся?"
+              onApprove={() => toast.success("Вы приняли решение")}
+              onReject={() => toast.error("Вы отказались от решения")}
+            />
+
             <Popover trigger={<Button>Открыть поповер</Button>}>
               <div>
                 <p>Это поповер</p>
@@ -61,6 +74,12 @@ export const Main = (): ReactNode => {
               Уведомление
             </Button>
             <Button onClick={() => toast.clear()}>Очистить уведомления</Button>
+            <Button schema="danger" onClick={() => toast.error("Произошла ошибка", "Уведомление")}>
+              Уведомление
+            </Button>
+            <Button schema="secondary" onClick={() => toast.info("Информация", "Уведомление")}>
+              Уведомление
+            </Button>
           </div>
 
           <div className="flex gap-6">

@@ -5,7 +5,7 @@ export { makeLastClientMessage } from "./lib/utils"
 
 // API
 export { useChats, useChatById } from "./api/chat-queries"
-export { useCreateChat, useUpdateChat, useSendMessage } from "./api/chat-mutations"
+export { useCreateChat, useUpdateChat, useSendMessage, useDeleteChat } from "./api/chat-mutations"
 
 // Model
 export { useChatStore } from "./model/chat-store"

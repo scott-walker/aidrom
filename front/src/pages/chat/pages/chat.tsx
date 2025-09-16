@@ -14,7 +14,7 @@ export const Chat = (): ReactNode => {
 
   const containerClasses = makeClasses("flex items-stretch justify-between h-full")
   const chatClasses = makeClasses("flex-1")
-  const asideClasses = makeClasses("w-[400px]", "border-l", "border-background-hard")
+  const asideClasses = makeClasses("border-l", "border-background-hard")
 
   return (
     <div className={containerClasses}>

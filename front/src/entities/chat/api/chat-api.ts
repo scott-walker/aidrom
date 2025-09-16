@@ -51,6 +51,14 @@ export const updateChat = async (chatId: number, data: ChatUpdateData): Promise<
 }
 
 /**
+ * Удаление чата по ID
+ * @namespace Entities.Chat.Api.deleteChat
+ */
+export const deleteChat = async (chatId: number): Promise<void> => {
+  await restClient.delete(`chats/${chatId}`)
+}
+
+/**
  * Отправка сообщения
  * @namespace Entities.Chat.Api.sendMessage
  */

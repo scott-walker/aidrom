@@ -1,13 +1,5 @@
 import type { ComponentProps, ReactNode } from "react"
-import {
-  makeClasses,
-  makeUiBox,
-  makeUiClickable,
-  makeUiHoverableAnimation,
-  makeUiShadow,
-  makeUiTransition,
-  makeVariants
-} from "@lib/style-api"
+import { makeClasses, makeUiBox, makeUiClickable, makeUiShadow, makeUiTransition, makeVariants } from "@lib/style-api"
 
 /**
  * Пропсы кнопки
@@ -15,7 +7,8 @@ import {
  */
 export type ButtonProps = ComponentProps<"button"> & {
   children: ReactNode
-  schema?: "ghost" | "soft" | "hard" | "primary" | "outline" | "brand"
+  schema?: "ghost" | "soft" | "hard" | "primary" | "outline" | "brand" | "secondary" | "danger"
+  rounded?: boolean
 }
 
 /**
@@ -27,6 +20,7 @@ export const Button = ({
   schema = "primary",
   className = "",
   disabled = false,
+  rounded = false,
   ...props
 }: ButtonProps): ReactNode => {
   const useSchema = makeVariants({
@@ -35,36 +29,76 @@ export const Button = ({
       makeUiShadow(),
       makeUiTransition(),
       !disabled && makeUiClickable(),
-      !disabled && makeUiHoverableAnimation(),
+      // !disabled && "hover:scale-110",
       disabled && "cursor-not-allowed",
-      disabled && "opacity-80"
+      disabled && "opacity-80",
+      rounded && "rounded-full",
+      "ring-2",
+      "ring-offset-3",
+      "ring-transparent",
+      "ring-offset-background",
+      "uppercase",
+      "text-xs",
+      "font-bold",
+      // "font-family-display",
+      "px-4",
+      "py-1.5"
     ),
     afterClasses: className,
     variants: {
+      ghost: makeClasses(
+        "bg-transparent",
+        "text-foreground",
+        "shadow-none",
+        "ring-transparent",
+        "ring-offset-transparent"
+        // "border-none",
+        // "hover:border-hard"
+        // "hover:text-primary"
+      ),
       soft: makeClasses(
         "bg-soft",
-        "text-soft-foreground"
+        "text-soft-foreground",
+        "hover:ring-background-hard"
         //"hover:bg-soft-accent",
         // "hover:text-soft-foreground-accent"
       ),
       hard: makeClasses(
         "bg-hard",
-        "text-hard-foreground"
+        "text-hard-foreground",
+        "hover:ring-hard"
         //"hover:bg-hard-accent",
         // "hover:text-hard-foreground-accent"
       ),
       primary: makeClasses(
         "bg-primary",
-        "text-primary-foreground"
+        "text-primary-foreground",
+        "hover:ring-primary"
+        // "hover:border-primary-foreground"
         // "hover:bg-primary-accent",
         // "hover:text-primary-foreground-accent"
+      ),
+      secondary: makeClasses(
+        "bg-secondary",
+        "text-secondary-foreground",
+        "hover:ring-secondary"
+        // "hover:bg-secondary-accent",
+        // "hover:text-secondary-foreground-accent"
       ),
       brand: makeClasses(
         "bg-brand-gradient",
         "text-primary-foreground",
         "border-none",
         "px-[calc(var(--ui-offset-x)+var(--ui-border-width))]",
-        "py-[calc(var(--ui-offset-y)+var(--ui-border-width))]"
+        "py-[calc(var(--ui-offset-y)+var(--ui-border-width))]",
+        "hover:ring-secondary"
+      ),
+      danger: makeClasses(
+        "bg-danger",
+        "text-danger-foreground",
+        "hover:ring-danger"
+        // "hover:bg-danger-accent",
+        // "hover:text-danger-foreground-accent"
       ),
       outline: makeClasses(
         "bg-transparent",
