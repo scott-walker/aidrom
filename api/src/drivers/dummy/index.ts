@@ -33,9 +33,15 @@ export const createDummyDriver = (config: DummyDriverConfig): Driver => {
 
       await new Promise(resolve => setTimeout(resolve, 1000))
 
+      const content = request.messages
+        .map(message => {
+          return `${message.role}: ${message.content}`
+        })
+        .join("\n")
+
       const response = {
         providerRequestId: "dummy",
-        content: "dummy response",
+        content,
         requestParams: request,
         responseData: {
           request,

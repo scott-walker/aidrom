@@ -16,17 +16,19 @@ import {
   UpdateChatData,
   ClientMessage,
   AgentMessage,
-  RequestWithResponseContent
+  RequestWithResponseContent,
+  ChatContext,
+  CommunicationRoles
 } from "@db"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
 import { sendRequest } from "@services/agent.service"
 
 /**
- * Тип для результата отправки сообщения
+ * Интерфейс результата отправки сообщения
  * @namespace Chat.Service.SendMessageResult
  */
-type SendMessageResult = {
+interface SendMessageResult {
   chatId: number
   messagePairId: number
   requestId: number
@@ -54,7 +56,7 @@ export const getChats = async (): Promise<Chat[]> => {
 
     logger.info("Запрос к БД выполнен успешно", { count: items.length })
 
-    return items.map(item => mapChat(item as Chat))
+    return items.map(item => mapChat({ ...item, context: [] } as Chat))
   } catch (error) {
     logger.error("Ошибка при получении всех чатов из БД", { error: error.message })
 
@@ -110,7 +112,7 @@ export const createChat = async (data: CreateChatData): Promise<Chat> => {
 
     logger.info("Чат успешно создан в БД", { chatId: chat.id })
 
-    return mapChat(chat)
+    return mapChat(chat as Chat)
   } catch (error) {
     logger.error("Ошибка при создании чата в БД", { error: error.message, data })
 
@@ -136,7 +138,7 @@ export const updateChat = async (chatId: number, data: UpdateChatData): Promise<
 
     logger.info("Чат успешно обновлен в БД", { chatId })
 
-    return mapChat(chat)
+    return mapChat(chat as Chat)
   } catch (error) {
     logger.error("Ошибка при обновлении чата в БД", { error: error.message, chatId })
 
@@ -167,6 +169,24 @@ export const deleteChat = async (chatId: number): Promise<void> => {
 }
 
 /**
+ * Очистить контекст чата
+ * @namespace Chat.Service.clearChatContext
+ */
+export const clearChatContext = async (chatId: number): Promise<void> => {
+  try {
+    logger.info("Очистка контекста чата", { chatId })
+
+    await db.update(chats).set({ context: [] }).where(eq(chats.id, chatId))
+
+    logger.info("Контекст чата успешно очищен", { chatId })
+  } catch (error) {
+    logger.error("Ошибка при очистке контекста чата", { error: error.message, chatId })
+
+    throw error
+  }
+}
+
+/**
  * Отправляет сообщение в чат
  * @namespace Chat.Service.sendMessage
  */
@@ -178,15 +198,22 @@ export const sendMessage = async (chatId: number, message: string): Promise<Send
     const chat = await getChatById(chatId)
 
     // Отправляем запрос к API
-    const request: RequestWithResponseContent = await sendRequest(chat.agent.id, chat.client.id, message)
+    const request: RequestWithResponseContent = await sendRequest({
+      agentId: chat.agent.id,
+      clientId: chat.client.id,
+      chatСontext: chat.context,
+      message
+    })
 
     // Создаем сообщение клиента
     logger.info("Создание сообщения клиента")
     const [clientMessage] = await db.insert(clientMessages).values({ content: message }).returning()
+    pushChatContext(chat, CommunicationRoles.Client, message)
 
     // Создаем сообщение агента
     logger.info("Создание сообщения агента")
     const [agentMessage] = await db.insert(agentMessages).values({ content: request.responseContent }).returning()
+    pushChatContext(chat, CommunicationRoles.Agent, request.responseContent)
 
     // Создаем messagePair с ID сообщений
     logger.info("Создание messagePair")
@@ -203,7 +230,13 @@ export const sendMessage = async (chatId: number, message: string): Promise<Send
     // Обновляем дату последнего обновления чата
     logger.info("Обновление даты последнего обновления чата")
 
-    await db.update(chats).set({ updatedAt: new Date() }).where(eq(chats.id, chatId))
+    await db
+      .update(chats)
+      .set({
+        updatedAt: new Date(),
+        context: chat.context
+      })
+      .where(eq(chats.id, chatId))
 
     logger.info("Сообщение успешно отправлено в чат", {
       chatId: chatId,
@@ -225,4 +258,16 @@ export const sendMessage = async (chatId: number, message: string): Promise<Send
 
     throw error
   }
+}
+
+/**
+ * Создать запись в контексте чата
+ * @namespace Chat.Service.pushChatContext
+ */
+export const pushChatContext = (chat: Chat, role: CommunicationRoles, content: string): Chat => {
+  const context: ChatContext = [...chat.context, { role, content }]
+
+  chat.context = context
+
+  return chat
 }

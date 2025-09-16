@@ -14,13 +14,25 @@ import {
   CreateAgentRuleData,
   AgentRule,
   agentRules,
-  mapAgent
+  mapAgent,
+  ChatContext
 } from "@db"
-import { DriverRequestParams, DriverResponse } from "@drivers"
+import { DriverResponse } from "@drivers"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
 import { processRequest } from "./provider.service"
 import { createRequest } from "./request.service"
+
+/**
+ * Параметры отправки запроса к AI агенту
+ * @namespace Agent.Service.SendRequestParams
+ */
+interface AgentSendRequestParams {
+  agentId: number
+  clientId: number
+  chatСontext: ChatContext
+  message: string
+}
 
 // Создаем логгер для сервиса агентов
 const logger = createServiceLogger("AgentService")
@@ -164,21 +176,24 @@ export const deleteAgent = async (agentId: number): Promise<void> => {
  * Отправить запрос к AI агенту
  * @namespace Agent.Service.sendRequest
  */
-export const sendRequest = async (
-  agentId: number,
-  clientId: number,
-  message: string
-): Promise<RequestWithResponseContent> => {
+export const sendRequest = async ({
+  agentId,
+  clientId,
+  chatСontext,
+  message
+}: AgentSendRequestParams): Promise<RequestWithResponseContent> => {
   try {
     logger.info("Отправка запроса к AI агенту", { agentId, clientId, message })
 
     const agent = await getAgentById(agentId)
 
     // Отправляем запрос к API
-    const response: DriverResponse = await processRequest(agent.providerId, {
-      message,
-      systemMessages: agent.rules.map(rule => rule.content),
-      params: agent.params as DriverRequestParams
+    const response: DriverResponse = await processRequest({
+      providerId: agent.providerId,
+      agentRules: agent.rules,
+      agentParams: agent.params,
+      chatContext: chatСontext,
+      clientMessage: message
     })
 
     logger.info("Запрос к API успешно отправлен", { agentId, clientId })

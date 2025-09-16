@@ -10,7 +10,17 @@ import {
   agentMessages,
   requests
 } from "./schema"
-import { DriverRequestParams, DriverRequestParamsConfig } from "@drivers"
+import { DriverRequestParams, DriverRequestMessageRole, DriverRequestParamsConfig } from "@drivers"
+
+/**
+ * Роли коммуникации
+ * @namespace CommunicationRoles
+ */
+export enum CommunicationRoles {
+  System = DriverRequestMessageRole.System,
+  Client = DriverRequestMessageRole.Client,
+  Agent = DriverRequestMessageRole.Agent
+}
 
 // Типы для провайдера
 export type Provider = InferSelectModel<typeof providers>
@@ -44,6 +54,7 @@ export type UpdateClientData = Partial<CreateClientData>
 export type Chat = InferSelectModel<typeof chats> & {
   agent: Agent
   client: Client
+  context: ChatContext
   messagePairs: (MessagePair & {
     clientMessage: ClientMessage
     agentMessage: AgentMessage
@@ -54,6 +65,10 @@ export type UpdateChatData = Partial<CreateChatData>
 export type ClientMessage = InferSelectModel<typeof clientMessages>
 export type AgentMessage = InferSelectModel<typeof agentMessages>
 export type MessagePair = InferSelectModel<typeof messagePairs>
+export type ChatContext = {
+  role: CommunicationRoles
+  content: string
+}[]
 
 // Типы для запроса
 export type Request = InferSelectModel<typeof requests>

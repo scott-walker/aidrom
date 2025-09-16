@@ -4,10 +4,42 @@
  */
 
 import { eq, desc } from "drizzle-orm"
-import { db, providers, Provider, CreateProviderData, UpdateProviderData, ProviderWithDriver } from "@db"
+import {
+  db,
+  providers,
+  Provider,
+  CreateProviderData,
+  UpdateProviderData,
+  ProviderWithDriver,
+  AgentParams,
+  ChatContext,
+  AgentRule,
+  CommunicationRoles
+} from "@db"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
-import { initDriver, DriverConfig, DriverRequest, DriverResponse, Driver, DriverRequestParamsConfig } from "@drivers"
+import {
+  initDriver,
+  DriverConfig,
+  DriverResponse,
+  Driver,
+  DriverRequestParamsConfig,
+  DriverRequestMessages,
+  DriverRequestMessageRole,
+  DriverRequestParams
+} from "@drivers"
+
+/**
+ * Параметры обработки запроса к провайдеру
+ * @namespace Provider.Service.ProcessRequestParams
+ */
+interface ProcessRequestParams {
+  providerId: number
+  agentRules: AgentRule[]
+  agentParams: AgentParams
+  chatContext: ChatContext
+  clientMessage: string
+}
 
 // Создаем логгер для сервиса провайдеров
 const logger = createServiceLogger("ProviderService")
@@ -147,18 +179,79 @@ export const deleteProvider = async (providerId: number): Promise<Provider> => {
  * Обработка запроса к провайдеру
  * @namespace Provider.Service.processRequest
  */
-export const processRequest = async (providerId: number, request: DriverRequest): Promise<DriverResponse> => {
+export const processRequest = async ({
+  providerId,
+  agentRules,
+  agentParams,
+  chatContext,
+  clientMessage
+}: ProcessRequestParams): Promise<DriverResponse> => {
   try {
-    logger.info("Обработка запроса к провайдеру", { providerId, request })
+    logger.info("Обработка запроса к провайдеру", { providerId })
 
     const provider = await getProviderById(providerId)
+    const messages = compileMessages(agentRules, chatContext, clientMessage)
+    const params = normalizeParams(agentParams)
     const driver = initDriver(provider.driver, provider.config as DriverConfig)
-    const response = await driver.sendRequest(request)
+    const response = await driver.sendRequest({ messages, params })
 
     return response
   } catch (error) {
-    logger.error("Ошибка при обработке запроса к провайдеру", { error: error.message, providerId, request })
+    logger.error("Ошибка при обработке запроса к провайдеру", { error: error.message, providerId })
 
     throw error
+  }
+}
+
+/**
+ * Компилирует системные сообщения агента, контекст чата и сообщение клиента
+ * @namespace Agent.Service.compileMessages
+ */
+export const compileMessages = (
+  agentRules: AgentRule[],
+  chatContext: ChatContext,
+  clientMessageContent: string
+): DriverRequestMessages => {
+  const mapRoles = {
+    [CommunicationRoles.System]: DriverRequestMessageRole.System,
+    [CommunicationRoles.Client]: DriverRequestMessageRole.Client,
+    [CommunicationRoles.Agent]: DriverRequestMessageRole.Agent
+  }
+
+  // Системные сообщения (на основе правил агента)
+  const systemMessages = agentRules
+    .map(rule => ({
+      role: DriverRequestMessageRole.System,
+      content: rule.content
+    }))
+    .reverse()
+
+  // Сообщения чата (контекст общения)
+  const chatMessages = chatContext.map(item => ({
+    role: mapRoles[item.role],
+    content: item.content
+  }))
+
+  // Сообщение клиента
+  const clientMessage = {
+    role: mapRoles[CommunicationRoles.Client],
+    content: clientMessageContent
+  }
+
+  return [...systemMessages, ...chatMessages, clientMessage]
+}
+
+/**
+ * Нормализует параметры агента
+ * @namespace Provider.Service.normalizeParams
+ */
+const normalizeParams = (agentParams: AgentParams): DriverRequestParams => {
+  return {
+    model: agentParams.model,
+    maxTokens: agentParams.maxTokens,
+    topP: agentParams.topP,
+    temperature: agentParams.temperature,
+    frequencyPenalty: agentParams.frequencyPenalty,
+    presencePenalty: agentParams.presencePenalty
   }
 }

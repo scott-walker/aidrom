@@ -4,12 +4,36 @@
  */
 
 /**
+ * Роли контекста запроса к драйверу
+ * @namespace Drivers.DriverRequestMessageRole
+ */
+export enum DriverRequestMessageRole {
+  System = "system",
+  Client = "client",
+  Agent = "agent"
+}
+
+/**
+ * Интерфейс контекста запроса к драйверу
+ * @namespace Drivers.DriverRequestMessage
+ */
+export interface DriverRequestMessage {
+  role: DriverRequestMessageRole
+  content: string
+}
+
+/**
+ * Интерфейс контекста запроса к драйверу
+ * @namespace Drivers.DriverRequestMessages
+ */
+export type DriverRequestMessages = DriverRequestMessage[]
+
+/**
  * Интерфейс запроса к драйверу
  * @namespace Drivers.DriverRequest
  */
 export interface DriverRequest {
-  message: string
-  systemMessages: string[]
+  messages: DriverRequestMessages
   params: DriverRequestParams
 }
 

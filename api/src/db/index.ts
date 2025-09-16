@@ -36,6 +36,7 @@ export type {
   ClientMessage,
   AgentMessage,
   MessagePair,
+  ChatContext,
 
   // Запросы
   Request,
@@ -43,3 +44,6 @@ export type {
   RequestWithResponseContent,
   CreateRequestData
 } from "./types"
+
+// Экспортируем enum как значение
+export { CommunicationRoles } from "./types"

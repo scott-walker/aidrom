@@ -9,6 +9,7 @@ router.get("/:chatId", chatController.getChat)
 router.post("/", chatController.createChat)
 router.put("/:chatId", chatController.updateChat)
 router.delete("/:chatId", chatController.deleteChat)
+router.delete("/:chatId/context", chatController.clearChatContext)
 router.post("/:chatId/send", chatController.sendMessage)
 
 export { router as chatRouter }

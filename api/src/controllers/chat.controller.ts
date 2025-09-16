@@ -118,6 +118,28 @@ export const deleteChat = async (req: Request, res: Response, next: NextFunction
 }
 
 /**
+ * Очистить контекст чата
+ * @namespace Chat.Controller.clearChatContext
+ */
+export const clearChatContext = async (req: Request, res: Response, next: NextFunction) => {
+  const chatId = parseInt(req.params.chatId)
+
+  try {
+    logger.info("Очистка контекста чата", { chatId })
+
+    await chatService.clearChatContext(chatId)
+
+    logger.info("Контекст чата успешно очищен", { chatId })
+
+    res.status(204).json({ message: "Контекст чата успешно очищен" })
+  } catch (err) {
+    logger.error("Ошибка при очистке контекста чата", { error: err.message, chatId })
+
+    next(err)
+  }
+}
+
+/**
  * Отправить сообщение в чат
  * @namespace Chat.Controller.sendMessage
  */
