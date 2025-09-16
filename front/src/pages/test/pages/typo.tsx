@@ -2,7 +2,6 @@ import type { ReactNode } from "react"
 import { useSubtitle } from "@lib/layout-api/utils"
 import { Card } from "@ui/card"
 import { Container } from "@ui/container"
-import { Typography } from "@ui/typography"
 
 /**
  * Страница с типографикой
@@ -16,7 +15,7 @@ export const Typo = (): ReactNode => {
     <Card>
       <Card.Body>
         <Container>
-          <Typography>
+          <div className="typography-container">
             <h1>Заголовок 1 уровня</h1>
             <p>
               Параграф с текстом, который может быть длинным и содержать много слов и символов. Он обязательно должен
@@ -110,7 +109,7 @@ export const Typo = (): ReactNode => {
                 }
               </code>
             </pre>
-          </Typography>
+          </div>
         </Container>
       </Card.Body>
     </Card>

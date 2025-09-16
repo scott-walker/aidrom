@@ -1,6 +1,5 @@
 import { makeClasses } from "@lib/style-api"
 import { LoaderBlock } from "@ui/loader-block"
-import { ErrorBlock } from "@ui/error-block"
 import { Separator } from "@ui/separator"
 import { Json } from "@ui/json"
 
@@ -23,8 +22,8 @@ type ChatInfoProps = {
  * @namespace Widgets.ChatInfo.UI.ChatInfo
  */
 export const ChatInfo = ({ chatId }: ChatInfoProps) => {
-  const { chat, isLoading: isChatLoading, error: chatError } = useChatById(chatId)
-  const { agent, isLoading: isAgentLoading, error: agentError } = useAgentById(chat?.agentId as number)
+  const { chat, isLoading: isChatLoading } = useChatById(chatId)
+  const { agent, isLoading: isAgentLoading } = useAgentById(chat?.agentId as number)
   const chatAgent = agent as Agent
 
   const { isVisible } = useToggleChatInfo()
@@ -49,13 +48,6 @@ export const ChatInfo = ({ chatId }: ChatInfoProps) => {
     return (
       <div className={containerClasses}>
         <LoaderBlock />
-      </div>
-    )
-  }
-  if (chatError || agentError) {
-    return (
-      <div className={containerClasses}>
-        <ErrorBlock error={(chatError || agentError) as Error} />
       </div>
     )
   }

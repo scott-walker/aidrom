@@ -1,5 +1,4 @@
-import type { ReactNode } from "react"
-import { useRef, useEffect, useState } from "react"
+import { useRef, type MouseEvent, type ReactNode, useState } from "react"
 import * as Dialog from "@radix-ui/react-dialog"
 import { makeClasses } from "@lib/style-api"
 import { Icon } from "@ui/icon"
@@ -36,29 +35,19 @@ export const Modal = ({
   className = ""
 }: ModalProps) => {
   const triggerRef = useRef<HTMLDivElement>(null)
-  const [triggerRect, setTriggerRect] = useState<DOMRect | null>(null)
-
-  useEffect(() => {
-    if (!nearTrigger) return
-
-    if (triggerRef.current) {
-      const rect = triggerRef.current.getBoundingClientRect()
-
-      setTriggerRect(rect)
-    }
-  }, [nearTrigger])
+  const [pointerPosition, setPointerPosition] = useState<{ x: number; y: number } | null>({ x: 0, y: 0 })
 
   const overlayClasses = makeClasses(
     "fixed",
     "inset-0",
     "bg-foreground-hard/50",
+    "dark:bg-background-hard/80",
     "data-[state=open]:animate-in",
     "data-[state=open]:fade-in-0",
     "data-[state=closed]:animate-out",
     "data-[state=closed]:fade-out-0",
     "duration-200"
   )
-
   const windowClasses = makeClasses(
     "fixed",
     "z-40",
@@ -80,7 +69,6 @@ export const Modal = ({
     "duration-200",
     "ease-out"
   )
-
   const contentClasses = makeClasses(
     "flex",
     "flex-col",
@@ -93,7 +81,6 @@ export const Modal = ({
     "bg-background-soft",
     className
   )
-
   const headerClasses = makeClasses(
     "flex",
     "justify-between",
@@ -108,27 +95,36 @@ export const Modal = ({
   const bodyClasses = makeClasses("px-4", "py-2", "w-full", "h-full")
   const closeClasses = makeClasses("text-foreground-soft", "cursor-pointer", "hover:text-primary")
 
-  const contentStyle = () => {
-    if (nearTrigger && triggerRect) {
+  const calcPositionStyle = () => {
+    if (nearTrigger && pointerPosition) {
       return {
-        top: triggerRect.bottom + 8,
-        left: triggerRect.left
+        top: pointerPosition.y + 20,
+        left: pointerPosition.x - 20
       }
     }
 
     return {}
   }
 
+  const handleTriggerClick = ({ clientX, clientY }: MouseEvent) => {
+    if (!nearTrigger) return
+
+    setPointerPosition({
+      x: clientX,
+      y: clientY
+    })
+  }
+
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
-      <div ref={triggerRef}>
+      <div ref={triggerRef} onClick={handleTriggerClick}>
         <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>
       </div>
       <Dialog.Portal>
         <Dialog.Overlay className={overlayClasses} />
         <Dialog.Content
           className={windowClasses}
-          style={contentStyle()}
+          style={calcPositionStyle()}
           aria-describedby={description ? undefined : undefined}
         >
           <div className={contentClasses}>

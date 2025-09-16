@@ -1,7 +1,6 @@
 import { makeClasses } from "@lib/style-api"
 import { useSubtitle } from "@lib/layout-api"
 import { LoaderBlock } from "@ui/loader-block"
-import { ErrorBlock } from "@ui/error-block"
 import { useChatById, type Chat } from "@entities/chat"
 import { ChatDialogHeader } from "./chat-dialog-header"
 import { ChatDialogInput } from "./chat-dialog-input"
@@ -21,13 +20,12 @@ type ChatDialogProps = {
  * @namespace Widgets.Chat
  */
 export const ChatDialog = ({ chatId, className = "" }: ChatDialogProps) => {
-  const { chat, isLoading, error } = useChatById(chatId)
+  const { chat, isLoading } = useChatById(chatId)
   const containerClasses = makeClasses("relative flex flex-col px-8 w-full h-full", className)
 
   useSubtitle(chat?.title || "")
 
   if (isLoading) return <LoaderBlock />
-  if (error) return <ErrorBlock error={error} />
 
   return (
     <div className={containerClasses}>

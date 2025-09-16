@@ -18,7 +18,7 @@ export const Item = ({ label, path, icon = null, compact = false }: MenuItem) =>
         false: "px-5"
       },
       active: {
-        true: cn("font-bold", "cursor-default", "bg-background-hard", "text-foreground-hard"),
+        true: cn("font-bold", "cursor-default", "bg-background", "text-foreground-hard"),
         false: cn("font-semibold", "text-foreground-soft", "hover:text-primary")
       }
     },

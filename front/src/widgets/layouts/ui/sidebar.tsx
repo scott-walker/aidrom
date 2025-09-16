@@ -16,7 +16,7 @@ const menuItems: MenuItems = [
   },
   {
     label: "Сервис",
-    icon: "wrench",
+    icon: "settings",
     path: "/service"
   }
 ]
@@ -30,7 +30,7 @@ const chatMenuItems: MenuItems = [
   },
   {
     label: "Агенты",
-    icon: "users",
+    icon: "bot",
     path: "/agents"
   }
 ]

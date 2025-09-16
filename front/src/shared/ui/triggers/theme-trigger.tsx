@@ -16,15 +16,5 @@ export const ThemeTrigger: FC<Props> = ({ ...props }): ReactNode => {
   const { isThemeDark, toggleThemeMode } = useLayout()
   const iconName = isThemeDark ? "sun" : "moon"
 
-  return (
-    <IconButton
-      schema="hard"
-      circle
-      icon={iconName}
-      iconSize={20}
-      iconClassName="m-1.5"
-      onClick={toggleThemeMode}
-      {...props}
-    />
-  )
+  return <IconButton schema="hard" circle icon={iconName} iconSize={18} onClick={toggleThemeMode} {...props} />
 }

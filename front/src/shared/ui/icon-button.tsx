@@ -23,7 +23,7 @@ export type IconButtonProps = Omit<ButtonProps, "children"> & {
 export const IconButton = ({
   icon,
   iconSize = 28,
-  iconStrokeWidth = 2,
+  iconStrokeWidth = 2.5,
   iconClassName = "",
   circle = false,
   schema = "ghost",
@@ -36,14 +36,15 @@ export const IconButton = ({
 
   const classes = makeClasses(
     "p-0",
+    "m-0",
+    "w-7",
+    "h-7",
     "shadow-none",
     isBrand && "p-(--ui-border-width)",
     isGhost && "hover:text-primary",
     circle && "rounded-full",
     className
   )
-
-  iconClassName = makeClasses(!isGhost && "m-0.5", iconClassName)
 
   return (
     <Button schema={schema} className={classes} disabled={disabled} {...props}>

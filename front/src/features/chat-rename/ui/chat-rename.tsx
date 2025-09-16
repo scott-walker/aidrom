@@ -3,6 +3,7 @@ import { InputLight } from "@ui/input-light"
 import { IconButton } from "@ui/icon-button"
 import type { Chat } from "@entities/chat"
 import { useRename } from "../lib/use-rename"
+import { Tooltip } from "@shared/ui/tooltip"
 
 /**
  * Пропсы для компонента
@@ -17,12 +18,19 @@ type ChatRenameProps = {
  * @namespace Features.ChatRename.UI.ChatRename
  */
 export const ChatRename = ({ chat }: ChatRenameProps) => {
-  const trigger = <IconButton icon="pencil-line" iconSize={20} />
   const { isOpen, setIsOpen, handleChange, handleSave, handleCancel, isPending } = useRename(chat)
+
+  const trigger = (
+    <div className="flex items-center">
+      <Tooltip text="Изменить название чата">
+        <IconButton icon="pencil-line" iconSize={20} />
+      </Tooltip>
+    </div>
+  )
 
   return (
     <Popover trigger={trigger} open={isOpen} onOpenChange={setIsOpen}>
-      <div className="flex gap-2">
+      <div className="flex items-center gap-2">
         <InputLight
           value={chat.title}
           autoFocus
@@ -32,8 +40,8 @@ export const ChatRename = ({ chat }: ChatRenameProps) => {
           maxLength={40}
           placeholder="Название чата"
         />
-        <IconButton icon="check" schema="primary" circle onClick={handleSave} disabled={isPending} />
-        <IconButton icon="x" onClick={handleCancel} />
+        <IconButton icon="check" iconSize={18} schema="primary" circle onClick={handleSave} disabled={isPending} />
+        <IconButton icon="x" iconSize={18} onClick={handleCancel} />
       </div>
     </Popover>
   )

@@ -1,5 +1,4 @@
 import ReactMarkdown from "react-markdown"
-import { Typography } from "@ui/typography"
 
 /**
  * Пропсы компонента для отображения Markdown
@@ -18,8 +17,8 @@ export const MarkdownReader = ({ value, ...props }: Props) => {
   value = value ?? ""
 
   return (
-    <Typography>
+    <div className="typography-container">
       <ReactMarkdown {...props}>{value}</ReactMarkdown>
-    </Typography>
+    </div>
   )
 }

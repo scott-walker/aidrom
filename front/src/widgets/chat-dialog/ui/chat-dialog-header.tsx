@@ -16,16 +16,17 @@ type ChatDialogHeaderProps = {
  * @namespace Widgets.Chat
  */
 export const ChatDialogHeader = ({ chat }: ChatDialogHeaderProps) => {
-  const headerClasses = makeClasses("absolute top-0 left-0 right-0")
+  const headerClasses = makeClasses("absolute", "top-0", "left-0", "right-0", "flex", "items-center")
   const panelClasses = makeClasses(
     "flex",
-    "gap-3",
+    "items-center",
+    "gap-4",
     "w-fit",
     "mx-auto",
     "bg-background-soft",
     "rounded-bl-xl",
     "rounded-br-xl",
-    "px-8",
+    "px-6",
     "py-2",
     "text-foreground",
     "font-semibold",
