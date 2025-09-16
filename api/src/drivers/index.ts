@@ -2,6 +2,7 @@ import { ApiError } from "@utils/errors"
 import { DriverFactoriesCollection, DriverConfig, Driver } from "./types"
 import { createDummyDriver } from "./dummy"
 import { createDeepseekDriver } from "./deepseek"
+import { createGigachatDriver } from "./gigachat"
 
 export * from "./types"
 
@@ -11,7 +12,8 @@ export * from "./types"
  */
 const driverFactories: DriverFactoriesCollection = {
   dummy: createDummyDriver,
-  deepseek: createDeepseekDriver
+  deepseek: createDeepseekDriver,
+  gigachat: createGigachatDriver
 }
 
 /**

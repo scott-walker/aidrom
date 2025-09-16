@@ -1,3 +1,4 @@
+import https from "https"
 import axios from "axios"
 import { createApiLogger } from "@utils/logger.js"
 import { RestClientConfig, RestClientFactory } from "./types"
@@ -9,12 +10,17 @@ import { RestClientConfig, RestClientFactory } from "./types"
  */
 export const createRestClient: RestClientFactory = (config: RestClientConfig) => {
   const logger = createApiLogger("REST")
+  const headers = config.headers ?? {}
   const client = axios.create({
     baseURL: config.baseUrl,
+    httpsAgent: new https.Agent({
+      rejectUnauthorized: false // ⚠️ игнорирует self-signed cert
+    }),
     headers: {
       "Content-Type": "application/json",
       Accept: "application/json",
-      Authorization: `Bearer ${config.apiKey}`
+      Authorization: `Bearer ${config.authKey}`,
+      ...headers
     }
   })
 

@@ -26,7 +26,8 @@ import {
   DriverRequestParamsConfig,
   DriverRequestMessages,
   DriverRequestMessageRole,
-  DriverRequestParams
+  DriverRequestParams,
+  DriverRequestMessage
 } from "@drivers"
 
 /**
@@ -213,18 +214,20 @@ export const compileMessages = (
   clientMessageContent: string
 ): DriverRequestMessages => {
   const mapRoles = {
-    [CommunicationRoles.System]: DriverRequestMessageRole.System,
-    [CommunicationRoles.Client]: DriverRequestMessageRole.Client,
-    [CommunicationRoles.Agent]: DriverRequestMessageRole.Agent
+    [CommunicationRoles.System]: DriverRequestMessageRole.SYSTEM,
+    [CommunicationRoles.Client]: DriverRequestMessageRole.USER,
+    [CommunicationRoles.Agent]: DriverRequestMessageRole.ASSISTANT
   }
 
   // Системные сообщения (на основе правил агента)
-  const systemMessages = agentRules
-    .map(rule => ({
-      role: DriverRequestMessageRole.System,
-      content: rule.content
-    }))
-    .reverse()
+  const systemMessage = agentRules.reverse().reduce(
+    (message, rule) => {
+      message.content += `- ${rule.content}\n`
+
+      return message
+    },
+    { role: DriverRequestMessageRole.SYSTEM, content: "" } as DriverRequestMessage
+  )
 
   // Сообщения чата (контекст общения)
   const chatMessages = chatContext.map(item => ({
@@ -238,7 +241,7 @@ export const compileMessages = (
     content: clientMessageContent
   }
 
-  return [...systemMessages, ...chatMessages, clientMessage]
+  return [systemMessage, ...chatMessages, clientMessage]
 }
 
 /**

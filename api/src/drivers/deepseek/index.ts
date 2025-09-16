@@ -1,19 +1,6 @@
 import { createRestClient } from "@utils/api"
-import {
-  Driver,
-  DriverRequest,
-  DriverRequestMessages,
-  DriverRequestMessageRole,
-  DriverRequestParamsConfig,
-  DriverResponse
-} from "../types"
-import {
-  DeepseekDriverConfig,
-  DeepseekDriverModel,
-  DeepseekDriverRequest,
-  DeepseekDriverResponse,
-  DeepseekDriverRole
-} from "./types"
+import { Driver, DriverRequest, DriverRequestParamsConfig, DriverResponse } from "../types"
+import { DeepseekDriverConfig, DeepseekDriverModel, DeepseekDriverRequest, DeepseekDriverResponse } from "./types"
 import { createApiLogger } from "@utils/logger"
 
 /**
@@ -26,27 +13,8 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
 
   const restClient = createRestClient({
     baseUrl: config.baseUrl,
-    apiKey: config.apiKey
+    authKey: config.apiKey
   })
-
-  /**
-   * Преобразует контекст запроса в контекст драйвера
-   * @namespace Drivers.Deepseek.convertContext
-   * @param {DriverRequestMessages} context Контекст запроса
-   * @returns {DeepseekDriverRequestContext} Контекст драйвера
-   */
-  const convertContext = (context: DriverRequestMessages): { role: DeepseekDriverRole; content: string }[] => {
-    const rolesMap = {
-      [DriverRequestMessageRole.System]: DeepseekDriverRole.SYSTEM,
-      [DriverRequestMessageRole.Client]: DeepseekDriverRole.USER,
-      [DriverRequestMessageRole.Agent]: DeepseekDriverRole.ASSISTANT
-    }
-
-    return context.map(item => ({
-      role: rolesMap[item.role],
-      content: item.content
-    }))
-  }
 
   const driver: Driver = {
     /**
@@ -88,13 +56,10 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
       logger.info("🚀 Отправка запроса", { action: "sendRequest", request })
 
       try {
-        // Сформировать контекстные сообщения
-        const messages = convertContext(request.messages)
-
         // Сформировать запрос к API
         const driverRequest: DeepseekDriverRequest = {
           model: request.params.model as DeepseekDriverModel,
-          messages,
+          messages: request.messages,
           frequency_penalty: request.params.frequencyPenalty,
           presence_penalty: request.params.presencePenalty,
           max_tokens: request.params.maxTokens,

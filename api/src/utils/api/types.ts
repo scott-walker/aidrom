@@ -6,7 +6,8 @@ import { AxiosInstance } from "axios"
  */
 export interface RestClientConfig {
   baseUrl: string
-  apiKey: string
+  authKey: string
+  headers?: Record<string, string>
 }
 
 /**

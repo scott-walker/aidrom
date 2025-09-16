@@ -4,7 +4,7 @@
  * https://api-docs.deepseek.com/api/create-chat-completion
  */
 
-import { DriverConfig } from "../types"
+import { DriverConfig, DriverRequestMessageRole } from "../types"
 
 /**
  * Модели Deepseek
@@ -13,17 +13,6 @@ import { DriverConfig } from "../types"
 export enum DeepseekDriverModel {
   DEEPSEEK_CHAT = "deepseek-chat",
   DEEPSEEK_REASONER = "deepseek-reasoner"
-}
-
-/**
- * Роли Deepseek
- * @namespace Drivers.Deepseek.DeepseekDriverRole
- */
-export enum DeepseekDriverRole {
-  SYSTEM = "system",
-  USER = "user",
-  ASSISTANT = "assistant",
-  TOOL = "tool"
 }
 
 /**
@@ -45,7 +34,7 @@ export enum DeepseekDriverFinishReason {
 export interface DeepseekDriverRequest {
   messages: {
     content: string
-    role: DeepseekDriverRole
+    role: DriverRequestMessageRole
     // Имя участника. Предоставляет информацию о модели, позволяющую различать участников с одинаковой ролью.
     name?: string
   }[]
@@ -81,7 +70,7 @@ export interface DeepseekDriverResponse {
     index: number
     message: {
       // Роль автора этого сообщения
-      role: DeepseekDriverRole.ASSISTANT
+      role: DriverRequestMessageRole.ASSISTANT
       // Содержание сообщения
       content: string
       // Содержимое, сгенерированное моделью в ходе логического вывода (только для модели deepseek-reasoner)
@@ -138,4 +127,7 @@ export interface DeepseekDriverResponse {
  * Интерфейс конфига драйвера Deepseek
  * @namespace Drivers.Deepseek.DeepseekDriverConfig
  */
-export interface DeepseekDriverConfig extends DriverConfig {}
+export interface DeepseekDriverConfig extends DriverConfig {
+  baseUrl: string
+  apiKey: string
+}

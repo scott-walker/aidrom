@@ -8,9 +8,10 @@
  * @namespace Drivers.DriverRequestMessageRole
  */
 export enum DriverRequestMessageRole {
-  System = "system",
-  Client = "client",
-  Agent = "agent"
+  SYSTEM = "system",
+  USER = "user",
+  ASSISTANT = "assistant",
+  TOOL = "tool"
 }
 
 /**
@@ -86,8 +87,8 @@ export interface DriverResponse {
  * @namespace Drivers.DriverConfig
  */
 export interface DriverConfig {
-  baseUrl: string
-  apiKey: string
+  // baseUrl: string
+  // apiKey: string
 }
 
 /**

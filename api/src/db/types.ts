@@ -10,16 +10,16 @@ import {
   agentMessages,
   requests
 } from "./schema"
-import { DriverRequestParams, DriverRequestMessageRole, DriverRequestParamsConfig } from "@drivers"
+import { DriverRequestParams, DriverRequestParamsConfig } from "@drivers"
 
 /**
  * Роли коммуникации
  * @namespace CommunicationRoles
  */
 export enum CommunicationRoles {
-  System = DriverRequestMessageRole.System,
-  Client = DriverRequestMessageRole.Client,
-  Agent = DriverRequestMessageRole.Agent
+  System = "system",
+  Client = "client",
+  Agent = "agent"
 }
 
 // Типы для провайдера
