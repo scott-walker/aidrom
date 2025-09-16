@@ -19,7 +19,7 @@ export const agents = pgTable(
     providerId: table
       .integer("provider_id")
       .notNull()
-      .references(() => providers.id),
+      .references(() => providers.id, { onDelete: "cascade" }),
     createdAt: table.timestamp("created_at").notNull().defaultNow(),
     updatedAt: table.timestamp("updated_at").notNull().defaultNow()
   }),

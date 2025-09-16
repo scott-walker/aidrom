@@ -17,19 +17,16 @@ export const messagePairs = pgTable(
     chatId: table
       .integer("chat_id")
       .notNull()
-      .references(() => chats.id),
-    requestId: table
-      .integer("request_id")
-      .notNull()
-      .references(() => requests.id),
+      .references(() => chats.id, { onDelete: "cascade" }),
+    requestId: table.integer("request_id").references(() => requests.id, { onDelete: "set null" }),
     clientMessageId: table
       .integer("client_message_id")
       .notNull()
-      .references(() => clientMessages.id),
+      .references(() => clientMessages.id, { onDelete: "cascade" }),
     agentMessageId: table
       .integer("agent_message_id")
       .notNull()
-      .references(() => agentMessages.id),
+      .references(() => agentMessages.id, { onDelete: "cascade" }),
     createdAt: table.timestamp("created_at").notNull().defaultNow(),
     updatedAt: table.timestamp("updated_at").notNull().defaultNow()
   }),

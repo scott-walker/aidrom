@@ -16,15 +16,15 @@ export const requests = pgTable(
     providerId: table
       .integer("provider_id")
       .notNull()
-      .references(() => providers.id),
+      .references(() => providers.id, { onDelete: "cascade" }),
     agentId: table
       .integer("agent_id")
       .notNull()
-      .references(() => agents.id),
+      .references(() => agents.id, { onDelete: "cascade" }),
     clientId: table
       .integer("client_id")
       .notNull()
-      .references(() => clients.id),
+      .references(() => clients.id, { onDelete: "cascade" }),
     providerRequestId: table.varchar("provider_request_id", { length: 255 }),
     requestParams: table.json("request_params"),
     responseData: table.json("response_data"),

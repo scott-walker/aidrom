@@ -15,7 +15,7 @@ export const agentRules = pgTable(
     agentId: table
       .integer("agent_id")
       .notNull()
-      .references(() => agents.id)
+      .references(() => agents.id, { onDelete: "cascade" })
   }),
   table => [index("agent_rules_agent_id_idx").on(table.agentId), index("agent_rules_priority_idx").on(table.priority)]
 )
