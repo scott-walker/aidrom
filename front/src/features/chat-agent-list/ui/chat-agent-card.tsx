@@ -74,7 +74,7 @@ export const ChatAgentCard = ({ agent, className = "" }: ChatAgentCardProps) => 
         </div>
       </section>
       <div className={chatListClasses}>
-        <div className="flex flex-col items-center overflow-hidden bg-background-soft">
+        <div className="flex flex-col items-center overflow-hidden bg-background-soft border-t-2 border-background-hard/70">
           <ChatCreateRegularButton
             agentId={agent.id}
             disabled={!agent.isActive}

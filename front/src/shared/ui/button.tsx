@@ -31,7 +31,7 @@ export const Button = ({
       !disabled && makeUiClickable(),
       // !disabled && "hover:scale-110",
       disabled && "cursor-not-allowed",
-      disabled && "opacity-80",
+      disabled && "opacity-50",
       rounded && "rounded-full",
       "ring-2",
       "ring-offset-3",
