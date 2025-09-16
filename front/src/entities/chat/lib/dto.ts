@@ -1,5 +1,5 @@
 import type { AgentDTO } from "@entities/agent"
-// import type { ClientDTO } from "@entities/client"
+import type { Roles } from "./constants"
 
 /**
  * DTO сообщения
@@ -27,6 +27,15 @@ export interface MessagePairDTO {
 }
 
 /**
+ * DTO контекста чата
+ * @namespace Entities.Chat.Model.ChatContextDTO
+ */
+export interface ChatContextItemDTO {
+  role: Roles
+  content: string
+}
+
+/**
  * DTO чата
  * @namespace Entities.Chat.Model.ChatDTO
  */
@@ -35,6 +44,7 @@ export interface ChatDTO {
   agentId: number
   clientId: number
   title: string
+  context: ChatContextItemDTO[]
   // agent: AgentDTO
   // client: ClientDTO
   messagePairs: MessagePairDTO[]

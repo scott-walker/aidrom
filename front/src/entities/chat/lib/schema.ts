@@ -1,15 +1,6 @@
 import type { Agent } from "@entities/agent"
 // import type { Client } from "@entities/client"
-
-/**
- * Роли отправляющих сообщения
- * @namespace Entities.Chat.Lib.Schema.Roles
- */
-export enum Roles {
-  Client = "client",
-  Agent = "agent"
-}
-
+import type { Roles } from "./constants"
 /**
  * Сообщение
  * @namespace Entities.Chat.Lib.Schema.Message
@@ -22,6 +13,15 @@ export interface Message {
 }
 
 /**
+ * Элемент контекста чата
+ * @namespace Entities.Chat.Lib.Schema.ChatContextItem
+ */
+export interface ChatContextItem {
+  role: Roles
+  content: string
+}
+
+/**
  * Чат
  * @namespace Entities.Chat.Lib.Schema.Chat
  */
@@ -30,6 +30,7 @@ export interface Chat {
   title: string
   agentId: number
   clientId: number
+  context: ChatContextItem[]
   // agent: Agent
   // client: Client
   messages: Message[]
@@ -41,7 +42,7 @@ export interface Chat {
  * Элемент списка чатов
  * @namespace Entities.Chat.Lib.Schema.ChatListItem
  */
-export interface ChatListItem extends Omit<Chat, "messages"> {
+export interface ChatListItem extends Omit<Chat, "messages" | "context"> {
   agent: Agent | null
 }
 

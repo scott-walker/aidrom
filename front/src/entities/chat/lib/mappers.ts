@@ -1,3 +1,4 @@
+import { Roles } from "./constants"
 import type {
   ChatDTO,
   ChatListItemDTO,
@@ -8,7 +9,7 @@ import type {
   MessageSendDTO,
   MessageSendResultDTO
 } from "./dto"
-import { Roles, type Chat, type Message, type ChatListItem } from "./schema"
+import { type Chat, type Message, type ChatListItem } from "./schema"
 import type { ChatCreateData, ChatUpdateData, MessageSendData, MessageSendResult } from "./types"
 
 import { toAgent } from "@entities/agent"
@@ -24,6 +25,7 @@ export const toChat = (dto: ChatDTO): Chat => {
     title: dto.title,
     agentId: dto.agentId,
     clientId: dto.clientId,
+    context: dto.context,
     // agent: toAgent(dto.agent),
     // client: toClient(dto.client),
     messages: dto.messagePairs.map(fromPairToMessages).flat(),
