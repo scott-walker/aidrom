@@ -1,5 +1,6 @@
 // Lib
-export { type Chat, type ChatListItem, Roles } from "./lib/schema"
+export { Roles } from "./lib/constants"
+export { type Chat, type ChatListItem, type Message } from "./lib/schema"
 export type { ChatCreateData, ChatUpdateData, MessageSendData, MessageSendResult } from "./lib/types"
 export { makeLastClientMessage } from "./lib/utils"
 

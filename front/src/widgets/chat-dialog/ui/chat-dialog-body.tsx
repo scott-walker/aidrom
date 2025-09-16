@@ -1,8 +1,7 @@
 import { makeClasses } from "@lib/style-api"
-import type { Chat } from "@entities/chat"
-import { MessageBubble, useChatStore, ChatPending, Roles } from "@entities/chat"
-import { MessageEmptyList } from "@entities/chat"
+import { type Chat, MessageBubble, useChatStore, ChatPending, Roles, MessageEmptyList } from "@entities/chat"
 import { useScrollBody } from "../lib/use-scroll-body"
+import { useFormatMessages } from "../lib/use-format-messages"
 
 /**
  * Пропсы компонента тела диалога
@@ -20,22 +19,31 @@ type ChatDialogBodyProps = {
 export const ChatDialogBody = ({ chat, className = "" }: ChatDialogBodyProps) => {
   const { isPending, lastClientMessage } = useChatStore()
   const messages = lastClientMessage ? [...chat.messages, lastClientMessage] : chat.messages
-  const isEmpty = !messages.length
-
   const { bodyRef } = useScrollBody(messages.length, isPending)
+  const { formattedMessages } = useFormatMessages(messages)
+  const isEmpty = !messages.length
 
   if (isEmpty) {
     return <MessageEmptyList className="-mt-16" />
   }
 
-  const bodyClasses = makeClasses("flex flex-col flex-1 pt-8 pb-64 overflow-y-auto scrollbar-hide", className)
+  const bodyClasses = makeClasses(
+    "flex",
+    "flex-col",
+    "flex-1",
+    "pt-8",
+    "pb-64",
+    "overflow-y-auto",
+    "scrollbar-hide",
+    className
+  )
   const makeMessageClasses = (role: Roles) => {
     return makeClasses(role === Roles.Agent && "items-start", role === Roles.Client && "items-end")
   }
 
   return (
     <div ref={bodyRef} className={bodyClasses}>
-      {messages.map(message => (
+      {formattedMessages.map(message => (
         <MessageBubble key={message.id} {...message} className={makeMessageClasses(message.role)} />
       ))}
       {isPending && <ChatPending />}

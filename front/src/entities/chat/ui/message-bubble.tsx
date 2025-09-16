@@ -1,6 +1,8 @@
-import { Roles } from "../lib/schema"
 import { makeClasses } from "@lib/style-api"
 import { DateTag } from "@ui/date-tag"
+// import { Markdown } from "@ui/markdown"
+import { DeepSeekMarkdown } from "@ui/deepseek-markdown"
+import { Roles } from "../lib/constants"
 
 /**
  * Элемент списка сообщений
@@ -35,7 +37,11 @@ export const MessageBubble = ({ content, role, createdAt, className = "" }: Mess
   return (
     <div className={containerClasses}>
       <div className={roleClasses}>{role}</div>
-      <div className={contentClasses}>{content}</div>
+      <div className={contentClasses}>
+        <DeepSeekMarkdown content={content} />
+      </div>
+      {/* <div className={contentClasses}>{content}</div> */}
+      {/* <div className={contentClasses} dangerouslySetInnerHTML={{ __html: content }} /> */}
       <div className={createdAtClasses}>
         <DateTag date={createdAt} />
       </div>

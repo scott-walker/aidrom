@@ -41,6 +41,7 @@ export const ChatInfo = ({ chatId }: ChatInfoProps) => {
     "py-6",
     "overflow-y-auto",
     "scrollbar-hide",
+    // "w-[400px]",
     !isVisible && "hidden"
   )
 

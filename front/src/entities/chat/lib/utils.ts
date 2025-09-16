@@ -1,4 +1,5 @@
-import { Roles, type Message } from "./schema"
+import { Roles } from "./constants"
+import type { Message } from "./schema"
 
 /**
  * Создать последнее сообщение клиента

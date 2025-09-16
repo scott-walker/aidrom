@@ -26,6 +26,7 @@ export const ChatList = ({ className = "" }: ChatListProps) => {
     "w-full",
     "overflow-y-auto",
     "scrollbar-hide",
+    // "w-[300px]",
     !isVisible && "hidden"
   )
 
