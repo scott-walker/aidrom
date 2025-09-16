@@ -72,7 +72,15 @@ export const toAgentCreateDTO = (data: AgentCreateData): AgentCreateDTO => {
   return {
     name: data.name,
     avatar: data.avatar ? btoa(data.avatar) : "",
-    providerId: data.providerId
+    providerId: data.providerId,
+    params: {
+      model: "",
+      maxTokens: 0,
+      topP: 0,
+      temperature: 0,
+      frequencyPenalty: 0,
+      presencePenalty: 0
+    }
   }
 }
 

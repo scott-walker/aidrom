@@ -49,6 +49,7 @@ export interface AgentCreateDTO {
   name: string
   avatar: string
   providerId: number
+  params: AgentParamsDTO
 }
 
 /**
