@@ -20,8 +20,15 @@ type PopoverProps = {
  * @namespace Shared.Ui.Popover
  */
 export const Popover = ({ children, trigger, className = "", open, onOpenChange }: PopoverProps) => {
-  const contentClasses = makeClasses("relative", "bg-background-soft", "rounded-lg", "p-4", "shadow-lg", className)
-  // const closeClasses = makeClasses("absolute", "top-2", "right-2", "cursor-pointer", "hover:text-primary")
+  const contentClasses = makeClasses(
+    "relative",
+    "bg-background-soft",
+    "rounded-lg",
+    "px-4",
+    "py-2",
+    "shadow-lg",
+    className
+  )
   const arrowClasses = makeClasses("fill-background-soft")
 
   return (
@@ -30,10 +37,6 @@ export const Popover = ({ children, trigger, className = "", open, onOpenChange 
       <BasePopover.Portal>
         <BasePopover.Content className={contentClasses} sideOffset={5}>
           {children}
-
-          {/* <BasePopover.Close className={closeClasses} aria-label="Close">
-            <Icon name="x" />
-          </BasePopover.Close> */}
           <BasePopover.Arrow className={arrowClasses} />
         </BasePopover.Content>
       </BasePopover.Portal>

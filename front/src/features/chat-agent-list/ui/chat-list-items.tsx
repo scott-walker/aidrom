@@ -35,12 +35,16 @@ export const ChatListItems = ({ chats, className = "" }: ChatListItemsProps) => 
       "px-6",
       "py-1",
       "w-full",
+      "min-w-0",
       "text-base",
       "text-foreground-hard",
+      "select-none",
+      "transition-colors",
+      "duration-200",
       isActive && "font-bold",
-      "hover:bg-background/50",
-      "hover:text-foreground-hard",
-      "select-none"
+      isActive && "cursor-default",
+      !isActive && "hover:bg-background/50",
+      !isActive && "hover:text-foreground-hard"
     )
   }
 
@@ -48,7 +52,9 @@ export const ChatListItems = ({ chats, className = "" }: ChatListItemsProps) => 
     <div className={containerClasses}>
       {chats.map(chat => (
         <NavLink to={`/chat/${chat.id}`} className={linkClasses} key={chat.id}>
-          {chat.title}
+          <span className="truncate w-full text-left" title={chat.title}>
+            {chat.title}
+          </span>
         </NavLink>
       ))}
     </div>

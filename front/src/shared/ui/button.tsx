@@ -77,7 +77,7 @@ export const Button = ({
   })
 
   return (
-    <button {...props} className={useSchema(schema)}>
+    <button {...props} className={useSchema(schema)} disabled={disabled}>
       {children}
     </button>
   )

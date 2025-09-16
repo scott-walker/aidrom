@@ -16,14 +16,13 @@ import { ChatInfoHeader } from "./chat-info-header"
  */
 type ChatInfoProps = {
   chatId: number
-  width?: string
 }
 
 /**
  * Информация о чате
  * @namespace Widgets.ChatInfo.UI.ChatInfo
  */
-export const ChatInfo = ({ chatId, width = "400px" }: ChatInfoProps) => {
+export const ChatInfo = ({ chatId }: ChatInfoProps) => {
   const { chat, isLoading: isChatLoading, error: chatError } = useChatById(chatId)
   const { agent, isLoading: isAgentLoading, error: agentError } = useAgentById(chat?.agentId as number)
   const chatAgent = agent as Agent
@@ -34,8 +33,7 @@ export const ChatInfo = ({ chatId, width = "400px" }: ChatInfoProps) => {
     "flex-col",
     "h-full",
     "bg-background-soft",
-    isVisible && `w-[${width}]`,
-    !isVisible && "w-fit"
+    isVisible ? "w-full" : "w-fit"
   )
   const contentClasses = makeClasses(
     "flex",

@@ -1,1 +1,1 @@
-export { ChatEditableTitle } from "./ui/chat-editable-title"
+export { ChatRename } from "./ui/chat-rename"

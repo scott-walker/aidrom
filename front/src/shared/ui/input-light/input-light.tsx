@@ -23,6 +23,7 @@ export type InputLightProps = Omit<ComponentProps<"div">, "onChange" | "onInput"
   placeholder?: string
   onChange?: (value: string) => void
   onBlur?: (value: string) => void
+  onEnter?: (value: string) => void
   autoFocus?: boolean
   disabled?: boolean
 }
@@ -37,6 +38,7 @@ export const InputLight = ({
   placeholder = "Введите текст",
   onChange,
   onBlur,
+  onEnter,
   autoFocus = false,
   disabled = false,
   maxLength,
@@ -103,7 +105,8 @@ export const InputLight = ({
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Enter") {
       e.preventDefault()
-      editableRef.current?.blur()
+      // editableRef.current?.blur()
+      onEnter?.(currentValue)
     }
     if (maxLength && currentValue.length >= maxLength && !EXCLUDE_KEYS.includes(e.key)) {
       e.preventDefault()

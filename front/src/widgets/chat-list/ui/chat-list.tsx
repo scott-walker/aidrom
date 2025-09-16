@@ -8,24 +8,16 @@ import { ChatAgentList } from "@features/chat-agent-list"
  * @namespace Widgets.ChatList.UI.ChatListProps
  */
 type ChatListProps = {
-  width?: string
+  className?: string
 }
 
 /**
  * Список чатов
  * @namespace Widgets.ChatList
  */
-export const ChatList = ({ width = "300px" }: ChatListProps) => {
+export const ChatList = ({ className = "" }: ChatListProps) => {
   const { isVisible } = useToggleChatList()
-  const containerClasses = makeClasses(
-    "flex",
-    "flex-col",
-    "h-full",
-    // isVisible
-    // "bg-background-hard/30",
-    isVisible && `w-[${width}]`,
-    !isVisible && "w-fit"
-  )
+  const containerClasses = makeClasses("flex", "flex-col", "h-full", isVisible ? "w-full" : "w-fit", className)
   const headerClasses = makeClasses("flex", "justify-between", "items-center", "px-6", "py-4")
   const listClasses = makeClasses(
     "flex",

@@ -14,13 +14,13 @@ export const Chat = (): ReactNode => {
 
   const containerClasses = makeClasses("flex items-stretch justify-between h-full")
   const chatClasses = makeClasses("flex-1")
-  const agentClasses = makeClasses("border-l", "border-background-hard")
+  const asideClasses = makeClasses("w-[400px]", "border-l", "border-background-hard")
 
   return (
     <div className={containerClasses}>
       <ChatDialog className={chatClasses} chatId={chatId} />
-      <aside className={agentClasses}>
-        <ChatInfo chatId={chatId} width="400px" />
+      <aside className={asideClasses}>
+        <ChatInfo chatId={chatId} />
       </aside>
     </div>
   )

@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom"
 import { Toasts as ToastsComponent } from "@ui/toasts"
 import { useToastStore } from "../model/toast-store"
 
@@ -8,5 +9,5 @@ import { useToastStore } from "../model/toast-store"
 export const Toasts = () => {
   const { toasts, removeToast } = useToastStore()
 
-  return <ToastsComponent toasts={toasts} onClose={removeToast} />
+  return createPortal(<ToastsComponent toasts={toasts} onClose={removeToast} />, document.body)
 }
