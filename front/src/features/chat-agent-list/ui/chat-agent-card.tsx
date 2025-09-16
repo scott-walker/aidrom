@@ -45,7 +45,7 @@ export const ChatAgentCard = ({ agent, className = "" }: ChatAgentCardProps) => 
     "duration-200",
     "bg-background-soft",
     "rounded-xl",
-    "shadow-md/15",
+    "shadow-md/10",
     !isOpen && "hover:shadow-md/20",
     !isOpen && "hover:scale-107",
     isOpen && "shadow-md/5",
@@ -59,6 +59,16 @@ export const ChatAgentCard = ({ agent, className = "" }: ChatAgentCardProps) => 
     "duration-300",
     "ease-in-out",
     isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+  )
+  const chatListInnerClasses = makeClasses(
+    "flex",
+    "flex-col",
+    "items-center",
+    "overflow-hidden",
+    "bg-background-soft",
+    "border-t-2",
+    "border-background-hard/50",
+    "rounded-b-xl"
   )
 
   return (
@@ -74,7 +84,7 @@ export const ChatAgentCard = ({ agent, className = "" }: ChatAgentCardProps) => 
         </div>
       </section>
       <div className={chatListClasses}>
-        <div className="flex flex-col items-center overflow-hidden bg-background-soft border-t-2 border-background-hard/70">
+        <div className={chatListInnerClasses}>
           <ChatCreateRegularButton
             agentId={agent.id}
             disabled={!agent.isActive}

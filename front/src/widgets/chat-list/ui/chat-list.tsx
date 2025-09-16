@@ -18,7 +18,7 @@ type ChatListProps = {
 export const ChatList = ({ className = "" }: ChatListProps) => {
   const { isVisible } = useToggleChatList()
   const containerClasses = makeClasses("flex", "flex-col", "h-full", isVisible ? "w-full" : "w-fit", className)
-  const headerClasses = makeClasses("flex", "justify-between", "items-center", "px-6", "py-4")
+  const headerClasses = makeClasses("flex", "justify-between", "items-center", "px-(--layout-inner-offset-x)", "py-4")
   const listClasses = makeClasses(
     "flex",
     "flex-col",

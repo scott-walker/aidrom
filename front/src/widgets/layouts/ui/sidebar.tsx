@@ -2,10 +2,8 @@ import type { ReactNode } from "react"
 import { useLayout } from "@scottwalker/lucent"
 import { makeClasses } from "@lib/style-api"
 import { Menu, type MenuItems } from "@ui/menu"
-import { Brand } from "@ui/brand"
 import { Separator } from "@ui/separator"
 import { Icon } from "@ui/icon"
-import { Scrollbar } from "@ui/scrollbar"
 
 // Основное меню
 const menuItems: MenuItems = [
@@ -50,7 +48,6 @@ const developmentMenuItems: MenuItems = [
  * @returns {ReactNode}
  */
 export const SidebarHeader = (): ReactNode => {
-  const collapsed = useLayout().isSidebarCollapsed
   const classes = makeClasses(
     "flex",
     "items-center",
@@ -58,11 +55,14 @@ export const SidebarHeader = (): ReactNode => {
     "h-[var(--layout-sidebar-header-height)]",
     "border-b",
     "border-border"
+    // "bg-brand-gradient",
+    // "text-primary-foreground"
+    // "text-primary"
   )
 
   return (
     <div className={classes}>
-      <Brand size="sm" compact={collapsed} />
+      <Icon name="bot-message-square" size={42} strokeWidth={2} />
     </div>
   )
 }
@@ -84,20 +84,17 @@ export const SidebarBody = (): ReactNode => {
 
   return (
     <div className={classes}>
-      <Scrollbar xAxis={false}>
-        <section className="p-4">
-          <Menu items={menuItems} compact={collapsed} />
-        </section>
-        <Separator />
-        <section className="p-4">
-          <Menu items={chatMenuItems} compact={collapsed} />
-        </section>
-        <Separator />
-        <section className="p-4">
-          <Menu items={developmentMenuItems} compact={collapsed} />
-        </section>
-        {/* {sidebar} */}
-      </Scrollbar>
+      <section className="p-4">
+        <Menu items={menuItems} compact={collapsed} />
+      </section>
+      <Separator />
+      <section className="p-4">
+        <Menu items={chatMenuItems} compact={collapsed} />
+      </section>
+      <Separator />
+      <section className="p-4">
+        <Menu items={developmentMenuItems} compact={collapsed} />
+      </section>
     </div>
   )
 }

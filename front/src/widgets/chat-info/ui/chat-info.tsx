@@ -52,7 +52,7 @@ export const ChatInfo = ({ chatId }: ChatInfoProps) => {
     )
   }
 
-  const sectionClasses = makeClasses("px-6", "w-full", "text-sm")
+  const sectionClasses = makeClasses("px-(--layout-inner-offset-x)", "w-full", "text-sm")
   const sectionTitleClasses = makeClasses("text-lg", "font-bold")
   const sectionContentClasses = makeClasses("mt-2", "text-sm")
 

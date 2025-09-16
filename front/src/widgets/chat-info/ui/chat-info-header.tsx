@@ -8,7 +8,7 @@ import { useToggleChatInfo, ChatInfoTrigger } from "@features/chat-info-toggle"
  */
 export const ChatInfoHeader = () => {
   const { isVisible } = useToggleChatInfo()
-  const headerClasses = makeClasses("flex", "justify-between", "items-center", "px-6", "py-4")
+  const headerClasses = makeClasses("flex", "justify-between", "items-center", "px-(--layout-inner-offset-x)", "py-4")
 
   return (
     <header className={headerClasses}>
