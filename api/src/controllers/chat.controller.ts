@@ -109,7 +109,7 @@ export const deleteChat = async (req: Request, res: Response, next: NextFunction
 
     logger.info("Чат успешно удален", { chatId })
 
-    res.status(204).send()
+    res.status(204).json({ message: "Чат успешно удален" })
   } catch (err) {
     logger.error("Ошибка при удалении чата", { error: err.message, chatId })
 

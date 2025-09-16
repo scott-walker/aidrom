@@ -108,7 +108,7 @@ export const deleteAgent = async (req: Request, res: Response, next: NextFunctio
 
     logger.info("Агент успешно удален", { agentId })
 
-    res.json({ message: "Агент успешно удален" })
+    res.status(204).json({ message: "Агент успешно удален" })
   } catch (err) {
     logger.error("Ошибка при удалении агента", { error: err.message, agentId })
 
@@ -153,7 +153,7 @@ export const deleteRule = async (req: Request, res: Response, next: NextFunction
 
     logger.info("Правило агента успешно удалено", { agentId, ruleId })
 
-    res.json({ message: "Правило агента успешно удалено" })
+    res.status(204).json({ message: "Правило агента успешно удалено" })
   } catch (err) {
     logger.error("Ошибка при удалении правила агента", { error: err.message, agentId, ruleId })
 

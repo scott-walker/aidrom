@@ -41,10 +41,7 @@ export type CreateClientData = InferInsertModel<typeof clients>
 export type UpdateClientData = Partial<CreateClientData>
 
 // Типы для чата
-export type Chat = InferSelectModel<typeof chats>
-export type CreateChatData = InferInsertModel<typeof chats>
-export type UpdateChatData = Partial<CreateChatData>
-export type ChatWithRelations = Chat & {
+export type Chat = InferSelectModel<typeof chats> & {
   agent: Agent
   client: Client
   messagePairs: (MessagePair & {
@@ -52,6 +49,8 @@ export type ChatWithRelations = Chat & {
     agentMessage: AgentMessage
   })[]
 }
+export type CreateChatData = InferInsertModel<typeof chats>
+export type UpdateChatData = Partial<CreateChatData>
 export type ClientMessage = InferSelectModel<typeof clientMessages>
 export type AgentMessage = InferSelectModel<typeof agentMessages>
 export type MessagePair = InferSelectModel<typeof messagePairs>

@@ -10,10 +10,8 @@ import {
   messagePairs,
   clientMessages,
   agentMessages,
-  mapAgent,
-  Agent,
+  mapChat,
   Chat,
-  ChatWithRelations,
   CreateChatData,
   UpdateChatData,
   ClientMessage,
@@ -56,7 +54,7 @@ export const getChats = async (): Promise<Chat[]> => {
 
     logger.info("Запрос к БД выполнен успешно", { count: items.length })
 
-    return items
+    return items.map(item => mapChat(item as Chat))
   } catch (error) {
     logger.error("Ошибка при получении всех чатов из БД", { error: error.message })
 
@@ -68,7 +66,7 @@ export const getChats = async (): Promise<Chat[]> => {
  * Получить чат по его идентификатору
  * @namespace Chat.Service.getChatById
  */
-export const getChatById = async (chatId: number): Promise<ChatWithRelations> => {
+export const getChatById = async (chatId: number): Promise<Chat> => {
   try {
     logger.info("Получение чата по ID", { chatId })
 
@@ -77,13 +75,6 @@ export const getChatById = async (chatId: number): Promise<ChatWithRelations> =>
       with: {
         agent: true,
         client: true,
-        // agent: {
-        //   with: {
-        //     provider: true,
-        //     rules: true
-        //   }
-        // },
-        // client: true,
         messagePairs: {
           with: {
             clientMessage: true,
@@ -99,9 +90,7 @@ export const getChatById = async (chatId: number): Promise<ChatWithRelations> =>
 
     logger.info("Чат по ID успешно найден", { chatId })
 
-    // chat.agent = mapAgent(chat.agent as Agent)
-
-    return chat as ChatWithRelations
+    return mapChat(chat as Chat)
   } catch (error) {
     logger.error("Ошибка при получении чата по ID", { error: error.message, chatId })
 
@@ -121,7 +110,7 @@ export const createChat = async (data: CreateChatData): Promise<Chat> => {
 
     logger.info("Чат успешно создан в БД", { chatId: chat.id })
 
-    return chat
+    return mapChat(chat)
   } catch (error) {
     logger.error("Ошибка при создании чата в БД", { error: error.message, data })
 
@@ -147,7 +136,7 @@ export const updateChat = async (chatId: number, data: UpdateChatData): Promise<
 
     logger.info("Чат успешно обновлен в БД", { chatId })
 
-    return chat
+    return mapChat(chat)
   } catch (error) {
     logger.error("Ошибка при обновлении чата в БД", { error: error.message, chatId })
 
@@ -159,19 +148,17 @@ export const updateChat = async (chatId: number, data: UpdateChatData): Promise<
  * Удалить чат
  * @namespace Chat.Service.deleteChat
  */
-export const deleteChat = async (chatId: number): Promise<Chat[]> => {
+export const deleteChat = async (chatId: number): Promise<void> => {
   try {
     logger.info("Удаление чата из БД", { chatId })
 
-    const chat = await db.delete(chats).where(eq(chats.id, chatId)).returning()
+    const [chat] = await db.delete(chats).where(eq(chats.id, chatId)).returning()
 
-    if (chat.length === 0) {
+    if (!chat) {
       throw new NotFoundError(`Чат с ID #${chatId} не найден`)
     }
 
     logger.info("Чат успешно удален из БД", { chatId })
-
-    return chat
   } catch (error) {
     logger.error("Ошибка при удалении чата из БД", { error: error.message, chatId })
 
