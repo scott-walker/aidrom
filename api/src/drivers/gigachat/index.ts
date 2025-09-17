@@ -49,26 +49,26 @@ export const createGigachatDriver = (config: GigachatDriverConfig): Driver => {
         meta: {},
         params: [
           {
-            name: "Модель",
+            name: "model",
             label: "Модель",
             type: "select",
             options: data.map((item: any) => item.id)
           },
           {
-            label: "Максимальное количество токенов",
             name: "maxTokens",
+            label: "Максимальное количество токенов",
             type: "range",
             step: 1,
-            min: 1,
-            max: 100
+            min: 10,
+            max: 4000
           },
           {
             name: "temperature",
             label: "Температура",
             type: "range",
-            step: 1,
-            min: 1,
-            max: 100
+            step: 0.1,
+            min: 0,
+            max: 2
           },
           {
             name: "topP",
@@ -80,11 +80,11 @@ export const createGigachatDriver = (config: GigachatDriverConfig): Driver => {
           },
           {
             name: "repetitionPenalty",
-            label: "Штраф за повторение",
+            label: "Количество повторений слов",
             type: "range",
             step: 0.1,
             min: 0,
-            max: 1
+            max: 2
           }
         ]
       }
