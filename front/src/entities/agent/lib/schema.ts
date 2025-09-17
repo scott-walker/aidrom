@@ -1,4 +1,4 @@
-import type { Provider } from "@entities/provider"
+import type { Provider, ProviderListItem } from "@entities/provider"
 
 /**
  * Агент
@@ -12,6 +12,22 @@ export interface Agent {
   description: string
   provider: Provider
   rules: AgentRule[]
+  isActive: boolean
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Элемент списка агентов
+ * @namespace Entities.Agent.Lib.Schema.AgentListItem
+ */
+export interface AgentListItem {
+  id: number
+  name: string
+  avatar: string
+  params: AgentParams
+  description: string
+  provider: ProviderListItem
   isActive: boolean
   createdAt: Date
   updatedAt: Date

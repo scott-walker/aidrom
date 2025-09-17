@@ -8,7 +8,23 @@ export interface Provider {
   driverParamsConfig: DriverParamsConfig
   name: string
   description: string
-  config: object
+  config: Record<string, unknown>
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Схема элемента списка провайдеров
+ * @namespace Entities.Provider.Lib.Schema.ProviderListItem
+ */
+export interface ProviderListItem {
+  id: number
+  driver: string
+  name: string
+  description: string
+  config: Record<string, unknown>
+  createdAt: Date
+  updatedAt: Date
 }
 
 /**

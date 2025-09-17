@@ -1,3 +1,5 @@
+import type { DriverParamsConfig } from "./schema"
+
 /**
  * DTO провайдера
  * @namespace Entities.Provider.Model.ProviderDTO
@@ -5,17 +7,26 @@
 export interface ProviderDTO {
   id: number
   driver: string
-  driverParamsConfig: {
-    model: string[]
-    maxTokens: { min: number; max: number }
-    topP: { min: number; max: number }
-    temperature: { min: number; max: number }
-    frequencyPenalty: { min: number; max: number }
-    presencePenalty: { min: number; max: number }
-  }
+  driverParamsConfig: DriverParamsConfig
   name: string
   description: string
   config: Record<string, unknown>
+  createdAt: string
+  updatedAt: string
+}
+
+/**
+ * DTO элемента списка провайдеров
+ * @namespace Entities.Provider.Model.ProviderListItemDTO
+ */
+export interface ProviderListItemDTO {
+  id: number
+  driver: string
+  name: string
+  description: string
+  config: Record<string, unknown>
+  createdAt: string
+  updatedAt: string
 }
 
 /**

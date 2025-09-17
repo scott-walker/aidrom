@@ -3,12 +3,33 @@ import type { Agent, AgentRule } from "../lib/schema"
 import type { AgentCreateData, AgentRuleCreateData, AgentRuleSortData, AgentUpdateData } from "../lib/types"
 import {
   toAgent,
+  toAgentListItem,
   toAgentCreateDTO,
   toAgentUpdateDTO,
   toAgentRule,
   toAgentRuleCreateDTO,
   toAgentRuleSortDTO
 } from "../lib/mappers"
+
+/**
+ * Получить список агентов
+ * @namespace Entities.Agent.Api.fetchAgents
+ */
+export const fetchAgents = async (): Promise<Agent[]> => {
+  const { data: dtos } = await restClient.get("agents")
+
+  return dtos.map(toAgentListItem)
+}
+
+/**
+ * Получить агента по ID
+ * @namespace Entities.Agent.Api.fetchAgentById
+ */
+export const fetchAgentById = async (id: number): Promise<Agent> => {
+  const { data: dto } = await restClient.get(`agents/${id}`)
+
+  return toAgent(dto)
+}
 
 /**
  * Создать агента
@@ -54,24 +75,4 @@ export const deleteAgentRule = async (agentId: number, ruleId: number): Promise<
  */
 export const sortAgentRules = async (agentId: number, data: AgentRuleSortData): Promise<void> => {
   await restClient.put(`agents/${agentId}/rules-sort`, toAgentRuleSortDTO(data))
-}
-
-/**
- * Получить список агентов
- * @namespace Entities.Agent.Api.fetchAgents
- */
-export const fetchAgents = async (): Promise<Agent[]> => {
-  const { data: dtos } = await restClient.get("agents")
-
-  return dtos.map(toAgent)
-}
-
-/**
- * Получить агента по ID
- * @namespace Entities.Agent.Api.fetchAgentById
- */
-export const fetchAgentById = async (id: number): Promise<Agent> => {
-  const { data: dto } = await restClient.get(`agents/${id}`)
-
-  return toAgent(dto)
 }

@@ -1,4 +1,4 @@
-import type { AgentDTO } from "@entities/agent"
+// import type { AgentListItemDTO } from "@entities/agent"
 import type { Roles } from "./constants"
 
 /**
@@ -56,8 +56,13 @@ export interface ChatDTO {
  * DTO элемента списка чатов
  * @namespace Entities.Chat.Model.ChatListItemDTO
  */
-export interface ChatListItemDTO extends ChatDTO {
-  agent: AgentDTO
+export interface ChatListItemDTO {
+  id: number
+  title: string
+  agentId: number
+  clientId: number
+  createdAt: string
+  updatedAt: string
 }
 
 /**

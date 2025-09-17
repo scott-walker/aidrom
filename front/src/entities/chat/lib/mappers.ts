@@ -12,7 +12,7 @@ import type {
 import { type Chat, type Message, type ChatListItem } from "./schema"
 import type { ChatCreateData, ChatUpdateData, MessageSendData, MessageSendResult } from "./types"
 
-import { toAgent } from "@entities/agent"
+// import { toAgentListItem } from "@entities/agent"
 // import { toClient } from "@entities/client"
 
 /**
@@ -44,7 +44,6 @@ export const toChatListItem = (dto: ChatListItemDTO): ChatListItem => {
     title: dto.title,
     agentId: dto.agentId,
     clientId: dto.clientId,
-    agent: toAgent({ ...dto.agent, rules: [] }),
     createdAt: new Date(dto.createdAt),
     updatedAt: new Date(dto.updatedAt)
   }

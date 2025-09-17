@@ -1,14 +1,15 @@
 // Lib
-export type { ProviderCreateDTO, ProviderUpdateDTO, ProviderDTO } from "./lib/dto"
+export type { ProviderDTO, ProviderListItemDTO, ProviderCreateDTO, ProviderUpdateDTO } from "./lib/dto"
 export type {
   Provider,
+  ProviderListItem,
   DriverParamsConfig,
   DriverParamsConfigParameter,
   DriverParamsConfigParameterSelect,
   DriverParamsConfigParameterRange
 } from "./lib/schema"
 export type { ProviderCreateData, ProviderUpdateData } from "./lib/types"
-export { toProvider } from "./lib/mappers"
+export { toProvider, toProviderListItem } from "./lib/mappers"
 
 // API
 export { useProviders, useProviderById } from "./api/provider-queries"

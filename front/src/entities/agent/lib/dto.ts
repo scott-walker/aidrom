@@ -1,4 +1,4 @@
-import type { ProviderDTO } from "@entities/provider"
+import type { ProviderDTO, ProviderListItemDTO } from "@entities/provider/lib/dto"
 
 /**
  * DTO агента
@@ -11,6 +11,23 @@ export interface AgentDTO {
   params: AgentParamsDTO
   description: string
   provider: ProviderDTO
+  rules: AgentRuleDTO[]
+  isActive: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+/**
+ * DTO элемента списка агентов
+ * @namespace Entities.Agent.Model.AgentListItemDTO
+ */
+export interface AgentListItemDTO {
+  id: number
+  name: string
+  avatar: string
+  params: AgentParamsDTO
+  description: string
+  provider: ProviderListItemDTO
   rules: AgentRuleDTO[]
   isActive: boolean
   createdAt: string

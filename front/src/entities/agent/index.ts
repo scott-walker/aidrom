@@ -1,8 +1,15 @@
 // Lib
-export type { Agent, AgentParams, AgentRule } from "./lib/schema"
-export type { AgentDTO, AgentCreateDTO, AgentUpdateDTO, AgentRuleSortDTO, AgentRuleCreateDTO } from "./lib/dto"
+export type { Agent, AgentListItem, AgentParams, AgentRule } from "./lib/schema"
+export type {
+  AgentDTO,
+  AgentListItemDTO,
+  AgentCreateDTO,
+  AgentUpdateDTO,
+  AgentRuleSortDTO,
+  AgentRuleCreateDTO
+} from "./lib/dto"
 export type { AgentCreateData, AgentUpdateData, AgentRuleSortData, AgentRuleCreateData } from "./lib/types"
-export { toAgent } from "./lib/mappers"
+export { toAgent, toAgentListItem } from "./lib/mappers"
 
 // API
 export { useAgents, useAgentById } from "./api/agent-queries"

@@ -1,14 +1,15 @@
 import type {
   AgentDTO,
+  AgentListItemDTO,
   AgentCreateDTO,
   AgentUpdateDTO,
   AgentRuleDTO,
   AgentRuleCreateDTO,
   AgentRuleSortDTO
 } from "./dto"
-import type { Agent, AgentRule } from "./schema"
+import type { Agent, AgentRule, AgentListItem } from "./schema"
 import type { AgentCreateData, AgentRuleCreateData, AgentRuleSortData, AgentUpdateData } from "./types"
-import { toProvider } from "@entities/provider"
+import { toProvider, toProviderListItem } from "@entities/provider"
 
 /**
  * Маппер из DTO в сущность "правило агента"
@@ -37,6 +38,24 @@ export const toAgent = (dto: AgentDTO): Agent => ({
   createdAt: new Date(dto.createdAt),
   updatedAt: new Date(dto.updatedAt)
 })
+
+/**
+ * Маппер из DTO чата в сущность элемента списка чатов
+ * @namespace Entities.Chat.Lib.Mappers.toChatListItem
+ */
+export const toAgentListItem = (dto: AgentListItemDTO): AgentListItem => {
+  return {
+    id: dto.id,
+    name: dto.name,
+    avatar: dto.avatar ? atob(dto.avatar) : "",
+    params: dto.params,
+    description: dto.description,
+    provider: toProviderListItem(dto.provider),
+    isActive: dto.isActive,
+    createdAt: new Date(dto.createdAt),
+    updatedAt: new Date(dto.updatedAt)
+  }
+}
 
 /**
  * Маппер из данных запроса в DTO создания агента

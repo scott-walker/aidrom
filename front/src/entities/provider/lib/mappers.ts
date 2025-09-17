@@ -1,5 +1,5 @@
-import type { Provider } from "./schema"
-import type { ProviderCreateDTO, ProviderUpdateDTO, ProviderDTO } from "./dto"
+import type { Provider, ProviderListItem } from "./schema"
+import type { ProviderDTO, ProviderListItemDTO, ProviderCreateDTO, ProviderUpdateDTO } from "./dto"
 import type { ProviderCreateData, ProviderUpdateData } from "./types"
 
 /**
@@ -12,7 +12,23 @@ export const toProvider = (dto: ProviderDTO): Provider => ({
   driverParamsConfig: dto.driverParamsConfig,
   name: dto.name,
   description: dto.description,
-  config: dto.config
+  config: dto.config,
+  createdAt: new Date(dto.createdAt),
+  updatedAt: new Date(dto.updatedAt)
+})
+
+/**
+ * Маппер из DTO в сущность элемента списка провайдеров
+ * @namespace Entities.Provider.Lib.Mappers.toProviderListItem
+ */
+export const toProviderListItem = (dto: ProviderListItemDTO): ProviderListItem => ({
+  id: dto.id,
+  driver: dto.driver,
+  name: dto.name,
+  description: dto.description,
+  config: dto.config,
+  createdAt: new Date(dto.createdAt),
+  updatedAt: new Date(dto.updatedAt)
 })
 
 /**

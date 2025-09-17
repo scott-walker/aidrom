@@ -42,8 +42,13 @@ export interface Chat {
  * Элемент списка чатов
  * @namespace Entities.Chat.Lib.Schema.ChatListItem
  */
-export interface ChatListItem extends Omit<Chat, "messages" | "context"> {
-  agent: Agent | null
+export interface ChatListItem {
+  id: number
+  title: string
+  agentId: number
+  clientId: number
+  createdAt: Date
+  updatedAt: Date
 }
 
 /**
