@@ -32,6 +32,7 @@ export const Navbar = ({ links }: NavbarProps) => {
       "border-b-2",
       "border-transparent",
       "hover:text-primary",
+      // !isActive && "hover:border-background-hard",
       isActive && "font-bold",
       isActive && "border-primary"
     )

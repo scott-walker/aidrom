@@ -10,7 +10,7 @@ import type { MenuItem } from "./types"
  */
 export const Item = ({ label, path, icon = null, compact = false }: MenuItem) => {
   // Link
-  const linkClasses = cn("flex", "items-center", "gap-4", "py-2", "select-none", "rounded-xl")
+  const linkClasses = cn("flex", "items-center", "gap-4", "py-2", "select-none", "rounded-xl", "hover:text-primary")
   const linkVariants = cva(linkClasses, {
     variants: {
       compact: {
@@ -18,8 +18,8 @@ export const Item = ({ label, path, icon = null, compact = false }: MenuItem) =>
         false: "px-5"
       },
       active: {
-        true: cn("font-bold", "cursor-default", "bg-background", "text-foreground-hard"),
-        false: cn("font-semibold", "text-foreground-soft", "hover:text-primary")
+        true: cn("font-bold", "bg-background", "text-foreground-hard"),
+        false: cn("font-semibold", "text-foreground-soft")
       }
     },
     compoundVariants: [
