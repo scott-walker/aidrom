@@ -59,6 +59,7 @@ export const Button = ({
       soft: makeClasses(
         "bg-soft",
         "text-soft-foreground",
+        "ring-offset-background-soft",
         "hover:ring-background-hard"
         //"hover:bg-soft-accent",
         // "hover:text-soft-foreground-accent"
