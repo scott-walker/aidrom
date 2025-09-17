@@ -13,7 +13,7 @@ export { toProvider, toProviderListItem } from "./lib/mappers"
 
 // API
 export { useProviders, useProviderById, useDrivers } from "./api/provider-queries"
-export { useCreateProvider, useUpdateProvider } from "./api/provider-mutations"
+export { useCreateProvider, useUpdateProvider, useDeleteProvider } from "./api/provider-mutations"
 
 // UI
 export { ProviderCard } from "./ui/provider-card"

@@ -91,7 +91,7 @@ export const Modal = ({
     !title && "hidden"
   )
   const titleClasses = makeClasses("text-xl", "font-bold")
-  const descriptionClasses = makeClasses("text-lg", "text-foreground-soft", "px-4", "py-2")
+  const descriptionClasses = makeClasses("text-lg", "text-foreground-soft", "px-4", "py-2", "max-w-2xl")
   const bodyClasses = makeClasses("px-4", "py-2", "w-full", "h-full")
   const closeClasses = makeClasses("text-foreground-soft", "cursor-pointer", "hover:text-primary")
 

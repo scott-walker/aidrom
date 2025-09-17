@@ -1,8 +1,7 @@
 import { Button } from "@ui/button"
 import { LoaderBlock } from "@ui/loader-block"
-import { ErrorBlock } from "@ui/error-block"
 
-import { type ProviderUpdateData, useUpdateProvider, useProviderById, type Provider } from "@entities/provider"
+import { useUpdateProvider, useProviderById, type Provider } from "@entities/provider"
 import { useToast } from "@features/toasts"
 
 import { ProviderForm } from "./provider-form"
@@ -21,13 +20,13 @@ type ProviderUpdateFormProps = {
  * @namespace Features.Provider.UpdateProviderForm.Ui.UpdateProviderForm
  */
 export const ProviderUpdateForm = ({ providerId, onUpdated = () => {} }: ProviderUpdateFormProps) => {
-  const { provider, isLoading, error: fetchError } = useProviderById(providerId)
-  const { mutate: updateProvider, isPending, error: updateError } = useUpdateProvider()
+  const { provider, isLoading } = useProviderById(providerId)
+  const { mutate: updateProvider } = useUpdateProvider()
   const toast = useToast()
 
   const onSubmit = (data: Partial<Provider>) => {
     updateProvider(
-      { providerId, data: data as ProviderUpdateData },
+      { providerId, data: { name: data.name, driver: data.driver } },
       {
         onSuccess: (provider: Provider) => {
           onUpdated(provider)
@@ -40,12 +39,11 @@ export const ProviderUpdateForm = ({ providerId, onUpdated = () => {} }: Provide
     )
   }
 
-  if (isLoading || isPending) return <LoaderBlock />
-  if (fetchError || updateError) return <ErrorBlock error={(fetchError || updateError) as Error} />
+  if (isLoading) return <LoaderBlock />
 
   return (
     <ProviderForm onSubmit={onSubmit} provider={provider as Provider}>
-      <Button type="submit" schema="primary" className="w-full">
+      <Button type="submit" schema="primary">
         Обновить
       </Button>
     </ProviderForm>

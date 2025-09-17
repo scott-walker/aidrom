@@ -17,10 +17,10 @@ export const Providers = (): ReactNode => {
   return (
     <Blocks>
       <Blocks.Row>
-        <Blocks.Block className="w-4/6">
+        <Blocks.Block className="w-3/6">
           <ProviderList />
         </Blocks.Block>
-        <Blocks.Block className="w-2/6">
+        <Blocks.Block className="w-3/6">
           <Card>
             <Card.Header>
               <Heading>Зарегистрировать провайдера</Heading>

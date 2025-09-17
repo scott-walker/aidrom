@@ -16,6 +16,8 @@ import {
 } from "@entities/provider"
 import { ProviderDescription } from "@features/provider-description"
 import { ProviderConfig } from "@features/provider-config"
+import { ProviderUpdateForm } from "@features/provider-form"
+import { ProviderDelete } from "@features/provider-delete"
 
 /**
  * Страница сервиса - провайдер
@@ -45,6 +47,17 @@ export const Provider = (): ReactNode => {
               <ProviderModifyInfo provider={provider as ProviderType} />
             </Card.Body>
           </Card>
+
+          <Card>
+            <Card.Header>
+              <Heading>Регистрация</Heading>
+              <ProviderDelete provider={provider as ProviderType} />
+            </Card.Header>
+            <Card.Body className="flex flex-col items-center gap-6">
+              <ProviderUpdateForm providerId={providerId} />
+            </Card.Body>
+          </Card>
+
           <Card>
             <Card.Header>
               <Heading>Информация от драйвера</Heading>

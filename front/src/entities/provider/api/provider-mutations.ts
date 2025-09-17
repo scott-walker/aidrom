@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient, type UseMutationResult } from "@tanstack/react-query"
 import { queryKeys } from "./provider-queries"
-import { createProvider, updateProvider } from "./provider-api"
+import { createProvider, updateProvider, deleteProvider } from "./provider-api"
 import type { ProviderCreateData, ProviderUpdateData } from "../lib/types"
 import type { Provider } from "../lib/schema"
 
@@ -36,6 +36,21 @@ export const useUpdateProvider = (): UseMutationResult<
     },
     onSuccess: (provider: Provider) => {
       queryClient.invalidateQueries({ queryKey: queryKeys.details(provider.id) })
+    }
+  })
+}
+
+/**
+ * Хук для удаления провайдера
+ * @namespace Entities.Provider.Api.useDeleteProvider
+ */
+export const useDeleteProvider = (): UseMutationResult<void, Error, number> => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (providerId: number) => deleteProvider(providerId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.all })
     }
   })
 }

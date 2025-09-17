@@ -12,6 +12,7 @@ type FormFieldProps = {
   label: string
   children: ReactNode
   error?: FieldErrorType
+  showError?: boolean
   className?: string
 }
 
@@ -19,13 +20,13 @@ type FormFieldProps = {
  * Поле формы
  * @namespace Shared.UI.FormField
  */
-export const FormField = ({ label, children, error, className }: FormFieldProps) => {
+export const FormField = ({ label, children, error, showError = true, className }: FormFieldProps) => {
   const labelClasses = makeClasses("flex", "flex-col", "gap-1", error && "text-danger", className)
 
   return (
     <FormFieldLabel text={label} className={labelClasses} error={!!error}>
       {children}
-      {error && <FormFieldError error={error} />}
+      {error && showError && <FormFieldError error={error} />}
     </FormFieldLabel>
   )
 }

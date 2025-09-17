@@ -52,3 +52,11 @@ export const updateProvider = async (providerId: number, data: ProviderUpdateDat
 
   return toProvider(dto)
 }
+
+/**
+ * Удалить провайдера
+ * @namespace Entities.Provider.Api.deleteProvider
+ */
+export const deleteProvider = async (providerId: number): Promise<void> => {
+  await restClient.delete(`providers/${providerId}`)
+}
