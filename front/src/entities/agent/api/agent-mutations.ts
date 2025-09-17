@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient, type UseMutationResult } from "@tanstack/react-query"
 import { queryKeys } from "./agent-queries"
-import { addAgentRule, createAgent, deleteAgentRule, sortAgentRules, updateAgent } from "./agent-api"
+import { addAgentRule, createAgent, deleteAgentRule, deleteAgent, sortAgentRules, updateAgent } from "./agent-api"
 import type { Agent, AgentRule } from "../lib/schema"
 import type { AgentCreateData, AgentRuleCreateData, AgentRuleSortData, AgentUpdateData } from "../lib/types"
 
@@ -30,6 +30,20 @@ export const useUpdateAgent = (): UseMutationResult<Agent, Error, { agentId: num
     mutationFn: ({ agentId, data }: { agentId: number; data: AgentUpdateData }) => {
       return updateAgent(agentId, data)
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.all })
+    }
+  })
+}
+
+/**
+ * Хук для удаления агента
+ * @namespace Entities.Agent.Api.useDeleteAgent
+ */
+export const useDeleteAgent = (): UseMutationResult<void, Error, number> => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (agentId: number) => deleteAgent(agentId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.all })
     }

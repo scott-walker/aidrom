@@ -18,7 +18,8 @@ export {
   useUpdateAgent,
   useAddAgentRule,
   useDeleteAgentRule,
-  useSortAgentRules
+  useSortAgentRules,
+  useDeleteAgent
 } from "./api/agent-mutations"
 
 // UI

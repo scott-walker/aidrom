@@ -1,7 +1,7 @@
 import { useForm as useBaseForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import type { Provider } from "@entities/provider"
-import { providerFormSchema, type ProviderForm } from "../model/form-schema"
+import { type Provider } from "@entities/provider"
+import { type ProviderForm, providerFormSchema } from "../model/form-schema"
 import { toProviderForm } from "../model/mapper"
 
 /**

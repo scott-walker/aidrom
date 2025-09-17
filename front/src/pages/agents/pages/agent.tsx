@@ -4,7 +4,6 @@ import { useParams } from "react-router"
 import { useSubtitle } from "@lib/layout-api"
 import { Blocks } from "@ui/blocks"
 import { LoaderBlock } from "@ui/loader-block"
-import { ErrorBlock } from "@ui/error-block"
 import { Card } from "@ui/card"
 import { Heading } from "@ui/heading"
 
@@ -13,6 +12,8 @@ import { AgentRules } from "@widgets/agent-rules"
 import { AgentDescription } from "@features/agent-description"
 import { AgentParams } from "@features/agent-params"
 import { ChatCreateRegularButton } from "@features/chat-create"
+import { AgentUpdateForm } from "@features/agent-form"
+import { AgentDelete } from "@features/agent-delete"
 
 /**
  * Страница агента
@@ -20,12 +21,11 @@ import { ChatCreateRegularButton } from "@features/chat-create"
  */
 export const Agent = (): ReactNode => {
   const agentId = parseInt(useParams().agentId as string)
-  const { agent, isLoading, error } = useAgentById(agentId)
+  const { agent, isLoading } = useAgentById(agentId)
 
   useSubtitle(agent?.name ?? "")
 
   if (isLoading) return <LoaderBlock />
-  if (error) return <ErrorBlock error={error} />
 
   return (
     <Blocks>
@@ -37,8 +37,24 @@ export const Agent = (): ReactNode => {
             </Card.Header>
             <Card.Body className="flex flex-col items-center gap-6">
               <AgentFaceInfo agent={agent as AgentType} />
-              <ChatCreateRegularButton agentId={agentId} icon="messages-square" className="px-4 py-1.5" />
+              <ChatCreateRegularButton
+                agentId={agentId}
+                disabled={!agent?.isActive}
+                disabledText="Необходимо активировать агента"
+                icon="messages-square"
+                className="px-4 py-1.5"
+              />
               <AgentModifyInfo agent={agent as AgentType} />
+            </Card.Body>
+          </Card>
+
+          <Card>
+            <Card.Header>
+              <Heading>Регистрация</Heading>
+              <AgentDelete agent={agent as AgentType} />
+            </Card.Header>
+            <Card.Body className="flex flex-col items-center gap-6">
+              <AgentUpdateForm agent={agent as AgentType} />
             </Card.Body>
           </Card>
 

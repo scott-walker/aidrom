@@ -52,6 +52,14 @@ export const updateAgent = async (agentId: number, data: AgentUpdateData): Promi
 }
 
 /**
+ * Удалить агента
+ * @namespace Entities.Agent.Api.deleteAgent
+ */
+export const deleteAgent = async (agentId: number): Promise<void> => {
+  await restClient.delete(`agents/${agentId}`)
+}
+
+/**
  * Добавить правило агенту
  * @namespace Entities.Agent.Api.addAgentRule
  */

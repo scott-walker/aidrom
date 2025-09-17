@@ -10,6 +10,7 @@ export interface AgentDTO {
   avatar: string
   params: AgentParamsDTO
   description: string
+  providerId: number
   provider: ProviderDTO
   rules: AgentRuleDTO[]
   isActive: boolean
@@ -27,6 +28,7 @@ export interface AgentListItemDTO {
   avatar: string
   params: AgentParamsDTO
   description: string
+  providerId: number
   provider: ProviderListItemDTO
   rules: AgentRuleDTO[]
   isActive: boolean
@@ -70,6 +72,7 @@ export interface AgentCreateDTO {
  */
 export interface AgentUpdateDTO {
   name?: string
+  // providerId?: number
   params?: AgentParamsDTO
   description?: string
 }

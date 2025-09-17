@@ -10,6 +10,7 @@ export interface Agent {
   avatar: string
   params: AgentParams
   description: string
+  providerId: number
   provider: Provider
   rules: AgentRule[]
   isActive: boolean
@@ -27,6 +28,7 @@ export interface AgentListItem {
   avatar: string
   params: AgentParams
   description: string
+  providerId: number
   provider: ProviderListItem
   isActive: boolean
   createdAt: Date

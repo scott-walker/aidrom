@@ -1,1 +1,2 @@
-export { CreateAgentForm as AgentCreateForm } from "./ui/create-agent-form"
+export { AgentCreateForm } from "./ui/agent-create-form"
+export { AgentUpdateForm } from "./ui/agent-update-form"

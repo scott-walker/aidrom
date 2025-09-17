@@ -32,6 +32,7 @@ export const toAgent = (dto: AgentDTO): Agent => ({
   avatar: dto.avatar ? atob(dto.avatar) : "",
   params: dto.params,
   description: dto.description,
+  providerId: dto.providerId,
   provider: toProvider(dto.provider),
   rules: dto.rules.map(toAgentRule),
   isActive: dto.isActive,
@@ -50,6 +51,7 @@ export const toAgentListItem = (dto: AgentListItemDTO): AgentListItem => {
     avatar: dto.avatar ? atob(dto.avatar) : "",
     params: dto.params,
     description: dto.description,
+    providerId: dto.providerId,
     provider: toProviderListItem(dto.provider),
     isActive: dto.isActive,
     createdAt: new Date(dto.createdAt),
@@ -78,6 +80,7 @@ export const toAgentUpdateDTO = (data: AgentUpdateData): AgentUpdateDTO => {
   const dto = {} as AgentUpdateDTO
 
   if (data.name !== undefined) dto.name = data.name
+  // if (data.providerId !== undefined) dto.providerId = data.providerId
   if (data.params !== undefined) dto.params = data.params
   if (data.description !== undefined) dto.description = data.description
 
