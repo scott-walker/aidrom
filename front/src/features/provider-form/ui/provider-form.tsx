@@ -4,7 +4,7 @@ import { Controller } from "react-hook-form"
 import { Input } from "@ui/input"
 import { FormField } from "@ui/form-field"
 import { Json } from "@ui/json"
-import { Markdown } from "@ui/markdown"
+// import { Markdown } from "@ui/markdown"
 
 import type { Provider } from "@entities/provider"
 import { type ProviderForm as ProviderFormType } from "../model/form-schema"
@@ -62,7 +62,7 @@ export const ProviderForm = ({ children, provider, onSubmit = () => {} }: Provid
           </FormField>
         </section>
 
-        <section>
+        {/* <section>
           <FormField label="Описание" error={errors.description} className="flex-1">
             <Controller
               name="description"
@@ -72,7 +72,7 @@ export const ProviderForm = ({ children, provider, onSubmit = () => {} }: Provid
               )}
             />
           </FormField>
-        </section>
+        </section> */}
       </div>
 
       {children}

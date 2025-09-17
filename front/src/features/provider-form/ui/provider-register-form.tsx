@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router"
+
 import { Button } from "@ui/button"
 import { LoaderBlock } from "@ui/loader-block"
 
@@ -13,10 +15,12 @@ import { ProviderForm } from "./provider-form"
 export const ProviderRegisterForm = () => {
   const { mutate: createProvider, isPending } = useCreateProvider()
   const toast = useToast()
+  const navigate = useNavigate()
 
   const onSubmit = (data: Partial<Provider>) => {
     createProvider(data as ProviderCreateData, {
-      onSuccess: () => {
+      onSuccess: (provider: Provider) => {
+        navigate(`/service/providers/${provider.id}`)
         toast.success("Провайдер успешно зарегистрирован")
       },
       onError: ({ message }) => {
