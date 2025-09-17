@@ -19,7 +19,7 @@ export const routes: PageRoutes = {
   path: "service",
   children: [
     {
-      index: true,
+      path: "providers",
       element: <Providers />
     },
     {
