@@ -28,7 +28,8 @@ import {
   DriverRequestMessageRole,
   DriverRequestParams,
   DriverRequestMessage,
-  DriverResponse
+  DriverResponse,
+  DriverStatus
 } from "@drivers"
 
 /**
@@ -78,6 +79,7 @@ export const getProviderById = async (providerId: number): Promise<ProviderWithD
 
     let driverInfo = {} as DriverInfo
     let driverParamsConfig = {} as DriverParamsConfig
+    let driverStatus = DriverStatus.OK
 
     const providerItem = await db.query.providers.findFirst({
       where: eq(providers.id, providerId)
@@ -93,12 +95,20 @@ export const getProviderById = async (providerId: number): Promise<ProviderWithD
       driverInfo = await driver.getInfo()
       driverParamsConfig = await driver.getParamsConfig()
     } catch (error) {
+      driverStatus = DriverStatus.ERROR
+      driverInfo = {
+        message: "Ошибка при инициализации драйвера"
+      }
+      driverParamsConfig = {
+        meta: { message: "Ошибка при инициализации драйвера" },
+        params: []
+      }
       logger.error("Ошибка при инициализации драйвера", { error: error.message, providerId })
     }
 
     logger.info("Провайдер по ID успешно найден", { providerId })
 
-    return { ...providerItem, driverInfo, driverParamsConfig }
+    return { ...providerItem, driverInfo, driverParamsConfig, driverStatus }
   } catch (error) {
     logger.error("Ошибка при получении провайдера по ID", { error: error.message, providerId })
 

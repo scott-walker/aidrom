@@ -10,7 +10,7 @@ import {
   agentMessages,
   requests
 } from "./schema"
-import { DriverRequestParams, DriverParamsConfig, DriverInfo } from "@drivers"
+import { DriverRequestParams, DriverParamsConfig, DriverInfo, DriverStatus } from "@drivers"
 
 /**
  * Роли коммуникации
@@ -27,6 +27,7 @@ export type Provider = InferSelectModel<typeof providers>
 export type ProviderWithDriver = Provider & {
   driverInfo: DriverInfo
   driverParamsConfig: DriverParamsConfig
+  driverStatus: DriverStatus
 }
 export type CreateProviderData = InferInsertModel<typeof providers>
 export type UpdateProviderData = Partial<CreateProviderData>

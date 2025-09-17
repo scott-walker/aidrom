@@ -4,6 +4,15 @@
  */
 
 /**
+ * Статус работы драйвера
+ * @namespace Drivers.DriverStatus
+ */
+export enum DriverStatus {
+  OK = "ok",
+  ERROR = "error"
+}
+
+/**
  * Роли контекста запроса к драйверу
  * @namespace Drivers.DriverRequestMessageRole
  */
