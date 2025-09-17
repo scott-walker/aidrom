@@ -14,6 +14,7 @@ import { AgentParams } from "@features/agent-params"
 import { ChatCreateRegularButton } from "@features/chat-create"
 import { AgentUpdateForm } from "@features/agent-form"
 import { AgentDelete } from "@features/agent-delete"
+import { ChatButton } from "@features/chat-button"
 
 /**
  * Страница агента
@@ -37,13 +38,16 @@ export const Agent = (): ReactNode => {
             </Card.Header>
             <Card.Body className="flex flex-col items-center gap-6">
               <AgentFaceInfo agent={agent as AgentType} />
-              <ChatCreateRegularButton
-                agentId={agentId}
-                disabled={!agent?.isActive}
-                disabledText="Необходимо активировать агента"
-                icon="messages-square"
-                className="px-4 py-1.5"
-              />
+              <div className="flex flex-row gap-3">
+                <ChatCreateRegularButton
+                  agentId={agentId}
+                  disabled={!agent?.isActive}
+                  disabledText="Необходимо активировать агента"
+                  icon="messages-square"
+                  className="px-4 py-1.5"
+                />
+                <ChatButton />
+              </div>
               <AgentModifyInfo agent={agent as AgentType} />
             </Card.Body>
           </Card>
