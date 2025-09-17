@@ -8,6 +8,7 @@ import { AgentFaceInfo, AgentModifyInfo, useAgentById, type Agent } from "@entit
 import { useToggleChatInfo } from "@features/chat-info-toggle"
 
 import { ChatInfoHeader } from "./chat-info-header"
+import { AgentInfoLink } from "@features/agent-info-link"
 
 /**
  * Пропсы для компонента ChatInfo
@@ -37,6 +38,7 @@ export const ChatInfo = ({ chatId }: ChatInfoProps) => {
   const contentClasses = makeClasses(
     "flex",
     "flex-col",
+    "items-center",
     "gap-6",
     "py-6",
     "overflow-y-auto",
@@ -62,6 +64,7 @@ export const ChatInfo = ({ chatId }: ChatInfoProps) => {
       <ChatInfoHeader />
       <div className={contentClasses}>
         <AgentFaceInfo agent={chatAgent} />
+        <AgentInfoLink agentId={chatAgent.id} />
 
         {/* <Separator className="bg-background-hard" />
         <AgentRulesCompact agent={chatAgent} /> */}

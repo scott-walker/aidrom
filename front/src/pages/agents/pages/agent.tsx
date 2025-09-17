@@ -12,6 +12,7 @@ import { type Agent as AgentType, useAgentById, AgentFaceInfo, AgentModifyInfo }
 import { AgentRules } from "@widgets/agent-rules"
 import { AgentEditableDescription } from "@features/agent-editable-description"
 import { AgentParams } from "@features/agent-params"
+import { ChatCreateRegularButton } from "@features/chat-create"
 
 /**
  * Страница агента
@@ -34,8 +35,9 @@ export const Agent = (): ReactNode => {
             <Card.Header>
               <Heading>Основная информация</Heading>
             </Card.Header>
-            <Card.Body className="flex flex-col gap-6">
+            <Card.Body className="flex flex-col items-center gap-6">
               <AgentFaceInfo agent={agent as AgentType} />
+              <ChatCreateRegularButton agentId={agentId} icon="messages-square" className="px-4 py-1.5" />
               <AgentModifyInfo agent={agent as AgentType} />
             </Card.Body>
           </Card>

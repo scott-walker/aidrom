@@ -34,20 +34,20 @@ export const fetchChatById = async (chatId: number): Promise<Chat> => {
  * Создание чата
  * @namespace Entities.Chat.Api.ChatApi.createChat
  */
-export const createChat = async (data: ChatCreateData): Promise<Chat> => {
+export const createChat = async (data: ChatCreateData): Promise<ChatListItem> => {
   const { data: dto } = await restClient.post("chats", toChatCreateDTO(data))
 
-  return toChat(dto)
+  return toChatListItem(dto)
 }
 
 /**
  * Обновление чата по ID
  * @namespace Entities.Chat.Api.updateChat
  */
-export const updateChat = async (chatId: number, data: ChatUpdateData): Promise<Chat> => {
+export const updateChat = async (chatId: number, data: ChatUpdateData): Promise<ChatListItem> => {
   const { data: dto } = await restClient.put(`chats/${chatId}`, toChatUpdateDTO(data))
 
-  return toChat(dto)
+  return toChatListItem(dto)
 }
 
 /**
