@@ -112,10 +112,19 @@ export interface DriverConfig {
 }
 
 /**
+ * Интерфейс информации о драйвере
+ * @namespace Drivers.DriverInfo
+ */
+export interface DriverInfo {
+  [key: string]: unknown
+}
+
+/**
  * Интерфейс драйвера
  * @namespace Drivers.Driver
  */
 export interface Driver {
+  getInfo: () => Promise<DriverInfo>
   getParamsConfig: () => Promise<DriverParamsConfig>
   sendRequest: (request: DriverRequest) => Promise<DriverResponse>
 }

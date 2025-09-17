@@ -12,6 +12,17 @@ export const createDummyDriver = (config: DummyDriverConfig): Driver => {
 
   const driver: Driver = {
     /**
+     * Получение информации о драйвере "заглушка"
+     * @namespace Drivers.Dummy.getInfo
+     */
+    getInfo: async () => ({
+      name: "dummy",
+      description: "Драйвер для тестирования",
+      version: "1.0.0",
+      balance: 0
+    }),
+
+    /**
      * Получение конфигурации параметров запроса к драйверу "заглушка"
      * @namespace Drivers.Dummy.getModels
      */

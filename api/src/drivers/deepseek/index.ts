@@ -18,6 +18,16 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
 
   const driver: Driver = {
     /**
+     * Получение информации о драйвере Deepseek
+     * @namespace Drivers.Deepseek.getInfo
+     */
+    getInfo: async () => ({
+      name: "deepseek",
+      description: "Драйвер для Deepseek",
+      account: await restClient.get("user/balance")
+    }),
+
+    /**
      * Получение конфигурации параметров запроса к драйверу
      * @namespace Drivers.Deepseek.getParamsConfig
      */
@@ -88,11 +98,11 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
         const driverRequest: DeepseekDriverRequest = {
           model: request.params.model as DeepseekDriverModel,
           messages: request.messages,
-          frequency_penalty: request.params.frequencyPenalty,
-          presence_penalty: request.params.presencePenalty,
-          max_tokens: request.params.maxTokens,
-          temperature: request.params.temperature,
-          top_p: request.params.topP
+          frequency_penalty: request.params.frequencyPenalty as number,
+          presence_penalty: request.params.presencePenalty as number,
+          max_tokens: request.params.maxTokens as number,
+          temperature: request.params.temperature as number,
+          top_p: request.params.topP as number
         }
 
         const data: DeepseekDriverResponse = await restClient.post("chat/completions", driverRequest)

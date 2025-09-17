@@ -20,14 +20,15 @@ import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
 import {
   initDriver,
-  DriverConfig,
-  DriverResponse,
   Driver,
+  DriverConfig,
+  DriverInfo,
   DriverParamsConfig,
   DriverRequestMessages,
   DriverRequestMessageRole,
   DriverRequestParams,
-  DriverRequestMessage
+  DriverRequestMessage,
+  DriverResponse
 } from "@drivers"
 
 /**
@@ -75,7 +76,9 @@ export const getProviderById = async (providerId: number): Promise<ProviderWithD
   try {
     logger.info("Получение провайдера по ID", { providerId })
 
+    let driverInfo = {} as DriverInfo
     let driverParamsConfig = {} as DriverParamsConfig
+
     const providerItem = await db.query.providers.findFirst({
       where: eq(providers.id, providerId)
     })
@@ -86,6 +89,8 @@ export const getProviderById = async (providerId: number): Promise<ProviderWithD
 
     try {
       const driver = initDriver(providerItem.driver, providerItem.config as DriverConfig) as Driver
+
+      driverInfo = await driver.getInfo()
       driverParamsConfig = await driver.getParamsConfig()
     } catch (error) {
       logger.error("Ошибка при инициализации драйвера", { error: error.message, providerId })
@@ -93,7 +98,7 @@ export const getProviderById = async (providerId: number): Promise<ProviderWithD
 
     logger.info("Провайдер по ID успешно найден", { providerId })
 
-    return { ...providerItem, driverParamsConfig }
+    return { ...providerItem, driverInfo, driverParamsConfig }
   } catch (error) {
     logger.error("Ошибка при получении провайдера по ID", { error: error.message, providerId })
 

@@ -1,20 +1,14 @@
 import crypto from "crypto"
-import fs from "fs"
-import path from "path"
-import { getConfigParam } from "@config"
+import https from "https"
+import GigaChat from "gigachat"
 import { createApiLogger } from "@utils/logger"
-import { createRestClient, RestClient } from "@utils/api"
 import { Driver, DriverRequest, DriverParamsConfig, DriverResponse } from "../types"
-import {
-  GigachatAuthResponse,
-  GigachatDriverConfig,
-  GigachatDriverRequest,
-  GigachatDriverResponse,
-  GigachatDriverModelsResponse
-} from "./types"
+import { GigachatDriverConfig, GigachatDriverRequest } from "./types"
 
-const AUTH_BASE_URL = "https://ngw.devices.sberbank.ru:9443/api/v2"
-const CHAT_BASE_URL = "https://gigachat.devices.sberbank.ru/api/v1"
+/**
+ * Область видимости для Gigachat
+ * @namespace Drivers.Gigachat.SCOPE
+ */
 const SCOPE = "GIGACHAT_API_PERS"
 
 /**
@@ -23,75 +17,33 @@ const SCOPE = "GIGACHAT_API_PERS"
  * @param {GigachatDriverConfig} config Конфиг драйвера
  */
 export const createGigachatDriver = (config: GigachatDriverConfig): Driver => {
-  const dataPath = path.resolve(getConfigParam("runtimeDir") as string, "gigachat", "auth.json")
   const logger = createApiLogger("GigachatDriver")
-  const authClient = createRestClient({
-    baseUrl: AUTH_BASE_URL,
-    authKey: config.authorizationKey,
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Accept: "application/json",
-      Authorization: `Basic ${config.authorizationKey}`,
-      RqUID: crypto.randomUUID()
-    }
+
+  const giga = new GigaChat({
+    credentials: config.authorizationKey,
+    scope: SCOPE,
+    httpsAgent: new https.Agent({
+      rejectUnauthorized: false // ⚠️ игнорирует self-signed cert
+    })
   })
 
-  /**
-   * Получает токен авторизации
-   * @returns {Promise<string>} Токен авторизации
-   */
-  const getAuthToken = async (): Promise<string> => {
-    // Проверить, есть ли токен в файле
-    if (fs.existsSync(dataPath)) {
-      const data = JSON.parse(fs.readFileSync(dataPath, "utf8"))
+  const driver: Driver = {
+    /**
+     * Получение информации о драйвере Gigachat
+     * @namespace Drivers.Gigachat.getInfo
+     */
+    getInfo: async () => ({
+      name: "gigachat",
+      description: "Драйвер для Gigachat",
+      account: await giga.balance()
+    }),
 
-      if (data.expires_at > Date.now()) {
-        logger.info("Токен получен из файла", { action: "getAuthToken" })
-
-        return data.access_token
-      }
-    }
-
-    try {
-      logger.info("Получение токена из API", { action: "getAuthToken" })
-
-      const data: GigachatAuthResponse = await authClient.post("oauth", {
-        scope: SCOPE
-      })
-
-      // Запомнить токен в файл
-      fs.mkdirSync(path.dirname(dataPath), { recursive: true })
-      fs.writeFileSync(dataPath, JSON.stringify(data, null, 2))
-
-      return data.access_token
-    } catch (error) {
-      logger.error("Ошибка при получении токена из API", { action: "getAuthToken", error: error.message })
-
-      throw error
-    }
-  }
-
-  /**
-   * Создает HTTP клиент для чата
-   * @returns {Promise<RestClient>} Клиент для чата
-   */
-  const createChatClient = async (): Promise<RestClient> => {
-    const authToken = await getAuthToken()
-
-    return createRestClient({
-      baseUrl: CHAT_BASE_URL,
-      authKey: authToken
-    })
-  }
-
-  return {
     /**
      * Получение конфигурации параметров запроса к драйверу
      * @namespace Drivers.Gigachat.getParamsConfig
      */
     getParamsConfig: async (): Promise<DriverParamsConfig> => {
-      const chatClient = await createChatClient()
-      const { data }: GigachatDriverModelsResponse = await chatClient.get("models")
+      const { data } = await giga.getModels()
 
       return {
         meta: {},
@@ -143,27 +95,39 @@ export const createGigachatDriver = (config: GigachatDriverConfig): Driver => {
      * @namespace Drivers.Gigachat.sendRequest
      */
     sendRequest: async (request: DriverRequest): Promise<DriverResponse> => {
-      const chatClient = await createChatClient()
+      logger.info("🚀 Отправка запроса", { action: "sendRequest", request })
 
-      const driverRequest: GigachatDriverRequest = {
-        messages: request.messages,
-        model: request.params.model as string,
-        temperature: request.params.temperature as number,
-        top_p: request.params.topP as number,
-        max_tokens: request.params.maxTokens as number,
-        repetition_penalty: request.params.repetitionPenalty as number
-      }
+      try {
+        const driverRequest: GigachatDriverRequest = {
+          messages: request.messages,
+          model: request.params.model as string,
+          temperature: request.params.temperature as number,
+          top_p: request.params.topP as number,
+          max_tokens: request.params.maxTokens as number,
+          repetition_penalty: request.params.repetitionPenalty as number
+        }
 
-      const data: GigachatDriverResponse = await chatClient.post("chat/completions", driverRequest)
+        const data = await giga.chat(driverRequest)
 
-      return {
-        content: data.choices[0].message.content,
-        providerRequestId: crypto.randomUUID(),
-        requestParams: driverRequest,
-        responseData: data,
-        requestTokens: data.usage.prompt_tokens,
-        responseTokens: data.usage.completion_tokens
+        logger.info("Получен ответ от API Gigachat", { action: "sendRequest", data })
+
+        return {
+          content: data.choices[0].message.content,
+          providerRequestId: data.xHeaders.xRequestId,
+          requestParams: driverRequest,
+          responseData: data,
+          requestTokens: data.usage.prompt_tokens,
+          responseTokens: data.usage.completion_tokens
+        }
+      } catch (error) {
+        logger.error("Ошибка при обработке запроса", { action: "sendRequest", error })
+
+        throw error
       }
     }
   }
+
+  logger.info("Драйвер инициализирован")
+
+  return driver
 }
