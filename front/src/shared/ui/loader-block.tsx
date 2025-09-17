@@ -1,5 +1,5 @@
 import { makeClasses } from "@lib/style-api"
-import { Loader } from "@ui/loader"
+import { Loader } from "@shared/ui/loader/loader"
 
 /**
  * Пропсы для компонента

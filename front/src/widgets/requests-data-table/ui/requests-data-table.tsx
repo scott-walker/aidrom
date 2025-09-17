@@ -2,7 +2,7 @@ import { useRequests } from "@entities/request/api/request-queries"
 import { Table } from "@ui/table"
 import { Card } from "@ui/card"
 import { Heading } from "@ui/heading"
-import { Loader } from "@shared/ui/loader"
+import { Loader } from "@shared/ui/loader/loader"
 import { Notification } from "@shared/ui/notification"
 import { RequestsDataTableItem } from "./requests-data-item"
 

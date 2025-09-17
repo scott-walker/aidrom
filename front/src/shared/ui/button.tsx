@@ -7,7 +7,7 @@ import { makeClasses, makeUiBox, makeUiClickable, makeUiShadow, makeUiTransition
  */
 export type ButtonProps = ComponentProps<"button"> & {
   children: ReactNode
-  schema?: "ghost" | "soft" | "hard" | "primary" | "outline" | "brand" | "secondary" | "danger"
+  schema?: "ghost" | "soft" | "hard" | "primary" | "outline" | "brand" | "secondary" | "danger" | "warning"
   rounded?: boolean
 }
 
@@ -106,6 +106,13 @@ export const Button = ({
         "text-primary"
         // "hover:border-primary-accent",
         // "hover:text-primary-accent"
+      ),
+      warning: makeClasses(
+        "bg-warning",
+        "text-warning-foreground",
+        "hover:ring-warning"
+        // "hover:bg-warning-accent",
+        // "hover:text-warning-foreground-accent"
       )
     }
   })

@@ -11,8 +11,23 @@
   user-select: none;
 }
 
+.infinityLoader {
+  width: 100%;
+  /* width: calc(80px / 0.707); */
+  height: 14px;
+  background: repeating-linear-gradient(-45deg, var(--color-warning) 0 15px, var(--color-warning-foreground) 0 30px)
+    left/200% 100%;
+  animation: i3 20s infinite linear;
+}
+
 @keyframes s2 {
   to {
     transform: rotate(1turn);
+  }
+}
+
+@keyframes i3 {
+  100% {
+    background-position: right;
   }
 }

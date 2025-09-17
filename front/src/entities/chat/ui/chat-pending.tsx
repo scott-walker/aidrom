@@ -1,5 +1,5 @@
 import { Icon } from "@ui/icon"
-import { Loader } from "@ui/loader"
+import { Loader } from "@shared/ui/loader/loader"
 
 /**
  * Чат в процессе отправки сообщения
