@@ -38,10 +38,8 @@ export const MessageBubble = ({ content, role, createdAt, className = "" }: Mess
     <div className={containerClasses}>
       <div className={roleClasses}>{role}</div>
       <div className={contentClasses}>
-        <DeepSeekMarkdown content={content} />
+        <DeepSeekMarkdown content={content} html />
       </div>
-      {/* <div className={contentClasses}>{content}</div> */}
-      {/* <div className={contentClasses} dangerouslySetInnerHTML={{ __html: content }} /> */}
       <div className={createdAtClasses}>
         <DateTag date={createdAt} />
       </div>

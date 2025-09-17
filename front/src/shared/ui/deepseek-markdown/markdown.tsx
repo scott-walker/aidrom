@@ -1,7 +1,9 @@
 import ReactMarkdown, { type Components } from "react-markdown"
 import remarkGfm from "remark-gfm"
 import rehypeHighlight from "rehype-highlight"
-import "highlight.js/styles/github.min.css" // или другая тема
+import rehypeRaw from "rehype-raw"
+import rehypeSanitize from "rehype-sanitize"
+import "highlight.js/styles/github.min.css"
 
 /**
  * Пропсы компонента для отображения Markdown
@@ -9,21 +11,36 @@ import "highlight.js/styles/github.min.css" // или другая тема
  */
 type Props = {
   content: string
+  html?: boolean
 }
 
 /**
  * Компонент для отображения Markdown
  * @namespace Shared.UI.DeepSeekMarkdown
  */
-export const DeepSeekMarkdown = ({ content }: Props) => {
+export const DeepSeekMarkdown = ({ content, html = false }: Props) => {
+  let rehypePlugins
+
+  if (html) {
+    rehypePlugins = [rehypeRaw, rehypeSanitize, rehypeHighlight]
+  } else {
+    rehypePlugins = [rehypeHighlight]
+  }
+
   return (
     <div className="typography-container">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]} // поддержка GitHub Flavored Markdown
-        rehypePlugins={[rehypeHighlight]} // подсветка синтаксиса
+        rehypePlugins={rehypePlugins} // подсветка синтаксиса
         components={
           {
             pre: ({ children }) => <div className="code-wrapper">{children}</div>,
+
+            img: ({ src, alt }) => {
+              return (
+                <img src={src} alt={alt} className="mb-4 border-3 border-primary rounded-2xl max-w-1/2 max-h-1/2" />
+              )
+            },
 
             // Кастомизация компонентов
             code({ className, children, ...props }) {
