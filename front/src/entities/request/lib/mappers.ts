@@ -1,5 +1,6 @@
 import type { RequestDTO } from "./dto"
 import type { Request } from "./schema"
+import { toProviderListItem } from "@entities/provider"
 
 /**
  * Маппер из DTO в сущность
@@ -7,7 +8,7 @@ import type { Request } from "./schema"
  */
 export const toRequest = (dto: RequestDTO): Request => ({
   id: dto.id,
-  provider: dto.provider,
+  provider: toProviderListItem(dto.provider),
   providerRequestId: dto.providerRequestId,
   requestParams: dto.requestParams,
   responseData: dto.responseData,

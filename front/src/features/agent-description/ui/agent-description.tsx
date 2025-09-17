@@ -3,22 +3,22 @@ import { Card } from "@ui/card"
 import { Heading } from "@ui/heading"
 import { IconButton } from "@ui/icon-button"
 import { Markdown } from "@ui/markdown"
-import { type Agent as AgentType, AgentDescriptionInfo, useUpdateAgent } from "@entities/agent"
+import { type Agent as AgentType, AgentDescription as BaseAgentDescription, useUpdateAgent } from "@entities/agent"
 import { useToast } from "@features/toasts"
 
 /**
- * Пропсы для компонента AgentEditableDescription
- * @namespace Features.AgentEditableDescription.Ui.AgentEditableDescription.Props
+ * Пропсы для компонента AgentDescription
+ * @namespace Features.AgentDescription.Ui.AgentDescription.Props
  */
-type AgentEditableDescriptionProps = {
+type AgentDescriptionProps = {
   agent: AgentType
 }
 
 /**
- * Компонент AgentEditableDescription
- * @namespace Features.AgentEditableDescription.Ui.AgentEditableDescription
+ * Компонент AgentDescription
+ * @namespace Features.AgentDescription.Ui.AgentDescription
  */
-export const AgentEditableDescription = ({ agent }: AgentEditableDescriptionProps) => {
+export const AgentDescription = ({ agent }: AgentDescriptionProps) => {
   const [edit, setEdit] = useState(false)
   const [description, setDescription] = useState(agent.description)
   const { mutate: updateAgent, isPending } = useUpdateAgent()
@@ -60,7 +60,7 @@ export const AgentEditableDescription = ({ agent }: AgentEditableDescriptionProp
         {edit ? (
           <Markdown editable value={description} onChange={setDescription} />
         ) : (
-          <AgentDescriptionInfo agent={agent} />
+          <BaseAgentDescription description={description} />
         )}
       </Card.Body>
     </Card>

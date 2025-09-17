@@ -1,4 +1,4 @@
-import type { Provider } from "@entities/provider"
+import type { ProviderListItem } from "@entities/provider"
 
 /**
  * Схема сущности "запрос к провайдеру"
@@ -6,7 +6,7 @@ import type { Provider } from "@entities/provider"
  */
 export interface Request {
   id: number
-  provider: Provider
+  provider: ProviderListItem
   providerRequestId: string
   requestParams: Record<string, unknown>
   responseData: Record<string, unknown>

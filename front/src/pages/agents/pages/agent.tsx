@@ -10,7 +10,7 @@ import { Heading } from "@ui/heading"
 
 import { type Agent as AgentType, useAgentById, AgentFaceInfo, AgentModifyInfo } from "@entities/agent"
 import { AgentRules } from "@widgets/agent-rules"
-import { AgentEditableDescription } from "@features/agent-editable-description"
+import { AgentDescription } from "@features/agent-description"
 import { AgentParams } from "@features/agent-params"
 import { ChatCreateRegularButton } from "@features/chat-create"
 
@@ -46,7 +46,7 @@ export const Agent = (): ReactNode => {
         </Blocks.Block>
         <Blocks.Block className="w-2/3 flex flex-col gap-8">
           <AgentRules agent={agent as AgentType} />
-          <AgentEditableDescription agent={agent as AgentType} />
+          <AgentDescription agent={agent as AgentType} />
         </Blocks.Block>
       </Blocks.Row>
     </Blocks>

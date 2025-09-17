@@ -77,9 +77,9 @@ export const toAgentCreateDTO = (data: AgentCreateData): AgentCreateDTO => {
 export const toAgentUpdateDTO = (data: AgentUpdateData): AgentUpdateDTO => {
   const dto = {} as AgentUpdateDTO
 
-  if (data.name) dto.name = data.name
-  if (data.params) dto.params = data.params
-  if (data.description) dto.description = data.description
+  if (data.name !== undefined) dto.name = data.name
+  if (data.params !== undefined) dto.params = data.params
+  if (data.description !== undefined) dto.description = data.description
 
   return dto
 }
