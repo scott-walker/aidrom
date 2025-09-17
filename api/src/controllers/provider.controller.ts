@@ -115,3 +115,23 @@ export const deleteProvider = async (req: Request, res: Response, next: NextFunc
     next(err)
   }
 }
+
+/**
+ * Получить список драйверов
+ * @namespace Provider.Controller.getDrivers
+ */
+export const getDrivers = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    logger.info("Получение списка драйверов")
+
+    const drivers = await providerService.getDrivers()
+
+    logger.info("Список драйверов успешно получен", { count: drivers.length })
+
+    res.json(drivers)
+  } catch (err) {
+    logger.error("Ошибка при получении списка драйверов", { error: err.message })
+
+    next(err)
+  }
+}

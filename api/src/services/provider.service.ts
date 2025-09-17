@@ -19,6 +19,7 @@ import {
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
 import {
+  driverFactories,
   initDriver,
   Driver,
   DriverConfig,
@@ -192,6 +193,14 @@ export const deleteProvider = async (providerId: number): Promise<Provider> => {
 }
 
 /**
+ * Получить список драйверов
+ * @namespace Provider.Service.getDrivers
+ */
+export const getDrivers = async (): Promise<string[]> => {
+  return Object.keys(driverFactories)
+}
+
+/**
  * Обработка запроса к провайдеру
  * @namespace Provider.Service.processRequest
  */
@@ -223,7 +232,7 @@ export const processRequest = async ({
  * Компилирует системные сообщения агента, контекст чата и сообщение клиента
  * @namespace Agent.Service.compileMessages
  */
-export const compileMessages = (
+const compileMessages = (
   agentRules: AgentRule[],
   chatContext: ChatContext,
   clientMessageContent: string

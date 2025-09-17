@@ -10,7 +10,7 @@ export * from "./types"
  * Коллекция фабрик драйверов
  * @namespace Drivers.drivers
  */
-const driverFactories: DriverFactoriesCollection = {
+export const driverFactories: DriverFactoriesCollection = {
   dummy: createDummyDriver,
   deepseek: createDeepseekDriver,
   gigachat: createGigachatDriver
