@@ -12,9 +12,6 @@ import type {
 import { type Chat, type Message, type ChatListItem } from "./schema"
 import type { ChatCreateData, ChatUpdateData, MessageSendData, MessageSendResult } from "./types"
 
-// import { toAgentListItem } from "@entities/agent"
-// import { toClient } from "@entities/client"
-
 /**
  * Маппер из DTO в сущность чата
  * @namespace Entities.Chat.Lib.Mappers.toChat
@@ -26,8 +23,6 @@ export const toChat = (dto: ChatDTO): Chat => {
     agentId: dto.agentId,
     clientId: dto.clientId,
     context: dto.context,
-    // agent: toAgent(dto.agent),
-    // client: toClient(dto.client),
     messages: dto.messagePairs.map(fromPairToMessages).flat(),
     createdAt: new Date(dto.createdAt),
     updatedAt: new Date(dto.updatedAt)

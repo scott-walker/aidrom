@@ -1,6 +1,5 @@
-import type { Agent } from "@entities/agent"
-// import type { Client } from "@entities/client"
 import type { Roles } from "./constants"
+
 /**
  * Сообщение
  * @namespace Entities.Chat.Lib.Schema.Message
@@ -31,8 +30,6 @@ export interface Chat {
   agentId: number
   clientId: number
   context: ChatContextItem[]
-  // agent: Agent
-  // client: Client
   messages: Message[]
   createdAt: Date
   updatedAt: Date
@@ -49,12 +46,4 @@ export interface ChatListItem {
   clientId: number
   createdAt: Date
   updatedAt: Date
-}
-
-/**
- * Чат с агентом
- * @namespace Entities.Chat.Lib.Schema.ChatWithAgent
- */
-export interface ChatWithAgent extends Chat {
-  agent: Agent | null
 }
