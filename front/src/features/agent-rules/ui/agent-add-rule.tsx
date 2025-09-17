@@ -16,7 +16,7 @@ import { type AgentRulesForm } from "../model/form-schema"
  * @namespace Features.AgentRules.Ui.AgentAddRule.Props
  */
 type AgentAddRuleProps = {
-  agent: AgentType
+  agentId: AgentType["id"]
   className?: string
 }
 
@@ -24,7 +24,7 @@ type AgentAddRuleProps = {
  * Компонент AgentAddRule
  * @namespace Features.AgentRules.Ui.AgentAddRule
  */
-export const AgentAddRule = ({ agent, className = "" }: AgentAddRuleProps) => {
+export const AgentAddRule = ({ agentId, className = "" }: AgentAddRuleProps) => {
   const [open, setOpen] = useState(false)
   const { mutate: addAgentRule, isPending } = useAddAgentRule()
   const {
@@ -39,7 +39,7 @@ export const AgentAddRule = ({ agent, className = "" }: AgentAddRuleProps) => {
 
   const onSubmit = (data: AgentRulesForm) => {
     addAgentRule(
-      { agentId: agent.id, data },
+      { agentId, data },
       {
         onSuccess: () => {
           setOpen(false)

@@ -1,4 +1,4 @@
-import type { ReactNode } from "react"
+import { type ReactNode } from "react"
 import { makeClasses } from "@lib/style-api"
 import { type AgentRule as AgentRuleType } from "@entities/agent"
 
@@ -7,7 +7,9 @@ import { type AgentRule as AgentRuleType } from "@entities/agent"
  * @namespace Features.AgentRules.Ui.AgentRule.Props
  */
 type AgentRuleProps = {
-  rule: AgentRuleType
+  id: AgentRuleType["id"]
+  priority: AgentRuleType["priority"]
+  content: AgentRuleType["content"]
   children?: ReactNode
   className?: string
 }
@@ -16,7 +18,7 @@ type AgentRuleProps = {
  * Компонент AgentRule
  * @namespace Features.AgentRules.Ui.AgentRule
  */
-export const AgentRule = ({ rule, children, className = "" }: AgentRuleProps) => {
+export const AgentRule = ({ id, priority, content, children, className = "" }: AgentRuleProps) => {
   const cardClasses = makeClasses(
     "flex",
     "items-center",
@@ -45,9 +47,9 @@ export const AgentRule = ({ rule, children, className = "" }: AgentRuleProps) =>
   )
 
   return (
-    <div className={cardClasses} data-id={rule.id}>
-      <div className={priorityClasses}>{rule.priority + 1}</div>
-      <div>{rule.content}</div>
+    <div className={cardClasses} data-id={id}>
+      <div className={priorityClasses}>{priority + 1}</div>
+      <div>{content}</div>
       <div className="ml-auto flex items-center gap-4">{children}</div>
     </div>
   )

@@ -19,8 +19,8 @@ export const AgentRulesCompact = ({ agent }: AgentRulesCompactProps) => {
 
   return (
     <div className={containerClasses}>
-      <AgentAddRule agent={agent as AgentType} />
-      <AgentRulesList agent={agent as AgentType} />
+      <AgentAddRule agentId={agent.id} />
+      <AgentRulesList agentId={agent.id} rules={agent.rules} />
     </div>
   )
 }

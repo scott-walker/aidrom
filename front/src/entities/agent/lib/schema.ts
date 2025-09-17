@@ -22,7 +22,7 @@ export interface Agent {
  * @namespace Entities.Agent.Lib.Schema.AgentParams
  */
 export interface AgentParams {
-  [key: string]: unknown
+  [key: string]: string | number | boolean
 }
 
 /**
