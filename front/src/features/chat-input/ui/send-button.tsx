@@ -18,17 +18,16 @@ type SendButtonProps = {
 export const SendButton = ({ onSend, className = "" }: SendButtonProps) => {
   const { isPending, input } = useChatStore()
   const disabled = isPending || !input.trim()
-  const classes = makeClasses(disabled && "bg-background-hard", className)
+  const classes = makeClasses(disabled && "bg-background-hard", "h-12", "w-12", className)
 
   return (
     <IconButton
       schema="primary"
-      circle={true}
-      iconSize={20}
+      circle
+      iconSize={22}
       icon="send"
       iconStrokeWidth={2.2}
       className={classes}
-      iconClassName="m-3"
       disabled={disabled}
       onClick={onSend}
     />
