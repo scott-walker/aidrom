@@ -31,9 +31,8 @@ export const Navbar = ({ links }: NavbarProps) => {
       "py-4",
       "border-b-2",
       "border-transparent",
-      !isActive && "hover:text-primary",
+      "hover:text-primary",
       isActive && "font-bold",
-      isActive && "cursor-default",
       isActive && "border-primary"
     )
   }
