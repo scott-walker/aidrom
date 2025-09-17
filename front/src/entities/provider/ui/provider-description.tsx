@@ -15,7 +15,7 @@ type ProviderDescriptionProps = {
  * @namespace Entities.Provider.Ui.ProviderDescription
  */
 export const ProviderDescription = ({ description, className = "" }: ProviderDescriptionProps) => {
-  const containerClasses = makeClasses("flex", "flex-col", className)
+  const containerClasses = makeClasses("flex", "flex-col", "px-4", "py-2", className)
 
   return (
     <div className={containerClasses}>

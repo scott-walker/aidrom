@@ -89,7 +89,9 @@ export const ChatAgentCard = ({ agent, className = "" }: ChatAgentCardProps) => 
             agentId={agent.id}
             disabled={!agent.isActive}
             disabledText="Необходимо активировать агента"
-            className="mt-3"
+            iconSize={14}
+            iconStrokeWidth={4}
+            className="mt-3 py-0.5"
           />
           <ChatListItems chats={agent.chats} />
         </div>

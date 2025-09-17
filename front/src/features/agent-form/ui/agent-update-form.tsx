@@ -55,7 +55,7 @@ export const AgentUpdateForm = ({ agent, children }: FormProps) => {
 
         <FormField label="&nbsp;">
           <Button type="submit" schema="primary" disabled={isPending}>
-            Обновить
+            Изменить
           </Button>
         </FormField>
 

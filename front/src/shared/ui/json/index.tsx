@@ -50,9 +50,8 @@ export const Json: FC<Props> = ({
         "py-2",
         "w-full",
         "bg-background",
-        "text-foreground-soft",
-        "text-lg",
-        // "font-bold",
+        "text-foreground",
+        "text-base",
         "rounded-xl",
         "overflow-x-auto",
         "overflow-y-auto"

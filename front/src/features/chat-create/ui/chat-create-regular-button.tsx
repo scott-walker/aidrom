@@ -16,6 +16,8 @@ type ChatCreateRegularButtonProps = {
   disabledText?: string
   className?: string
   icon?: IconName
+  iconSize?: number
+  iconStrokeWidth?: number
 }
 
 /**
@@ -28,6 +30,8 @@ export const ChatCreateRegularButton = ({
   text = "Создать чат",
   disabledText = "Создание чата запрещено",
   icon = "plus",
+  iconSize = 18,
+  iconStrokeWidth = 3,
   className = ""
 }: ChatCreateRegularButtonProps): ReactNode => {
   const { createChat } = useCreateChat({ agentId, clientId: 1 })
@@ -37,7 +41,7 @@ export const ChatCreateRegularButton = ({
     return (
       <Tooltip text={disabledText}>
         <Button className={buttonClasses} disabled={true} rounded>
-          <Icon name={icon} size={20} strokeWidth={2} /> {text}
+          <Icon name={icon} size={iconSize} strokeWidth={iconStrokeWidth} /> {text}
         </Button>
       </Tooltip>
     )
@@ -45,7 +49,7 @@ export const ChatCreateRegularButton = ({
 
   return (
     <Button className={buttonClasses} onClick={() => createChat("Новый чат")} rounded disabled={disabled}>
-      <Icon name={icon} size={18} strokeWidth={3} />
+      <Icon name={icon} size={iconSize} strokeWidth={iconStrokeWidth} />
       {text}
     </Button>
   )

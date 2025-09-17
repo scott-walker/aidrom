@@ -50,7 +50,7 @@ export const Agent = (): ReactNode => {
 
           <Card>
             <Card.Header>
-              <Heading>Регистрация</Heading>
+              <Heading>Регистрационные </Heading>
               <AgentDelete agent={agent as AgentType} />
             </Card.Header>
             <Card.Body className="flex flex-col items-center gap-6">

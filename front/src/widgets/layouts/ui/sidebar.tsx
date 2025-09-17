@@ -1,46 +1,10 @@
 import type { ReactNode } from "react"
 import { useLayout } from "@scottwalker/lucent"
 import { makeClasses } from "@lib/style-api"
-import { Menu, type MenuItems } from "@ui/menu"
+import { Menu } from "@ui/menu"
 import { Separator } from "@ui/separator"
 import { Icon } from "@ui/icon"
-
-// Основное меню
-const menuItems: MenuItems = [
-  {
-    label: "Панель",
-    icon: "gauge",
-    path: "/"
-  },
-  {
-    label: "Сервис",
-    icon: "settings",
-    path: "/service"
-  }
-]
-
-// Меню для разработки
-const chatMenuItems: MenuItems = [
-  {
-    label: "Чат",
-    icon: "messages-square",
-    path: "/chat"
-  },
-  {
-    label: "Агенты",
-    icon: "bot",
-    path: "/agents"
-  }
-]
-
-// Меню для разработки
-const developmentMenuItems: MenuItems = [
-  {
-    label: "Разработка",
-    icon: "code",
-    path: "/test"
-  }
-]
+import { useMenuItems } from "../lib/use-menu-items"
 
 /**
  * Шапка сайдбара
@@ -73,6 +37,8 @@ export const SidebarHeader = (): ReactNode => {
  * @returns {ReactNode}
  */
 export const SidebarBody = (): ReactNode => {
+  const { menuItems, chatMenuItems, developmentMenuItems } = useMenuItems()
+
   const collapsed = useLayout().isSidebarCollapsed
   const classes = makeClasses(
     "flex-1",

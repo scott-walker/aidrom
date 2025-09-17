@@ -15,7 +15,7 @@ type AgentDescriptionProps = {
  * @namespace Entities.Agent.Ui.AgentDescription
  */
 export const AgentDescription = ({ description, className = "" }: AgentDescriptionProps) => {
-  const containerClasses = makeClasses("flex", "flex-col", className)
+  const containerClasses = makeClasses("flex", "flex-col", "px-4", "py-2", className)
 
   return (
     <div className={containerClasses}>
