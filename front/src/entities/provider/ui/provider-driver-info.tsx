@@ -20,7 +20,7 @@ export const ProviderDriverInfo = ({ provider, className = "" }: ProviderDriverI
 
   return (
     <div className={containerClasses}>
-      <Json value={provider.driverInfo} interactive />
+      <Json value={provider.driverInfo} schema="terminal" />
     </div>
   )
 }

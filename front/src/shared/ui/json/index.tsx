@@ -3,7 +3,7 @@ import CodeMirror, { EditorView } from "@uiw/react-codemirror"
 import { createTheme } from "@uiw/codemirror-themes"
 import { json } from "@codemirror/lang-json"
 import { tags } from "@lezer/highlight"
-import { makeClasses } from "@lib/style-api"
+import { makeClasses, makeVariants } from "@lib/style-api"
 import type { Value } from "./types"
 import { formatValue } from "./utils"
 
@@ -15,6 +15,7 @@ type Props = {
   value: Value
   interactive?: boolean
   editable?: boolean
+  schema?: "default" | "terminal"
   error?: boolean
   minHeight?: string
   onChange?: (value: Value) => void
@@ -33,6 +34,7 @@ type Props = {
 export const Json: FC<Props> = ({
   value,
   interactive = false,
+  schema = "default",
   editable = false,
   error = false,
   className = "",
@@ -42,21 +44,33 @@ export const Json: FC<Props> = ({
   if (!interactive && !editable) {
     value = formatValue(value)
 
-    const preClasses = makeClasses(
-      "px-4",
-      "py-2",
-      "w-full",
-      "bg-background",
-      "rounded-xl",
-      "overflow-x-auto",
-      "overflow-y-auto",
-      className
-    )
-    const codeClasses = makeClasses("p-0", "text-base", "text-foreground-hard")
+    const preClasses = makeVariants({
+      beforeClasses: makeClasses(
+        "px-4",
+        "py-2",
+        "w-full",
+        "bg-background",
+        "text-foreground-soft",
+        "text-lg",
+        // "font-bold",
+        "rounded-xl",
+        "overflow-x-auto",
+        "overflow-y-auto"
+      ),
+      afterClasses: className,
+      variants: {
+        terminal: makeClasses(
+          "bg-foreground-hard/93",
+          "text-positive-accent",
+          "dark:bg-background-hard",
+          "dark:text-positive-accent"
+        )
+      }
+    })
 
     return (
-      <pre className={preClasses}>
-        <code className={codeClasses}>{value}</code>
+      <pre className={preClasses(schema)}>
+        <code className="p-0">{value}</code>
       </pre>
     )
   }
