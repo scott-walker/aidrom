@@ -1,4 +1,4 @@
-import { restClient } from "@shared/api"
+import { restClient } from "@features/provider-form/model/api"
 import type { Agent, AgentRule } from "../lib/schema"
 import type { AgentCreateData, AgentRuleCreateData, AgentRuleSortData, AgentUpdateData } from "../lib/types"
 import {

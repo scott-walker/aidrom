@@ -1,4 +1,4 @@
-import { restClient } from "@shared/api"
+import { restClient } from "@features/provider-form/model/api"
 import type { Chat, ChatListItem } from "../lib/schema"
 import type { ChatCreateData, ChatUpdateData, MessageSendData, MessageSendResult } from "../lib/types"
 import {

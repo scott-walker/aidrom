@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import type { RestError } from "@shared/api"
+import type { RestError } from "@features/provider-form/model/api"
 import type { ProviderListQueryData, ProviderDetailQueryData } from "../lib/types"
 import { fetchProviderById, fetchProviders } from "./provider-api"
 

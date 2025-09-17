@@ -1,4 +1,4 @@
-import type { RestError } from "@shared/api"
+import type { RestError } from "@features/provider-form/model/api"
 import type { Request } from "./schema"
 
 /**

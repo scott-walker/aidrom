@@ -1,4 +1,4 @@
-import type { RestError } from "@shared/api"
+import type { RestError } from "@features/provider-form/model/api"
 import type { Provider } from "./schema"
 
 /**
@@ -36,9 +36,4 @@ export type ProviderCreateData = {
  * Тип данных для запроса на обновление провайдера
  * @namespace Entities.Provider.Lib.Types.ProviderUpdateData
  */
-export type ProviderUpdateData = {
-  driver?: string
-  name?: string
-  description?: string
-  config: Record<string, unknown>
-}
+export type ProviderUpdateData = Partial<ProviderCreateData>

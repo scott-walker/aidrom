@@ -61,7 +61,7 @@ export const Json: FC<Props> = ({
     )
   }
 
-  const classes = makeClasses("overflow-x-auto", "overflow-y-auto", "cursor-text", className)
+  const classes = makeClasses("overflow-x-auto", "overflow-y-auto", "cursor-text", "w-full", "max-w-full", className)
   const theme = createTheme({
     theme: "light",
     settings: {

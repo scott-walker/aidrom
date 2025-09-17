@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import type { RequestListQueryData, RequestDetailQueryData } from "../lib/types"
 import { fetchRequestsByProviderId, fetchRequests } from "./request-api"
-import type { RestError } from "@shared/api/rest-error"
+import type { RestError } from "@features/provider-form/model/api/rest-error"
 
 /**
  * Ключ запроса для записей запросов к провайдерам

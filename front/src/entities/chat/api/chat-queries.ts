@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query"
-import type { RestError } from "@shared/api"
+import type { RestError } from "@features/provider-form/model/api"
 // import { useAgents } from "@entities/agent"
 import type { ChatListQueryData, ChatDetailQueryData } from "../lib/types"
 import { fetchChatById, fetchChats } from "./chat-api"

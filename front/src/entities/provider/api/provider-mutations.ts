@@ -35,7 +35,6 @@ export const useUpdateProvider = (): UseMutationResult<
       return updateProvider(providerId, data)
     },
     onSuccess: (provider: Provider) => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.list({}) })
       queryClient.invalidateQueries({ queryKey: queryKeys.details(provider.id) })
     }
   })

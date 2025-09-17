@@ -1,11 +1,10 @@
 import { useState, type ReactNode } from "react"
+import { useNavigate } from "react-router"
 
 import { Icon } from "@ui/icon"
 import { IconButton } from "@ui/icon-button"
-import { Modal } from "@ui/modal"
 
 import { type Provider, ProviderCard as BaseProviderCard } from "@entities/provider"
-import { ProviderUpdateForm } from "@features/provider-form"
 
 /**
  * Пропсы карточки провайдера
@@ -22,22 +21,19 @@ type ProviderCardProps = {
  */
 export const ProviderCard = ({ provider, children }: ProviderCardProps) => {
   const [details, setDetails] = useState(false)
-  const [edit, setEdit] = useState(false)
-
+  const navigate = useNavigate()
   const toggleDetails = () => setDetails(!details)
-  const onUpdated = () => setEdit(false)
-
-  const trigger = <IconButton className="ml-2" icon="edit" iconSize={26} />
 
   return (
-    <BaseProviderCard provider={provider} details={details} className=" select-none">
+    <BaseProviderCard provider={provider} details={details} className="flex flex-row items-center select-none">
       {children}
 
-      <Modal trigger={trigger} title="Обновление провайдера" open={edit} onOpenChange={setEdit}>
-        <div className="py-2 w-lg">
-          <ProviderUpdateForm providerId={provider.id} onUpdated={onUpdated} />
-        </div>
-      </Modal>
+      <IconButton
+        className="ml-2"
+        icon="edit"
+        iconSize={26}
+        onClick={() => navigate(`/service/providers/${provider.id}`)}
+      />
 
       <div className="flex-1 cursor-pointer" onClick={toggleDetails}>
         <Icon name={details ? "chevron-up" : "chevron-down"} className="ml-auto text-foreground-soft" />

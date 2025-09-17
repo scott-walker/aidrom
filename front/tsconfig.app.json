@@ -14,7 +14,7 @@
       "@utils/*": ["./src/shared/utils/*"],
       "@lib/*": ["./src/shared/lib/*"],
       "@ui/*": ["./src/shared/ui/*"],
-      "@api/*": ["./src/shared/api/*"],
+      "@api/*": ["src/features/provider-form/model/api/*"],
       "@styles/*": ["./src/shared/styles/*"],
       "@styles": ["./src/shared/styles/index.ts"]
     },

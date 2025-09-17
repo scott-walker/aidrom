@@ -17,3 +17,7 @@ export { useCreateProvider, useUpdateProvider } from "./api/provider-mutations"
 
 // UI
 export { ProviderCard } from "./ui/provider-card"
+export { ProviderFaceInfo } from "./ui/provider-face-info"
+export { ProviderModifyInfo } from "./ui/provider-modify-info"
+export { ProviderDriverInfo } from "./ui/provider-driver-info"
+export { ProviderDriverStatus } from "./ui/provider-driver-status"

@@ -9,6 +9,7 @@ export interface ProviderDTO {
   driver: string
   driverInfo: DriverInfo
   driverParamsConfig: DriverParamsConfig
+  driverStatus: string
   name: string
   description: string
   config: Record<string, unknown>

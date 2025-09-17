@@ -2,6 +2,7 @@ import { Outlet } from "react-router"
 import type { PageRoutes } from "@lib/page-api/types"
 import { Layout } from "./layout"
 import { Providers } from "./pages/providers"
+import { Provider } from "./pages/provider"
 import { Settings } from "./pages/settings"
 import { Requests } from "./pages/requests"
 
@@ -20,6 +21,10 @@ export const routes: PageRoutes = {
     {
       index: true,
       element: <Providers />
+    },
+    {
+      path: "providers/:providerId",
+      element: <Provider />
     },
     {
       path: "requests",

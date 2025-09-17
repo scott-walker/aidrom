@@ -11,6 +11,7 @@ export const toProvider = (dto: ProviderDTO): Provider => ({
   driver: dto.driver,
   driverInfo: dto.driverInfo,
   driverParamsConfig: dto.driverParamsConfig,
+  driverStatus: dto.driverStatus,
   name: dto.name,
   description: dto.description,
   config: dto.config,

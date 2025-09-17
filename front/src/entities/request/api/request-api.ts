@@ -1,4 +1,4 @@
-import { restClient } from "@shared/api"
+import { restClient } from "@features/provider-form/model/api"
 import type { Request } from "../lib/schema"
 import { toRequest } from "../lib/mappers"
 
