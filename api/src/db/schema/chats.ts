@@ -15,11 +15,11 @@ export const chats = pgTable(
     agentId: table
       .integer("agent_id")
       .notNull()
-      .references(() => agents.id),
+      .references(() => agents.id, { onDelete: "cascade" }),
     clientId: table
       .integer("client_id")
       .notNull()
-      .references(() => clients.id),
+      .references(() => clients.id, { onDelete: "cascade" }),
     title: table.varchar("title", { length: 255 }),
     context: table.json("context").notNull().default("[]"),
     createdAt: table.timestamp("created_at").notNull().defaultNow(),

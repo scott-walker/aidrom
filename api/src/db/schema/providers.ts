@@ -1,4 +1,4 @@
-import { pgTable, unique } from "drizzle-orm/pg-core"
+import { pgTable, index } from "drizzle-orm/pg-core"
 import { relations } from "drizzle-orm"
 import { requests } from "./requests"
 
@@ -17,7 +17,7 @@ export const providers = pgTable(
     createdAt: table.timestamp("created_at").notNull().defaultNow(),
     updatedAt: table.timestamp("updated_at").notNull().defaultNow()
   }),
-  table => [unique("providers_driver_idx").on(table.driver)]
+  table => [index("providers_driver_idx").on(table.driver)]
 )
 
 /**
