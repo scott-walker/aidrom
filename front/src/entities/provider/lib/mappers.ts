@@ -9,6 +9,7 @@ import type { ProviderCreateData, ProviderUpdateData } from "./types"
 export const toProvider = (dto: ProviderDTO): Provider => ({
   id: dto.id,
   driver: dto.driver,
+  driverInfo: dto.driverInfo,
   driverParamsConfig: dto.driverParamsConfig,
   name: dto.name,
   description: dto.description,

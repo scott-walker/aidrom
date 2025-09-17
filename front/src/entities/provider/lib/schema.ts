@@ -5,6 +5,7 @@
 export interface Provider {
   id: number
   driver: string
+  driverInfo: DriverInfo
   driverParamsConfig: DriverParamsConfig
   name: string
   description: string
@@ -64,4 +65,12 @@ export interface DriverParamsConfigParameterRange extends DriverParamsConfigPara
 export interface DriverParamsConfig {
   meta: Record<string, unknown>
   params: (DriverParamsConfigParameterSelect | DriverParamsConfigParameterRange)[]
+}
+
+/**
+ * Интерфейс информации о драйвере
+ * @namespace Entities.Provider.Lib.Schema.DriverInfo
+ */
+export interface DriverInfo {
+  [key: string]: unknown
 }

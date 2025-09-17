@@ -1,4 +1,4 @@
-import type { DriverParamsConfig } from "./schema"
+import type { DriverInfo, DriverParamsConfig } from "./schema"
 
 /**
  * DTO провайдера
@@ -7,6 +7,7 @@ import type { DriverParamsConfig } from "./schema"
 export interface ProviderDTO {
   id: number
   driver: string
+  driverInfo: DriverInfo
   driverParamsConfig: DriverParamsConfig
   name: string
   description: string
