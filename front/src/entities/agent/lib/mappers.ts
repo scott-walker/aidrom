@@ -2,26 +2,13 @@ import type {
   AgentDTO,
   AgentCreateDTO,
   AgentUpdateDTO,
-  AgentParamsDTO,
   AgentRuleDTO,
   AgentRuleCreateDTO,
   AgentRuleSortDTO
 } from "./dto"
-import type { Agent, AgentParams, AgentRule } from "./schema"
+import type { Agent, AgentRule } from "./schema"
 import type { AgentCreateData, AgentRuleCreateData, AgentRuleSortData, AgentUpdateData } from "./types"
-
-/**
- * Маппер из DTO в сущность "параметры агента"
- * @namespace Entities.Agent.Model.toAgentParams
- */
-export const toAgentParams = (dto: AgentParamsDTO): AgentParams => ({
-  model: dto.model,
-  maxTokens: dto.maxTokens,
-  topP: dto.topP,
-  temperature: dto.temperature,
-  frequencyPenalty: dto.frequencyPenalty,
-  presencePenalty: dto.presencePenalty
-})
+import { toProvider } from "@entities/provider"
 
 /**
  * Маппер из DTO в сущность "правило агента"
@@ -42,26 +29,13 @@ export const toAgent = (dto: AgentDTO): Agent => ({
   id: dto.id,
   name: dto.name,
   avatar: dto.avatar ? atob(dto.avatar) : "",
-  params: toAgentParams(dto.params),
+  params: dto.params,
   description: dto.description,
-  provider: dto.provider,
+  provider: toProvider(dto.provider),
   rules: dto.rules.map(toAgentRule),
   isActive: dto.isActive,
   createdAt: new Date(dto.createdAt),
   updatedAt: new Date(dto.updatedAt)
-})
-
-/**
- * Маппер из данных запроса в DTO параметров агента
- * @namespace Entities.Agent.Model.toAgentParamsDTO
- */
-export const toAgentParamsDTO = (data: AgentParams): AgentParamsDTO => ({
-  model: data.model,
-  maxTokens: data.maxTokens,
-  topP: data.topP,
-  temperature: data.temperature,
-  frequencyPenalty: data.frequencyPenalty,
-  presencePenalty: data.presencePenalty
 })
 
 /**
@@ -73,14 +47,7 @@ export const toAgentCreateDTO = (data: AgentCreateData): AgentCreateDTO => {
     name: data.name,
     avatar: data.avatar ? btoa(data.avatar) : "",
     providerId: data.providerId,
-    params: {
-      model: "",
-      maxTokens: 0,
-      topP: 0,
-      temperature: 0,
-      frequencyPenalty: 0,
-      presencePenalty: 0
-    }
+    params: {}
   }
 }
 
@@ -92,7 +59,7 @@ export const toAgentUpdateDTO = (data: AgentUpdateData): AgentUpdateDTO => {
   const dto = {} as AgentUpdateDTO
 
   if (data.name) dto.name = data.name
-  if (data.params) dto.params = toAgentParamsDTO(data.params)
+  if (data.params) dto.params = data.params
   if (data.description) dto.description = data.description
 
   return dto

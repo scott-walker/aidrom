@@ -22,12 +22,7 @@ export interface AgentDTO {
  * @namespace Entities.Agent.Model.AgentParamsDTO
  */
 export interface AgentParamsDTO {
-  model: string
-  maxTokens: number
-  topP: number
-  temperature: number
-  frequencyPenalty: number
-  presencePenalty: number
+  [key: string]: unknown
 }
 
 /**

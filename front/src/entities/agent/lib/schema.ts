@@ -22,12 +22,7 @@ export interface Agent {
  * @namespace Entities.Agent.Lib.Schema.AgentParams
  */
 export interface AgentParams {
-  model: string
-  maxTokens: number
-  topP: number
-  temperature: number
-  frequencyPenalty: number
-  presencePenalty: number
+  [key: string]: unknown
 }
 
 /**

@@ -12,14 +12,40 @@ export interface Provider {
 }
 
 /**
- * Схема конфигурации параметров драйвера
+ * Интерфейс конфигурации параметров запроса к драйверу (общий)
+ * @namespace Entities.Provider.Lib.Schema.DriverParamsConfigParameter
+ */
+export interface DriverParamsConfigParameter {
+  name: string
+  label: string
+  type: string
+}
+
+/**
+ * Интерфейс конфигурации параметров запроса к драйверу (строка)
+ * @namespace Entities.Provider.Lib.Schema.DriverParamsConfigParameterSelect
+ */
+export interface DriverParamsConfigParameterSelect extends DriverParamsConfigParameter {
+  type: "select"
+  options: string[]
+}
+
+/**
+ * Интерфейс конфигурации параметров запроса к драйверу (число)
+ * @namespace Entities.Provider.Lib.Schema.DriverParamsConfigParameterRange
+ */
+export interface DriverParamsConfigParameterRange extends DriverParamsConfigParameter {
+  type: "range"
+  step: number
+  min: number
+  max: number
+}
+
+/**
+ * Интерфейс конфигурации параметров запроса к драйверу
  * @namespace Entities.Provider.Lib.Schema.DriverParamsConfig
  */
 export interface DriverParamsConfig {
-  model: string[]
-  maxTokens: { min: number; max: number }
-  topP: { min: number; max: number }
-  temperature: { min: number; max: number }
-  frequencyPenalty: { min: number; max: number }
-  presencePenalty: { min: number; max: number }
+  meta: Record<string, unknown>
+  params: (DriverParamsConfigParameterSelect | DriverParamsConfigParameterRange)[]
 }

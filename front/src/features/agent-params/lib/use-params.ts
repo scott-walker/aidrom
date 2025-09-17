@@ -1,27 +1,48 @@
+import { useRef } from "react"
 import type { DriverParamsConfig } from "@entities/provider"
+import type { Agent } from "@entities/agent"
+
+/**
+ * Интерфейс заполненных параметров
+ * @namespace Features.AgentParams.Lib.FilledMap
+ */
+export interface FilledMap {
+  [key: string]: string | number | null | undefined
+}
 
 /**
  * Хук для параметров агента
  * @namespace Features.AgentParams.Lib.useParams
  */
-export const useParams = () => {
-  const parseParams = (paramsConfig: DriverParamsConfig) => {
-    const models = paramsConfig.model.map(model => ({ label: model, value: model }))
-    const maxTokens = paramsConfig.maxTokens
-    const topP = paramsConfig.topP
-    const temperature = paramsConfig.temperature
-    const frequencyPenalty = paramsConfig.frequencyPenalty
-    const presencePenalty = paramsConfig.presencePenalty
+export const useParams = (agent: Agent) => {
+  const config = useRef<DriverParamsConfig>(agent.provider.driverParamsConfig)
+  const values = useRef<FilledMap>(agent.params as FilledMap)
 
-    return {
-      models,
-      maxTokens,
-      topP,
-      temperature,
-      frequencyPenalty,
-      presencePenalty
-    }
+  /**
+   * Получить параметры
+   * @namespace Features.AgentParams.Lib.useParams.params
+   */
+  const params = config.current.params ?? []
+
+  /**
+   * Получить значения параметров
+   * @namespace Features.AgentParams.Lib.useParams.getValues
+   */
+  const getValues = () => values.current
+
+  /**
+   * Получить значение параметра
+   * @namespace Features.AgentParams.Lib.useParams.getValue
+   */
+  const getValue = (name: string) => values.current[name]
+
+  /**
+   * Установить значение параметра
+   * @namespace Features.AgentParams.Lib.useParams.setValue
+   */
+  const setValue = (name: string, value: string | number | null) => {
+    values.current[name] = value
   }
 
-  return { parseParams }
+  return { params, getValues, getValue, setValue }
 }
