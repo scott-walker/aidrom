@@ -43,26 +43,46 @@ export interface DriverRequest {
  * @namespace Drivers.DriverRequestParams
  */
 export interface DriverRequestParams {
-  model: string
-  maxTokens: number
-  topP: number
-  temperature: number
-  frequencyPenalty: number
-  presencePenalty: number
+  [key: string]: unknown
+}
+
+/**
+ * Интерфейс конфигурации параметров запроса к драйверу (общий)
+ * @namespace Drivers.DriverParamsConfigParameter
+ */
+export interface DriverParamsConfigParameter {
+  name: string
+  label: string
+  type: string
+}
+
+/**
+ * Интерфейс конфигурации параметров запроса к драйверу (строка)
+ * @namespace Drivers.DriverParamsConfigParameterSelect
+ */
+export interface DriverParamsConfigParameterSelect extends DriverParamsConfigParameter {
+  type: "select"
+  options: string[]
+}
+
+/**
+ * Интерфейс конфигурации параметров запроса к драйверу (число)
+ * @namespace Drivers.DriverParamsConfigParameterRange
+ */
+export interface DriverParamsConfigParameterRange extends DriverParamsConfigParameter {
+  type: "range"
+  step: number
+  min: number
+  max: number
 }
 
 /**
  * Интерфейс конфигурации параметров запроса к драйверу
- * (позволяет получить диапазон значений для параметров)
- * @namespace Drivers.DriverRequestParamsConfig
+ * @namespace Drivers.DriverParamsConfig
  */
-export interface DriverRequestParamsConfig {
-  model: string[]
-  maxTokens: { min: number; max: number }
-  topP: { min: number; max: number }
-  temperature: { min: number; max: number }
-  frequencyPenalty: { min: number; max: number }
-  presencePenalty: { min: number; max: number }
+export interface DriverParamsConfig {
+  meta: Record<string, unknown>
+  params: (DriverParamsConfigParameterSelect | DriverParamsConfigParameterRange)[]
 }
 
 /**
@@ -96,7 +116,7 @@ export interface DriverConfig {
  * @namespace Drivers.Driver
  */
 export interface Driver {
-  getParamsConfig: () => Promise<DriverRequestParamsConfig>
+  getParamsConfig: () => Promise<DriverParamsConfig>
   sendRequest: (request: DriverRequest) => Promise<DriverResponse>
 }
 

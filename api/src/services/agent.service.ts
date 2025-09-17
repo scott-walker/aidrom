@@ -20,7 +20,7 @@ import {
 import { DriverResponse } from "@drivers"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
-import { processRequest } from "./provider.service"
+import { getProviderById, processRequest } from "./provider.service"
 import { createRequest } from "./request.service"
 
 /**
@@ -78,7 +78,7 @@ export const getAgentById = async (agentId: number): Promise<Agent> => {
     const agent = (await db.query.agents.findFirst({
       where: eq(agents.id, agentId),
       with: {
-        provider: true,
+        // provider: true,
         rules: {
           orderBy: [asc(agentRules.priority)]
         }
@@ -88,6 +88,9 @@ export const getAgentById = async (agentId: number): Promise<Agent> => {
     if (!agent) {
       throw new NotFoundError(`Агент с ID #${agentId} не найден`)
     }
+
+    // Получаем провайдера (с конфигурацией параметров)
+    agent.provider = await getProviderById(agent.providerId)
 
     logger.info("Агент по ID успешно найден", { agentId })
 

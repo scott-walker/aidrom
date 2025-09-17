@@ -10,7 +10,7 @@ import {
   agentMessages,
   requests
 } from "./schema"
-import { DriverRequestParams, DriverRequestParamsConfig } from "@drivers"
+import { DriverRequestParams, DriverParamsConfig } from "@drivers"
 
 /**
  * Роли коммуникации
@@ -25,7 +25,7 @@ export enum CommunicationRoles {
 // Типы для провайдера
 export type Provider = InferSelectModel<typeof providers>
 export type ProviderWithDriver = Provider & {
-  driverParamsConfig: DriverRequestParamsConfig
+  driverParamsConfig: DriverParamsConfig
 }
 export type CreateProviderData = InferInsertModel<typeof providers>
 export type UpdateProviderData = Partial<CreateProviderData>

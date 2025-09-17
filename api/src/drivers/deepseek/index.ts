@@ -1,5 +1,5 @@
 import { createRestClient } from "@utils/api"
-import { Driver, DriverRequest, DriverRequestParamsConfig, DriverResponse } from "../types"
+import { Driver, DriverRequest, DriverParamsConfig, DriverResponse } from "../types"
 import { DeepseekDriverConfig, DeepseekDriverModel, DeepseekDriverRequest, DeepseekDriverResponse } from "./types"
 import { createApiLogger } from "@utils/logger"
 
@@ -19,32 +19,60 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
   const driver: Driver = {
     /**
      * Получение конфигурации параметров запроса к драйверу
-     * @namespace Drivers.Deepseek.getParams
+     * @namespace Drivers.Deepseek.getParamsConfig
      */
-    getParamsConfig: async (): Promise<DriverRequestParamsConfig> => {
+    getParamsConfig: async (): Promise<DriverParamsConfig> => {
       return {
         // model: await restClient.get("models").then(res => res.data.map((item: any) => item.id)),
-        model: [DeepseekDriverModel.DEEPSEEK_CHAT, DeepseekDriverModel.DEEPSEEK_REASONER],
-        maxTokens: {
-          min: 1,
-          max: 4000
-        },
-        temperature: {
-          min: 0,
-          max: 2
-        },
-        topP: {
-          min: 0.1,
-          max: 1
-        },
-        frequencyPenalty: {
-          min: -2,
-          max: 2
-        },
-        presencePenalty: {
-          min: -2,
-          max: 2
-        }
+        meta: {},
+        params: [
+          {
+            name: "model",
+            label: "Модель",
+            type: "select",
+            options: [DeepseekDriverModel.DEEPSEEK_CHAT, DeepseekDriverModel.DEEPSEEK_REASONER]
+          },
+          {
+            name: "maxTokens",
+            label: "Максимальное количество токенов",
+            type: "range",
+            step: 1,
+            min: 1,
+            max: 4000
+          },
+          {
+            name: "temperature",
+            label: "Температура",
+            type: "range",
+            step: 0.1,
+            min: 0,
+            max: 2
+          },
+          {
+            name: "topP",
+            label: "Top P",
+            type: "range",
+            step: 0.1,
+            min: 0.1,
+            max: 1
+          },
+          {
+            name: "frequencyPenalty",
+            label: "Частотная штрафность",
+            type: "range",
+            step: 0.1,
+            min: -2,
+            max: 2
+          },
+          {
+            name: "presencePenalty",
+            label: "Штраф за присутствие",
+            type: "range",
+            step: 0.1,
+            min: -2,
+            max: 2
+          }
+        ]
       }
     },
 

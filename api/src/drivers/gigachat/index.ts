@@ -4,7 +4,7 @@ import path from "path"
 import { getConfigParam } from "@config"
 import { createApiLogger } from "@utils/logger"
 import { createRestClient, RestClient } from "@utils/api"
-import { Driver, DriverRequest, DriverRequestParamsConfig, DriverResponse } from "../types"
+import { Driver, DriverRequest, DriverParamsConfig, DriverResponse } from "../types"
 import {
   GigachatAuthResponse,
   GigachatDriverConfig,
@@ -89,17 +89,51 @@ export const createGigachatDriver = (config: GigachatDriverConfig): Driver => {
      * Получение конфигурации параметров запроса к драйверу
      * @namespace Drivers.Gigachat.getParamsConfig
      */
-    getParamsConfig: async (): Promise<DriverRequestParamsConfig> => {
+    getParamsConfig: async (): Promise<DriverParamsConfig> => {
       const chatClient = await createChatClient()
       const { data }: GigachatDriverModelsResponse = await chatClient.get("models")
 
       return {
-        model: data.map((item: any) => item.id),
-        maxTokens: { min: 1, max: 100 },
-        topP: { min: 0, max: 1 },
-        temperature: { min: 0, max: 1 },
-        frequencyPenalty: { min: 0, max: 1 },
-        presencePenalty: { min: 0, max: 1 }
+        model: {
+          name: "Модель",
+          type: "string",
+          values: data.map((item: any) => item.id)
+        },
+        maxTokens: {
+          name: "Максимальное количество токенов",
+          type: "number",
+          step: 1,
+          min: 1,
+          max: 100
+        },
+        topP: {
+          name: "Top P",
+          type: "number",
+          step: 0.1,
+          min: 0.1,
+          max: 1
+        },
+        temperature: {
+          name: "Температура",
+          type: "number",
+          step: 0.1,
+          min: 0,
+          max: 1
+        },
+        frequencyPenalty: {
+          name: "Частотная штрафность",
+          type: "number",
+          step: 0.1,
+          min: 0,
+          max: 1
+        },
+        presencePenalty: {
+          name: "Штраф за присутствие",
+          type: "number",
+          step: 0.1,
+          min: 0,
+          max: 1
+        }
       }
     },
     /**

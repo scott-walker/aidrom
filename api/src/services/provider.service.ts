@@ -23,7 +23,7 @@ import {
   DriverConfig,
   DriverResponse,
   Driver,
-  DriverRequestParamsConfig,
+  DriverParamsConfig,
   DriverRequestMessages,
   DriverRequestMessageRole,
   DriverRequestParams,
@@ -75,7 +75,7 @@ export const getProviderById = async (providerId: number): Promise<ProviderWithD
   try {
     logger.info("Получение провайдера по ID", { providerId })
 
-    let driverParamsConfig = {} as DriverRequestParamsConfig
+    let driverParamsConfig = {} as DriverParamsConfig
     const providerItem = await db.query.providers.findFirst({
       where: eq(providers.id, providerId)
     })

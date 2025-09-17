@@ -16,12 +16,31 @@ export const createDummyDriver = (config: DummyDriverConfig): Driver => {
      * @namespace Drivers.Dummy.getModels
      */
     getParamsConfig: async () => ({
-      model: ["dummy1", "dummy2"],
-      maxTokens: { min: 1, max: 100 },
-      topP: { min: 0, max: 1 },
-      temperature: { min: 0, max: 1 },
-      frequencyPenalty: { min: 0, max: 1 },
-      presencePenalty: { min: 0, max: 1 }
+      meta: {},
+      params: [
+        {
+          name: "dummyModel",
+          label: "Модель",
+          type: "select",
+          options: ["dummy1", "dummy2"]
+        },
+        {
+          name: "dummyMaxTokens",
+          label: "Максимальное количество токенов",
+          type: "range",
+          min: 0,
+          max: 100,
+          step: 1
+        },
+        {
+          name: "dummyTemperature",
+          label: "Температура",
+          type: "range",
+          min: 0,
+          max: 100,
+          step: 0.1
+        }
+      ]
     }),
 
     /**
