@@ -4,9 +4,9 @@ import { Controller } from "react-hook-form"
 import { Input } from "@ui/input"
 import { FormField } from "@ui/form-field"
 import { Json } from "@ui/json"
-// import { Markdown } from "@ui/markdown"
+import { Select } from "@ui/select"
 
-import type { Provider } from "@entities/provider"
+import { type Provider, useDrivers } from "@entities/provider"
 import { type ProviderForm as ProviderFormType } from "../model/form-schema"
 import { toProvider } from "../model/mapper"
 import { useForm } from "../lib/use-form"
@@ -26,6 +26,12 @@ type ProviderFormProps = {
  * @namespace Features.ProviderForm.Ui.ProviderForm
  */
 export const ProviderForm = ({ children, provider, onSubmit = () => {} }: ProviderFormProps) => {
+  const { drivers, isLoading } = useDrivers()
+  const driversItems = drivers.map((driver: string) => ({
+    label: driver,
+    value: driver
+  }))
+
   const {
     register,
     handleSubmit,
@@ -46,7 +52,20 @@ export const ProviderForm = ({ children, provider, onSubmit = () => {} }: Provid
             <Input {...register("name")} placeholder="Введите название провайдера" error={!!errors.name} />
           </FormField>
           <FormField label="Драйвер" error={errors.driver} className="flex-1">
-            <Input {...register("driver")} placeholder="Введите название драйвера" error={!!errors.driver} />
+            <Controller
+              name="driver"
+              control={control}
+              render={({ field, fieldState }) => (
+                <Select
+                  items={driversItems}
+                  value={field.value}
+                  onChangeValue={value => field.onChange(value)}
+                  placeholder="Выберите драйвер"
+                  error={!!fieldState.error}
+                  disabled={isLoading}
+                />
+              )}
+            />
           </FormField>
         </section>
 

@@ -24,6 +24,16 @@ export const fetchProviderById = async (providerId: number): Promise<Provider> =
 }
 
 /**
+ * Получить список драйверов
+ * @namespace Entities.Provider.Api.fetchDrivers
+ */
+export const fetchDrivers = async (): Promise<string[]> => {
+  const { data: drivers } = await restClient.get("providers/drivers")
+
+  return drivers
+}
+
+/**
  * Создать провайдера
  * @namespace Entities.Provider.Api.createProvider
  */

@@ -12,6 +12,16 @@ export type ProviderListQueryData = {
 }
 
 /**
+ * Тип данных для запроса списка драйверов
+ * @namespace Entities.Provider.Lib.Types.ProviderDriversListQueryData
+ */
+export type ProviderDriversListQueryData = {
+  drivers: string[]
+  isLoading: boolean
+  error: RestError | null
+}
+
+/**
  * Тип данных для запроса одного провайдера
  * @namespace Entities.Provider.Lib.Types.ProviderDetailQueryData
  */

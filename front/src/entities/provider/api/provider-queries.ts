@@ -1,13 +1,19 @@
 import { useQuery } from "@tanstack/react-query"
 import type { RestError } from "@features/provider-form/model/api"
-import type { ProviderListQueryData, ProviderDetailQueryData } from "../lib/types"
-import { fetchProviderById, fetchProviders } from "./provider-api"
+import type { ProviderListQueryData, ProviderDetailQueryData, ProviderDriversListQueryData } from "../lib/types"
+import { fetchDrivers, fetchProviderById, fetchProviders } from "./provider-api"
 
 /**
  * Ключ запроса для провайдеров
  * @namespace Entities.Provider.Api.PROVIDER_QUERY_KEY
  */
 export const PROVIDER_QUERY_KEY = "provider"
+
+/**
+ * Ключ запроса для драйверов
+ * @namespace Entities.Provider.Api.PROVIDER_DRIVERS_QUERY_KEY
+ */
+export const PROVIDER_DRIVERS_QUERY_KEY = "drivers"
 
 /**
  * Время кеширования в миллисекундах
@@ -21,6 +27,7 @@ const STALE_TIME = 60000
  */
 export const queryKeys = {
   all: [PROVIDER_QUERY_KEY] as const,
+  drivers: [PROVIDER_DRIVERS_QUERY_KEY] as const,
   list: (filters: Record<string, string>) => [...queryKeys.all, "list", filters] as const,
   details: (id: number) => [...queryKeys.all, "details", id] as const
 }
@@ -38,6 +45,24 @@ export const useProviders = (): ProviderListQueryData => {
 
   return {
     providers: data || [],
+    isLoading,
+    error: error as RestError | null
+  }
+}
+
+/**
+ * Хук для запроса списка драйверов
+ * @namespace Entities.Provider.Api.useDrivers
+ */
+export const useDrivers = (): ProviderDriversListQueryData => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: queryKeys.drivers,
+    queryFn: fetchDrivers,
+    staleTime: STALE_TIME
+  })
+
+  return {
+    drivers: data || [],
     isLoading,
     error: error as RestError | null
   }

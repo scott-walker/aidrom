@@ -12,7 +12,7 @@ export type { ProviderCreateData, ProviderUpdateData } from "./lib/types"
 export { toProvider, toProviderListItem } from "./lib/mappers"
 
 // API
-export { useProviders, useProviderById } from "./api/provider-queries"
+export { useProviders, useProviderById, useDrivers } from "./api/provider-queries"
 export { useCreateProvider, useUpdateProvider } from "./api/provider-mutations"
 
 // UI
