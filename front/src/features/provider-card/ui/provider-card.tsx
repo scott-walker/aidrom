@@ -1,8 +1,7 @@
 import { type ReactNode } from "react"
 import { useNavigate } from "react-router"
 
-import { IconButton } from "@ui/icon-button"
-
+import { makeClasses } from "@lib/style-api"
 import { type Provider, ProviderCard as BaseProviderCard } from "@entities/provider"
 
 /**
@@ -12,25 +11,24 @@ import { type Provider, ProviderCard as BaseProviderCard } from "@entities/provi
 type ProviderCardProps = {
   provider: Provider
   children?: ReactNode
+  className?: string
 }
 
 /**
  * Карточка провайдера
  * @namespace Features.ProviderCard
  */
-export const ProviderCard = ({ provider, children }: ProviderCardProps) => {
+export const ProviderCard = ({ provider, children, className = "" }: ProviderCardProps) => {
   const navigate = useNavigate()
+  const cardClasses = makeClasses("flex", "flex-row", "items-center", "select-none", className)
 
   return (
-    <BaseProviderCard provider={provider} className="flex flex-row items-center select-none">
+    <BaseProviderCard
+      provider={provider}
+      className={cardClasses}
+      onClick={() => navigate(`/service/providers/${provider.id}`)}
+    >
       {children}
-
-      <IconButton
-        className="ml-2"
-        icon="edit"
-        iconSize={26}
-        onClick={() => navigate(`/service/providers/${provider.id}`)}
-      />
     </BaseProviderCard>
   )
 }
