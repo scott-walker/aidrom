@@ -194,14 +194,19 @@ export const sendMessage = async (chatId: number, message: string): Promise<Send
   try {
     logger.info("Отправка сообщения в чат", { chatId, message })
 
-    // Получаем чат по ID
-    const chat = await getChatById(chatId)
+    // Получить чат по ID
+    const chat = await db.query.chats.findFirst({ where: eq(chats.id, chatId) })
+
+    if (!chat) {
+      throw new NotFoundError(`Чат с ID #${chatId} не найден`)
+    }
 
     // Отправляем запрос к API
+    logger.info("Отправка запроса к API")
     const request: RequestWithResponseContent = await sendRequest({
-      agentId: chat.agent.id,
-      clientId: chat.client.id,
-      chatСontext: chat.context,
+      agentId: chat.agentId,
+      clientId: chat.clientId,
+      chatСontext: chat.context as ChatContext,
       message
     })
 
