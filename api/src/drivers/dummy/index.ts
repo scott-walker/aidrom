@@ -34,7 +34,7 @@ export const createDummyDriver = (config: DummyDriverConfig): Driver => {
         },
         {
           name: "dummyTemperature",
-          label: "Температура",
+          label: "Температура (ура-ура)",
           type: "range",
           min: 0,
           max: 100,

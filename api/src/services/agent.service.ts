@@ -240,7 +240,7 @@ export const addRule = async (agentId: number, data: CreateAgentRuleData): Promi
 
     logger.info("Максимальный приоритет правил агента", { maxPriority })
 
-    const priority = maxPriority ? maxPriority + 1 : 0
+    const priority = maxPriority + 1
 
     logger.info("Приоритет правила агента успешно вычислен", { priority })
 

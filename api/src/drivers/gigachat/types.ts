@@ -42,8 +42,8 @@ export interface GigachatDriverRequest {
   model: string
   temperature: number
   top_p: number
-  repetition_penalty?: number
-  max_tokens?: number
+  repetition_penalty: number
+  max_tokens: number
 }
 
 /**

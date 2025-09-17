@@ -43,7 +43,7 @@ export interface DriverRequest {
  * @namespace Drivers.DriverRequestParams
  */
 export interface DriverRequestParams {
-  [key: string]: unknown
+  [key: string]: string | number | boolean
 }
 
 /**

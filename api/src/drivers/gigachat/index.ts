@@ -94,48 +94,50 @@ export const createGigachatDriver = (config: GigachatDriverConfig): Driver => {
       const { data }: GigachatDriverModelsResponse = await chatClient.get("models")
 
       return {
-        model: {
-          name: "Модель",
-          type: "string",
-          values: data.map((item: any) => item.id)
-        },
-        maxTokens: {
-          name: "Максимальное количество токенов",
-          type: "number",
-          step: 1,
-          min: 1,
-          max: 100
-        },
-        topP: {
-          name: "Top P",
-          type: "number",
-          step: 0.1,
-          min: 0.1,
-          max: 1
-        },
-        temperature: {
-          name: "Температура",
-          type: "number",
-          step: 0.1,
-          min: 0,
-          max: 1
-        },
-        frequencyPenalty: {
-          name: "Частотная штрафность",
-          type: "number",
-          step: 0.1,
-          min: 0,
-          max: 1
-        },
-        presencePenalty: {
-          name: "Штраф за присутствие",
-          type: "number",
-          step: 0.1,
-          min: 0,
-          max: 1
-        }
+        meta: {},
+        params: [
+          {
+            name: "Модель",
+            label: "Модель",
+            type: "select",
+            options: data.map((item: any) => item.id)
+          },
+          {
+            label: "Максимальное количество токенов",
+            name: "maxTokens",
+            type: "range",
+            step: 1,
+            min: 1,
+            max: 100
+          },
+          {
+            name: "temperature",
+            label: "Температура",
+            type: "range",
+            step: 1,
+            min: 1,
+            max: 100
+          },
+          {
+            name: "topP",
+            label: "Top P",
+            type: "range",
+            step: 0.1,
+            min: 0.1,
+            max: 1
+          },
+          {
+            name: "repetitionPenalty",
+            label: "Штраф за повторение",
+            type: "range",
+            step: 0.1,
+            min: 0,
+            max: 1
+          }
+        ]
       }
     },
+
     /**
      * Отправка запроса к API Gigachat
      * @namespace Drivers.Gigachat.sendRequest
@@ -145,12 +147,11 @@ export const createGigachatDriver = (config: GigachatDriverConfig): Driver => {
 
       const driverRequest: GigachatDriverRequest = {
         messages: request.messages,
-        model: request.params.model,
-        temperature: request.params.temperature,
-        top_p: request.params.topP,
-        max_tokens: request.params.maxTokens
-        // TODO
-        // repetition_penalty: request.params.repetitionPenalty,
+        model: request.params.model as string,
+        temperature: request.params.temperature as number,
+        top_p: request.params.topP as number,
+        max_tokens: request.params.maxTokens as number,
+        repetition_penalty: request.params.repetitionPenalty as number
       }
 
       const data: GigachatDriverResponse = await chatClient.post("chat/completions", driverRequest)
