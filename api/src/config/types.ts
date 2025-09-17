@@ -7,6 +7,7 @@ export type AppConfig = {
   srcDir: string
   runtimeDir: string
   logDir: string
+  staticDir: string
   dbDir: string
   host: string
   port: number
@@ -15,6 +16,7 @@ export type AppConfig = {
   logFile: string
   logMetaDir: string
   logLevel: string
+  static: Record<string, unknown>
 }
 
 /**

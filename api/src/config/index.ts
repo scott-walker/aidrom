@@ -27,6 +27,11 @@ const runtimeDir = process.env.RUNTIME_DIR || resolve(rootDir, "runtime")
 const logDir = process.env.LOG_DIR || resolve(rootDir, "logs")
 
 /**
+ * Каталог для хранения статических файлов
+ */
+const staticDir = process.env.STATIC_DIR || resolve(rootDir, "static")
+
+/**
  * Каталог для работы с БД
  */
 const dbDir = resolve(srcDir, "db")
@@ -40,6 +45,7 @@ const config: AppConfig = {
   srcDir,
   runtimeDir,
   logDir,
+  staticDir,
   dbDir,
 
   // Параметры для запуска сервиса
@@ -55,7 +61,16 @@ const config: AppConfig = {
   // Логирование
   logFile: resolve(logDir, "api.log"),
   logMetaDir: resolve(runtimeDir, "winston"),
-  logLevel: process.env.LOG_LEVEL || "info"
+  logLevel: process.env.LOG_LEVEL || "info",
+
+  // Работа со статикой
+  static: {
+    maxAge: "1h",
+    etag: true,
+    lastModified: true,
+    index: false,
+    dotfiles: "deny"
+  }
 }
 
 /**

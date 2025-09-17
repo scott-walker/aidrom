@@ -40,10 +40,11 @@ export interface GigachatDriverModelsResponse {
 export interface GigachatDriverRequest {
   messages: DriverRequestMessages
   model: string
-  temperature: number
-  top_p: number
-  repetition_penalty: number
-  max_tokens: number
+  temperature?: number
+  top_p?: number
+  repetition_penalty?: number
+  max_tokens?: number
+  function_call?: string
 }
 
 /**

@@ -1,7 +1,7 @@
-import crypto from "crypto"
 import https from "https"
-import GigaChat from "gigachat"
+import { GigaChat, detectImage } from "gigachat"
 import { createApiLogger } from "@utils/logger"
+import * as imager from "@utils/imager"
 import { Driver, DriverRequest, DriverParamsConfig, DriverResponse } from "../types"
 import { GigachatDriverConfig, GigachatDriverRequest } from "./types"
 
@@ -94,8 +94,44 @@ export const createGigachatDriver = (config: GigachatDriverConfig): Driver => {
      * Отправка запроса к API Gigachat
      * @namespace Drivers.Gigachat.sendRequest
      */
+    // sendRequest: async (request: DriverRequest): Promise<DriverResponse> => {
+    //   logger.info("🚀 Отправка запроса", { action: "sendRequest", request })
+
+    //   try {
+    //     const driverRequest: GigachatDriverRequest = {
+    //       messages: request.messages,
+    //       model: request.params.model as string,
+    //       temperature: request.params.temperature as number,
+    //       top_p: request.params.topP as number,
+    //       max_tokens: request.params.maxTokens as number,
+    //       repetition_penalty: request.params.repetitionPenalty as number
+    //     }
+
+    //     const data = await giga.chat(driverRequest)
+
+    //     logger.info("Получен ответ от API Gigachat", { action: "sendRequest", data })
+
+    //     return {
+    //       content: data.choices[0].message.content,
+    //       providerRequestId: data.xHeaders.xRequestId,
+    //       requestParams: driverRequest,
+    //       responseData: data,
+    //       requestTokens: data.usage.prompt_tokens,
+    //       responseTokens: data.usage.completion_tokens
+    //     }
+    //   } catch (error) {
+    //     logger.error("Ошибка при обработке запроса", { action: "sendRequest", error })
+
+    //     throw error
+    //   }
+    // },
+
+    /**
+     * Отправка запроса к API Gigachat для генерации изображения
+     * @namespace Drivers.Gigachat.sendGenerateImage
+     */
     sendRequest: async (request: DriverRequest): Promise<DriverResponse> => {
-      logger.info("🚀 Отправка запроса", { action: "sendRequest", request })
+      logger.info("🚀 Отправка запроса", { action: "sendGenerateImage", request })
 
       try {
         const driverRequest: GigachatDriverRequest = {
@@ -104,23 +140,31 @@ export const createGigachatDriver = (config: GigachatDriverConfig): Driver => {
           temperature: request.params.temperature as number,
           top_p: request.params.topP as number,
           max_tokens: request.params.maxTokens as number,
-          repetition_penalty: request.params.repetitionPenalty as number
+          repetition_penalty: request.params.repetitionPenalty as number,
+          function_call: "auto"
         }
 
         const data = await giga.chat(driverRequest)
+        const content = data.choices[0]?.message.content ?? ""
 
-        logger.info("Получен ответ от API Gigachat", { action: "sendRequest", data })
+        // Получение изображения по идентификатору
+        const detectedImage = detectImage(content)
+        const image = await giga.getImage(detectedImage.uuid)
+        const fileName = `${detectedImage.uuid}.jpeg`
+        const replacedContent = content.replace(detectedImage.uuid, `https://api.aidrom.lc/static/${fileName}`)
+
+        imager.save(fileName, image.content)
 
         return {
-          content: data.choices[0].message.content,
-          providerRequestId: data.xHeaders.xRequestId,
+          content: replacedContent,
+          providerRequestId: data.xHeaders.xRequestID,
           requestParams: driverRequest,
           responseData: data,
           requestTokens: data.usage.prompt_tokens,
           responseTokens: data.usage.completion_tokens
         }
       } catch (error) {
-        logger.error("Ошибка при обработке запроса", { action: "sendRequest", error })
+        logger.error("Ошибка при обработке запроса", { action: "sendGenerateImage", error })
 
         throw error
       }
