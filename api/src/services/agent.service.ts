@@ -48,10 +48,10 @@ export const getAgents = async (): Promise<Agent[]> => {
     const items = (await db.query.agents.findMany({
       orderBy: [desc(agents.createdAt)],
       with: {
-        provider: true,
-        rules: {
-          orderBy: [asc(agentRules.priority)]
-        }
+        provider: true
+        // rules: {
+        //   orderBy: [asc(agentRules.priority)]
+        // }
       }
     })) as Agent[]
 

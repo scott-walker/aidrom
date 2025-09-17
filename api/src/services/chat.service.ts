@@ -50,13 +50,18 @@ export const getChats = async (): Promise<Chat[]> => {
     const items = await db.query.chats.findMany({
       orderBy: [desc(chats.updatedAt)],
       with: {
-        agent: true
+        // agent: true
       }
     })
 
     logger.info("Запрос к БД выполнен успешно", { count: items.length })
 
-    return items.map(item => mapChat({ ...item, context: [] } as Chat))
+    return items.map(item => {
+      const chat = item as Chat
+
+      delete chat.context
+      return mapChat(chat)
+    })
   } catch (error) {
     logger.error("Ошибка при получении всех чатов из БД", { error: error.message })
 
