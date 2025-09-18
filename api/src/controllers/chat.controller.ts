@@ -109,9 +109,31 @@ export const deleteChat = async (req: Request, res: Response, next: NextFunction
 
     logger.info("Чат успешно удален", { chatId })
 
-    res.status(204).json({ message: "Чат успешно удален" })
+    res.json({ message: "Чат успешно удален" })
   } catch (err) {
     logger.error("Ошибка при удалении чата", { error: err.message, chatId })
+
+    next(err)
+  }
+}
+
+/**
+ * Оптимизировать контекст чата
+ * @namespace Chat.Controller.optimizeChatContext
+ */
+export const optimizeChatContext = async (req: Request, res: Response, next: NextFunction) => {
+  const chatId = parseInt(req.params.chatId)
+
+  try {
+    logger.info("Оптимизация контекста чата", { chatId })
+
+    const context = await chatService.optimizeChatContext(chatId)
+
+    logger.info("Контекст чата успешно оптимизирован", { chatId })
+
+    res.json({ message: "Контекст чата успешно оптимизирован", context })
+  } catch (err) {
+    logger.error("Ошибка при оптимизации контекста чата", { error: err.message, chatId })
 
     next(err)
   }
@@ -127,11 +149,11 @@ export const clearChatContext = async (req: Request, res: Response, next: NextFu
   try {
     logger.info("Очистка контекста чата", { chatId })
 
-    await chatService.clearChatContext(chatId)
+    const context = await chatService.clearChatContext(chatId)
 
     logger.info("Контекст чата успешно очищен", { chatId })
 
-    res.status(204).json({ message: "Контекст чата успешно очищен" })
+    res.json({ message: "Контекст чата успешно очищен", context })
   } catch (err) {
     logger.error("Ошибка при очистке контекста чата", { error: err.message, chatId })
 

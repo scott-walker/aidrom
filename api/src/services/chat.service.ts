@@ -169,24 +169,6 @@ export const deleteChat = async (chatId: number): Promise<void> => {
 }
 
 /**
- * Очистить контекст чата
- * @namespace Chat.Service.clearChatContext
- */
-export const clearChatContext = async (chatId: number): Promise<void> => {
-  try {
-    logger.info("Очистка контекста чата", { chatId })
-
-    await db.update(chats).set({ context: [] }).where(eq(chats.id, chatId))
-
-    logger.info("Контекст чата успешно очищен", { chatId })
-  } catch (error) {
-    logger.error("Ошибка при очистке контекста чата", { error: error.message, chatId })
-
-    throw error
-  }
-}
-
-/**
  * Отправляет сообщение в чат
  * @namespace Chat.Service.sendMessage
  */
@@ -195,7 +177,7 @@ export const sendMessage = async (chatId: number, message: string): Promise<Send
     logger.info("Отправка сообщения в чат", { chatId, message })
 
     // Получить чат по ID
-    const chat = await db.query.chats.findFirst({ where: eq(chats.id, chatId) })
+    const chat = (await db.query.chats.findFirst({ where: eq(chats.id, chatId) })) as Chat
 
     if (!chat) {
       throw new NotFoundError(`Чат с ID #${chatId} не найден`)
@@ -206,7 +188,7 @@ export const sendMessage = async (chatId: number, message: string): Promise<Send
     const request: RequestWithResponseContent = await sendRequest({
       agentId: chat.agentId,
       clientId: chat.clientId,
-      chatСontext: chat.context as ChatContext,
+      chatСontext: chat.context,
       message
     })
 
@@ -266,11 +248,93 @@ export const sendMessage = async (chatId: number, message: string): Promise<Send
 }
 
 /**
+ * Очистить контекст чата
+ * @namespace Chat.Service.clearChatContext
+ */
+export const clearChatContext = async (chatId: number): Promise<ChatContext> => {
+  try {
+    logger.info("Очистка контекста чата", { chatId })
+
+    const [chat] = (await db
+      .update(chats)
+      .set({ context: [], updatedAt: new Date() })
+      .where(eq(chats.id, chatId))
+      .returning()) as Chat[]
+
+    logger.info("Контекст чата успешно очищен", { chatId })
+
+    return chat.context
+  } catch (error) {
+    logger.error("Ошибка при очистке контекста чата", { error: error.message, chatId })
+
+    throw error
+  }
+}
+
+/**
+ * Оптимизировать контекст чата (сократить контекст)
+ * @namespace Chat.Service.optimizeChatContext
+ */
+export const optimizeChatContext = async (chatId: number): Promise<ChatContext> => {
+  try {
+    logger.info("Оптимизация контекста чата", { chatId })
+
+    const chat = (await db.query.chats.findFirst({ where: eq(chats.id, chatId) })) as Chat
+
+    if (!chat) {
+      throw new NotFoundError(`Чат с ID #${chatId} не найден`)
+    }
+
+    // Отправляем запрос на оптимизацию контекста к API
+    logger.info("Отправка запроса к API")
+    const request: RequestWithResponseContent = await sendRequest({
+      agentId: chat.agentId,
+      clientId: chat.clientId,
+      chatСontext: chat.context,
+      message: "Подведи итог нашего общения. Сформулируй основные факты, мысли и идеи, которые мы обсуждали."
+    })
+
+    // Обновляем контекст чата
+    logger.info("Обновление контекста чата")
+    resetChatContext(chat)
+    pushChatContext(chat, CommunicationRoles.Agent, request.responseContent)
+
+    await db
+      .update(chats)
+      .set({
+        context: chat.context,
+        updatedAt: new Date()
+      })
+      .where(eq(chats.id, chatId))
+
+    logger.info("Контекст чата успешно оптимизирован", { chatId })
+
+    return chat.context
+  } catch (error) {
+    logger.error("Ошибка при оптимизации контекста чата", { error: error.message, chatId })
+
+    throw error
+  }
+}
+
+/**
  * Создать запись в контексте чата
  * @namespace Chat.Service.pushChatContext
  */
 export const pushChatContext = (chat: Chat, role: CommunicationRoles, content: string): Chat => {
   const context: ChatContext = [...chat.context, { role, content }]
+
+  chat.context = context
+
+  return chat
+}
+
+/**
+ * Сбросить контекст чата
+ * @namespace Chat.Service.resetChatContext
+ */
+export const resetChatContext = (chat: Chat): Chat => {
+  const context: ChatContext = []
 
   chat.context = context
 
