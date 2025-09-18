@@ -42,13 +42,18 @@ export const AdvancedMarkdownReader = ({ value, html = false }: Props) => {
           pre: Pre,
           img: Image,
           code: Code,
-          h1: ({ children }) => <h1 className="mb-4 text-4xl font-bold">{children}</h1>,
-          h2: ({ children }) => <h2 className="mb-4 text-3xl font-bold">{children}</h2>,
-          h3: ({ children }) => <h3 className="mb-4 text-2xl font-bold">{children}</h3>,
-          h4: ({ children }) => <h4 className="mb-4 text-xl font-bold">{children}</h4>,
-          h5: ({ children }) => <h5 className="mb-4 text-lg font-bold">{children}</h5>,
-          h6: ({ children }) => <h6 className="mb-4 text-base font-bold">{children}</h6>,
+          h1: ({ children }) => <h1 className="flex gap-4 mb-4 text-4xl">{children}</h1>,
+          h2: ({ children }) => <h2 className="flex gap-4 mb-4 text-3xl">{children}</h2>,
+          h3: ({ children }) => <h3 className="flex gap-4 mb-4 text-2xl">{children}</h3>,
+          h4: ({ children }) => <h4 className="flex gap-4 mb-4 text-xl">{children}</h4>,
+          h5: ({ children }) => <h5 className="flex gap-4 mb-4 text-lg">{children}</h5>,
+          h6: ({ children }) => <h6 className="flex gap-4 mb-4 text-base">{children}</h6>,
           hr: () => <hr className="my-8 border-background-hard/90" />,
+          a: ({ children, href }) => (
+            <a className="text-primary" href={href} target="_blank">
+              {children}
+            </a>
+          ),
           p: ({ children }) => <p className="mb-4 last:mb-0 text-base leading-relaxed">{children}</p>,
           ol: ({ children }) => <ol className="mb-4 pl-8 list-decimal list-outside">{children}</ol>,
           ul: ({ children }) => <ul className="mb-4 pl-8 list-disc list-inside">{children}</ul>,
