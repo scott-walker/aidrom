@@ -8,35 +8,33 @@ import { useToast } from "@features/toasts"
  * @namespace Features.Chat.SendMessage.Lib.UseSendMessage
  */
 export const useSendMessage = () => {
-  const { input, isPending, setInput, setPending, setLastClientMessage } = useChatStore()
+  const { isPending, setPending, setLastClientMessage } = useChatStore()
   const { mutate: send } = useApiSendMessage()
   const toast = useToast()
 
-  const sendMessage = async (chatId: number) => {
+  const sendMessage = async (chatId: number, input: string) => {
     if (!input.trim() || isPending) return
 
     setLastClientMessage(makeLastClientMessage(input))
     setPending(true)
-    setInput("")
     send(
       { chatId, data: { message: input } },
       {
         onSuccess: () => {
           setLastClientMessage(null)
-          setPending(false)
         },
         onError: ({ message }) => {
-          setPending(false)
           toast.error("Произошла ошибка при отправке сообщения", message)
+        },
+        onSettled: () => {
+          setPending(false)
         }
       }
     )
   }
 
   return {
-    input,
     isPending,
-    setInput,
     sendMessage
   }
 }
