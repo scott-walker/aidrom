@@ -29,9 +29,6 @@ export const Button = ({
       makeUiShadow(),
       makeUiTransition(),
       !disabled && makeUiClickable(),
-      // !disabled && "hover:scale-110",
-      disabled && "cursor-not-allowed",
-      disabled && "opacity-50",
       rounded && "rounded-full",
       "ring-2",
       "ring-offset-3",
@@ -44,7 +41,13 @@ export const Button = ({
       "px-4",
       "py-1.5"
     ),
-    afterClasses: className,
+    afterClasses: makeClasses(
+      disabled && "cursor-not-allowed",
+      disabled && "opacity-50",
+      disabled && "hover:border-transparent",
+      disabled && "hover:ring-transparent",
+      className
+    ),
     variants: {
       ghost: makeClasses(
         "bg-transparent",

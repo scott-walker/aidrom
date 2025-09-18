@@ -56,6 +56,7 @@ export const ChatInput = ({ chat, className = "" }: ChatInputProps) => {
   return (
     <div className={containerClasses}>
       <Textarea
+        value={input}
         disabled={disabledInput}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
