@@ -145,18 +145,22 @@ export const createGigachatDriver = (config: GigachatDriverConfig): Driver => {
         }
 
         const data = await giga.chat(driverRequest)
-        const content = data.choices[0]?.message.content ?? ""
+        let content = data.choices[0]?.message.content ?? ""
 
         // Получение изображения по идентификатору
         const detectedImage = detectImage(content)
-        const image = await giga.getImage(detectedImage.uuid)
-        const fileName = `${detectedImage.uuid}.jpeg`
-        const replacedContent = content.replace(detectedImage.uuid, `https://api.aidrom.lc/static/${fileName}`)
 
-        imager.save(fileName, image.content)
+        // Если в содержимом есть изображение
+        if (detectedImage) {
+          const image = await giga.getImage(detectedImage.uuid)
+          const fileName = `${detectedImage.uuid}.jpeg`
+          content = content.replace(detectedImage.uuid, `/static/${fileName}`)
+
+          imager.save(fileName, image.content)
+        }
 
         return {
-          content: replacedContent,
+          content,
           providerRequestId: data.xHeaders.xRequestID,
           requestParams: driverRequest,
           responseData: data,
