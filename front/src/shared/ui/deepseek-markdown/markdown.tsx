@@ -1,9 +1,17 @@
 import ReactMarkdown, { type Components } from "react-markdown"
+
+// GitHub Flavored Markdown
 import remarkGfm from "remark-gfm"
 import rehypeHighlight from "rehype-highlight"
 import rehypeRaw from "rehype-raw"
 import rehypeSanitize from "rehype-sanitize"
 import "highlight.js/styles/github.min.css"
+
+import { Image } from "./elements/image"
+import { Pre } from "./elements/pre"
+import { Code } from "./elements/code"
+import { Heading } from "./elements/heading"
+import { Paragraph } from "./elements/paragraph"
 
 /**
  * Пропсы компонента для отображения Markdown
@@ -28,45 +36,30 @@ export const DeepSeekMarkdown = ({ content, html = false }: Props) => {
   }
 
   return (
-    <div className="typography-container">
+    <div>
       <ReactMarkdown
-        remarkPlugins={[remarkGfm]} // поддержка GitHub Flavored Markdown
-        rehypePlugins={rehypePlugins} // подсветка синтаксиса
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={rehypePlugins}
         components={
           {
-            pre: ({ children }) => <div className="code-wrapper">{children}</div>,
-
-            img: ({ src, alt }) => {
-              return (
-                <img src={src} alt={alt} className="mb-4 border-3 border-primary rounded-2xl max-w-1/2 max-h-1/2" />
-              )
-            },
-
-            // Кастомизация компонентов
-            code({ className, children, ...props }) {
-              const inline = "inline" in props ? props.inline : false
-              const match = /language-(\w+)/.exec(className || "")
-              const language = match ? match[1] : ""
-
-              return !inline ? (
-                <div className="code-block">
-                  {language && <div className="code-block__language">{language}</div>}
-
-                  <pre className={className}>
-                    <code {...props}>{children}</code>
-                  </pre>
-                </div>
-              ) : (
-                <code className={className} {...props}>
-                  {children}
-                </code>
-              )
-            }
-
-            // Стилизация других элементов
-            // h1: ({ children }) => <h1 className="text-3xl font-bold my-4">{children}</h1>,
-            // h2: ({ children }) => <h2 className="text-2xl font-semibold my-3">{children}</h2>,
-            // p: ({ children }) => <p className="my-2 leading-relaxed">{children}</p>,
+            pre: Pre,
+            img: Image,
+            code: Code,
+            h1: ({ children }) => <h1 className="mb-4 text-4xl font-bold">{children}</h1>,
+            h2: ({ children }) => <h2 className="mb-4 text-3xl font-bold">{children}</h2>,
+            h3: ({ children }) => <h3 className="mb-4 text-2xl font-bold">{children}</h3>,
+            h4: ({ children }) => <h4 className="mb-4 text-xl font-bold">{children}</h4>,
+            h5: ({ children }) => <h5 className="mb-4 text-lg font-bold">{children}</h5>,
+            h6: ({ children }) => <h6 className="mb-4 text-base font-bold">{children}</h6>,
+            p: ({ children }) => <p className="mb-4 text-base leading-relaxed">{children}</p>,
+            ol: ({ children }) => <ol className="pl-8 list-decimal list-outside">{children}</ol>,
+            ul: ({ children }) => <ul className="pl-8 list-disc list-inside">{children}</ul>,
+            li: ({ children }) => <li className="mb-2">{children}</li>,
+            blockquote: ({ children }) => (
+              <blockquote className="pl-4 pr-4 py-2 border-l-4 border-background-hard bg-background/30 rounded-r-lg text-foreground-soft">
+                {children}
+              </blockquote>
+            )
             // table: ({ children }) => (
             //   <div className="overflow-x-auto">
             //     <table className="min-w-full border-collapse">{children}</table>
