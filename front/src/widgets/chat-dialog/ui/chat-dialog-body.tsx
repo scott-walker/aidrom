@@ -1,7 +1,8 @@
 import { makeClasses } from "@lib/style-api"
-import { type Chat, MessageBubble, useChatStore, ChatPending, Roles, MessageEmptyList } from "@entities/chat"
+import { type Chat, useChatStore, ChatPending, Roles, MessageEmptyList } from "@entities/chat"
 import { useScrollBody } from "../lib/use-scroll-body"
 import { useFormatMessages } from "../lib/use-format-messages"
+import { ChatMessage } from "@features/chat-message"
 
 /**
  * Пропсы компонента тела диалога
@@ -44,7 +45,7 @@ export const ChatDialogBody = ({ chat, className = "" }: ChatDialogBodyProps) =>
   return (
     <div ref={bodyRef} className={bodyClasses}>
       {formattedMessages.map(message => (
-        <MessageBubble key={message.id} {...message} className={makeMessageClasses(message.role)} />
+        <ChatMessage key={message.id} {...message} className={makeMessageClasses(message.role)} />
       ))}
       {isPending && <ChatPending />}
     </div>

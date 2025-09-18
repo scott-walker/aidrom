@@ -10,23 +10,21 @@ import "highlight.js/styles/github.min.css"
 import { Image } from "./elements/image"
 import { Pre } from "./elements/pre"
 import { Code } from "./elements/code"
-import { Heading } from "./elements/heading"
-import { Paragraph } from "./elements/paragraph"
 
 /**
  * Пропсы компонента для отображения Markdown
- * @namespace Shared.UI.DeepSeekMarkdown.Props
+ * @namespace Shared.UI.AdvancedMarkdownReader.Props
  */
 type Props = {
-  content: string
+  value: string
   html?: boolean
 }
 
 /**
  * Компонент для отображения Markdown
- * @namespace Shared.UI.DeepSeekMarkdown
+ * @namespace Shared.UI.AdvancedMarkdownReader
  */
-export const DeepSeekMarkdown = ({ content, html = false }: Props) => {
+export const AdvancedMarkdownReader = ({ value, html = false }: Props) => {
   let rehypePlugins
 
   if (html) {
@@ -68,7 +66,7 @@ export const DeepSeekMarkdown = ({ content, html = false }: Props) => {
           } as Components
         }
       >
-        {content}
+        {value}
       </ReactMarkdown>
     </div>
   )
