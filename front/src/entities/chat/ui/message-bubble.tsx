@@ -26,6 +26,7 @@ export const MessageBubble = ({ children, role, createdAt, className = "" }: Mes
     "px-6",
     "py-4",
     "min-w-[300px]",
+    "max-w-full",
     "rounded-xl",
     "bg-background-soft",
     role === Roles.Client && "bg-background-hard/50",

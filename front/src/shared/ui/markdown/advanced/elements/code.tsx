@@ -1,4 +1,5 @@
 import type { ReactNode } from "react"
+import classes from "../style.module.css"
 
 /**
  * Компонент для отображения кода
@@ -27,8 +28,8 @@ export const Code = ({ children, className, inline, ...props }: Props) => {
   }
 
   return (
-    <div className="code-block">
-      {language && <div className="code-block__language">{language}</div>}
+    <div className={classes.codeBlock}>
+      {language && <div className={classes.codeBlockLanguage}>{language}</div>}
 
       <pre className={className}>
         <code {...props}>{children}</code>

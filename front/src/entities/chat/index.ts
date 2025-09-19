@@ -2,7 +2,7 @@
 export { Roles } from "./lib/constants"
 export { type Chat, type ChatListItem, type Message } from "./lib/schema"
 export type { ChatCreateData, ChatUpdateData, MessageSendData, MessageSendResult } from "./lib/types"
-export { makeLastClientMessage } from "./lib/utils"
+export { makeLastClientMessage, makeLastAgentMessage } from "./lib/utils"
 
 // API
 export { useChats, useChatById } from "./api/chat-queries"

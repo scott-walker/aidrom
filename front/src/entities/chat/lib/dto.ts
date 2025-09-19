@@ -1,16 +1,4 @@
-// import type { AgentListItemDTO } from "@entities/agent"
 import type { Roles } from "./constants"
-
-/**
- * DTO сообщения
- * @namespace Entities.Chat.Model.MessageDTO
- */
-export interface MessageDTO {
-  id: number
-  content: string
-  createdAt: Date
-  updatedAt: Date
-}
 
 /**
  * DTO пары сообщений
@@ -20,8 +8,8 @@ export interface MessagePairDTO {
   id: number
   chatId: number
   requestId: number
-  clientMessage: MessageDTO
-  agentMessage: MessageDTO
+  clientMessage: string
+  agentMessage: string
   createdAt: string
   updatedAt: string
 }
@@ -45,8 +33,6 @@ export interface ChatDTO {
   clientId: number
   title: string
   context: ChatContextItemDTO[]
-  // agent: AgentDTO
-  // client: ClientDTO
   messagePairs: MessagePairDTO[]
   createdAt: string
   updatedAt: string
@@ -96,8 +82,11 @@ export interface MessageSendDTO {
  * @namespace Entities.Chat.Model.MessageSendResultDTO
  */
 export interface MessageSendResultDTO {
+  id: number
   chatId: number
   requestId: number
-  clientMessage: MessageDTO
-  agentMessage: MessageDTO
+  clientMessage: string
+  agentMessage: string
+  createdAt: string
+  updatedAt: string
 }

@@ -21,7 +21,7 @@ type ChatDialogProps = {
  */
 export const ChatDialog = ({ chatId, className = "" }: ChatDialogProps) => {
   const { chat, isLoading } = useChatById(chatId)
-  const containerClasses = makeClasses("relative flex flex-col px-8 w-full h-full", className)
+  const containerClasses = makeClasses("relative flex flex-col w-full h-full", className)
 
   useSubtitle(chat?.title || "")
 

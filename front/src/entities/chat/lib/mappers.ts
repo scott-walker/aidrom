@@ -4,12 +4,11 @@ import type {
   ChatListItemDTO,
   ChatCreateDTO,
   ChatUpdateDTO,
-  MessageDTO,
   MessagePairDTO,
   MessageSendDTO,
   MessageSendResultDTO
 } from "./dto"
-import { type Chat, type Message, type ChatListItem } from "./schema"
+import { type Chat, type ChatListItem, type Message } from "./schema"
 import type { ChatCreateData, ChatUpdateData, MessageSendData, MessageSendResult } from "./types"
 
 /**
@@ -23,7 +22,7 @@ export const toChat = (dto: ChatDTO): Chat => {
     agentId: dto.agentId,
     clientId: dto.clientId,
     context: dto.context,
-    messages: dto.messagePairs.map(fromPairToMessages).flat(),
+    messages: dto.messagePairs.map(toMessages).flat(),
     createdAt: new Date(dto.createdAt),
     updatedAt: new Date(dto.updatedAt)
   }
@@ -48,21 +47,21 @@ export const toChatListItem = (dto: ChatListItemDTO): ChatListItem => {
  * Маппер из DTO сообщения в сущность сообщения
  * @namespace Entities.Chat.Lib.Mappers.toMessage
  */
-export const toMessage = (dto: MessageDTO, role: Roles): Message => {
-  return {
-    id: crypto.randomUUID(),
-    role,
-    content: dto.content,
-    createdAt: new Date(dto.createdAt)
-  }
-}
-
-/**
- * Маппер из пары сообщений в кортеж сообщений
- * @namespace Entities.Chat.Lib.Mappers.fromPairToMessages
- */
-export const fromPairToMessages = ({ clientMessage, agentMessage }: MessagePairDTO): Message[] => {
-  return [toMessage(clientMessage, Roles.Client), toMessage(agentMessage, Roles.Agent)]
+export const toMessages = (dto: MessagePairDTO): Message[] => {
+  return [
+    {
+      id: crypto.randomUUID(),
+      role: Roles.Client,
+      content: dto.clientMessage,
+      createdAt: new Date(dto.createdAt)
+    },
+    {
+      id: crypto.randomUUID(),
+      role: Roles.Agent,
+      content: dto.agentMessage,
+      createdAt: new Date(dto.createdAt)
+    }
+  ]
 }
 
 /**
@@ -73,10 +72,7 @@ export const toMessageSendResult = (dto: MessageSendResultDTO): MessageSendResul
   return {
     chatId: dto.chatId,
     requestId: dto.requestId,
-    messages: fromPairToMessages({
-      clientMessage: dto.clientMessage,
-      agentMessage: dto.agentMessage
-    } as MessagePairDTO)
+    messages: toMessages(dto)
   }
 }
 

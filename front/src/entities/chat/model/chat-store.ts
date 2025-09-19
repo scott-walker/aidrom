@@ -8,8 +8,10 @@ import type { Message } from "../lib/schema"
 interface ChatStore {
   isPending: boolean
   lastClientMessage: Message | null
+  lastAgentMessage: Message | null
   setPending: (isPending: boolean) => void
   setLastClientMessage: (message: Message | null) => void
+  setLastAgentMessage: (message: Message | null) => void
 }
 
 /**
@@ -19,6 +21,8 @@ interface ChatStore {
 export const useChatStore = create<ChatStore>(set => ({
   isPending: false,
   lastClientMessage: null,
+  lastAgentMessage: null,
   setPending: isPending => set({ isPending }),
-  setLastClientMessage: message => set({ lastClientMessage: message })
+  setLastClientMessage: message => set({ lastClientMessage: message }),
+  setLastAgentMessage: message => set({ lastAgentMessage: message })
 }))

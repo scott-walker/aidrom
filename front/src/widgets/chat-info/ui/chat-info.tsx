@@ -28,13 +28,7 @@ export const ChatInfo = ({ chatId }: ChatInfoProps) => {
   const chatAgent = agent as Agent
 
   const { isVisible } = useToggleChatInfo()
-  const containerClasses = makeClasses(
-    "flex",
-    "flex-col",
-    "h-full",
-    "bg-background-soft",
-    isVisible ? "w-full" : "w-fit"
-  )
+  const containerClasses = makeClasses("flex", "flex-col", "h-full", "bg-background-soft")
   const contentClasses = makeClasses(
     "flex",
     "flex-col",
@@ -43,7 +37,6 @@ export const ChatInfo = ({ chatId }: ChatInfoProps) => {
     "py-6",
     "overflow-y-auto",
     "scrollbar-hide",
-    // "w-[400px]",
     !isVisible && "hidden"
   )
 

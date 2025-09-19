@@ -13,3 +13,16 @@ export const makeLastClientMessage = (content: string): Message => {
     createdAt: new Date()
   }
 }
+
+/**
+ * Создать последнее сообщение агента
+ * @namespace Entities.Chat.Lib.Utils.makeLastAgentMessage
+ */
+export const makeLastAgentMessage = (content: string): Message => {
+  return {
+    id: crypto.randomUUID(),
+    role: Roles.Agent,
+    content,
+    createdAt: new Date()
+  }
+}

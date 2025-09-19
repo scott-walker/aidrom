@@ -1,5 +1,5 @@
 import { useChatStore } from "@entities/chat"
-import { makeLastClientMessage } from "@entities/chat"
+import { makeLastClientMessage, makeLastAgentMessage } from "@entities/chat"
 import { useSendMessage as useApiSendMessage } from "@entities/chat/api/chat-mutations"
 import { useToast } from "@features/toasts"
 
@@ -8,7 +8,7 @@ import { useToast } from "@features/toasts"
  * @namespace Features.Chat.SendMessage.Lib.UseSendMessage
  */
 export const useSendMessage = () => {
-  const { isPending, setPending, setLastClientMessage } = useChatStore()
+  const { isPending, setPending, setLastClientMessage, setLastAgentMessage } = useChatStore()
   const { mutate: send } = useApiSendMessage()
   const toast = useToast()
 
@@ -17,20 +17,30 @@ export const useSendMessage = () => {
 
     setLastClientMessage(makeLastClientMessage(input))
     setPending(true)
-    send(
-      { chatId, data: { message: input } },
-      {
-        onSuccess: () => {
-          setLastClientMessage(null)
-        },
-        onError: ({ message }) => {
-          toast.error("Произошла ошибка при отправке сообщения", message)
-        },
-        onSettled: () => {
-          setPending(false)
+
+    const stream = new EventSource(`${import.meta.env.VITE_API_BASE_URL}/chats/${chatId}/stream`)
+
+    stream.onmessage = event => {
+      // const data = JSON.parse(event.data)
+      // setLastAgentMessage(makeLastAgentMessage(data.agentMessage))
+    }
+    stream.onopen = () => {
+      send(
+        { chatId, data: { message: input } },
+        {
+          onSuccess: () => {
+            setLastClientMessage(null)
+          },
+          onError: ({ message }) => {
+            toast.error("Произошла ошибка при отправке сообщения", message)
+          },
+          onSettled: () => {
+            setPending(false)
+            stream.close()
+          }
         }
-      }
-    )
+      )
+    }
   }
 
   return {
