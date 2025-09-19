@@ -14,10 +14,9 @@ import {
   DriverInfo,
   DriverParamsConfig,
   DriverStatus,
-  DriverRequest,
-  SenderEvents,
-  ISender
+  DriverRequest
 } from "@drivers"
+import { ISender, SenderEvents } from "@utils/sender"
 import * as requestService from "./request.service"
 
 /**

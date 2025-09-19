@@ -16,7 +16,8 @@ import {
   mapAgent,
   AgentParams
 } from "@db"
-import { DriverRequestMessage, DriverRequestMessageRole, DriverRequest, DriverRequestMessages, ISender } from "@drivers"
+import { DriverRequestMessage, DriverRequestMessageRole, DriverRequest, DriverRequestMessages } from "@drivers"
+import { ISender } from "@utils/sender"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
 import { getProviderById, processRequest } from "./provider.service"

@@ -18,7 +18,8 @@ import {
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
 import { sendRequest } from "@services/agent.service"
-import { DriverRequestMessageRole, DriverRequestMessages, ISender, SenderEvents } from "@drivers"
+import { DriverRequestMessageRole, DriverRequestMessages } from "@drivers"
+import { ISender, SenderEvents } from "@utils/sender"
 
 // Создаем логгер для сервиса чатов
 const logger = createServiceLogger("ChatService")
@@ -193,6 +194,7 @@ export const sendMessage = async (chatId: number, message: string): Promise<ISen
           agentMessage: responseContent
         })
         .where(eq(messagePairs.id, messagePairId))
+        .returning()
 
       // Обновить контекст чата сообщением агента
       logger.info("Добавление сообщения агента в контекст чата", { chatId })

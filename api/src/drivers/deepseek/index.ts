@@ -108,17 +108,17 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
         logger.info("🚀 Отправка запроса", { action: "Sender.process" })
 
         try {
-          const asStream = request.params.stream as boolean
+          const asStream = request.stream as boolean
 
           // Сформировать запрос к API
           const driverRequest: DeepseekDriverRequest = {
-            model: request.params.model as DeepseekDriverModel,
+            model: request.model as DeepseekDriverModel,
             messages: request.messages,
-            frequency_penalty: request.params.frequencyPenalty as number,
-            presence_penalty: request.params.presencePenalty as number,
-            max_tokens: request.params.maxTokens as number,
-            temperature: request.params.temperature as number,
-            top_p: request.params.topP as number,
+            frequency_penalty: request.frequencyPenalty as number,
+            presence_penalty: request.presencePenalty as number,
+            max_tokens: request.maxTokens as number,
+            temperature: request.temperature as number,
+            top_p: request.topP as number,
             stream: asStream
           }
 

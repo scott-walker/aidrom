@@ -2,10 +2,10 @@ import express from "express"
 import cors from "cors"
 import { getConfigParam } from "@config"
 import { router } from "@router"
-import logger from "@utils/logger.js"
-import requestLogger from "@middlewares/requestLogger.js"
-import notFoundHandler from "@middlewares/notFoundHandler.js"
-import errorHandler from "@middlewares/errorHandler.js"
+import logger from "@utils/logger"
+import requestLogger from "@middlewares/requestLogger"
+import notFoundHandler from "@middlewares/notFoundHandler"
+import errorHandler from "@middlewares/error-handler"
 
 // Инициализация приложения
 const app = express()

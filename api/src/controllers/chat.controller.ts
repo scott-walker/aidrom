@@ -173,6 +173,8 @@ export const sendMessage = async (req: Request, res: Response, next: NextFunctio
   const sse = sessionStorage.get(chatId)
 
   if (!sse) {
+    logger.error("SSE сессия не найдена", { chatId })
+
     return res.status(400).json({ error: "SSE сессия не найдена" })
   }
 
@@ -181,19 +183,23 @@ export const sendMessage = async (req: Request, res: Response, next: NextFunctio
 
     const sender = await chatService.sendMessage(chatId, message)
 
-    sender.on(SenderEvents.START, () => {
+    sender.on(SenderEvents.START, async () => {
       logger.info("Сообщение от клиента успешно отправлено", { chatId })
+
       sse.push({ type: "start" })
     })
     // sender.on(SenderEvents.CHUNK, ({ content }: ISenderEventData) => {
     //   sse.push({ type: "chunk", data: content })
     // })
-    sender.on(SenderEvents.ERROR, ({ error }: ISenderErrorEventData) => {
+    sender.on(SenderEvents.ERROR, async ({ error }: ISenderErrorEventData) => {
       logger.error("Ошибка при отправке/получении сообщения", { error: error.message, chatId, message })
+
       sse.push({ type: "error", message: error.message })
+      next(error)
     })
-    sender.on(SenderEvents.END, (messagePair: ISenderEndEventData) => {
+    sender.on(SenderEvents.END, async (messagePair: ISenderEndEventData) => {
       logger.info("Сообщение от AI агента успешно получено", { chatId })
+
       sse.push({ type: "end", data: messagePair })
       res.json(messagePair)
     })

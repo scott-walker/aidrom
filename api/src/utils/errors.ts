@@ -1,8 +1,14 @@
 /**
  * Базовый класс для кастомных ошибок приложения
+ * @namespace Utils.AppError
  */
 export class AppError extends Error {
-  constructor(message, statusCode = 500, code = "INTERNAL_ERROR") {
+  statusCode: number
+  code: string
+  isOperational: boolean
+  stack?: string
+
+  constructor(message: string, statusCode = 500, code = "INTERNAL_ERROR") {
     super(message)
     this.name = this.constructor.name
     this.statusCode = statusCode
@@ -15,6 +21,7 @@ export class AppError extends Error {
 
 /**
  * Ошибка для случаев, когда ресурс не найден
+ * @namespace Utils.NotFoundError
  */
 export class NotFoundError extends AppError {
   constructor(message = "Ресурс не найден", code = "NOT_FOUND") {
@@ -24,6 +31,7 @@ export class NotFoundError extends AppError {
 
 /**
  * Ошибка для случаев неверных данных запроса
+ * @namespace Utils.ValidationError
  */
 export class ValidationError extends AppError {
   constructor(message = "Неверные данные запроса", code = "VALIDATION_ERROR") {
@@ -33,6 +41,7 @@ export class ValidationError extends AppError {
 
 /**
  * Ошибка для случаев неавторизованного доступа
+ * @namespace Utils.UnauthorizedError
  */
 export class UnauthorizedError extends AppError {
   constructor(message = "Неавторизованный доступ", code = "UNAUTHORIZED") {
@@ -42,6 +51,7 @@ export class UnauthorizedError extends AppError {
 
 /**
  * Ошибка для случаев запрещенного доступа
+ * @namespace Utils.ForbiddenError
  */
 export class ForbiddenError extends AppError {
   constructor(message = "Доступ запрещен", code = "FORBIDDEN") {
@@ -51,6 +61,7 @@ export class ForbiddenError extends AppError {
 
 /**
  * Ошибка для случаев ошибок API
+ * @namespace Utils.ApiError
  */
 export class ApiError extends AppError {
   constructor(message = "Ошибка API", code = "API_ERROR") {
@@ -58,8 +69,21 @@ export class ApiError extends AppError {
   }
 }
 
+/**
+ * Ошибка для случаев ошибок отправщика сообщений
+ * @namespace Services.SenderError
+ */
+export class SenderError extends AppError {
+  constructor(message = "Ошибка отправщика сообщений", stack: string = "", code = "SENDER_ERROR") {
+    super(message, 500, code)
+
+    this.stack = [this.stack, stack].join("\n\nSender handler stack:\n")
+  }
+}
+
 // /**
 //  * Ошибка для случаев превышения лимитов
+//  * @namespace Utils.RateLimitError
 //  */
 // export class RateLimitError extends AppError {
 //   constructor(message = "Превышен лимит запросов", code = "RATE_LIMIT") {

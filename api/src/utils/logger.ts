@@ -9,9 +9,9 @@ import { getConfigParam } from "@config"
  * @namespace Utils.ILogger
  */
 export interface ILogger {
-  info: (message: string, meta?: ILoggerMeta) => void
-  warn: (message: string, meta?: ILoggerMeta) => void
-  error: (message: string, meta?: ILoggerMeta) => void
+  info: (message: string, data?: ILoggerMetaData) => void
+  warn: (message: string, data?: ILoggerMetaData) => void
+  error: (message: string, data?: ILoggerMetaData) => void
 }
 
 /**
@@ -24,9 +24,9 @@ export interface IDbLogger extends ILogger {
 
 /**
  * Интерфейс метаданных логгера
- * @namespace Utils.ILoggerMeta
+ * @namespace Utils.ILoggerMetaData
  */
-export interface ILoggerMeta {
+export interface ILoggerMetaData {
   action?: string
   method?: string
   status?: string
@@ -37,9 +37,9 @@ export interface ILoggerMeta {
 
 /**
  * Интерфейс метаданных логгера для HTTP
- * @namespace Utils.IHttpLoggerMeta
+ * @namespace Utils.IHttpLoggerMetaData
  */
-export interface IHttpLoggerMeta extends ILoggerMeta {
+export interface IHttpLoggerMetaData extends ILoggerMetaData {
   ip?: string
   host?: string
   scheme?: string
@@ -174,26 +174,26 @@ export const createHttpLogger = (): ILogger => {
    * @param {ILogger[K]} handler - Обработчик логов
    */
   const wrap = <K extends keyof ILogger>(handler: ILogger[K]): ILogger[K] => {
-    return (message, meta: IHttpLoggerMeta = {}) => {
-      const normalizedMeta: IHttpLoggerMeta = {}
+    return (message, data: IHttpLoggerMetaData = {}) => {
+      const normalizedData: IHttpLoggerMetaData = {}
 
-      const httpMethod = meta.method || null
-      const httpCode = meta.statusCode ? `[${meta.statusCode}]` : null
-      const httpIp = meta.ip || null
-      const httpHost = meta.host || null
-      const httpScheme = meta.scheme || null
-      const httpUrl = meta.url || null
-      const httpDuration = meta.duration ? `(${meta.duration})` : null
+      const httpMethod = data.method || null
+      const httpCode = data.statusCode ? `[${data.statusCode}]` : null
+      const httpIp = data.ip || null
+      const httpHost = data.host || null
+      const httpScheme = data.scheme || null
+      const httpUrl = data.url || null
+      const httpDuration = data.duration ? `(${data.duration})` : null
       let httpFullUrl = null
 
       if (httpScheme && httpHost && httpUrl) {
         httpFullUrl = `${httpScheme}://${httpHost}${httpUrl}`
       }
 
-      if (meta.params) normalizedMeta.params = meta.params
-      if (meta.query) normalizedMeta.query = meta.query
-      if (meta.headers) normalizedMeta.headers = meta.headers
-      if (meta.responseSize) normalizedMeta.responseSize = meta.responseSize
+      if (data.params) normalizedData.params = data.params
+      if (data.query) normalizedData.query = data.query
+      if (data.headers) normalizedData.headers = data.headers
+      if (data.responseSize) normalizedData.responseSize = data.responseSize
 
       /**
        * Собрать информацию о запросе
@@ -204,7 +204,7 @@ export const createHttpLogger = (): ILogger => {
         return info || "<unknown>"
       }
 
-      return handler(`${compileInfo()} :: ${message}`, normalizedMeta)
+      return handler(`${compileInfo()} :: ${message}`, { data: normalizedData })
     }
   }
 
@@ -227,12 +227,18 @@ export const createDbLogger = (): IDbLogger => {
     defaultMeta: { layer: "DB" }
   })
 
-  // Для drizzle
-  const logQuery: IDbLogger["logQuery"] = (query, params) => {
-    logger.info(`[QUERY] ${query}`, { params })
+  return {
+    info: (message, data = {}) => {
+      logger.info(`[DB.${getMethodName()}] ${message}`, { data })
+    },
+    warn: (message, data = {}) => {
+      logger.warn(`[DB.${getMethodName()}] ${message}`, { data })
+    },
+    error: (message, data = {}) => {
+      logger.error(`[DB.${getMethodName()}] ${message}`, { data })
+    },
+    logQuery: (query, params) => logger.info(`[DB.QUERY] ${query}`, { params })
   }
-
-  return { ...logger, logQuery }
 }
 
 /**
@@ -248,14 +254,14 @@ export const createSenderLogger = (): ILogger => {
   })
 
   return {
-    info: (message, meta = {}) => {
-      logger.info(`[SENDER.${getMethodName()}] ${message}`, meta)
+    info: (message, data = {}) => {
+      logger.info(`[SENDER] ${message}`, { data })
     },
-    warn: (message, meta = {}) => {
-      logger.warn(`[SENDER.${getMethodName()}] ${message}`, meta)
+    warn: (message, data = {}) => {
+      logger.warn(`[SENDER] ${message}`, { data })
     },
-    error: (message, meta = {}) => {
-      logger.error(`[SENDER.${getMethodName()}] ${message}`, meta)
+    error: (message, data = {}) => {
+      logger.error(`[SENDER] ${message}`, { data })
     }
   }
 }
@@ -274,17 +280,23 @@ export const createApiLogger = (apiName: string): ILogger => {
   })
 
   return {
-    info: (message, meta = {}) => {
-      const methodName = getMethodName(meta.action)
-      logger.info(`[${apiName}.${methodName}] ${message}`, meta)
+    info: (message, data = {}) => {
+      const methodName = getMethodName(data.action)
+
+      delete data.action
+      logger.info(`[${apiName}.${methodName}] ${message}`, { data })
     },
-    warn: (message, meta = {}) => {
-      const methodName = getMethodName(meta.action)
-      logger.warn(`[${apiName}.${methodName}] ${message}`, meta)
+    warn: (message, data = {}) => {
+      const methodName = getMethodName(data.action)
+
+      delete data.action
+      logger.warn(`[${apiName}.${methodName}] ${message}`, { data })
     },
-    error: (message, meta = {}) => {
-      const methodName = getMethodName(meta.action)
-      logger.error(`[${apiName}.${methodName}] ${message}`, meta)
+    error: (message, data = {}) => {
+      const methodName = getMethodName(data.action)
+
+      delete data.action
+      logger.error(`[${apiName}.${methodName}] ${message}`, { data })
     }
   }
 }
@@ -303,14 +315,14 @@ export const createControllerLogger = (controllerName: string): ILogger => {
   })
 
   return {
-    info: (message, meta = {}) => {
-      logger.info(`[${controllerName}.${getMethodName()}] ${message}`, meta)
+    info: (message, data = {}) => {
+      logger.info(`[${controllerName}.${getMethodName()}] ${message}`, { data })
     },
-    warn: (message, meta = {}) => {
-      logger.warn(`[${controllerName}.${getMethodName()}] ${message}`, meta)
+    warn: (message, data = {}) => {
+      logger.warn(`[${controllerName}.${getMethodName()}] ${message}`, { data })
     },
-    error: (message, meta = {}) => {
-      logger.error(`[${controllerName}.${getMethodName()}] ${message}`, meta)
+    error: (message, data = {}) => {
+      logger.error(`[${controllerName}.${getMethodName()}] ${message}`, { data })
     }
   }
 }
@@ -329,14 +341,14 @@ export const createServiceLogger = (service: string): ILogger => {
   })
 
   return {
-    info: (message, meta = {}) => {
-      logger.info(`[${service}.${getMethodName()}] ${message}`, meta)
+    info: (message, data = {}) => {
+      logger.info(`[${service}.${getMethodName()}] ${message}`, { data })
     },
-    warn: (message, meta = {}) => {
-      logger.warn(`[${service}.${getMethodName()}] ${message}`, meta)
+    warn: (message, data = {}) => {
+      logger.warn(`[${service}.${getMethodName()}] ${message}`, { data })
     },
-    error: (message, meta = {}) => {
-      logger.error(`[${service}.${getMethodName()}] ${message}`, meta)
+    error: (message, data = {}) => {
+      logger.error(`[${service}.${getMethodName()}] ${message}`, { data })
     }
   }
 }

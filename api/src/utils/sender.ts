@@ -1,5 +1,6 @@
 import { EventEmitter } from "events"
 import { createSenderLogger, ILogger } from "@utils/logger"
+import { SenderError } from "@utils/errors"
 
 /**
  * События эмиттера отправки сообщения
@@ -20,18 +21,12 @@ export enum SenderEvents {
  */
 export interface ISender {
   process: () => Promise<void>
-  emit<K extends keyof ISenderEventMap>(event: K, data: ISenderEventMap[K]): ReturnType<EventEmitter["emit"]>
-  on<K extends keyof ISenderEventMap>(
+  emit: <K extends keyof ISenderEventMap>(event: K, data: ISenderEventMap[K]) => ReturnType<EventEmitter["emit"]>
+  on: <K extends keyof ISenderEventMap>(
     event: K,
-    listener: (data: ISenderEventMap[K]) => void
-  ): ReturnType<EventEmitter["on"]>
+    listener: (data: ISenderEventMap[K]) => Promise<void>
+  ) => ReturnType<EventEmitter["on"]>
 }
-
-/**
- * Интерфейс ошибки отправщика сообщений
- * @namespace Services.ISenderError
- */
-export interface ISenderError extends Error {}
 
 /**
  * Интерфейс фабрики отправщика сообщений
@@ -103,7 +98,7 @@ export interface ISenderCompleteEventData extends ISenderEventData {
  * @namespace Services.ISenderErrorEventData
  */
 export interface ISenderErrorEventData extends ISenderEventData {
-  error: ISenderError
+  error: SenderError
 }
 
 /**
@@ -124,6 +119,98 @@ export interface ISenderRequestStoredEventData extends ISenderEventData {
 }
 
 /**
+ * Отправщик сообщений
+ * @namespace Drivers.Sender
+ */
+export class Sender implements ISender {
+  /**
+   * Эмиттер
+   * @namespace Drivers.Sender.emitter
+   */
+  private readonly emitter: EventEmitter
+
+  /**
+   * Логгер
+   * @namespace Drivers.Sender.logger
+   */
+  private readonly logger: ILogger
+
+  /**
+   * Обработчик запроса
+   * @namespace Drivers.Sender.handler
+   */
+  private readonly handler: ISenderHandler
+
+  /**
+   * Конструктор
+   * @namespace Drivers.Sender.constructor
+   */
+  public constructor(handler: ISenderHandler, emitter: EventEmitter, logger: ILogger) {
+    logger.info("Инициализация отправщика сообщений")
+
+    this.handler = handler
+    this.emitter = emitter
+    this.logger = logger
+  }
+
+  /**
+   * Обработка запроса
+   * @namespace Drivers.Sender.process
+   */
+  public async process(): Promise<void> {
+    try {
+      this.logger.info("Обработка запроса")
+
+      await this.handler.call(this, this)
+
+      this.logger.info("Запрос успешно обработан")
+    } catch (error) {
+      this.logger.error("Ошибка при обработке запроса", { error: error.message })
+
+      throw error
+    }
+  }
+
+  /**
+   * Эммитеть событие
+   * @namespace Drivers.Sender.emit
+   */
+  emit: ISender["emit"] = (event, data) => {
+    return this.emitter.emit(event as string, data)
+  }
+
+  /**
+   * Обработчик событий
+   * @namespace Drivers.Sender.on
+   */
+  on: ISender["on"] = (event, listener) => {
+    /**
+     * Обернуть обработчик событий
+     * @namespace Drivers.Sender.on.wrap
+     */
+    const wrap = (listener: (data: ISenderEventData) => Promise<void>) => {
+      return async (data: ISenderEventData) => {
+        try {
+          this.logger.info("Обработка события", { event, data })
+
+          await listener(data)
+
+          this.logger.info("Событие успешно обработано", { event })
+        } catch (error) {
+          this.logger.error("Ошибка при обработке события", { event, error: error.message })
+
+          this.emit(SenderEvents.ERROR, {
+            error: new SenderError(error.message, error.stack)
+          })
+        }
+      }
+    }
+
+    return this.emitter.on(event as string, wrap(listener))
+  }
+}
+
+/**
  * Создать отправщик сообщений
  * @namespace Drivers.createSender
  */
@@ -133,39 +220,5 @@ export const createSender: ISenderFactory = (handler: ISenderHandler): ISender =
 
   logger.info("Создание отправщика сообщений")
 
-  return {
-    /**
-     * Обработать запрос
-     * @namespace Drivers.Sender.process
-     */
-    async process() {
-      try {
-        logger.info("Обработка запроса")
-
-        await handler.call(this, this)
-
-        logger.info("Запрос успешно обработан")
-      } catch (error) {
-        logger.error("Ошибка при обработке запроса", { error: error.message })
-
-        throw error
-      }
-    },
-
-    /**
-     * Эммитеть событие
-     * @namespace Drivers.Sender.emit
-     */
-    emit(event, data) {
-      return emitter.emit(event as string, data)
-    },
-
-    /**
-     * Обработать событие
-     * @namespace Drivers.Sender.on
-     */
-    on(event, listener) {
-      return emitter.on(event as string, listener)
-    }
-  }
+  return new Sender(handler, emitter, logger)
 }
