@@ -3,6 +3,7 @@ import DailyRotateFile from "winston-daily-rotate-file"
 import { mkdir } from "fs/promises"
 import { dirname } from "path"
 import { getConfigParam } from "@config"
+import { safeStringify } from "./helpers"
 
 /**
  * Интерфейс логгера
@@ -81,8 +82,8 @@ const createLogFormat = (): winston.Logform.Format => {
 
       let log = `${timestamp} [${level.toUpperCase()}]: ${layer} :: ${message}`
 
-      if (Object.keys(meta).length > 0) {
-        log += ` ${JSON.stringify(meta)}`
+      if ("data" in meta && Object.keys(meta.data).length > 0) {
+        log += safeStringify(meta.data)
       }
 
       if (stack) {
@@ -130,15 +131,15 @@ const createTransports = (fileMarker: string): winston.transport[] => {
 
 /**
  * Получить название метода из стека вызовов
- * @param {string} defaultName - Название метода по умолчанию
+ * @param {ILoggerMetaData} data - Метаданные логгера
  * @returns {string} Название метода
  */
-const getMethodName = (defaultName: string = "unknown"): string => {
+const getMethodName = (data: ILoggerMetaData): string => {
   const stack = new Error().stack
   const callerLine = stack.split("\n")[3]
   const match = callerLine.replace("Module.", "").match(/at\s+(\w+)\s+\(/)
 
-  return match ? match[1] : defaultName
+  return match ? match[1] : data.action || "unknown"
 }
 
 /**
@@ -229,13 +230,13 @@ export const createDbLogger = (): IDbLogger => {
 
   return {
     info: (message, data = {}) => {
-      logger.info(`[DB.${getMethodName()}] ${message}`, { data })
+      logger.info(`[DB] ${message}`, { data })
     },
     warn: (message, data = {}) => {
-      logger.warn(`[DB.${getMethodName()}] ${message}`, { data })
+      logger.warn(`[DB] ${message}`, { data })
     },
     error: (message, data = {}) => {
-      logger.error(`[DB.${getMethodName()}] ${message}`, { data })
+      logger.error(`[DB] ${message}`, { data })
     },
     logQuery: (query, params) => logger.info(`[DB.QUERY] ${query}`, { params })
   }
@@ -281,22 +282,13 @@ export const createApiLogger = (apiName: string): ILogger => {
 
   return {
     info: (message, data = {}) => {
-      const methodName = getMethodName(data.action)
-
-      delete data.action
-      logger.info(`[${apiName}.${methodName}] ${message}`, { data })
+      logger.info(`[${apiName}.${getMethodName(data)}] ${message}`, { data })
     },
     warn: (message, data = {}) => {
-      const methodName = getMethodName(data.action)
-
-      delete data.action
-      logger.warn(`[${apiName}.${methodName}] ${message}`, { data })
+      logger.warn(`[${apiName}.${getMethodName(data)}] ${message}`, { data })
     },
     error: (message, data = {}) => {
-      const methodName = getMethodName(data.action)
-
-      delete data.action
-      logger.error(`[${apiName}.${methodName}] ${message}`, { data })
+      logger.error(`[${apiName}.${getMethodName(data)}] ${message}`, { data })
     }
   }
 }
@@ -316,13 +308,13 @@ export const createControllerLogger = (controllerName: string): ILogger => {
 
   return {
     info: (message, data = {}) => {
-      logger.info(`[${controllerName}.${getMethodName()}] ${message}`, { data })
+      logger.info(`[${controllerName}.${getMethodName(data)}] ${message}`, { data })
     },
     warn: (message, data = {}) => {
-      logger.warn(`[${controllerName}.${getMethodName()}] ${message}`, { data })
+      logger.warn(`[${controllerName}.${getMethodName(data)}] ${message}`, { data })
     },
     error: (message, data = {}) => {
-      logger.error(`[${controllerName}.${getMethodName()}] ${message}`, { data })
+      logger.error(`[${controllerName}.${getMethodName(data)}] ${message}`, { data })
     }
   }
 }
@@ -342,13 +334,13 @@ export const createServiceLogger = (service: string): ILogger => {
 
   return {
     info: (message, data = {}) => {
-      logger.info(`[${service}.${getMethodName()}] ${message}`, { data })
+      logger.info(`[${service}.${getMethodName(data)}] ${message}`, { data })
     },
     warn: (message, data = {}) => {
-      logger.warn(`[${service}.${getMethodName()}] ${message}`, { data })
+      logger.warn(`[${service}.${getMethodName(data)}] ${message}`, { data })
     },
     error: (message, data = {}) => {
-      logger.error(`[${service}.${getMethodName()}] ${message}`, { data })
+      logger.error(`[${service}.${getMethodName(data)}] ${message}`, { data })
     }
   }
 }

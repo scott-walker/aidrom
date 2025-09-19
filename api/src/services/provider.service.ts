@@ -199,7 +199,7 @@ export const processRequest = async (providerId: number, request: DriverRequest)
 
     // Обработать завершение запроса
     sender.on(SenderEvents.COMPLETE, async response => {
-      logger.info("Сохранение информации о запросе к провайдеру", { providerId })
+      logger.info("Сохранение информации о запросе к провайдеру", { action: "onComplete", providerId })
 
       // Сохранить запрос в БД
       const requestData = await requestService.createRequest({
@@ -211,7 +211,11 @@ export const processRequest = async (providerId: number, request: DriverRequest)
         responseTokens: response.responseTokens
       })
 
-      logger.info("Запрос к провайдеру успешно сохранен", { providerId, requestId: requestData.id })
+      logger.info("Запрос к провайдеру успешно сохранен", {
+        action: "onComplete",
+        providerId,
+        requestId: requestData.id
+      })
 
       // Эммитеть о том, что запрос сохранен в БД
       sender.emit(SenderEvents.REQUEST_STORED, {

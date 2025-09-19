@@ -186,7 +186,7 @@ export const sendMessage = async (chatId: number, message: string): Promise<ISen
       const messagePairId = messagePair.id
 
       // Обновить messagePair с ID запроса
-      logger.info("Обновление messagePair с ID запроса")
+      logger.info("Обновление messagePair с ID запроса", { action: "onRequestStored" })
       const [updatedMessagePair] = await db
         .update(messagePairs)
         .set({
@@ -197,12 +197,17 @@ export const sendMessage = async (chatId: number, message: string): Promise<ISen
         .returning()
 
       // Обновить контекст чата сообщением агента
-      logger.info("Добавление сообщения агента в контекст чата", { chatId })
+      logger.info("Добавление сообщения агента в контекст чата", { action: "onRequestStored", chatId })
       await pushChatContext(chat, CommunicationRoles.Agent, responseContent)
 
       // Еммитеть о завершении всей операции
       sender.emit(SenderEvents.END, updatedMessagePair)
-      logger.info("Сообщение от AI агента успешно получено", { chatId, messagePairId, requestId })
+      logger.info("Сообщение от AI агента успешно получено", {
+        action: "onRequestStored",
+        chatId,
+        messagePairId,
+        requestId
+      })
     })
 
     return sender

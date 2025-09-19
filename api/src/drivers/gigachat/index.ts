@@ -2,8 +2,9 @@ import https from "https"
 import { GigaChat, detectImage } from "gigachat"
 import { createApiLogger } from "@utils/logger"
 import * as imager from "@utils/imager"
-import { Driver, DriverRequest, DriverParamsConfig, DriverResponse } from "../types"
+import { Driver, DriverRequest, DriverParamsConfig } from "../types"
 import { GigachatDriverConfig, GigachatDriverRequest } from "./types"
+import { createSender, ISender, SenderEvents } from "@utils/sender"
 
 /**
  * Область видимости для Gigachat
@@ -101,53 +102,55 @@ export const createGigachatDriver = (config: GigachatDriverConfig): Driver => {
      * Отправка запроса к API Gigachat для генерации изображения
      * @namespace Drivers.Gigachat.sendGenerateImage
      */
-    sendRequest: async (request: DriverRequest): Promise<DriverResponse> => {
+    sendRequest: (request: DriverRequest): ISender => {
       logger.info("🚀 Отправка запроса", { action: "sendRequest", request })
 
-      try {
-        const driverRequest: GigachatDriverRequest = {
-          messages: request.messages,
-          model: request.params.model as string,
-          temperature: request.params.temperature as number,
-          top_p: request.params.topP as number,
-          max_tokens: request.params.maxTokens as number,
-          repetition_penalty: request.params.repetitionPenalty as number,
-          function_call: "auto"
+      return createSender(async sender => {
+        try {
+          const driverRequest: GigachatDriverRequest = {
+            messages: request.messages,
+            model: request.model as string,
+            temperature: request.temperature as number,
+            top_p: request.topP as number,
+            max_tokens: request.maxTokens as number,
+            repetition_penalty: request.repetitionPenalty as number,
+            function_call: "auto"
+          }
+
+          const data = await giga.chat(driverRequest)
+          let content = data.choices[0]?.message.content ?? ""
+
+          logger.info("Получен ответ", { action: "sendRequest" })
+
+          // Получение изображения по идентификатору
+          const detectedImage = detectImage(content)
+
+          // Если в содержимом есть изображение
+          if (detectedImage) {
+            logger.info("Запрос на получение изображения", { action: "sendRequest" })
+
+            const image = await giga.getImage(detectedImage.uuid)
+            const fileName = `${detectedImage.uuid}.jpeg`
+            content = content.replace(detectedImage.uuid, `/static/${fileName}`)
+
+            const filePath = imager.save(fileName, image.content)
+            logger.info("Изображение сохранено в файл", { action: "sendRequest", filePath })
+          }
+
+          sender.emit(SenderEvents.COMPLETE, {
+            content,
+            providerRequestId: data.xHeaders.xRequestID,
+            requestParams: driverRequest,
+            responseData: data,
+            requestTokens: data.usage.prompt_tokens,
+            responseTokens: data.usage.completion_tokens
+          })
+        } catch (error) {
+          logger.error("Ошибка при обработке запроса", { action: "sendRequest", error: error.message })
+
+          sender.emit(SenderEvents.ERROR, { error: error.message })
         }
-
-        const data = await giga.chat(driverRequest)
-        let content = data.choices[0]?.message.content ?? ""
-
-        logger.info("Получен ответ", { action: "sendRequest", data })
-
-        // Получение изображения по идентификатору
-        const detectedImage = detectImage(content)
-
-        // Если в содержимом есть изображение
-        if (detectedImage) {
-          logger.info("Запрос на получение изображения", { action: "sendRequest" })
-
-          const image = await giga.getImage(detectedImage.uuid)
-          const fileName = `${detectedImage.uuid}.jpeg`
-          content = content.replace(detectedImage.uuid, `/static/${fileName}`)
-
-          const filePath = imager.save(fileName, image.content)
-          logger.info("Изображение сохранено в файл", { action: "sendRequest", filePath })
-        }
-
-        return {
-          content,
-          providerRequestId: data.xHeaders.xRequestID,
-          requestParams: driverRequest,
-          responseData: data,
-          requestTokens: data.usage.prompt_tokens,
-          responseTokens: data.usage.completion_tokens
-        }
-      } catch (error) {
-        logger.error("Ошибка при обработке запроса", { action: "sendRequest", error })
-
-        throw error
-      }
+      })
     }
   }
 

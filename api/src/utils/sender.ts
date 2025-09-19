@@ -176,7 +176,28 @@ export class Sender implements ISender {
    * @namespace Drivers.Sender.emit
    */
   emit: ISender["emit"] = (event, data) => {
-    return this.emitter.emit(event as string, data)
+    /**
+     * Обернуть данные события
+     * @namespace Drivers.Sender.emit.wrap
+     */
+    const wrap = (data: ISenderEventData) => {
+      // Обернуть ошибку в SenderError
+      if (event === SenderEvents.ERROR) {
+        let error: SenderError
+
+        if (data.error instanceof Error) {
+          error = new SenderError(data.error.message, data.error.stack)
+        } else {
+          error = new SenderError(data.error as string)
+        }
+
+        return { error }
+      }
+
+      return data
+    }
+
+    return this.emitter.emit(event as string, wrap(data))
   }
 
   /**
@@ -191,7 +212,7 @@ export class Sender implements ISender {
     const wrap = (listener: (data: ISenderEventData) => Promise<void>) => {
       return async (data: ISenderEventData) => {
         try {
-          this.logger.info("Обработка события", { event, data })
+          this.logger.info("Обработка события", { event })
 
           await listener(data)
 
@@ -199,9 +220,7 @@ export class Sender implements ISender {
         } catch (error) {
           this.logger.error("Ошибка при обработке события", { event, error: error.message })
 
-          this.emit(SenderEvents.ERROR, {
-            error: new SenderError(error.message, error.stack)
-          })
+          this.emit(SenderEvents.ERROR, { error })
         }
       }
     }

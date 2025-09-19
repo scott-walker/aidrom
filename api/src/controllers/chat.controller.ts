@@ -187,7 +187,7 @@ export const sendMessage = async (req: Request, res: Response, next: NextFunctio
     const sender = await chatService.sendMessage(chatId, message)
 
     sender.on(SenderEvents.START, async () => {
-      logger.info("Сообщение от клиента успешно отправлено", { chatId })
+      logger.info("Сообщение от клиента успешно отправлено", { action: "onStart", chatId })
 
       sse.push({ type: "start" })
     })
@@ -195,13 +195,18 @@ export const sendMessage = async (req: Request, res: Response, next: NextFunctio
     //   sse.push({ type: "chunk", data: content })
     // })
     sender.on(SenderEvents.ERROR, async ({ error }: ISenderErrorEventData) => {
-      logger.error("Ошибка при отправке/получении сообщения", { error: error.message, chatId, message })
+      logger.error("Ошибка при отправке/получении сообщения", {
+        action: "onError",
+        error: error.message,
+        chatId,
+        message
+      })
 
       sse.push({ type: "error", message: error.message })
       next(error)
     })
     sender.on(SenderEvents.END, async (messagePair: ISenderEndEventData) => {
-      logger.info("Сообщение от AI агента успешно получено", { chatId })
+      logger.info("Сообщение от AI агента успешно получено", { action: "onEnd", chatId })
 
       sse.push({ type: "end", data: messagePair })
       res.json(messagePair)
@@ -209,7 +214,7 @@ export const sendMessage = async (req: Request, res: Response, next: NextFunctio
 
     sender.process()
   } catch (err) {
-    logger.error("Ошибка при отправке сообщения в чат", { error: err.message, chatId, message })
+    logger.error("Ошибка при отправке сообщения в чат", { action: "sendMessage", error: err.message, chatId, message })
     // sse.push({ type: "error", message: err.message })
 
     next(err)

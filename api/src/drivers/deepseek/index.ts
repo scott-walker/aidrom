@@ -105,7 +105,7 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
       logger.info("Инициализация отправки запроса к API", { action: "sendRequest", request })
 
       return createSender(async (sender: ISender) => {
-        logger.info("🚀 Отправка запроса", { action: "Sender.process" })
+        logger.info("🚀 Отправка запроса", { action: "sendRequest" })
 
         try {
           const asStream = request.stream as boolean
@@ -134,8 +134,7 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
           logger.info("Получен ответ", {
             action: "sendRequest",
             id: response.data.id,
-            model: response.data.model,
-            usage: response.data.usage
+            model: response.data.model
           })
 
           sender.emit(SenderEvents.COMPLETE, {
@@ -147,9 +146,9 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
             content: response.data.choices[0].message.content
           })
         } catch (error) {
-          logger.error("Ошибка при обработке запроса", { action: "Sender.process", error })
+          logger.error("Ошибка при обработке запроса", { action: "sendRequest", error })
 
-          throw error
+          sender.emit(SenderEvents.ERROR, { error })
         }
       })
     }

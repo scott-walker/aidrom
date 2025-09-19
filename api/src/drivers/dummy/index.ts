@@ -1,6 +1,7 @@
 import { createApiLogger } from "@utils/logger"
-import { Driver, DriverRequest, DriverResponse } from "../types"
+import { Driver, DriverRequest } from "../types"
 import { DummyDriverConfig } from "./types"
+import { createSender, ISender, SenderEvents } from "@utils/sender"
 
 /**
  * Фабрика драйвера "заглушка" (для тестирования)
@@ -58,32 +59,32 @@ export const createDummyDriver = (config: DummyDriverConfig): Driver => {
      * Отправка запроса к API драйвера "заглушка"
      * @namespace Drivers.Dummy.sendRequest
      */
-    async sendRequest(request: DriverRequest): Promise<DriverResponse> {
-      logger.info("🚀 Отправка запроса", { request })
+    sendRequest(request: DriverRequest): ISender {
+      logger.info("🚀 Отправка запроса", { action: "sendRequest", request })
 
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      return createSender(async sender => {
+        await new Promise(resolve => setTimeout(resolve, 1000))
 
-      const content = request.messages
-        .map(message => {
-          return `${message.role}: ${message.content}`
+        const content = request.messages
+          .map(message => {
+            return `${message.role}: ${message.content}`
+          })
+          .join("\n")
+
+        sender.emit(SenderEvents.COMPLETE, {
+          providerRequestId: "dummy",
+          content,
+          requestParams: request,
+          responseData: {
+            request,
+            config
+          },
+          requestTokens: 0,
+          responseTokens: 0
         })
-        .join("\n")
 
-      const response = {
-        providerRequestId: "dummy",
-        content,
-        requestParams: request,
-        responseData: {
-          request,
-          config
-        },
-        requestTokens: 0,
-        responseTokens: 0
-      }
-
-      logger.info("🚀 Получен ответ", response)
-
-      return response
+        logger.info("🚀 Получен ответ", { action: "sendRequest" })
+      })
     }
   }
 
