@@ -1,10 +1,7 @@
-// api/src/db/schema/messagePairs.js
 import { pgTable, index } from "drizzle-orm/pg-core"
 import { relations } from "drizzle-orm"
 import { chats } from "./chats"
 import { requests } from "./requests"
-import { clientMessages } from "./clientMessages"
-import { agentMessages } from "./agentMessages"
 
 /**
  * Пара сообщений - объединяет сообщение клиента и ответ агента
@@ -19,23 +16,12 @@ export const messagePairs = pgTable(
       .notNull()
       .references(() => chats.id, { onDelete: "cascade" }),
     requestId: table.integer("request_id").references(() => requests.id, { onDelete: "set null" }),
-    clientMessageId: table
-      .integer("client_message_id")
-      .notNull()
-      .references(() => clientMessages.id, { onDelete: "cascade" }),
-    agentMessageId: table
-      .integer("agent_message_id")
-      .notNull()
-      .references(() => agentMessages.id, { onDelete: "cascade" }),
+    clientMessage: table.text("client_message").notNull(),
+    agentMessage: table.text("agent_message"),
     createdAt: table.timestamp("created_at").notNull().defaultNow(),
     updatedAt: table.timestamp("updated_at").notNull().defaultNow()
   }),
-  table => [
-    index("message_pairs_chat_idx").on(table.chatId),
-    index("message_pairs_request_idx").on(table.requestId),
-    index("message_pairs_client_message_idx").on(table.clientMessageId),
-    index("message_pairs_agent_message_idx").on(table.agentMessageId)
-  ]
+  table => [index("message_pairs_chat_idx").on(table.chatId), index("message_pairs_request_idx").on(table.requestId)]
 )
 
 /**
@@ -50,13 +36,5 @@ export const messagePairsRelations = relations(messagePairs, ({ one }) => ({
   request: one(requests, {
     fields: [messagePairs.requestId],
     references: [requests.id]
-  }),
-  clientMessage: one(clientMessages, {
-    fields: [messagePairs.clientMessageId],
-    references: [clientMessages.id]
-  }),
-  agentMessage: one(agentMessages, {
-    fields: [messagePairs.agentMessageId],
-    references: [agentMessages.id]
   })
 }))

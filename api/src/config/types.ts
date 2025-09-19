@@ -29,4 +29,4 @@ export type AppConfigKey = keyof AppConfig
  * Тип параметра конфигурации
  * @namespace Config.types.AppConfigParam
  */
-export type AppConfigParam = AppConfig[AppConfigKey]
+export type AppConfigParam<K extends AppConfigKey> = AppConfig[K]

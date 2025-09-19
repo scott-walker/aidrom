@@ -47,7 +47,7 @@ export const createRestClient: RestClientFactory = (config: RestClientConfig) =>
         data: res.data
       })
 
-      return res.data
+      return res
     },
     err => {
       logger.error("Ошибка в запросе", {

@@ -21,7 +21,7 @@ export const chats = pgTable(
       .notNull()
       .references(() => clients.id, { onDelete: "cascade" }),
     title: table.varchar("title", { length: 255 }),
-    context: table.json("context").notNull().default("[]"),
+    context: table.json("context").notNull().default([]),
     createdAt: table.timestamp("created_at").notNull().defaultNow(),
     updatedAt: table.timestamp("updated_at").notNull().defaultNow()
   }),

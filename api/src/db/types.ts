@@ -1,16 +1,6 @@
 import { InferSelectModel, InferInsertModel } from "drizzle-orm"
-import {
-  providers,
-  agents,
-  agentRules,
-  clients,
-  chats,
-  messagePairs,
-  clientMessages,
-  agentMessages,
-  requests
-} from "./schema"
-import { DriverRequestParams, DriverParamsConfig, DriverInfo, DriverStatus } from "@drivers"
+import { providers, agents, agentRules, clients, chats, messagePairs, requests } from "./schema"
+import { DriverParamsConfig, DriverInfo, DriverStatus, Driver } from "@drivers"
 
 /**
  * Роли коммуникации
@@ -25,6 +15,7 @@ export enum CommunicationRoles {
 // Типы для провайдера
 export type Provider = InferSelectModel<typeof providers>
 export type ProviderWithDriver = Provider & {
+  driverInstance: Driver
   driverInfo: DriverInfo
   driverParamsConfig: DriverParamsConfig
   driverStatus: DriverStatus
@@ -39,7 +30,9 @@ export type Agent = InferSelectModel<typeof agents> & {
   rules: AgentRule[]
   isActive: boolean
 }
-export type AgentParams = DriverRequestParams
+export type AgentParams = {
+  [key: string]: any
+}
 export type CreateAgentData = InferInsertModel<typeof agents>
 export type UpdateAgentData = Partial<CreateAgentData>
 
@@ -57,15 +50,10 @@ export type Chat = InferSelectModel<typeof chats> & {
   agent: Agent
   client: Client
   context: ChatContext
-  messagePairs: (MessagePair & {
-    clientMessage: ClientMessage
-    agentMessage: AgentMessage
-  })[]
+  messagePairs: MessagePair[]
 }
 export type CreateChatData = InferInsertModel<typeof chats>
 export type UpdateChatData = Partial<CreateChatData>
-export type ClientMessage = InferSelectModel<typeof clientMessages>
-export type AgentMessage = InferSelectModel<typeof agentMessages>
 export type MessagePair = InferSelectModel<typeof messagePairs>
 export type ChatContext = {
   role: CommunicationRoles

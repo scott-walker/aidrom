@@ -3,6 +3,8 @@
  * @namespace Drivers
  */
 
+import { ISender } from "@utils/sender"
+
 /**
  * Статус работы драйвера
  * @namespace Drivers.DriverStatus
@@ -44,15 +46,7 @@ export type DriverRequestMessages = DriverRequestMessage[]
  */
 export interface DriverRequest {
   messages: DriverRequestMessages
-  params: DriverRequestParams
-}
-
-/**
- * Интерфейс параметров запроса к драйверу
- * @namespace Drivers.DriverRequestParams
- */
-export interface DriverRequestParams {
-  [key: string]: string | number | boolean
+  [key: string]: any
 }
 
 /**
@@ -86,12 +80,20 @@ export interface DriverParamsConfigParameterRange extends DriverParamsConfigPara
 }
 
 /**
+ * Интерфейс конфигурации параметров запроса к драйверу (переключатель)
+ * @namespace Drivers.DriverParamsConfigParameterToggle
+ */
+export interface DriverParamsConfigParameterToggle extends DriverParamsConfigParameter {
+  type: "toggle"
+}
+
+/**
  * Интерфейс конфигурации параметров запроса к драйверу
  * @namespace Drivers.DriverParamsConfig
  */
 export interface DriverParamsConfig {
   meta: Record<string, unknown>
-  params: (DriverParamsConfigParameterSelect | DriverParamsConfigParameterRange)[]
+  params: (DriverParamsConfigParameterSelect | DriverParamsConfigParameterRange | DriverParamsConfigParameterToggle)[]
 }
 
 /**
@@ -115,10 +117,7 @@ export interface DriverResponse {
  * Интерфейс конфига драйвера
  * @namespace Drivers.DriverConfig
  */
-export interface DriverConfig {
-  // baseUrl: string
-  // apiKey: string
-}
+export interface DriverConfig {}
 
 /**
  * Интерфейс информации о драйвере
@@ -135,8 +134,7 @@ export interface DriverInfo {
 export interface Driver {
   getInfo: () => Promise<DriverInfo>
   getParamsConfig: () => Promise<DriverParamsConfig>
-  sendRequest: (request: DriverRequest) => Promise<DriverResponse>
-  sendGenerateImage?: (request: DriverRequest) => Promise<DriverResponse>
+  sendRequest: (request: DriverRequest) => ISender
 }
 
 /**

@@ -6,6 +6,8 @@
 import { Request, Response, NextFunction } from "express"
 import { createControllerLogger } from "@utils/logger"
 import * as chatService from "@services/chat.service"
+import { createSSE, sessionStorage } from "@utils/sse"
+import { SenderEvents, ISenderEndEventData, ISenderErrorEventData } from "@utils/sender"
 
 // Создаем логгер для контроллера чатов
 const logger = createControllerLogger("ChatController")
@@ -168,18 +170,93 @@ export const clearChatContext = async (req: Request, res: Response, next: NextFu
 export const sendMessage = async (req: Request, res: Response, next: NextFunction) => {
   const chatId = parseInt(req.params.chatId)
   const message = req.body.message
+  const sse = sessionStorage.get(chatId)
+
+  if (!sse) {
+    return res.status(400).json({ error: "SSE сессия не найдена" })
+  }
 
   try {
     logger.info("Отправка сообщения в чат", { chatId, message })
 
-    const data = await chatService.sendMessage(chatId, message)
+    const sender = await chatService.sendMessage(chatId, message)
 
-    logger.info("Сообщение успешно отправлено", { chatId })
+    sender.on(SenderEvents.START, () => {
+      logger.info("Сообщение от клиента успешно отправлено", { chatId })
+      sse.push({ type: "start" })
+    })
+    // sender.on(SenderEvents.CHUNK, ({ content }: ISenderEventData) => {
+    //   sse.push({ type: "chunk", data: content })
+    // })
+    sender.on(SenderEvents.ERROR, ({ error }: ISenderErrorEventData) => {
+      logger.error("Ошибка при отправке/получении сообщения", { error: error.message, chatId, message })
+      sse.push({ type: "error", message: error.message })
+    })
+    sender.on(SenderEvents.END, (messagePair: ISenderEndEventData) => {
+      logger.info("Сообщение от AI агента успешно получено", { chatId })
+      sse.push({ type: "end", data: messagePair })
+      res.json(messagePair)
+    })
 
-    res.json(data)
+    sender.process()
   } catch (err) {
     logger.error("Ошибка при отправке сообщения в чат", { error: err.message, chatId, message })
+    sse.push({ type: "error", message: err.message })
 
     next(err)
   }
 }
+
+/**
+ * Инициализация потока
+ * @namespace Chat.Controller.initStream
+ */
+export const initStream = async (req: Request, res: Response, next: NextFunction) => {
+  const chatId = parseInt(req.params.chatId)
+  const session = await createSSE(req, res)
+
+  sessionStorage.set(chatId, session)
+
+  try {
+    logger.info("Инициализация потока", { chatId })
+    session.push({ type: "connected", chatId })
+    session.push({ type: "sessions", sessions: Array.from(sessionStorage.keys()) })
+    logger.info("Поток успешно инициализирован", { chatId })
+  } catch (err) {
+    logger.error("Ошибка при инициализации потока", { error: err.message, chatId })
+    session.push({ type: "error", message: err.message })
+
+    next(err)
+  }
+}
+
+/**
+ * Отправить сообщение в чат через SSE
+ * @namespace Chat.Controller.sendStreamMessage
+ */
+// export const sendStreamMessage = async (req: Request, res: SseResponse, next: NextFunction) => {
+//   const chatId = parseInt(req.params.chatId)
+//   const message = req.body.message
+
+//   try {
+//     sse.send({ type: "connected", chatId })
+//     // const data = await chatService.sendStreamMessage(chatId, message)
+
+//     const interval = setInterval(() => {
+//       sse.send({ message, date: Date.now() })
+//     }, 2000)
+
+//     // logger.info("Сообщение успешно отправлено", { chatId })
+
+//     // // res.json(data)
+//     // req.on("close", () => {
+//     //   clearInterval(interval)
+//     //   res.end()
+//     // })
+//     // req.on("close", () => clearInterval(interval))
+//   } catch (err) {
+//     logger.error("Ошибка при отправке сообщения в чат", { error: err.message, chatId, message })
+//     sse.send({ type: "error", message: err.message })
+//     res.end()
+//   }
+// }

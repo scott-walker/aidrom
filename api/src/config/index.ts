@@ -9,32 +9,32 @@ dotenvExpand.expand(dotenv.config())
 /**
  * Корневой каталог проекта
  */
-const rootDir = process.env.ROOT_DIR || "/app"
+const rootDir: string = process.env.ROOT_DIR || "/app"
 
 /**
  * Корневой каталог приложения
  */
-const srcDir = resolve(rootDir, "src")
+const srcDir: string = resolve(rootDir, "src")
 
 /**
  * Каталог для хранения временных служебных файлов
  */
-const runtimeDir = process.env.RUNTIME_DIR || resolve(rootDir, "runtime")
+const runtimeDir: string = process.env.RUNTIME_DIR || resolve(rootDir, "runtime")
 
 /**
  * Каталог для хранения логов
  */
-const logDir = process.env.LOG_DIR || resolve(rootDir, "logs")
+const logDir: string = process.env.LOG_DIR || resolve(rootDir, "logs")
 
 /**
  * Каталог для хранения статических файлов
  */
-const staticDir = process.env.STATIC_DIR || resolve(rootDir, "static")
+const staticDir: string = process.env.STATIC_DIR || resolve(rootDir, "static")
 
 /**
  * Каталог для работы с БД
  */
-const dbDir = resolve(srcDir, "db")
+const dbDir: string = resolve(srcDir, "db")
 
 /**
  * Конфигурация проекта
@@ -77,7 +77,7 @@ const config: AppConfig = {
  * Получение параметра конфигурации
  * @namespace Config.getConfigParam
  */
-export const getConfigParam = (key: AppConfigKey): AppConfigParam => {
+export const getConfigParam = <K extends AppConfigKey>(key: K): AppConfigParam<K> => {
   if (!config.hasOwnProperty(key)) {
     throw new Error(`Недоступный параметр конфигурации ${key}`)
   }

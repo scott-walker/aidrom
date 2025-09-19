@@ -2,6 +2,7 @@ import { createRestClient } from "@utils/api"
 import { Driver, DriverRequest, DriverParamsConfig, DriverResponse } from "../types"
 import { DeepseekDriverConfig, DeepseekDriverModel, DeepseekDriverRequest, DeepseekDriverResponse } from "./types"
 import { createApiLogger } from "@utils/logger"
+import { ISender, SenderEvents, createSender } from "@utils/sender"
 
 /**
  * Фабрика драйвера Deepseek
@@ -21,19 +22,24 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
      * Получение информации о драйвере Deepseek
      * @namespace Drivers.Deepseek.getInfo
      */
-    getInfo: async () => ({
-      name: "deepseek",
-      description: "Драйвер для Deepseek",
-      account: await restClient.get("user/balance")
-    }),
+    getInfo: async () => {
+      const { data } = await restClient.get("user/balance")
+
+      return {
+        name: "deepseek",
+        description: "Драйвер для Deepseek",
+        account: data
+      }
+    },
 
     /**
      * Получение конфигурации параметров запроса к драйверу
      * @namespace Drivers.Deepseek.getParamsConfig
      */
     getParamsConfig: async (): Promise<DriverParamsConfig> => {
+      // model: await restClient.get("models").then(res => res.data.map((item: any) => item.id)),
+
       return {
-        // model: await restClient.get("models").then(res => res.data.map((item: any) => item.id)),
         meta: {},
         params: [
           {
@@ -41,6 +47,11 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
             label: "Модель",
             type: "select",
             options: [DeepseekDriverModel.DEEPSEEK_CHAT, DeepseekDriverModel.DEEPSEEK_REASONER]
+          },
+          {
+            name: "stream",
+            label: "Режим потока",
+            type: "toggle"
           },
           {
             name: "maxTokens",
@@ -90,43 +101,57 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
      * Отправка запроса к API Deepseek
      * @namespace Drivers.Deepseek.sendRequest
      */
-    async sendRequest(request: DriverRequest): Promise<DriverResponse> {
-      logger.info("🚀 Отправка запроса", { action: "sendRequest", request })
+    sendRequest(request: DriverRequest): ISender {
+      logger.info("Инициализация отправки запроса к API", { action: "sendRequest", request })
 
-      try {
-        // Сформировать запрос к API
-        const driverRequest: DeepseekDriverRequest = {
-          model: request.params.model as DeepseekDriverModel,
-          messages: request.messages,
-          frequency_penalty: request.params.frequencyPenalty as number,
-          presence_penalty: request.params.presencePenalty as number,
-          max_tokens: request.params.maxTokens as number,
-          temperature: request.params.temperature as number,
-          top_p: request.params.topP as number
+      return createSender(async (sender: ISender) => {
+        logger.info("🚀 Отправка запроса", { action: "Sender.process" })
+
+        try {
+          const asStream = request.params.stream as boolean
+
+          // Сформировать запрос к API
+          const driverRequest: DeepseekDriverRequest = {
+            model: request.params.model as DeepseekDriverModel,
+            messages: request.messages,
+            frequency_penalty: request.params.frequencyPenalty as number,
+            presence_penalty: request.params.presencePenalty as number,
+            max_tokens: request.params.maxTokens as number,
+            temperature: request.params.temperature as number,
+            top_p: request.params.topP as number,
+            stream: asStream
+          }
+
+          const response = await restClient.post("chat/completions", driverRequest, {
+            responseType: asStream ? "stream" : "json"
+          })
+
+          // if (asStream) {
+          //   for await (const chunk of response.data) {
+          //   }
+          // }
+
+          logger.info("Получен ответ", {
+            action: "sendRequest",
+            id: response.data.id,
+            model: response.data.model,
+            usage: response.data.usage
+          })
+
+          sender.emit(SenderEvents.COMPLETE, {
+            providerRequestId: response.data.id,
+            requestParams: driverRequest,
+            responseData: response.data,
+            requestTokens: response.data.usage.prompt_tokens,
+            responseTokens: response.data.usage.completion_tokens,
+            content: response.data.choices[0].message.content
+          })
+        } catch (error) {
+          logger.error("Ошибка при обработке запроса", { action: "Sender.process", error })
+
+          throw error
         }
-
-        const data: DeepseekDriverResponse = await restClient.post("chat/completions", driverRequest)
-
-        logger.info("Получен ответ", {
-          action: "sendRequest",
-          id: data.id,
-          model: data.model,
-          usage: data.usage
-        })
-
-        return {
-          providerRequestId: data.id,
-          requestParams: driverRequest,
-          responseData: data,
-          requestTokens: data.usage.prompt_tokens,
-          responseTokens: data.usage.completion_tokens,
-          content: data.choices[0].message.content
-        }
-      } catch (error) {
-        logger.error("Ошибка при обработке запроса", { action: "sendRequest", error })
-
-        throw error
-      }
+      })
     }
   }
 

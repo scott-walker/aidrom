@@ -10,18 +10,16 @@ import {
   Agent,
   CreateAgentData,
   UpdateAgentData,
-  RequestWithResponseContent,
   CreateAgentRuleData,
   AgentRule,
   agentRules,
   mapAgent,
-  ChatContext
+  AgentParams
 } from "@db"
-import { DriverResponse } from "@drivers"
+import { DriverRequestMessage, DriverRequestMessageRole, DriverRequest, DriverRequestMessages, ISender } from "@drivers"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
 import { getProviderById, processRequest } from "./provider.service"
-import { createRequest } from "./request.service"
 
 /**
  * Параметры отправки запроса к AI агенту
@@ -29,9 +27,7 @@ import { createRequest } from "./request.service"
  */
 interface AgentSendRequestParams {
   agentId: number
-  clientId: number
-  chatСontext: ChatContext
-  message: string
+  messages: DriverRequestMessages
 }
 
 // Создаем логгер для сервиса агентов
@@ -92,7 +88,7 @@ export const getAgentById = async (agentId: number): Promise<Agent> => {
     // Получаем провайдера (с конфигурацией параметров)
     agent.provider = await getProviderById(agent.providerId)
 
-    logger.info("Агент по ID успешно найден", { agentId })
+    logger.info("Агент по ID успешно получен", { agentId })
 
     return mapAgent(agent)
   } catch (error) {
@@ -132,10 +128,7 @@ export const updateAgent = async (agentId: number, data: UpdateAgentData): Promi
 
     const [agent] = await db
       .update(agents)
-      .set({
-        ...data,
-        updatedAt: new Date()
-      })
+      .set({ ...data, updatedAt: new Date() })
       .where(eq(agents.id, agentId))
       .returning()
 
@@ -179,46 +172,20 @@ export const deleteAgent = async (agentId: number): Promise<void> => {
  * Отправить запрос к AI агенту
  * @namespace Agent.Service.sendRequest
  */
-export const sendRequest = async ({
-  agentId,
-  clientId,
-  chatСontext,
-  message
-}: AgentSendRequestParams): Promise<RequestWithResponseContent> => {
+export const sendRequest = async ({ agentId, messages }: AgentSendRequestParams): Promise<ISender> => {
   try {
-    logger.info("Отправка запроса к AI агенту", { agentId, clientId, message })
-
     const agent = await getAgentById(agentId)
 
-    // Отправляем запрос к API
-    const response: DriverResponse = await processRequest({
-      providerId: agent.providerId,
-      agentRules: agent.rules,
-      agentParams: agent.params,
-      chatContext: chatСontext,
-      clientMessage: message
-    })
+    logger.info("Отправка запроса от AI агента к провайдеру", { agentId, providerId: agent.providerId })
 
-    logger.info("Запрос к API успешно отправлен", { agentId, clientId })
-    logger.info("Сохранение нового запроса в БД")
+    const request = makeAgentRequest(messages, agent.rules, agent.params)
+    const sender = await processRequest(agent.providerId, request)
 
-    // Сохраняем запрос в БД
-    const request = await createRequest({
-      providerId: agent.providerId,
-      agentId: agent.id,
-      clientId,
-      providerRequestId: response.providerRequestId,
-      requestParams: response.requestParams,
-      responseData: response.responseData,
-      requestTokens: response.requestTokens,
-      responseTokens: response.responseTokens
-    })
+    logger.info("Запрос от AI агента к провайдеру успешно отправлен", { agentId, providerId: agent.providerId })
 
-    logger.info("Запрос успешно сохранен в БД", { requestId: request.id })
-
-    return { ...request, responseContent: response.content }
+    return sender
   } catch (error) {
-    logger.error("Ошибка при создании нового запроса к AI агенту", { error: error.message })
+    logger.error("Ошибка при создании нового запроса от AI агента к провайдеру", { agentId, error: error.message })
 
     throw error
   }
@@ -311,4 +278,35 @@ export const sortRules = async (agentId: number, ruleIds: number[]): Promise<voi
 
     throw error
   }
+}
+
+/**
+ * Создать сообщение из правил агента
+ * @namespace Agent.Service.makeAgentRuleMessage
+ */
+const makeAgentRuleMessage = (agentRules: AgentRule[]): DriverRequestMessage => {
+  const content = agentRules.reverse().reduce((message, rule) => {
+    message += `- ${rule.content}\n`
+
+    return message
+  }, "")
+
+  return {
+    role: DriverRequestMessageRole.SYSTEM,
+    content
+  }
+}
+
+/**
+ * Создать запрос от агента к провайдеру
+ * @namespace Agent.Service.makeAgentRequest
+ */
+export const makeAgentRequest = (
+  messages: DriverRequestMessages,
+  rules: AgentRule[],
+  params: AgentParams
+): DriverRequest => {
+  const systemMessage = makeAgentRuleMessage(rules)
+
+  return { ...params, messages: [systemMessage, ...messages] }
 }

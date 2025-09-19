@@ -4,45 +4,29 @@
  */
 
 import { eq, desc } from "drizzle-orm"
-import {
-  db,
-  providers,
-  Provider,
-  CreateProviderData,
-  UpdateProviderData,
-  ProviderWithDriver,
-  AgentParams,
-  ChatContext,
-  AgentRule,
-  CommunicationRoles
-} from "@db"
+import { db, providers, Provider, CreateProviderData, UpdateProviderData, ProviderWithDriver } from "@db"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
 import {
   driverFactories,
   initDriver,
   Driver,
-  DriverConfig,
   DriverInfo,
   DriverParamsConfig,
-  DriverRequestMessages,
-  DriverRequestMessageRole,
-  DriverRequestParams,
-  DriverRequestMessage,
-  DriverResponse,
-  DriverStatus
+  DriverStatus,
+  DriverRequest,
+  SenderEvents,
+  ISender
 } from "@drivers"
+import * as requestService from "./request.service"
 
 /**
  * Параметры обработки запроса к провайдеру
  * @namespace Provider.Service.ProcessRequestParams
  */
-interface ProcessRequestParams {
-  providerId: number
-  agentRules: AgentRule[]
-  agentParams: AgentParams
-  chatContext: ChatContext
-  clientMessage: string
+interface ProviderProcessResponse {
+  requestId: number
+  content: string
 }
 
 // Создаем логгер для сервиса провайдеров
@@ -78,6 +62,7 @@ export const getProviderById = async (providerId: number): Promise<ProviderWithD
   try {
     logger.info("Получение провайдера по ID", { providerId })
 
+    let driverInstance = {} as Driver
     let driverInfo = {} as DriverInfo
     let driverParamsConfig = {} as DriverParamsConfig
     let driverStatus = DriverStatus.OK
@@ -91,10 +76,9 @@ export const getProviderById = async (providerId: number): Promise<ProviderWithD
     }
 
     try {
-      const driver = initDriver(providerItem.driver, providerItem.config as DriverConfig) as Driver
-
-      driverInfo = await driver.getInfo()
-      driverParamsConfig = await driver.getParamsConfig()
+      driverInstance = initDriver(providerItem.driver, providerItem.config)
+      driverInfo = await driverInstance.getInfo()
+      driverParamsConfig = await driverInstance.getParamsConfig()
     } catch (error) {
       driverStatus = DriverStatus.ERROR
       driverInfo = {
@@ -109,7 +93,13 @@ export const getProviderById = async (providerId: number): Promise<ProviderWithD
 
     logger.info("Провайдер по ID успешно найден", { providerId })
 
-    return { ...providerItem, driverInfo, driverParamsConfig, driverStatus }
+    return {
+      ...providerItem,
+      driverInstance,
+      driverInfo,
+      driverParamsConfig,
+      driverStatus
+    }
   } catch (error) {
     logger.error("Ошибка при получении провайдера по ID", { error: error.message, providerId })
 
@@ -147,10 +137,7 @@ export const updateProvider = async (providerId: number, data: UpdateProviderDat
 
     const [providerItem] = await db
       .update(providers)
-      .set({
-        ...data,
-        updatedAt: new Date()
-      })
+      .set({ ...data, updatedAt: new Date() })
       .where(eq(providers.id, providerId))
       .returning()
 
@@ -204,81 +191,40 @@ export const getDrivers = async (): Promise<string[]> => {
  * Обработка запроса к провайдеру
  * @namespace Provider.Service.processRequest
  */
-export const processRequest = async ({
-  providerId,
-  agentRules,
-  agentParams,
-  chatContext,
-  clientMessage
-}: ProcessRequestParams): Promise<DriverResponse> => {
+export const processRequest = async (providerId: number, request: DriverRequest): Promise<ISender> => {
   try {
     logger.info("Обработка запроса к провайдеру", { providerId })
 
-    const provider = await getProviderById(providerId)
-    const messages = compileMessages(agentRules, chatContext, clientMessage)
-    const params = normalizeParams(agentParams)
-    const driver = initDriver(provider.driver, provider.config as DriverConfig)
-    const response = await driver.sendRequest({ messages, params })
+    const { driverInstance } = await getProviderById(providerId)
+    const sender = driverInstance.sendRequest(request)
 
-    return response
+    // Обработать завершение запроса
+    sender.on(SenderEvents.COMPLETE, async response => {
+      logger.info("Сохранение информации о запросе к провайдеру", { providerId })
+
+      // Сохранить запрос в БД
+      const requestData = await requestService.createRequest({
+        providerId,
+        providerRequestId: response.providerRequestId,
+        requestParams: response.requestParams,
+        responseData: response.responseData,
+        requestTokens: response.requestTokens,
+        responseTokens: response.responseTokens
+      })
+
+      logger.info("Запрос к провайдеру успешно сохранен", { providerId, requestId: requestData.id })
+
+      // Эммитеть о том, что запрос сохранен в БД
+      sender.emit(SenderEvents.REQUEST_STORED, {
+        requestId: requestData.id,
+        responseContent: response.content
+      })
+    })
+
+    return sender
   } catch (error) {
-    logger.error("Ошибка при обработке запроса к провайдеру", { error: error.message, providerId })
+    logger.error("Ошибка при обработке запроса к провайдеру", { providerId, error: error.message })
 
     throw error
-  }
-}
-
-/**
- * Компилирует системные сообщения агента, контекст чата и сообщение клиента
- * @namespace Agent.Service.compileMessages
- */
-const compileMessages = (
-  agentRules: AgentRule[],
-  chatContext: ChatContext,
-  clientMessageContent: string
-): DriverRequestMessages => {
-  const mapRoles = {
-    [CommunicationRoles.System]: DriverRequestMessageRole.SYSTEM,
-    [CommunicationRoles.Client]: DriverRequestMessageRole.USER,
-    [CommunicationRoles.Agent]: DriverRequestMessageRole.ASSISTANT
-  }
-
-  // Системные сообщения (на основе правил агента)
-  const systemMessage = agentRules.reverse().reduce(
-    (message, rule) => {
-      message.content += `- ${rule.content}\n`
-
-      return message
-    },
-    { role: DriverRequestMessageRole.SYSTEM, content: "" } as DriverRequestMessage
-  )
-
-  // Сообщения чата (контекст общения)
-  const chatMessages = chatContext.map(item => ({
-    role: mapRoles[item.role],
-    content: item.content
-  }))
-
-  // Сообщение клиента
-  const clientMessage = {
-    role: mapRoles[CommunicationRoles.Client],
-    content: clientMessageContent
-  }
-
-  return [systemMessage, ...chatMessages, clientMessage]
-}
-
-/**
- * Нормализует параметры агента
- * @namespace Provider.Service.normalizeParams
- */
-const normalizeParams = (agentParams: AgentParams): DriverRequestParams => {
-  return {
-    model: agentParams.model,
-    maxTokens: agentParams.maxTokens,
-    topP: agentParams.topP,
-    temperature: agentParams.temperature,
-    frequencyPenalty: agentParams.frequencyPenalty,
-    presencePenalty: agentParams.presencePenalty
   }
 }

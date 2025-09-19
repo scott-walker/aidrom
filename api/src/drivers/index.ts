@@ -5,6 +5,7 @@ import { createDeepseekDriver } from "./deepseek"
 import { createGigachatDriver } from "./gigachat"
 
 export * from "./types"
+export { createSender, Sender } from "../utils/sender"
 
 /**
  * Коллекция фабрик драйверов
@@ -19,14 +20,14 @@ export const driverFactories: DriverFactoriesCollection = {
 /**
  * Инициализировать драйвер
  * @namespace Drivers.initDriver
- * @param {string} alias - Алиас драйвера
+ * @param {string} driver - Драйвер
  * @param {DriverConfig} config - Конфиг драйвера
  */
-export const initDriver = (alias: string, config: DriverConfig): Driver => {
-  const createDriver = driverFactories[alias]
+export const initDriver = (driver: string, config: DriverConfig): Driver => {
+  const createDriver = driverFactories[driver]
 
   if (!createDriver) {
-    throw new ApiError(`Драйвер "${alias}" не найден`)
+    throw new ApiError(`Драйвер "${driver}" не найден`)
   }
 
   return createDriver(config)
