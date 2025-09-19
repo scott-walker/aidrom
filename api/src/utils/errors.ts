@@ -81,6 +81,16 @@ export class SenderError extends AppError {
   }
 }
 
+/**
+ * Ошибка для случаев ошибок SSE сессий
+ * @namespace Utils.SSEError
+ */
+export class SseError extends AppError {
+  constructor(message = "Ошибка SSE сессий", code = "SSE_ERROR") {
+    super(message, 500, code)
+  }
+}
+
 // /**
 //  * Ошибка для случаев превышения лимитов
 //  * @namespace Utils.RateLimitError
