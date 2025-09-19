@@ -1,5 +1,5 @@
 import { createRestClient } from "@utils/api"
-import { Driver, DriverRequest, DriverParamsConfig, DriverResponse } from "../types"
+import { Driver, DriverRequest, DriverParamsConfig } from "../types"
 import { DeepseekDriverConfig, DeepseekDriverModel, DeepseekDriverRequest, DeepseekDriverResponse } from "./types"
 import { createApiLogger } from "@utils/logger"
 import { ISender, SenderEvents, createSender } from "@utils/sender"
@@ -108,7 +108,7 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
         logger.info("🚀 Отправка запроса", { action: "sendRequest" })
 
         try {
-          const asStream = request.stream as boolean
+          const asStream = true // request.stream as boolean
 
           // Сформировать запрос к API
           const driverRequest: DeepseekDriverRequest = {
@@ -122,28 +122,68 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
             stream: asStream
           }
 
+          let content = ""
+          let data = {} as DeepseekDriverResponse
           const response = await restClient.post("chat/completions", driverRequest, {
             responseType: asStream ? "stream" : "json"
           })
 
-          // if (asStream) {
-          //   for await (const chunk of response.data) {
-          //   }
-          // }
+          if (asStream) {
+            logger.info("Получен поток ответа", { action: "sendRequest" })
 
-          logger.info("Получен ответ", {
-            action: "sendRequest",
-            id: response.data.id,
-            model: response.data.model
-          })
+            let buffer = ""
+
+            for await (const chunk of response.data) {
+              // Преобразуем Buffer в строку
+              const chunkStr = chunk.toString()
+              buffer += chunkStr
+
+              // Обрабатываем строки, разделенные двойными переносами строк
+              const lines = buffer.split("\n\n")
+              buffer = lines.pop() || "" // Оставляем неполную строку в буфере
+
+              for (const line of lines) {
+                if (line.trim() === "") continue
+                if (line.startsWith("data: [DONE]")) {
+                  // Конец стрима
+                  break
+                }
+                if (line.startsWith("data: ")) {
+                  try {
+                    const jsonStr = line.slice(6) // Убираем "data: "
+                    const chunkData = JSON.parse(jsonStr)
+
+                    // Извлекаем содержимое из чанка
+                    const deltaContent = chunkData.choices?.[0]?.delta?.content
+                    if (deltaContent) {
+                      content += deltaContent
+                      sender.emit(SenderEvents.CHUNK, { content })
+                    }
+
+                    // Сохраняем последние данные для финального ответа
+                    if (chunkData.usage) {
+                      data = chunkData
+                    }
+                  } catch (parseError) {
+                    logger.error("Ошибка парсинга JSON чанка", { parseError, line })
+                  }
+                }
+              }
+            }
+          } else {
+            logger.info("Получен ответ", { action: "sendRequest" })
+
+            content = response.data.choices[0].message.content
+            data = response.data
+          }
 
           sender.emit(SenderEvents.COMPLETE, {
-            providerRequestId: response.data.id,
+            providerRequestId: data?.id,
             requestParams: driverRequest,
-            responseData: response.data,
-            requestTokens: response.data.usage.prompt_tokens,
-            responseTokens: response.data.usage.completion_tokens,
-            content: response.data.choices[0].message.content
+            responseData: data,
+            requestTokens: data?.usage?.prompt_tokens,
+            responseTokens: data?.usage?.completion_tokens,
+            content
           })
         } catch (error) {
           logger.error("Ошибка при обработке запроса", { action: "sendRequest", error })

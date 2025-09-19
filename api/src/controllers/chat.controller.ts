@@ -7,7 +7,7 @@ import { Request, Response, NextFunction } from "express"
 import { createControllerLogger } from "@utils/logger"
 import * as chatService from "@services/chat.service"
 import { createSSE, Session } from "@utils/sse"
-import { SenderEvents, ISenderEndEventData, ISenderErrorEventData } from "@utils/sender"
+import { SenderEvents, ISenderEndEventData, ISenderErrorEventData, ISenderChunkEventData } from "@utils/sender"
 
 // Создаем логгер для контроллера чатов
 const logger = createControllerLogger("ChatController")
@@ -191,9 +191,9 @@ export const sendMessage = async (req: Request, res: Response, next: NextFunctio
 
       sse.push({ type: "start" })
     })
-    // sender.on(SenderEvents.CHUNK, ({ content }: ISenderEventData) => {
-    //   sse.push({ type: "chunk", data: content })
-    // })
+    sender.on(SenderEvents.CHUNK, async ({ content }: ISenderChunkEventData) => {
+      sse.push({ type: "chunk", content })
+    })
     sender.on(SenderEvents.ERROR, async ({ error }: ISenderErrorEventData) => {
       logger.error("Ошибка при отправке/получении сообщения", {
         action: "onError",
