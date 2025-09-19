@@ -1,7 +1,6 @@
 import { makeClasses } from "@lib/style-api"
 import { type Chat, useChatStore, ChatPending, Roles, MessageEmptyList } from "@entities/chat"
 import { useScrollBody } from "../lib/use-scroll-body"
-import { useFormatMessages } from "../lib/use-format-messages"
 import { ChatMessage } from "@features/chat-message"
 
 /**
@@ -18,10 +17,13 @@ type ChatDialogBodyProps = {
  * @namespace Widgets.Chat
  */
 export const ChatDialogBody = ({ chat, className = "" }: ChatDialogBodyProps) => {
-  const { isPending, lastClientMessage } = useChatStore()
-  const messages = lastClientMessage ? [...chat.messages, lastClientMessage] : chat.messages
+  const { isPending, lastClientMessage, lastAgentMessage } = useChatStore()
+
+  let messages = chat.messages
+  messages = lastClientMessage ? [...messages, lastClientMessage] : messages
+  messages = lastAgentMessage ? [...messages, lastAgentMessage] : messages
+
   const { bodyRef } = useScrollBody(messages.length, isPending)
-  const { formattedMessages } = useFormatMessages(messages)
   const isEmpty = !messages.length
 
   if (isEmpty) {
@@ -44,7 +46,7 @@ export const ChatDialogBody = ({ chat, className = "" }: ChatDialogBodyProps) =>
 
   return (
     <div ref={bodyRef} className={bodyClasses}>
-      {formattedMessages.map(message => (
+      {messages.map(message => (
         <ChatMessage key={message.id} {...message} className={makeMessageClasses(message.role)} />
       ))}
       {isPending && <ChatPending />}

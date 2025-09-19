@@ -21,8 +21,11 @@ export const useSendMessage = () => {
     const stream = new EventSource(`${import.meta.env.VITE_API_BASE_URL}/chats/${chatId}/stream`)
 
     stream.onmessage = event => {
-      // const data = JSON.parse(event.data)
-      // setLastAgentMessage(makeLastAgentMessage(data.agentMessage))
+      const data = JSON.parse(event.data)
+
+      console.log("data", data)
+
+      setLastAgentMessage(makeLastAgentMessage(data.content))
     }
     stream.onopen = () => {
       send(
@@ -30,6 +33,7 @@ export const useSendMessage = () => {
         {
           onSuccess: () => {
             setLastClientMessage(null)
+            setLastAgentMessage(null)
           },
           onError: ({ message }) => {
             toast.error("Произошла ошибка при отправке сообщения", message)
