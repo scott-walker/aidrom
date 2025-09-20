@@ -124,6 +124,29 @@ export interface DeepseekDriverResponse {
 }
 
 /**
+ * Интерфейс фрагмента ответа от Deepseek
+ * @namespace Drivers.Deepseek.DeepseekDriverChunkResponse
+ */
+export interface DeepseekDriverChunkResponse {
+  id: string
+  choices: {
+    delta: {
+      content: string
+    }
+  }[]
+  usage: {
+    prompt_tokens: number
+    completion_tokens: number
+    total_tokens: number
+    prompt_tokens_details: {
+      cached_tokens: number
+    }
+    prompt_cache_hit_tokens: number
+    prompt_cache_miss_tokens: number
+  }
+}
+
+/**
  * Интерфейс конфига драйвера Deepseek
  * @namespace Drivers.Deepseek.DeepseekDriverConfig
  */

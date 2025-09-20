@@ -1,8 +1,15 @@
 import { createRestClient } from "@utils/api"
 import { Driver, DriverRequest, DriverParamsConfig } from "../types"
-import { DeepseekDriverConfig, DeepseekDriverModel, DeepseekDriverRequest, DeepseekDriverResponse } from "./types"
+import {
+  DeepseekDriverConfig,
+  DeepseekDriverModel,
+  DeepseekDriverRequest,
+  DeepseekDriverResponse,
+  DeepseekDriverChunkResponse
+} from "./types"
 import { createApiLogger } from "@utils/logger"
 import { ISender, SenderEvents, createSender } from "@utils/sender"
+import { handleStream } from "@utils/helpers"
 
 /**
  * Фабрика драйвера Deepseek
@@ -123,7 +130,7 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
           }
 
           let content = ""
-          let data = {} as DeepseekDriverResponse
+          let data = {} as DeepseekDriverResponse | DeepseekDriverChunkResponse
           const response = await restClient.post("chat/completions", driverRequest, {
             responseType: asStream ? "stream" : "json"
           })
@@ -134,45 +141,21 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
           if (asStream) {
             logger.info("Получен поток ответа", { action: "sendRequest" })
 
-            let buffer = ""
+            await handleStream(response.data, {
+              onChunk: (chunk: DeepseekDriverChunkResponse) => {
+                const deltaContent = chunk.choices?.[0]?.delta?.content
 
-            for await (const chunk of response.data) {
-              // Преобразуем Buffer в строку
-              const chunkStr = chunk.toString()
-              buffer += chunkStr
-
-              // Обрабатываем строки, разделенные двойными переносами строк
-              const lines = buffer.split("\n\n")
-              buffer = lines.pop() || "" // Оставляем неполную строку в буфере
-
-              for (const line of lines) {
-                if (line.trim() === "") continue
-                if (line.startsWith("data: [DONE]")) {
-                  // Конец стрима
-                  break
+                if (deltaContent) {
+                  content += deltaContent
+                  sender.emit(SenderEvents.CHUNK, { content })
                 }
-                if (line.startsWith("data: ")) {
-                  try {
-                    const jsonStr = line.slice(6) // Убираем "data: "
-                    const chunkData = JSON.parse(jsonStr)
 
-                    // Извлекаем содержимое из чанка
-                    const deltaContent = chunkData.choices?.[0]?.delta?.content
-                    if (deltaContent) {
-                      content += deltaContent
-                      sender.emit(SenderEvents.CHUNK, { content })
-                    }
-
-                    // Сохраняем последние данные для финального ответа
-                    if (chunkData.usage) {
-                      data = chunkData
-                    }
-                  } catch (parseError) {
-                    logger.error("Ошибка парсинга JSON чанка", { parseError, line })
-                  }
-                }
+                data = chunk
+              },
+              onError: error => {
+                logger.error("Ошибка при обработке стрима", { error: error.message })
               }
-            }
+            })
           } else {
             logger.info("Получен ответ", { action: "sendRequest" })
 
