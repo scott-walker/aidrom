@@ -65,11 +65,15 @@ export const createDummyDriver = (config: DummyDriverConfig): Driver => {
       return createSender(async sender => {
         await new Promise(resolve => setTimeout(resolve, 1000))
 
-        const content = request.messages
-          .map(message => {
-            return `${message.role}: ${message.content}`
-          })
-          .join("\n")
+        const responseContent = "Отличный выбор! Next.js — это один из самых"
+
+        let content = ""
+        for (const chunk of responseContent.split("")) {
+          content += chunk
+          sender.emit(SenderEvents.CHUNK, { content })
+
+          await new Promise(resolve => setTimeout(resolve, 100))
+        }
 
         sender.emit(SenderEvents.COMPLETE, {
           providerRequestId: "dummy",
