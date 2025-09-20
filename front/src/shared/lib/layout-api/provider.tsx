@@ -11,8 +11,6 @@ import { LayoutContext } from "./context"
  * @param {ReactNode} props.children дочерние элементы
  */
 export const LayoutProvider: FC<LayoutProviderProps> = ({ children }: LayoutProviderProps): ReactNode => {
-  // console.log("LayoutProvider")
-
   const lucentApi: LucentApi = useLayout()
   const { isThemeDark, isSidebarCollapsed } = lucentApi
   const [title, setTitle] = useState<string>("")

@@ -24,14 +24,13 @@ export const ChatDialogInput = ({ chat, className = "" }: ChatDialogInputProps) 
     "flex",
     "items-center",
     "justify-center",
-    "px-8",
     "py-10",
     className
   )
 
   return (
     <div className={containerClasses}>
-      <ChatInput className="w-2/3" chat={chat} />
+      <ChatInput chat={chat} />
     </div>
   )
 }

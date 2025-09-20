@@ -19,7 +19,16 @@ type ChatInputProps = {
  */
 export const ChatInput = ({ chat, className = "" }: ChatInputProps) => {
   const { sendMessage } = useSendMessage()
-  const containerClasses = makeClasses("relative", "flex", "items-center", "justify-center", className)
+  const containerClasses = makeClasses(
+    "relative",
+    "flex",
+    "items-center",
+    "justify-center",
+    "max-w-[490px]",
+    "w-full",
+    "mx-auto",
+    className
+  )
   const onSend = (input: string) => sendMessage(chat.id, input)
 
   return (

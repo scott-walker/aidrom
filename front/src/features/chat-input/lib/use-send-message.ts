@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react"
 import { useChatStore } from "@entities/chat"
 import { useSendMessage as useApiSendMessage, makeClientMessage, makeAgentMessage } from "@entities/chat"
 import { useToast } from "@features/toasts"
@@ -8,14 +9,17 @@ import { createStream } from "./utils"
  * @namespace Features.Chat.SendMessage.Lib.UseSendMessage
  */
 export const useSendMessage = () => {
-  console.log("useSendMessage")
-
   const setPending = useChatStore(state => state.setPending)
   const addMessage = useChatStore(state => state.addMessage)
   const updateMessage = useChatStore(state => state.updateMessage)
 
   const { mutate: send } = useApiSendMessage()
   const toast = useToast()
+  const stream = useRef<EventSource | null>(null)
+
+  useEffect(() => {
+    return () => stream.current?.close()
+  }, [])
 
   /**
    * Отправка сообщения
@@ -27,10 +31,9 @@ export const useSendMessage = () => {
     const clientMessage = makeClientMessage(chatId, input)
     const agentMessage = makeAgentMessage(chatId, "")
 
-    const stream = createStream(chatId, {
+    stream.current = createStream(chatId, {
       onOpen: () => {
-        toast.info("Соединение открыто")
-
+        // toast.info("Соединение открыто")
         addMessage(clientMessage)
         setPending(true)
         send(
@@ -41,20 +44,20 @@ export const useSendMessage = () => {
               toast.error("Произошла ошибка при отправке сообщения", message)
             },
             onSettled: () => {
-              stream.close()
+              stream.current?.close()
             }
           }
         )
       },
       onStart: () => {
-        toast.info("Начало получения сообщения")
+        // toast.info("Начало получения сообщения")
         addMessage(agentMessage)
       },
       onChunk: ({ content }) => {
         updateMessage({ ...agentMessage, content })
       },
       onEnd: () => {
-        toast.info("Сообщение получено")
+        // toast.info("Сообщение получено")
         setPending(false)
       },
       onError: ({ message }) => {

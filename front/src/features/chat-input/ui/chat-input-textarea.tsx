@@ -41,6 +41,7 @@ export const ChatInputTextarea = ({ className = "", onSend }: ChatInputTextareaP
     if (!e.shiftKey && e.key === "Enter") {
       e.preventDefault()
       onSend(input)
+      setInput("")
     }
   }
 

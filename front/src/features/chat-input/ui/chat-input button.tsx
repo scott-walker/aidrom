@@ -18,9 +18,15 @@ type ChatInputButtonProps = {
 export const ChatInputButton = ({ onSend }: ChatInputButtonProps) => {
   const isPending = useChatStore(state => state.isPending)
   const input = useChatStore(state => state.input)
+  const setInput = useChatStore(state => state.setInput)
 
   const disabledButton = !input.trim() || isPending
   const buttonClasses = makeClasses("absolute", "right-6", "h-12", "w-12", disabledButton && "bg-background-hard")
+
+  const handleClick = () => {
+    onSend(input)
+    setInput("")
+  }
 
   return (
     <IconButton
@@ -31,7 +37,7 @@ export const ChatInputButton = ({ onSend }: ChatInputButtonProps) => {
       iconStrokeWidth={2.2}
       className={buttonClasses}
       disabled={disabledButton}
-      onClick={() => onSend(input)}
+      onClick={handleClick}
     />
   )
 }
