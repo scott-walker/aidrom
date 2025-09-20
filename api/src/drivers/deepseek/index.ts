@@ -128,6 +128,9 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
             responseType: asStream ? "stream" : "json"
           })
 
+          // Эммитеть событие "старт отправки сообщений"
+          sender.emit(SenderEvents.START, {})
+
           if (asStream) {
             logger.info("Получен поток ответа", { action: "sendRequest" })
 
