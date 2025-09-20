@@ -8,7 +8,8 @@ import { useChatInfoToggleStore } from "../store/chat-info-toggle"
  * @namespace Features.ChatInfoToggle.UI.ChatInfoTrigger
  */
 export const ChatInfoTrigger = () => {
-  const { isVisible, toggleVisible } = useChatInfoToggleStore()
+  const isVisible = useChatInfoToggleStore(state => state.isVisible)
+  const toggleVisible = useChatInfoToggleStore(state => state.toggleVisible)
 
   const iconName = isVisible ? ICON.SHOW : ICON.HIDE
   const tooltipText = isVisible ? TOOLTIP_TEXT.HIDE : TOOLTIP_TEXT.SHOW

@@ -13,7 +13,7 @@ type ChatNoneMessagesProps = {
  * @namespace Features.ChatNoneMessages
  */
 export const ChatNoneMessages = ({ messages }: ChatNoneMessagesProps) => {
-  const { messages: lastMessages } = useChatStore()
+  const lastMessages = useChatStore(state => state.messages)
 
   if (!messages.length && !lastMessages.length) {
     return <MessageEmptyList />

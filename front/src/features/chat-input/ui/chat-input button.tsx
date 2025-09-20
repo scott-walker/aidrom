@@ -7,7 +7,7 @@ import { useChatStore } from "@entities/chat"
  * @namespace Features.ChatInput.UI.ChatInputButtonProps
  */
 type ChatInputButtonProps = {
-  onSend: () => void
+  onSend: (input: string) => void
   className?: string
 }
 
@@ -16,7 +16,9 @@ type ChatInputButtonProps = {
  * @namespace Features.ChatInput.UI.ChatInputButton
  */
 export const ChatInputButton = ({ onSend }: ChatInputButtonProps) => {
-  const { isPending, input } = useChatStore()
+  const isPending = useChatStore(state => state.isPending)
+  const input = useChatStore(state => state.input)
+
   const disabledButton = !input.trim() || isPending
   const buttonClasses = makeClasses("absolute", "right-6", "h-12", "w-12", disabledButton && "bg-background-hard")
 
@@ -29,7 +31,7 @@ export const ChatInputButton = ({ onSend }: ChatInputButtonProps) => {
       iconStrokeWidth={2.2}
       className={buttonClasses}
       disabled={disabledButton}
-      onClick={onSend}
+      onClick={() => onSend(input)}
     />
   )
 }

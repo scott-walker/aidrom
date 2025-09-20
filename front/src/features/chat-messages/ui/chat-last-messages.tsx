@@ -17,7 +17,7 @@ type ChatLastMessagesProps = {
  */
 export const ChatLastMessages = ({ chatId }: ChatLastMessagesProps): ReactNode => {
   const messages = useChatMessages(chatId)
-  const { isPending } = useChatStore()
+  const isPending = useChatStore(state => state.isPending)
   const { messagesEndRef } = useScrollMessages(messages.length)
 
   return (

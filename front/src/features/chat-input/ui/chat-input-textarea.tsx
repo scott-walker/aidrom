@@ -9,8 +9,8 @@ import { PLACEHOLDER_TEXT } from "../lib/constants"
  * @namespace Features.ChatInput.UI.ChatTextareaProps
  */
 type ChatInputTextareaProps = {
+  onSend: (input: string) => void
   className?: string
-  onSend: () => void
 }
 
 /**
@@ -18,7 +18,12 @@ type ChatInputTextareaProps = {
  * @namespace Features.ChatInput.UI.ChatTextarea
  */
 export const ChatInputTextarea = ({ className = "", onSend }: ChatInputTextareaProps) => {
-  const { isPending, input, setInput } = useChatStore()
+  const isPending = useChatStore(state => state.isPending)
+  const input = useChatStore(state => state.input)
+  const setInput = useChatStore(state => state.setInput)
+
+  console.log("ChatInputTextarea", input)
+
   const textareaClasses = makeClasses(
     "w-full",
     "pr-20",
@@ -35,7 +40,7 @@ export const ChatInputTextarea = ({ className = "", onSend }: ChatInputTextareaP
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (!e.shiftKey && e.key === "Enter") {
       e.preventDefault()
-      onSend()
+      onSend(input)
     }
   }
 

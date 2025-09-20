@@ -1,6 +1,4 @@
-import { Outlet } from "react-router"
 import type { PageRoutes } from "@lib/page-api/types"
-import { Layout } from "./layout"
 import { Main } from "./pages/main"
 import { Chat } from "./pages/chat"
 
@@ -9,11 +7,11 @@ import { Chat } from "./pages/chat"
  * @namespace Pages.Chat.Routes
  */
 export const routes: PageRoutes = {
-  element: (
-    <Layout>
-      <Outlet />
-    </Layout>
-  ),
+  // element: (
+  //   <Layout>
+  //     <Outlet />
+  //   </Layout>
+  // ),
   path: "chat",
   children: [
     {

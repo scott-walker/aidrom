@@ -3,35 +3,46 @@ import { useTitle } from "@lib/layout-api/utils"
 import { makeClasses } from "@lib/style-api"
 import { ChatList } from "@widgets/chat-list"
 import { useChatListToggleStore } from "@features/chat-list-toggle"
+import { useChatInfoToggleStore } from "@features/chat-info-toggle"
+
+/**
+ * Пропсы макета
+ * @namespace Pages.Chat.Layout.Props
+ */
+type LayoutProps = {
+  children: ReactNode
+  infobar?: ReactNode
+}
 
 /**
  * Макет страницы
  * @namespace Pages.Chat.Layout
  */
-export const Layout = ({ children }: { children: ReactNode }) => {
+export const Layout = ({ children, infobar }: LayoutProps) => {
   useTitle("Чаты")
 
-  const { isVisible: isChatListVisible } = useChatListToggleStore()
+  const isChatListVisible = useChatListToggleStore(state => state.isVisible)
+  const isChatInfoVisible = useChatInfoToggleStore(state => state.isVisible)
 
   const containerClasses = makeClasses("flex items-stretch justify-between h-full")
-  const asideClasses = makeClasses(
-    "h-full",
-    // "border-r",
-    // "border-background-hard",
-    isChatListVisible ? "w-[350px]" : "w-[90px]"
-  )
+  const listbarClasses = makeClasses("h-full", isChatListVisible ? "w-[350px]" : "w-[90px]")
+  const infobarClasses = makeClasses("h-full", isChatInfoVisible ? "w-[350px]" : "w-[90px]")
   const chatClasses = makeClasses(
     "flex-1",
-    "w-full",
-    isChatListVisible ? "w-[calc(100%-350px)]" : "w-[calc(100%-90px)]"
+    !!infobar && "pr-8",
+    isChatInfoVisible && isChatListVisible && "w-[calc(100%-640px)]",
+    !isChatInfoVisible && !isChatListVisible && "w-[calc(100%-180px)]",
+    isChatInfoVisible && !isChatListVisible && "w-[calc(100%-440px)]",
+    !isChatInfoVisible && isChatListVisible && "w-[calc(100%-440px)]"
   )
 
   return (
     <div className={containerClasses}>
-      <aside className={asideClasses}>
+      <aside className={listbarClasses}>
         <ChatList />
       </aside>
       <div className={chatClasses}>{children}</div>
+      {infobar && <aside className={infobarClasses}>{infobar}</aside>}
     </div>
   )
 }

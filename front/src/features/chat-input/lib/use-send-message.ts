@@ -8,9 +8,12 @@ import { createStream } from "./utils"
  * @namespace Features.Chat.SendMessage.Lib.UseSendMessage
  */
 export const useSendMessage = () => {
-  // console.log("useSendMessage")
+  console.log("useSendMessage")
 
-  const { input, isPending, setPending, addMessage, updateMessage, setInput } = useChatStore()
+  const setPending = useChatStore(state => state.setPending)
+  const addMessage = useChatStore(state => state.addMessage)
+  const updateMessage = useChatStore(state => state.updateMessage)
+
   const { mutate: send } = useApiSendMessage()
   const toast = useToast()
 
@@ -18,8 +21,8 @@ export const useSendMessage = () => {
    * Отправка сообщения
    * @namespace Features.Chat.SendMessage.Lib.UseSendMessage.sendMessage
    */
-  const sendMessage = async (chatId: number) => {
-    if (!input.trim() || isPending) return
+  const sendMessage = async (chatId: number, input: string) => {
+    if (!input.trim()) return
 
     const clientMessage = makeClientMessage(chatId, input)
     const agentMessage = makeAgentMessage(chatId, "")
@@ -29,7 +32,6 @@ export const useSendMessage = () => {
         toast.info("Соединение открыто")
 
         addMessage(clientMessage)
-        setInput("")
         setPending(true)
         send(
           { chatId, data: { message: input } },
@@ -61,8 +63,5 @@ export const useSendMessage = () => {
     })
   }
 
-  return {
-    isPending,
-    sendMessage
-  }
+  return { sendMessage }
 }
