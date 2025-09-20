@@ -1,6 +1,6 @@
 import type { ReactNode } from "react"
 import { usePage } from "@lib/page-api"
-import { HeaderVisibleTrigger } from "@ui/triggers"
+import { HeaderVisibleTrigger } from "@features/triggers"
 import { cn } from "@utils/jsxtools"
 
 /**

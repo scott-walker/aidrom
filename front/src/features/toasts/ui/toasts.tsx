@@ -1,6 +1,6 @@
 import { createPortal } from "react-dom"
 import { Toasts as ToastsComponent } from "@ui/toasts"
-import { useToastStore } from "../model/toast-store"
+import { useToastStore } from "../store/toast-store"
 
 /**
  * Компонент для отображения уведомлений

@@ -5,9 +5,10 @@ import type { Message } from "./schema"
  * Создать последнее сообщение клиента
  * @namespace Entities.Chat.Lib.Utils.makeLastClientMessage
  */
-export const makeLastClientMessage = (content: string): Message => {
+export const makeClientMessage = (chatId: number, content: string): Message => {
   return {
     id: crypto.randomUUID(),
+    chatId,
     role: Roles.Client,
     content,
     createdAt: new Date()
@@ -18,9 +19,10 @@ export const makeLastClientMessage = (content: string): Message => {
  * Создать последнее сообщение агента
  * @namespace Entities.Chat.Lib.Utils.makeLastAgentMessage
  */
-export const makeLastAgentMessage = (content: string): Message => {
+export const makeAgentMessage = (chatId: number, content: string): Message => {
   return {
     id: crypto.randomUUID(),
+    chatId,
     role: Roles.Agent,
     content,
     createdAt: new Date()

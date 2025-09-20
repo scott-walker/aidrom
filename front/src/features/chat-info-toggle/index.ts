@@ -1,2 +1,2 @@
-export { useToggleChatInfo } from "./lib/use-toggle-chat-info"
+export { useChatInfoToggleStore } from "./store/chat-info-toggle"
 export { ChatInfoTrigger } from "./ui/chat-info-trigger"

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient, type UseMutationResult } from "@tanstack/react-query"
 import { createChat, updateChat, sendMessage, deleteChat } from "./chat-api"
-import type { Chat } from "../lib/schema"
+import type { ChatListItem } from "../lib/schema"
 import type { ChatCreateData, ChatUpdateData, MessageSendData, MessageSendResult } from "../lib/types"
 import { queryKeys } from "./chat-queries"
 
@@ -8,7 +8,7 @@ import { queryKeys } from "./chat-queries"
  * Хук для создания чата
  * @namespace Entities.Chat.Api.ChatMutations.useCreateChat
  */
-export const useCreateChat = (): UseMutationResult<Chat, Error, ChatCreateData> => {
+export const useCreateChat = (): UseMutationResult<ChatListItem, Error, ChatCreateData> => {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -23,7 +23,7 @@ export const useCreateChat = (): UseMutationResult<Chat, Error, ChatCreateData> 
  * Хук для обновления чата
  * @namespace Entities.Chat.Api.ChatMutations.useUpdateChat
  */
-export const useUpdateChat = (): UseMutationResult<Chat, Error, { chatId: number; data: ChatUpdateData }> => {
+export const useUpdateChat = (): UseMutationResult<ChatListItem, Error, { chatId: number; data: ChatUpdateData }> => {
   const queryClient = useQueryClient()
 
   return useMutation({
@@ -58,12 +58,12 @@ export const useSendMessage = (): UseMutationResult<
   Error,
   { chatId: number; data: MessageSendData }
 > => {
-  const queryClient = useQueryClient()
+  // const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: ({ chatId, data }: { chatId: number; data: MessageSendData }) => sendMessage(chatId, data),
-    onSuccess: ({ chatId }: MessageSendResult) => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.details(chatId) })
-    }
+    mutationFn: ({ chatId, data }: { chatId: number; data: MessageSendData }) => sendMessage(chatId, data)
+    // onSuccess: ({ chatId }: MessageSendResult) => {
+    //   queryClient.invalidateQueries({ queryKey: queryKeys.details(chatId) })
+    // }
   })
 }

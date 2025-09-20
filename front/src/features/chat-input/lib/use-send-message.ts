@@ -1,50 +1,64 @@
 import { useChatStore } from "@entities/chat"
-import { makeLastClientMessage, makeLastAgentMessage } from "@entities/chat"
-import { useSendMessage as useApiSendMessage } from "@entities/chat/api/chat-mutations"
+import { useSendMessage as useApiSendMessage, makeClientMessage, makeAgentMessage } from "@entities/chat"
 import { useToast } from "@features/toasts"
+import { createStream } from "./utils"
 
 /**
  * Хук для отправки сообщения
  * @namespace Features.Chat.SendMessage.Lib.UseSendMessage
  */
 export const useSendMessage = () => {
-  const { isPending, setPending, setLastClientMessage, setLastAgentMessage } = useChatStore()
+  // console.log("useSendMessage")
+
+  const { input, isPending, setPending, addMessage, updateMessage, setInput } = useChatStore()
   const { mutate: send } = useApiSendMessage()
   const toast = useToast()
 
-  const sendMessage = async (chatId: number, input: string) => {
+  /**
+   * Отправка сообщения
+   * @namespace Features.Chat.SendMessage.Lib.UseSendMessage.sendMessage
+   */
+  const sendMessage = async (chatId: number) => {
     if (!input.trim() || isPending) return
 
-    setLastClientMessage(makeLastClientMessage(input))
-    setPending(true)
+    const clientMessage = makeClientMessage(chatId, input)
+    const agentMessage = makeAgentMessage(chatId, "")
 
-    const stream = new EventSource(`${import.meta.env.VITE_API_BASE_URL}/chats/${chatId}/stream`)
+    const stream = createStream(chatId, {
+      onOpen: () => {
+        toast.info("Соединение открыто")
 
-    stream.onmessage = event => {
-      const data = JSON.parse(event.data)
-
-      console.log("data", data)
-
-      setLastAgentMessage(makeLastAgentMessage(data.content))
-    }
-    stream.onopen = () => {
-      send(
-        { chatId, data: { message: input } },
-        {
-          onSuccess: () => {
-            setLastClientMessage(null)
-            setLastAgentMessage(null)
-          },
-          onError: ({ message }) => {
-            toast.error("Произошла ошибка при отправке сообщения", message)
-          },
-          onSettled: () => {
-            setPending(false)
-            stream.close()
+        addMessage(clientMessage)
+        setInput("")
+        setPending(true)
+        send(
+          { chatId, data: { message: input } },
+          {
+            onSuccess: () => {},
+            onError: ({ message }) => {
+              toast.error("Произошла ошибка при отправке сообщения", message)
+            },
+            onSettled: () => {
+              stream.close()
+            }
           }
-        }
-      )
-    }
+        )
+      },
+      onStart: () => {
+        toast.info("Начало получения сообщения")
+        addMessage(agentMessage)
+      },
+      onChunk: ({ content }) => {
+        updateMessage({ ...agentMessage, content })
+      },
+      onEnd: () => {
+        toast.info("Сообщение получено")
+        setPending(false)
+      },
+      onError: ({ message }) => {
+        toast.error("Ошибка при отправке сообщения", message)
+      }
+    })
   }
 
   return {

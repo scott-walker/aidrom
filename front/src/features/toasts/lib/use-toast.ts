@@ -1,4 +1,4 @@
-import { useToastStore } from "../model/toast-store"
+import { useToastStore } from "../store/toast-store"
 
 /**
  * Хук для работы с уведомлениями

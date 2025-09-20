@@ -1,6 +1,6 @@
 import { makeClasses } from "@lib/style-api"
 import { Heading } from "@ui/heading"
-import { ChatListTrigger, useToggleChatList } from "@features/chat-list-toggle"
+import { ChatListTrigger, useChatListToggleStore } from "@features/chat-list-toggle"
 import { ChatAgentList } from "@features/chat-agent-list"
 
 /**
@@ -16,7 +16,7 @@ type ChatListProps = {
  * @namespace Widgets.ChatList
  */
 export const ChatList = ({ className = "" }: ChatListProps) => {
-  const { isVisible } = useToggleChatList()
+  const { isVisible } = useChatListToggleStore()
   const containerClasses = makeClasses("flex", "flex-col", "h-full", className)
   const headerClasses = makeClasses("flex", "justify-between", "items-center", "px-(--layout-inner-offset-x)", "py-4")
   const listClasses = makeClasses(

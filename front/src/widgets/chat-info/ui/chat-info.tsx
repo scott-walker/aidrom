@@ -5,7 +5,7 @@ import { Json } from "@ui/json"
 
 import { useChatById } from "@entities/chat"
 import { AgentFaceInfo, AgentModifyInfo, useAgentById, type Agent } from "@entities/agent"
-import { useToggleChatInfo } from "@features/chat-info-toggle"
+import { useChatInfoToggleStore } from "@features/chat-info-toggle"
 
 import { ChatInfoHeader } from "./chat-info-header"
 import { AgentInfoLink } from "@features/agent-info-link"
@@ -27,7 +27,7 @@ export const ChatInfo = ({ chatId }: ChatInfoProps) => {
   const { agent, isLoading: isAgentLoading } = useAgentById(chat?.agentId as number)
   const chatAgent = agent as Agent
 
-  const { isVisible } = useToggleChatInfo()
+  const { isVisible } = useChatInfoToggleStore()
   const containerClasses = makeClasses("flex", "flex-col", "h-full", "bg-background-soft")
   const contentClasses = makeClasses(
     "flex",

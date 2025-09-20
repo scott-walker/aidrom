@@ -51,12 +51,14 @@ export const toMessages = (dto: MessagePairDTO): Message[] => {
   return [
     {
       id: crypto.randomUUID(),
+      chatId: dto.chatId,
       role: Roles.Client,
       content: dto.clientMessage,
       createdAt: new Date(dto.createdAt)
     },
     {
       id: crypto.randomUUID(),
+      chatId: dto.chatId,
       role: Roles.Agent,
       content: dto.agentMessage,
       createdAt: new Date(dto.createdAt)

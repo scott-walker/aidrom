@@ -2,7 +2,7 @@ import type { ReactNode } from "react"
 import { useTitle } from "@lib/layout-api/utils"
 import { makeClasses } from "@lib/style-api"
 import { ChatList } from "@widgets/chat-list"
-import { useToggleChatList } from "@features/chat-list-toggle"
+import { useChatListToggleStore } from "@features/chat-list-toggle"
 
 /**
  * Макет страницы
@@ -11,7 +11,7 @@ import { useToggleChatList } from "@features/chat-list-toggle"
 export const Layout = ({ children }: { children: ReactNode }) => {
   useTitle("Чаты")
 
-  const { isVisible: isChatListVisible } = useToggleChatList()
+  const { isVisible: isChatListVisible } = useChatListToggleStore()
 
   const containerClasses = makeClasses("flex items-stretch justify-between h-full")
   const asideClasses = makeClasses(

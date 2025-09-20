@@ -1,12 +1,12 @@
 import { create } from "zustand"
 import { persist } from "zustand/middleware"
-import { LS_STATE_KEY } from "./constants"
+import { LS_STATE_KEY } from "../lib/constants"
 
 /**
  * Тип данных для управления скрытием/показом информации о чате
- * @namespace Features.ChatInfoToggle.Lib.ToggleChatInfoStore
+ * @namespace Features.ChatInfoToggle.Lib.ChatInfoToggleStore
  */
-type ToggleChatInfoStore = {
+type ChatInfoToggleStore = {
   isVisible: boolean
   show: () => void
   hide: () => void
@@ -15,9 +15,9 @@ type ToggleChatInfoStore = {
 
 /**
  * Хук для управления скрытием/показом информации о чате
- * @namespace Features.ChatInfoToggle.Lib.useToggleChatInfo
+ * @namespace Features.ChatInfoToggle.Lib.useChatInfoToggleStore
  */
-export const useToggleChatInfo = create<ToggleChatInfoStore>()(
+export const useChatInfoToggleStore = create<ChatInfoToggleStore>()(
   persist(
     set => ({
       isVisible: false,

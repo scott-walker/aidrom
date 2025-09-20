@@ -3,7 +3,7 @@ import { useParams } from "react-router"
 import { makeClasses } from "@lib/style-api"
 import { ChatDialog } from "@widgets/chat-dialog"
 import { ChatInfo } from "@widgets/chat-info"
-import { useToggleChatInfo } from "@features/chat-info-toggle"
+import { useChatInfoToggleStore } from "@features/chat-info-toggle"
 
 /**
  * Страница чата
@@ -13,7 +13,7 @@ import { useToggleChatInfo } from "@features/chat-info-toggle"
 export const Chat = (): ReactNode => {
   const chatId = parseInt(useParams().chatId as string)
 
-  const { isVisible: isChatInfoVisible } = useToggleChatInfo()
+  const { isVisible: isChatInfoVisible } = useChatInfoToggleStore()
 
   const containerClasses = makeClasses("flex", "items-stretch", "justify-between", "h-full", "w-full")
   const chatClasses = makeClasses("flex-1", "pr-8", isChatInfoVisible ? "w-[calc(100%-350px)]" : "w-[calc(100%-90px)]")

@@ -1,15 +1,16 @@
 // Lib
-export { Roles } from "./lib/constants"
+export { Roles, SSEDataType } from "./lib/constants"
 export { type Chat, type ChatListItem, type Message } from "./lib/schema"
 export type { ChatCreateData, ChatUpdateData, MessageSendData, MessageSendResult } from "./lib/types"
-export { makeLastClientMessage, makeLastAgentMessage } from "./lib/utils"
+export { makeClientMessage, makeAgentMessage } from "./lib/utils"
 
 // API
 export { useChats, useChatById } from "./api/chat-queries"
 export { useCreateChat, useUpdateChat, useSendMessage, useDeleteChat } from "./api/chat-mutations"
 
-// Model
-export { useChatStore } from "./model/chat-store"
+// Store
+export { useChatStore } from "./store/chat-store"
+export { useChatMessages } from "./store/chat-selectors"
 
 // UI
 export { ChatPending } from "./ui/chat-pending"

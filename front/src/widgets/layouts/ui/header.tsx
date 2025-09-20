@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 import { useLayout } from "@lib/layout-api"
 import { cn } from "@utils/jsxtools"
-import { ThemeTrigger } from "@ui/triggers"
+import { ThemeTrigger } from "@features/triggers"
 // import { SidebarCollapseTrigger } from "@ui/triggers"
 import { Heading } from "@ui/heading"
 import { Icon } from "@ui/icon"

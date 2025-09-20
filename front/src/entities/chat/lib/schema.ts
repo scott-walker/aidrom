@@ -6,6 +6,7 @@ import type { Roles } from "./constants"
  */
 export interface Message {
   id: string
+  chatId: number
   role: Roles
   content: string
   createdAt: Date

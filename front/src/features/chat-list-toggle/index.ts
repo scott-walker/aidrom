@@ -1,2 +1,2 @@
-export { useToggleChatList } from "./lib/use-toggle-chat-list"
+export { useChatListToggleStore } from "./store/chat-list-toggle"
 export { ChatListTrigger } from "./ui/chat-list-trigger"
