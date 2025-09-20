@@ -81,8 +81,10 @@ export const createStream = (
       onChunk?.(data)
     } else if (data.type === SSEDataType.End) {
       onEnd?.(data)
+      isFirstChunk = true
     } else if (data.type === SSEDataType.Error) {
       onError?.(data)
+      isFirstChunk = true
     }
   }
 

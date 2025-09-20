@@ -12,14 +12,19 @@ export const useSendMessage = () => {
   const setPending = useChatStore(state => state.setPending)
   const addMessage = useChatStore(state => state.addMessage)
   const updateMessage = useChatStore(state => state.updateMessage)
+  const clearMessages = useChatStore(state => state.clearMessages)
 
   const { mutate: send } = useApiSendMessage()
   const toast = useToast()
   const stream = useRef<EventSource | null>(null)
 
   useEffect(() => {
-    return () => stream.current?.close()
-  }, [])
+    return () => {
+      console.log("useSendMessage unmounted")
+      stream.current?.close()
+      clearMessages()
+    }
+  }, [clearMessages])
 
   /**
    * Отправка сообщения
@@ -62,6 +67,7 @@ export const useSendMessage = () => {
       },
       onError: ({ message }) => {
         toast.error("Ошибка при отправке сообщения", message)
+        setPending(false)
       }
     })
   }

@@ -1,7 +1,7 @@
+import { type ReactNode } from "react"
 import { useChatMessages, useChatStore, ChatPending } from "@entities/chat"
 import { ChatMessage } from "@features/chat-message"
 import { useScrollMessages } from "../lib/use-scroll-messages"
-import type { ReactNode } from "react"
 
 /**
  * Пропсы компонента последних сообщений

@@ -22,8 +22,6 @@ export const ChatInputTextarea = ({ className = "", onSend }: ChatInputTextareaP
   const input = useChatStore(state => state.input)
   const setInput = useChatStore(state => state.setInput)
 
-  console.log("ChatInputTextarea", input)
-
   const textareaClasses = makeClasses(
     "w-full",
     "pr-20",

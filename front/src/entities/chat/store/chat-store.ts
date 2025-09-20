@@ -14,6 +14,7 @@ interface ChatStore {
   setPending: (isPending: boolean) => void
   addMessage: (message: Message) => void
   updateMessage: (message: Message) => void
+  clearMessages: () => void
 }
 
 /**
@@ -70,6 +71,16 @@ export const useChatStore = create<ChatStore>(set => ({
   updateMessage: message => {
     set(state => {
       return { messages: state.messages.map(m => (m.id === message.id ? message : m)) }
+    })
+  },
+
+  /**
+   * Очистить сообщения
+   * @namespace Entities.Chat.Model.useChatStore.clearMessages
+   */
+  clearMessages: () => {
+    set(() => {
+      return { messages: [] }
     })
   }
 }))
