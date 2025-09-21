@@ -24,7 +24,7 @@ export const ChatMessage = ({ content, role, createdAt, className = "" }: ChatMe
 
   return (
     <MessageBubble role={role} createdAt={createdAt} className={makeMessageClasses(role)}>
-      <Markdown value={content} advanced html />
+      <Markdown value={content} />
     </MessageBubble>
   )
 }
