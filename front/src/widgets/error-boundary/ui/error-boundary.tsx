@@ -1,6 +1,6 @@
 import { useRouteError, isRouteErrorResponse, useNavigate } from "react-router"
 import { makeClasses } from "@lib/style-api"
-import { useLayoutTitle, useLayoutSubtitle } from "@lib/layout-api"
+import { useLayoutTitle } from "@lib/layout-api"
 import { Card } from "@ui/card"
 import { Button } from "@ui/button"
 import { InfinityLoader } from "@ui/loader"
@@ -10,8 +10,7 @@ import { InfinityLoader } from "@ui/loader"
  * @namespace Widgets.ErrorBoundary
  */
 export const ErrorBoundary = () => {
-  const { setTitle } = useLayoutTitle()
-  const { setSubtitle } = useLayoutSubtitle()
+  useLayoutTitle("Ошибка")
 
   const error = useRouteError()
   const navigate = useNavigate()
@@ -28,9 +27,6 @@ export const ErrorBoundary = () => {
     errorMessage = error.message
     errorDetails = error.stack
   }
-
-  setTitle("Ошибка")
-  setSubtitle(errorMessage)
 
   const containerClasses = makeClasses(
     "flex",

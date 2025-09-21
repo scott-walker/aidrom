@@ -7,9 +7,7 @@ import { Container } from "@ui/container"
  * @namespace Pages.Dashboard.Layout
  */
 export const Layout = ({ children }: { children: ReactNode }) => {
-  const { setTitle } = useLayoutTitle()
-
-  setTitle("Dashboard")
+  useLayoutTitle("Dashboard")
 
   return <Container>{children}</Container>
 }

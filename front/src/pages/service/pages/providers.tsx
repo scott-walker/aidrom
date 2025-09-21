@@ -12,7 +12,7 @@ import { Card } from "@shared/ui/card"
  * @returns {ReactNode}
  */
 export const Providers = (): ReactNode => {
-  useLayoutSubtitle().setSubtitle("Провайдеры")
+  useLayoutSubtitle("Провайдеры")
 
   return (
     <Blocks>

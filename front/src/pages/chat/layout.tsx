@@ -17,7 +17,7 @@ type LayoutProps = {
  * @namespace Pages.Chat.Layout
  */
 export const Layout = ({ children, infobar }: LayoutProps) => {
-  useLayoutTitle().setTitle("Чаты")
+  useLayoutTitle("Чаты")
 
   return (
     <ChatInterface listbar={<ChatList />} infobar={infobar}>

@@ -11,7 +11,7 @@ import { Heading } from "@ui/heading"
  * @returns {ReactNode}
  */
 export const Json = (): ReactNode => {
-  useLayoutSubtitle().setSubtitle("JSON")
+  useLayoutSubtitle("JSON")
 
   const json = `{
   "name": "John",

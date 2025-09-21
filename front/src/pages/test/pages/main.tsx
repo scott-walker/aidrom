@@ -18,7 +18,7 @@ import { useToast } from "@features/toasts"
  * @returns {ReactNode}
  */
 export const Main = (): ReactNode => {
-  useLayoutSubtitle().setSubtitle("Главная")
+  useLayoutSubtitle("Главная")
 
   const [sliderValue, setSliderValue] = useState<number[]>([0])
   const toast = useToast()

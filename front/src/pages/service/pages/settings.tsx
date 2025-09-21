@@ -9,7 +9,7 @@ import { Blocks } from "@ui/blocks"
  * @returns {ReactNode}
  */
 export const Settings = (): ReactNode => {
-  useLayoutSubtitle().setSubtitle("Настройки")
+  useLayoutSubtitle("Настройки")
 
   return (
     <Blocks>

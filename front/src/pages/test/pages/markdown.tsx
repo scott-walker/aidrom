@@ -10,7 +10,7 @@ import { Markdown as MarkdownUI } from "@ui/markdown"
  * @returns {ReactNode}
  */
 export const Markdown = (): ReactNode => {
-  useLayoutSubtitle().setSubtitle("Markdown")
+  useLayoutSubtitle("Markdown")
 
   const markdown = `## FSD-архитектура
 

@@ -8,9 +8,7 @@ import { Container } from "@ui/container"
  * @namespace Pages.Test.Layout
  */
 export const Layout = ({ children }: { children: ReactNode }) => {
-  const { setTitle } = useLayoutTitle()
-
-  setTitle("Разработка")
+  useLayoutTitle("Разработка")
 
   const links: Link[] = [
     {

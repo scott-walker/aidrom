@@ -28,7 +28,7 @@ export const Provider = (): ReactNode => {
   const providerId = parseInt(useParams().providerId as string)
   const { provider, isLoading, error } = useProviderById(providerId)
 
-  useLayoutSubtitle().setSubtitle(provider?.name ?? "")
+  useLayoutSubtitle(provider?.name ?? "")
 
   if (isLoading) return <LoaderBlock />
   if (error) return <ErrorBlock error={error} />

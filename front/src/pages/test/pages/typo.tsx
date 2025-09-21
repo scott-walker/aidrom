@@ -9,7 +9,7 @@ import { Container } from "@ui/container"
  * @returns {ReactNode}
  */
 export const Typo = (): ReactNode => {
-  useLayoutSubtitle().setSubtitle("Типографика")
+  useLayoutSubtitle("Типографика")
 
   return (
     <Card>

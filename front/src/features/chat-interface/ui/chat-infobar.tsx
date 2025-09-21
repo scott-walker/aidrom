@@ -29,6 +29,7 @@ export const ChatInfoBar = ({ className = "" }: ChatInfoBarProps) => {
     !isVisible && "hidden",
     INFOPBAR_CONTAINER_CLASS
   )
+
   return (
     <aside className={containerClasses}>
       <header className={headerClasses}>

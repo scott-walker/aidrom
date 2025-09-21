@@ -29,6 +29,7 @@ export const ChatListBar = ({ className = "" }: ChatListBarProps) => {
     !isVisible && "hidden",
     LISBAR_CONTAINER_CLASS
   )
+
   return (
     <aside className={containerClasses}>
       <header className={headerClasses}>

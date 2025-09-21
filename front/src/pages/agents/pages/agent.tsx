@@ -24,8 +24,7 @@ export const Agent = (): ReactNode => {
   const agentId = parseInt(useParams().agentId as string)
   const { agent, isLoading } = useAgentById(agentId)
 
-  const { setSubtitle } = useLayoutSubtitle()
-  setSubtitle(agent?.name ?? "")
+  useLayoutSubtitle(agent?.name ?? "")
 
   if (isLoading) return <LoaderBlock />
 

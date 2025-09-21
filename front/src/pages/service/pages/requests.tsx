@@ -9,7 +9,7 @@ import { RequestsDataTable } from "@widgets/requests-data-table"
  * @returns {ReactNode}
  */
 export const Requests = (): ReactNode => {
-  useLayoutSubtitle().setSubtitle("Запросы")
+  useLayoutSubtitle("Запросы")
 
   return (
     <Blocks>

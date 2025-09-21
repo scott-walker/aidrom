@@ -7,9 +7,7 @@ import { Container } from "@ui/container"
  * @namespace Pages.Agents.Layout
  */
 export const AgentsLayout = ({ children }: { children: ReactNode }) => {
-  const { setTitle } = useLayoutTitle()
-
-  setTitle("Агенты")
+  useLayoutTitle("Агенты")
 
   return <Container>{children}</Container>
 }

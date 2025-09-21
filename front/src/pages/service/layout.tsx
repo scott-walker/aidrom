@@ -8,9 +8,7 @@ import { Container } from "@ui/container"
  * @namespace Pages.Service.Layout
  */
 export const Layout = ({ children }: { children: ReactNode }) => {
-  const { setTitle } = useLayoutTitle()
-
-  setTitle("Сервис")
+  useLayoutTitle("Сервис")
 
   const links = [
     { label: "Провайдеры", path: "/service/providers" },
