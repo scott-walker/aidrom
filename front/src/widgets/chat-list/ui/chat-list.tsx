@@ -16,7 +16,7 @@ type ChatListProps = {
  * @namespace Widgets.ChatList
  */
 export const ChatList = ({ className = "" }: ChatListProps) => {
-  const { isVisible } = useChatListToggleStore()
+  const isVisible = useChatListToggleStore(state => state.isVisible)
   const containerClasses = makeClasses("flex", "flex-col", "h-full", className)
   const headerClasses = makeClasses("flex", "justify-between", "items-center", "px-(--layout-inner-offset-x)", "py-4")
   const listClasses = makeClasses(

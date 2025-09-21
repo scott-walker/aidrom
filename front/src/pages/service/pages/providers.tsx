@@ -1,5 +1,5 @@
 import { type ReactNode } from "react"
-import { useSubtitle } from "@lib/layout-api/utils"
+import { useLayoutSubtitle } from "@lib/layout-api"
 import { Blocks } from "@ui/blocks"
 import { ProviderList } from "@widgets/provider-list"
 import { Heading } from "@shared/ui/heading"
@@ -12,7 +12,7 @@ import { Card } from "@shared/ui/card"
  * @returns {ReactNode}
  */
 export const Providers = (): ReactNode => {
-  useSubtitle("Провайдеры")
+  useLayoutSubtitle().setSubtitle("Провайдеры")
 
   return (
     <Blocks>

@@ -1,5 +1,5 @@
 import { NavLink } from "react-router"
-import { cn, cva } from "@utils/jsxtools"
+import { makeClasses } from "@lib/style-api"
 import { Tooltip } from "@ui/tooltip"
 import { Icon } from "@ui/icon"
 import type { MenuItem } from "./types"
@@ -8,65 +8,30 @@ import type { MenuItem } from "./types"
  * Элемент меню
  * @namespace Shared.UI.Menu.MenuItem
  */
-export const Item = ({ label, path, icon = null, compact = false }: MenuItem) => {
-  // Link
-  const linkClasses = cn("flex", "items-center", "gap-4", "py-2", "select-none", "rounded-xl", "hover:text-primary")
-  const linkVariants = cva(linkClasses, {
-    variants: {
-      compact: {
-        true: "justify-center px-3",
-        false: "px-5"
-      },
-      active: {
-        true: cn("font-bold", "bg-background", "text-foreground-hard"),
-        false: cn("font-semibold", "text-foreground-soft")
-      }
-    },
-    compoundVariants: [
-      {
-        compact: true,
-        active: false,
-        class: cn("text-foreground", "hover:text-primary")
-      },
-      {
-        compact: false,
-        active: false,
-        class: cn("text-foreground-soft", "hover:text-primary")
-      }
-    ],
-    defaultVariants: {
-      compact: false,
-      active: false
-    }
-  })
-
-  const linkClassHandler = ({ isActive }: { isActive: boolean }) => linkVariants({ active: isActive, compact })
-
+export const Item = ({ label, path, icon }: MenuItem) => {
   const iconWeight = 2
-  const labelClasses = cn("text-base")
-  const labelVariants = cva(labelClasses, {
-    variants: {
-      compact: {
-        true: "hidden",
-        false: "block"
-      }
-    },
-    defaultVariants: {
-      compact: false
-    }
-  })
+  const linkClassHandler = ({ isActive }: { isActive: boolean }) => {
+    return makeClasses(
+      "flex",
+      "items-center",
+      "justify-center",
+      "px-3",
+      "py-2",
+      "select-none",
+      "rounded-xl",
+      "hover:text-primary",
+      isActive ? "font-bold" : "font-semibold",
+      isActive ? "bg-background" : "bg-transparent",
+      isActive ? "text-foreground-hard" : "text-foreground-soft"
+    )
+  }
 
   return (
     <li>
       <NavLink className={linkClassHandler} to={path}>
-        {icon && compact && (
-          <Tooltip text={label} side="right" offset={30} delay={50}>
-            <Icon strokeWidth={iconWeight} name={icon} />
-          </Tooltip>
-        )}
-        {icon && !compact && <Icon strokeWidth={iconWeight} name={icon} />}
-
-        <span className={labelVariants({ compact })}>{label}</span>
+        <Tooltip text={label} side="right" offset={30} delay={50}>
+          <Icon strokeWidth={iconWeight} name={icon} />
+        </Tooltip>
       </NavLink>
     </li>
   )

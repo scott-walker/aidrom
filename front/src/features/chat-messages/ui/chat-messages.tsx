@@ -1,7 +1,7 @@
 import { makeClasses } from "@lib/style-api"
 import { type Chat } from "@entities/chat"
 import { ChatNoneMessages } from "./chat-none-messages"
-import { ChatPrevMessages } from "./chat-prev-messages"
+// import { ChatPrevMessages } from "./chat-prev-messages"
 import { ChatLastMessages } from "./chat-last-messages"
 import { useScrollMessages } from "../lib/use-scroll-messages"
 
@@ -36,7 +36,7 @@ export const ChatMessages = ({ chat, className = "" }: ChatMessagesProps) => {
   return (
     <div ref={bodyRef} className={bodyClasses}>
       <ChatNoneMessages messages={chat.messages} />
-      <ChatPrevMessages messages={chat.messages} />
+      {/* <ChatPrevMessages messages={chat.messages} /> */}
       <ChatLastMessages chatId={chat.id} />
     </div>
   )

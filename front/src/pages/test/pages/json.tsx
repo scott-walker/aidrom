@@ -1,17 +1,17 @@
 import type { ReactNode } from "react"
-import { useSubtitle } from "@lib/layout-api/utils"
+import { useLayoutSubtitle } from "@lib/layout-api"
 import { Card } from "@ui/card"
 import { Container } from "@ui/container"
-import { Json as JsonUI } from "@shared/ui/json"
-import { Heading } from "@shared/ui/heading"
+import { Json as JsonUI } from "@ui/json"
+import { Heading } from "@ui/heading"
 
 /**
- * Страница с Markdown
- * @namespace Pages.Test.Markdown
+ * Страница с JSON
+ * @namespace Pages.Test.Json
  * @returns {ReactNode}
  */
 export const Json = (): ReactNode => {
-  useSubtitle("Markdown")
+  useLayoutSubtitle().setSubtitle("JSON")
 
   const json = `{
   "name": "John",

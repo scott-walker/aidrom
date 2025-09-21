@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 import { useParams } from "react-router"
 
-import { useSubtitle } from "@lib/layout-api"
+import { useLayoutSubtitle } from "@lib/layout-api"
 import { Blocks } from "@ui/blocks"
 import { LoaderBlock } from "@ui/loader-block"
 import { Card } from "@ui/card"
@@ -24,7 +24,8 @@ export const Agent = (): ReactNode => {
   const agentId = parseInt(useParams().agentId as string)
   const { agent, isLoading } = useAgentById(agentId)
 
-  useSubtitle(agent?.name ?? "")
+  const { setSubtitle } = useLayoutSubtitle()
+  setSubtitle(agent?.name ?? "")
 
   if (isLoading) return <LoaderBlock />
 

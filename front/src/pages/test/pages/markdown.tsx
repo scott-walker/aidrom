@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { useSubtitle } from "@lib/layout-api/utils"
+import { useLayoutSubtitle } from "@lib/layout-api"
 import { Card } from "@ui/card"
 import { Container } from "@ui/container"
 import { Markdown as MarkdownUI } from "@ui/markdown"
@@ -10,7 +10,7 @@ import { Markdown as MarkdownUI } from "@ui/markdown"
  * @returns {ReactNode}
  */
 export const Markdown = (): ReactNode => {
-  useSubtitle("Markdown")
+  useLayoutSubtitle().setSubtitle("Markdown")
 
   const markdown = `## FSD-архитектура
 

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { useSubtitle } from "@lib/layout-api/utils"
+import { useLayoutSubtitle } from "@lib/layout-api"
 import { Card } from "@ui/card"
 import { Container } from "@ui/container"
 
@@ -9,7 +9,7 @@ import { Container } from "@ui/container"
  * @returns {ReactNode}
  */
 export const Typo = (): ReactNode => {
-  useSubtitle("Типографика")
+  useLayoutSubtitle().setSubtitle("Типографика")
 
   return (
     <Card>

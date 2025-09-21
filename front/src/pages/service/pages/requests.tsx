@@ -1,5 +1,5 @@
 import { type ReactNode } from "react"
-import { useSubtitle } from "@lib/layout-api"
+import { useLayoutSubtitle } from "@lib/layout-api"
 import { Blocks } from "@ui/blocks"
 import { RequestsDataTable } from "@widgets/requests-data-table"
 
@@ -9,7 +9,7 @@ import { RequestsDataTable } from "@widgets/requests-data-table"
  * @returns {ReactNode}
  */
 export const Requests = (): ReactNode => {
-  useSubtitle("Запросы")
+  useLayoutSubtitle().setSubtitle("Запросы")
 
   return (
     <Blocks>

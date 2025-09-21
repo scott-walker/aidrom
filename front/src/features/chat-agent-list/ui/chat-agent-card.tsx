@@ -4,7 +4,7 @@ import { AgentStatusAvatar } from "@entities/agent"
 import { ChatCreateRegularButton } from "@features/chat-create"
 import type { AgentChats } from "../model/schema"
 import { ChatListItems } from "./chat-list-items"
-import { useChatAgentListStore } from "../model/store"
+import { useChatAgentListStore } from "../store/chat-agent-list-store"
 
 /**
  * Пропсы карточки агента с чатами
@@ -20,7 +20,10 @@ type ChatAgentCardProps = {
  * @namespace Features.ChatAgentList.UI.ChatAgentCard
  */
 export const ChatAgentCard = ({ agent, className = "" }: ChatAgentCardProps) => {
-  const { openAgentId, setOpenAgentId, unsetOpenAgentId } = useChatAgentListStore()
+  const openAgentId = useChatAgentListStore(state => state.openAgentId)
+  const setOpenAgentId = useChatAgentListStore(state => state.setOpenAgentId)
+  const unsetOpenAgentId = useChatAgentListStore(state => state.unsetOpenAgentId)
+
   const isOpen = openAgentId === agent.id
   const toggleChatList = () => {
     if (isOpen) {

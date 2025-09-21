@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { useTitle } from "@lib/layout-api"
+import { useLayoutTitle } from "@lib/layout-api"
 import { Container } from "@ui/container"
 
 /**
@@ -7,7 +7,9 @@ import { Container } from "@ui/container"
  * @namespace Pages.Dashboard.Layout
  */
 export const Layout = ({ children }: { children: ReactNode }) => {
-  useTitle("Dashboard")
+  const { setTitle } = useLayoutTitle()
+
+  setTitle("Dashboard")
 
   return <Container>{children}</Container>
 }

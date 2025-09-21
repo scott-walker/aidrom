@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { useTitle } from "@lib/layout-api/utils"
+// import { useLayoutTitle } from "@lib/layout-api"
 import { makeClasses } from "@lib/style-api"
 import { ChatList } from "@widgets/chat-list"
 import { useChatListToggleStore } from "@features/chat-list-toggle"
@@ -19,7 +19,7 @@ type LayoutProps = {
  * @namespace Pages.Chat.Layout
  */
 export const Layout = ({ children, infobar }: LayoutProps) => {
-  useTitle("Чаты")
+  // useLayoutTitle().setTitle("Чаты")
 
   const isChatListVisible = useChatListToggleStore(state => state.isVisible)
   const isChatInfoVisible = useChatInfoToggleStore(state => state.isVisible)

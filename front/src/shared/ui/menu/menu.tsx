@@ -6,11 +6,14 @@ import type { MenuProps } from "./types"
  * Корневой компонент меню
  * @namespace Shared.UI.Menu
  */
-export const Menu = ({ items, compact = false }: MenuProps) => {
-  const classes = makeClasses("flex", "flex-col", compact && "items-center")
-  const itemList = items.map(item => {
-    return <Item key={item.path} {...item} compact={compact} />
-  })
+export const Menu = ({ items }: MenuProps) => {
+  const classes = makeClasses("flex", "flex-col")
 
-  return <ul className={classes}>{itemList}</ul>
+  return (
+    <ul className={classes}>
+      {items.map(item => (
+        <Item key={item.path} {...item} />
+      ))}
+    </ul>
+  )
 }

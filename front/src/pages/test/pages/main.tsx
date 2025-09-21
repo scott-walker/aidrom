@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react"
-import { useSubtitle } from "@lib/layout-api/utils"
+import { useLayoutSubtitle } from "@lib/layout-api"
 import { Card } from "@ui/card"
 import { Container } from "@ui/container"
 import { Heading } from "@ui/heading"
@@ -7,10 +7,10 @@ import { Modal } from "@ui/modal"
 import { Button } from "@ui/button"
 import { Popover } from "@ui/popover"
 import { Slider } from "@ui/slider"
-import { Loader } from "@shared/ui/loader/loader"
+import { Loader } from "@ui/loader/loader"
 import { InputLight } from "@ui/input-light"
+import { ModalConfirm } from "@ui/modal-confirm"
 import { useToast } from "@features/toasts"
-import { ModalConfirm } from "@shared/ui/modal-confirm"
 
 /**
  * Главная страница инструментов
@@ -18,10 +18,10 @@ import { ModalConfirm } from "@shared/ui/modal-confirm"
  * @returns {ReactNode}
  */
 export const Main = (): ReactNode => {
+  useLayoutSubtitle().setSubtitle("Главная")
+
   const [sliderValue, setSliderValue] = useState<number[]>([0])
   const toast = useToast()
-
-  useSubtitle("Главная")
 
   return (
     <Card>

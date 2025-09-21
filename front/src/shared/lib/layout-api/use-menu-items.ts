@@ -1,4 +1,4 @@
-import type { MenuItems } from "./types"
+import type { MenuItems } from "@ui/menu"
 
 // Основное меню
 const menuItems: MenuItems = [

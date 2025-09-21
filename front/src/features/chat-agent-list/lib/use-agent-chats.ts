@@ -8,10 +8,14 @@ import type { AgentChats } from "../model/schema"
  * @namespace Widgets.ChatList.Lib.useAgentChats
  */
 export const useAgentChats = () => {
+  console.log("useAgentChats")
+
   const { agents, isLoading: isAgentsLoading, error: agentsError } = useAgents()
   const { chats, isLoading: isChatsLoading, error: chatsError } = useChats()
 
   const agentChats: AgentChats[] = useMemo(() => {
+    console.log("agentChats")
+
     return agents.map(agent => ({
       ...agent,
       chats: chats.filter(chat => chat.agentId === agent.id)

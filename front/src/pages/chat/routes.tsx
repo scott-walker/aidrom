@@ -1,17 +1,19 @@
 import type { PageRoutes } from "@lib/page-api/types"
 import { Main } from "./pages/main"
 import { Chat } from "./pages/chat"
+import { Layout } from "./layout"
+import { Outlet } from "react-router"
 
 /**
  * Маршруты
  * @namespace Pages.Chat.Routes
  */
 export const routes: PageRoutes = {
-  // element: (
-  //   <Layout>
-  //     <Outlet />
-  //   </Layout>
-  // ),
+  element: (
+    <Layout>
+      <Outlet />
+    </Layout>
+  ),
   path: "chat",
   children: [
     {

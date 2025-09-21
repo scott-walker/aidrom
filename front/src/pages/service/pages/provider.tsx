@@ -1,6 +1,6 @@
 import { type ReactNode } from "react"
 import { useParams } from "react-router"
-import { useSubtitle } from "@lib/layout-api/utils"
+import { useLayoutSubtitle } from "@lib/layout-api"
 import { Blocks } from "@ui/blocks"
 import { Card } from "@ui/card"
 import { Heading } from "@ui/heading"
@@ -28,7 +28,7 @@ export const Provider = (): ReactNode => {
   const providerId = parseInt(useParams().providerId as string)
   const { provider, isLoading, error } = useProviderById(providerId)
 
-  useSubtitle(provider?.name ?? "")
+  useLayoutSubtitle().setSubtitle(provider?.name ?? "")
 
   if (isLoading) return <LoaderBlock />
   if (error) return <ErrorBlock error={error} />

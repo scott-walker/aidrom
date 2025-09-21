@@ -1,5 +1,5 @@
 import { type ReactNode } from "react"
-import { useTitle } from "@lib/layout-api"
+import { useLayoutTitle } from "@lib/layout-api"
 import { Navbar } from "@ui/navbar"
 import { Container } from "@ui/container"
 
@@ -8,7 +8,9 @@ import { Container } from "@ui/container"
  * @namespace Pages.Service.Layout
  */
 export const Layout = ({ children }: { children: ReactNode }) => {
-  useTitle("Сервис")
+  const { setTitle } = useLayoutTitle()
+
+  setTitle("Сервис")
 
   const links = [
     { label: "Провайдеры", path: "/service/providers" },

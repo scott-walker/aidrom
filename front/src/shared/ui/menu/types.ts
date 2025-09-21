@@ -7,8 +7,7 @@ import type { IconName } from "@ui/icon"
 export type MenuItem = {
   label: string
   path: string
-  icon?: IconName | null
-  compact?: boolean
+  icon: IconName
 }
 
 /**
@@ -23,5 +22,4 @@ export type MenuItems = MenuItem[]
  */
 export type MenuProps = {
   items: MenuItems
-  compact?: boolean
 }

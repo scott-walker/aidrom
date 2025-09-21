@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { useTitle } from "@lib/layout-api/utils"
+import { useLayoutTitle } from "@lib/layout-api"
 import { Navbar, type Link } from "@ui/navbar"
 import { Container } from "@ui/container"
 
@@ -8,7 +8,9 @@ import { Container } from "@ui/container"
  * @namespace Pages.Test.Layout
  */
 export const Layout = ({ children }: { children: ReactNode }) => {
-  useTitle("Разработка")
+  const { setTitle } = useLayoutTitle()
+
+  setTitle("Разработка")
 
   const links: Link[] = [
     {

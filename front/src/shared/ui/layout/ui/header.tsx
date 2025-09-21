@@ -1,37 +1,42 @@
 import type { ReactNode } from "react"
-import { useLayout } from "@lib/layout-api"
-import { cn } from "@utils/jsxtools"
-import { ThemeTrigger } from "@features/triggers"
-// import { SidebarCollapseTrigger } from "@ui/triggers"
+import { useLayoutStore } from "@lib/layout-api"
+import { makeClasses } from "@lib/style-api"
 import { Heading } from "@ui/heading"
 import { Icon } from "@ui/icon"
-// import { FooterVisibleTrigger } from "@ui/triggers"
 import { Brand } from "@ui/brand"
+import { ThemeTrigger } from "./theme-trigger"
 
 /**
- * Заголовок макета
+ * Пропсы хедера
+ * @namespace Widgets.Layouts.UI.HeaderProps
+ */
+interface HeaderProps {
+  className?: string
+}
+
+/**
+ * Хедер
  * @namespace Widgets.Layouts.UI.Header
  */
-export const Header = (): ReactNode => {
-  const { title, subtitle } = useLayout()
-  const classes = cn(
+export const Header = ({ className = "" }: HeaderProps): ReactNode => {
+  const title = useLayoutStore(state => state.title)
+  const subtitle = useLayoutStore(state => state.subtitle)
+  const classes = makeClasses(
     "flex",
     "items-center",
     "justify-between",
     "gap-8",
     "px-[var(--layout-inner-offset-x)]",
     "h-full",
-    // "shadow-md/10"
     "border-b",
-    "border-border"
-    // "bg-background-soft"
+    "border-border",
+    className
   )
 
   return (
     <div className={classes}>
       <div className="flex-1 flex items-center gap-8">
-        {/* <SidebarCollapseTrigger /> */}
-        <Brand withIcon={false} />
+        <Brand />
         <Heading level={7} className="flex-1 flex items-center justify-center gap-6">
           {title}
           {subtitle && <Icon name="chevron-right" size={20} strokeWidth={3} />}
@@ -39,7 +44,6 @@ export const Header = (): ReactNode => {
         </Heading>
       </div>
       <div className="flex items-center gap-4">
-        {/* <FooterVisibleTrigger /> */}
         <ThemeTrigger />
       </div>
     </div>

@@ -1,6 +1,5 @@
 import type { ReactNode } from "react"
 import { ChatEmpty } from "@widgets/chat-empty"
-import { Layout } from "../layout"
 
 /**
  * Главная страница чата
@@ -8,9 +7,5 @@ import { Layout } from "../layout"
  * @returns {ReactNode}
  */
 export const Main = (): ReactNode => {
-  return (
-    <Layout>
-      <ChatEmpty />
-    </Layout>
-  )
+  return <ChatEmpty />
 }

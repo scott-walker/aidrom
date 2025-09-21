@@ -1,7 +1,7 @@
 import { type ReactNode } from "react"
+import { useLayoutSubtitle } from "@lib/layout-api"
 import { Heading } from "@ui/heading"
-import { Blocks } from "@shared/ui/blocks"
-import { useSubtitle } from "@lib/layout-api/utils"
+import { Blocks } from "@ui/blocks"
 
 /**
  * Страница настроек
@@ -9,7 +9,7 @@ import { useSubtitle } from "@lib/layout-api/utils"
  * @returns {ReactNode}
  */
 export const Settings = (): ReactNode => {
-  useSubtitle("Настройки")
+  useLayoutSubtitle().setSubtitle("Настройки")
 
   return (
     <Blocks>
