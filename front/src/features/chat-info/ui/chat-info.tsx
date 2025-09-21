@@ -5,9 +5,7 @@ import { Json } from "@ui/json"
 
 import { useChatById } from "@entities/chat"
 import { AgentFaceInfo, AgentModifyInfo, useAgentById, type Agent } from "@entities/agent"
-import { useChatInfoToggleStore } from "@features/chat-info-toggle"
 
-import { ChatInfoHeader } from "./chat-info-header"
 import { AgentInfoLink } from "@features/agent-info-link"
 
 /**
@@ -27,7 +25,6 @@ export const ChatInfo = ({ chatId }: ChatInfoProps) => {
   const { agent, isLoading: isAgentLoading } = useAgentById(chat?.agentId as number)
   const chatAgent = agent as Agent
 
-  const { isVisible } = useChatInfoToggleStore()
   const containerClasses = makeClasses("flex", "flex-col", "h-full", "bg-background-soft")
   const contentClasses = makeClasses(
     "flex",
@@ -36,8 +33,7 @@ export const ChatInfo = ({ chatId }: ChatInfoProps) => {
     "gap-6",
     "py-6",
     "overflow-y-auto",
-    "scrollbar-hide",
-    !isVisible && "hidden"
+    "scrollbar-hide"
   )
 
   if (isChatLoading || isAgentLoading) {
@@ -53,22 +49,19 @@ export const ChatInfo = ({ chatId }: ChatInfoProps) => {
   const sectionContentClasses = makeClasses("mt-2", "text-sm")
 
   return (
-    <div className={containerClasses}>
-      <ChatInfoHeader />
-      <div className={contentClasses}>
-        <AgentFaceInfo agent={chatAgent} />
-        <AgentInfoLink agentId={chatAgent.id} />
+    <div className={contentClasses}>
+      <AgentFaceInfo agent={chatAgent} />
+      <AgentInfoLink agentId={chatAgent.id} />
 
-        {/* <Separator className="bg-background-hard" />
+      {/* <Separator className="bg-background-hard" />
         <AgentRulesCompact agent={chatAgent} /> */}
-        <Separator className="bg-background-hard" />
-        <section className={sectionClasses}>
-          <h6 className={sectionTitleClasses}>Параметры</h6>
-          <Json value={chatAgent.params} className={sectionContentClasses} />
-        </section>
-        <Separator className="bg-background-hard" />
-        <AgentModifyInfo agent={chatAgent} />
-      </div>
+      <Separator className="bg-background-hard" />
+      <section className={sectionClasses}>
+        <h6 className={sectionTitleClasses}>Параметры</h6>
+        <Json value={chatAgent.params} className={sectionContentClasses} />
+      </section>
+      <Separator className="bg-background-hard" />
+      <AgentModifyInfo agent={chatAgent} />
     </div>
   )
 }

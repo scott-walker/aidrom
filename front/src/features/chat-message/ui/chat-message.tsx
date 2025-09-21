@@ -1,6 +1,6 @@
 import { MessageBubble, Roles } from "@entities/chat"
 import { makeClasses } from "@shared/lib/style-api"
-// import { Markdown } from "@ui/markdown"
+import { Markdown } from "@ui/markdown"
 
 /**
  * Пропсы компонента сообщения чата
@@ -24,8 +24,7 @@ export const ChatMessage = ({ content, role, createdAt, className = "" }: ChatMe
 
   return (
     <MessageBubble role={role} createdAt={createdAt} className={makeMessageClasses(role)}>
-      {content}
-      {/* <Markdown value={content} advanced html /> */}
+      <Markdown value={content} advanced html />
     </MessageBubble>
   )
 }

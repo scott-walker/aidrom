@@ -4,12 +4,10 @@ import { ChatAgentCard } from "./chat-agent-card"
 import { useAgentChats } from "../lib/use-agent-chats"
 
 /**
- * Список чатов по агентам
- * @namespace Features.ChatAgentList
+ * Список чатов
+ * @namespace Features.ChatList
  */
-export const ChatAgentList = () => {
-  console.log("ChatAgentList")
-
+export const ChatList = () => {
   const { agentChats, isLoading } = useAgentChats()
   const containerClasses = makeClasses("flex", "flex-col", "gap-3", "px-(--layout-inner-offset-x)", "pt-2", "pb-8")
 

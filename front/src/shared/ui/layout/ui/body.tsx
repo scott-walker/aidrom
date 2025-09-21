@@ -15,7 +15,13 @@ interface BodyProps {
  * @namespace Widgets.Layouts.UI.Body
  */
 export const Body = ({ children, className = "" }: BodyProps): ReactNode => {
-  const classes = makeClasses("h-full", "w-full", "scrollbar-hide", "overflow-y-auto", className)
+  const classes = makeClasses(
+    "h-[calc(100vh-var(--layout-header-height))]",
+    "w-full",
+    "scrollbar-hide",
+    "overflow-y-auto",
+    className
+  )
 
   return <div className={classes}>{children}</div>
 }

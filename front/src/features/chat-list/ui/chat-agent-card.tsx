@@ -1,10 +1,11 @@
+import { useState } from "react"
 import { makeClasses } from "@lib/style-api"
 import { pluralize } from "@utils/pluralize"
-import { AgentStatusAvatar } from "@entities/agent"
+import { AgentAvatar } from "@entities/agent"
 import { ChatCreateRegularButton } from "@features/chat-create"
 import type { AgentChats } from "../model/schema"
 import { ChatListItems } from "./chat-list-items"
-import { useChatAgentListStore } from "../store/chat-agent-list-store"
+// import { useChatAgentListStore } from "../store/chat-agent-list-store"
 
 /**
  * Пропсы карточки агента с чатами
@@ -20,17 +21,19 @@ type ChatAgentCardProps = {
  * @namespace Features.ChatAgentList.UI.ChatAgentCard
  */
 export const ChatAgentCard = ({ agent, className = "" }: ChatAgentCardProps) => {
-  const openAgentId = useChatAgentListStore(state => state.openAgentId)
-  const setOpenAgentId = useChatAgentListStore(state => state.setOpenAgentId)
-  const unsetOpenAgentId = useChatAgentListStore(state => state.unsetOpenAgentId)
+  const [isOpen, setIsOpen] = useState(false)
+  // const openAgentId = useChatAgentListStore(state => state.openAgentId)
+  // const setOpenAgentId = useChatAgentListStore(state => state.setOpenAgentId)
+  // const unsetOpenAgentId = useChatAgentListStore(state => state.unsetOpenAgentId)
 
-  const isOpen = openAgentId === agent.id
+  // const isOpen = openAgentId === agent.id
   const toggleChatList = () => {
-    if (isOpen) {
-      unsetOpenAgentId()
-    } else {
-      setOpenAgentId(agent.id)
-    }
+    setIsOpen(!isOpen)
+    // if (isOpen) {
+    //   unsetOpenAgentId()
+    // } else {
+    //   setOpenAgentId(agent.id)
+    // }
   }
 
   const chatsCountText = pluralize(agent.chats.length, ["чат", "чата", "чатов"])
@@ -74,10 +77,12 @@ export const ChatAgentCard = ({ agent, className = "" }: ChatAgentCardProps) => 
     "rounded-b-xl"
   )
 
+  console.log("agentCard", agent.id)
+
   return (
     <div className={containerClasses}>
       <section className={agentCardClasses} onClick={toggleChatList}>
-        <AgentStatusAvatar agent={agent} />
+        <AgentAvatar agent={agent} />
         <div className="flex flex-col">
           <h3 className="text-foreground-hard text-base leading-none font-bold">{agent.name}</h3>
           <div className="text-xs text-primary font-bold font-family-display">{agent.provider.name}</div>
