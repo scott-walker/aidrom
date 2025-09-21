@@ -5,5 +5,5 @@ import styles from "./loader.module.css"
  * @namespace UI.Loader.InfinityLoader
  */
 export const InfinityLoader = () => {
-  return <div className={styles.infinityLoader}></div>
+  return <div className={styles.infinityLoader} />
 }

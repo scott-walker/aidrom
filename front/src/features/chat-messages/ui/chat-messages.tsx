@@ -4,6 +4,7 @@ import { ChatNoneMessages } from "./chat-none-messages"
 import { ChatPrevMessages } from "./chat-prev-messages"
 import { ChatLastMessages } from "./chat-last-messages"
 import { useScrollMessages } from "../lib/use-scroll-messages"
+import { ChatPending } from "./chat-pending"
 
 /**
  * Пропсы компонента сообщений
@@ -19,7 +20,7 @@ type ChatMessagesProps = {
  * @namespace Features.ChatMessages
  */
 export const ChatMessages = ({ chat, className = "" }: ChatMessagesProps) => {
-  const { bodyRef } = useScrollMessages(chat.messages.length)
+  const { bodyRef, messagesEndRef } = useScrollMessages(chat.messages.length)
 
   const bodyClasses = makeClasses(
     "flex",
@@ -38,6 +39,9 @@ export const ChatMessages = ({ chat, className = "" }: ChatMessagesProps) => {
       <ChatNoneMessages messages={chat.messages} />
       <ChatPrevMessages messages={chat.messages} />
       <ChatLastMessages chatId={chat.id} />
+
+      <ChatPending />
+      <div ref={messagesEndRef} />
     </div>
   )
 }
