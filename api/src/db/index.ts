@@ -33,8 +33,6 @@ export type {
   Chat,
   CreateChatData,
   UpdateChatData,
-  ClientMessage,
-  AgentMessage,
   MessagePair,
   ChatContext,
 

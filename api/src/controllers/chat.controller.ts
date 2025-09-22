@@ -125,15 +125,22 @@ export const deleteChat = async (req: Request, res: Response, next: NextFunction
  */
 export const optimizeChatContext = async (req: Request, res: Response, next: NextFunction) => {
   const chatId = parseInt(req.params.chatId)
+  const instruction =
+    req.body.instruction ||
+    "Подведи итог нашего общения. Сформулируй кратко основные факты, мысли и идеи, которые мы обсуждали."
 
   try {
     logger.info("Оптимизация контекста чата", { chatId })
 
-    const context = await chatService.optimizeChatContext(chatId)
+    const sender = await chatService.optimizeChatContext(chatId, instruction)
 
-    logger.info("Контекст чата успешно оптимизирован", { chatId })
+    sender.on(SenderEvents.END, async ({ context }: ISenderEndEventData) => {
+      logger.info("Контекст чата успешно оптимизирован", { chatId })
 
-    res.json({ message: "Контекст чата успешно оптимизирован", context })
+      res.json({ message: "Контекст чата успешно оптимизирован", context })
+    })
+
+    sender.process()
   } catch (err) {
     logger.error("Ошибка при оптимизации контекста чата", { error: err.message, chatId })
 

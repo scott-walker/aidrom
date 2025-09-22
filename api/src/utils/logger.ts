@@ -20,7 +20,7 @@ export interface ILogger {
  * @namespace Utils.IDbLogger
  */
 export interface IDbLogger extends ILogger {
-  logQuery: (query: string, params: Record<string, unknown>) => void
+  logQuery: (query: string, params: unknown[]) => void
 }
 
 /**

@@ -25,6 +25,15 @@ import { ISender, SenderEvents } from "@utils/sender"
 const logger = createServiceLogger("ChatService")
 
 /**
+ * Параметры получения чата по ID
+ * @namespace Chat.Service.GetChatByIdParams
+ */
+export interface GetChatByIdParams {
+  withContext?: boolean
+  withMessagePairs?: boolean
+}
+
+/**
  * Получить все чаты из базы данных
  * @namespace Chat.Service.getChats
  */
@@ -50,14 +59,17 @@ export const getChats = async (): Promise<Chat[]> => {
  * Получить чат по его идентификатору
  * @namespace Chat.Service.getChatById
  */
-export const getChatById = async (chatId: number): Promise<Chat> => {
+export const getChatById = async (
+  chatId: number,
+  { withMessagePairs = true, withContext = true }: GetChatByIdParams = {}
+): Promise<Chat> => {
   try {
     logger.info("Получение чата по ID", { chatId })
 
     const chat = await db.query.chats.findFirst({
       where: eq(chats.id, chatId),
       with: {
-        messagePairs: true
+        messagePairs: withMessagePairs || null
       }
     })
 
@@ -67,7 +79,7 @@ export const getChatById = async (chatId: number): Promise<Chat> => {
 
     logger.info("Чат по ID успешно найден", { chatId })
 
-    return mapChat(chat as Chat)
+    return mapChat(chat as Chat, { withContext })
   } catch (error) {
     logger.error("Ошибка при получении чата по ID", { error: error.message, chatId })
 
@@ -246,7 +258,7 @@ export const clearChatContext = async (chatId: number): Promise<ChatContext> => 
  * Оптимизировать контекст чата (сократить контекст)
  * @namespace Chat.Service.optimizeChatContext
  */
-export const optimizeChatContext = async (chatId: number): Promise<ChatContext> => {
+export const optimizeChatContext = async (chatId: number, instruction: string): Promise<ISender> => {
   try {
     logger.info("Оптимизация контекста чата", { chatId })
 
@@ -257,20 +269,22 @@ export const optimizeChatContext = async (chatId: number): Promise<ChatContext> 
     }
 
     // Отправляем запрос на оптимизацию контекста к API
-    // logger.info("Отправка запроса к API")
-    // const { responseContent } = await sendRequest({
-    //   agentId: chat.agentId,
-    //   messages: makeChatContextMessages(
-    //     chat.context,
-    //     "Подведи итог нашего общения. Сформулируй основные факты, мысли и идеи, которые мы обсуждали."
-    //   )
-    // })
+    logger.info("Создание запроса к API")
+    const sender = await sendRequest({
+      agentId: chat.agentId,
+      messages: makeChatContextMessages(chat.context, instruction)
+    })
 
-    // // Обновляем контекст чата
-    // await setChatContext(chat, CommunicationRoles.Agent, responseContent)
-    // logger.info("Контекст чата успешно оптимизирован", { chatId })
+    sender.on(SenderEvents.AGENT_SEND_COMPLETE, async ({ responseContent }) => {
+      logger.info("Запрос успешно обработан", { action: "onComplete" })
 
-    return chat.context
+      await setChatContext(chat, CommunicationRoles.Agent, responseContent)
+
+      sender.emit(SenderEvents.END, { context: chat.context })
+      logger.info("Контекст чата успешно оптимизирован", { chatId })
+    })
+
+    return sender
   } catch (error) {
     logger.error("Ошибка при оптимизации контекста чата", { error: error.message, chatId })
 

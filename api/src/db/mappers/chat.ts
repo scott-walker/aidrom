@@ -1,11 +1,21 @@
 import { Chat } from "../types"
 
 /**
+ * Маппер для чата
+ * @namespace Db.Mappers.ChatMapper
+ */
+export interface MapChatParams {
+  withContext?: boolean
+}
+
+/**
  * Маппер для агента
  * @namespace Db.Mappers.AgentMapper
  */
-export const mapChat = (chat: Partial<Chat>): Chat => {
-  delete chat.context
+export const mapChat = (chat: Partial<Chat>, { withContext = false }: MapChatParams = {}): Chat => {
+  if (!withContext) {
+    delete chat.context
+  }
 
   return chat as Chat
   // const agent = chat.agent ?? null
