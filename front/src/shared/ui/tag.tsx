@@ -32,7 +32,7 @@ export const Tag = ({ schema = "soft", children, className = "" }: TagProps): Re
     ),
     afterClasses: className,
     variants: {
-      soft: makeClasses("bg-primary-ghost-hard", "text-primary/60"),
+      soft: makeClasses("bg-primary-ghost-hard", "text-primary/60", "dark:bg-primary/20", "dark:text-primary"),
       hard: makeClasses("bg-secondary", "text-secondary-foreground"),
       positive: makeClasses("bg-positive", "text-positive-foreground"),
       danger: makeClasses("bg-danger", "text-danger-foreground")
