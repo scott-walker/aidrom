@@ -1,5 +1,5 @@
 import { makeClasses } from "@lib/style-api"
-// import { useLayoutSubtitle } from "@lib/layout-api"
+import { useLayoutSubtitle } from "@lib/layout-api"
 import { LoaderBlock } from "@ui/loader-block"
 import { useChatById, type Chat } from "@entities/chat"
 import { ChatDialogHeader } from "./chat-dialog-header"
@@ -23,7 +23,7 @@ export const ChatDialog = ({ chatId, className = "" }: ChatDialogProps) => {
   const { chat, isLoading } = useChatById(chatId)
   const containerClasses = makeClasses("relative flex flex-col w-full h-full", className)
 
-  // useLayoutSubtitle(chat?.title || "")
+  useLayoutSubtitle(chat?.title || "")
 
   if (isLoading) return <LoaderBlock />
 

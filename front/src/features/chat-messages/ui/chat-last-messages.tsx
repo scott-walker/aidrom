@@ -17,9 +17,10 @@ type ChatLastMessagesProps = {
  */
 export const ChatLastMessages = ({ chatId }: ChatLastMessagesProps): ReactNode => {
   const messages = useChatMessages(chatId)
-  const { messagesEndRef, scrollToBottom } = useScrollMessages(messages.length)
+  const { messagesEndRef, scrollToBottom } = useScrollMessages()
 
-  useEffect(() => scrollToBottom("instant"), [])
+  useEffect(() => scrollToBottom("instant"), [chatId])
+  useEffect(() => scrollToBottom("smooth"), [messages.length])
 
   return (
     <>
