@@ -22,9 +22,11 @@ export const ChatMessage = ({ content, role, createdAt, className = "" }: ChatMe
     return makeClasses(role === Roles.Agent && "items-start", role === Roles.Client && "items-end", className)
   }
 
+  const normalizedContent = role === Roles.Agent ? <Markdown value={content} /> : <p>{content}</p>
+
   return (
     <MessageBubble role={role} createdAt={createdAt} className={makeMessageClasses(role)}>
-      <Markdown value={content} />
+      {normalizedContent}
     </MessageBubble>
   )
 }

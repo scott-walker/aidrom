@@ -29,6 +29,7 @@ export const MessageBubble = ({ children, role, createdAt, className = "" }: Mes
     "max-w-full",
     "rounded-xl",
     "bg-background-soft",
+    "typography-container",
     role === Roles.Client && "bg-background-hard/50",
     role === Roles.Agent && "shadow-md/5"
   )
