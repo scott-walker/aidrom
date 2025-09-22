@@ -55,4 +55,5 @@ export type ChatDetailQueryData = {
   chat: Chat | null
   isLoading: boolean
   error: RestError | null
+  refetch: () => void
 }

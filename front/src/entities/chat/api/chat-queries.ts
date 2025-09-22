@@ -13,7 +13,7 @@ const CHATS_QUERY_KEY = "chats"
 // 5 минут кеша для списка чатов
 const STALE_CHATS_TIME = 300000
 // 5 минут кеша для чата по ID
-const STALE_CHAT_BY_ID_TIME = 300000
+// const STALE_CHAT_BY_ID_TIME = 300000
 
 /**
  * Ключи инвалидации для чатов
@@ -70,15 +70,18 @@ export const useChats = (): ChatListQueryData => {
  * @namespace Entities.Chat.Api.Queries.useChatById
  */
 export const useChatById = (chatId: number): ChatDetailQueryData => {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
+    // queryKey: queryKeys.details(chatId),
     queryKey: queryKeys.details(chatId),
     queryFn: () => fetchChatById(chatId),
-    staleTime: STALE_CHAT_BY_ID_TIME
+    enabled: !!chatId
+    // staleTime: STALE_CHAT_BY_ID_TIME
   })
 
   return {
     chat: data ?? null,
     isLoading,
-    error: error as RestError | null
+    error: error as RestError | null,
+    refetch
   }
 }

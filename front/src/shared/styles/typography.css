@@ -136,6 +136,11 @@ body.theme-dark {
     list-style: circle;
   }
 
+  & img {
+    width: 100%;
+    max-width: 300px;
+  }
+
   /* Код */
   & code {
     display: inline-block;
@@ -147,6 +152,7 @@ body.theme-dark {
     background-color: var(--typo-color-neutral-3);
     color: var(--typo-color-neutral-5);
   }
+
   /* & pre {
     display: block;
     padding: 1rem 1.5rem;
@@ -211,10 +217,4 @@ body.theme-dark {
     margin-bottom: 0 !important;
     /* padding-bottom: 0 !important; */
   }
-  /* 
-  & img {
-    padding: 1rem 0;
-    max-width: 50%;
-    max-height: 50%;
-  } */
 }

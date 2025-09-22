@@ -1,6 +1,7 @@
+import type { ReactNode } from "react"
 import { type Message } from "@entities/chat"
 import { ChatMessage } from "@features/chat-message"
-import type { ReactNode } from "react"
+import { useScrollMessages } from "../lib/use-scroll-messages"
 
 /**
  * Пропсы компонента предыдущих сообщений
@@ -15,8 +16,11 @@ type ChatPrevMessagesProps = {
  * @namespace Features.ChatPrevMessages
  */
 export const ChatPrevMessages = ({ messages }: ChatPrevMessagesProps): ReactNode => {
+  const { messagesStartRef } = useScrollMessages()
+
   return (
     <>
+      <div ref={messagesStartRef} />
       {messages.map(message => (
         <ChatMessage key={message.id} {...message} />
       ))}
