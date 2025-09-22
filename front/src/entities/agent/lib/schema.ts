@@ -40,7 +40,7 @@ export interface AgentListItem {
  * @namespace Entities.Agent.Lib.Schema.AgentParams
  */
 export interface AgentParams {
-  [key: string]: string | number | boolean
+  [key: string]: string | number | boolean | null | undefined
 }
 
 /**

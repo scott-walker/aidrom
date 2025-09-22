@@ -7,7 +7,7 @@ import type { Agent } from "@entities/agent"
  * @namespace Features.AgentParams.Lib.FilledMap
  */
 export interface FilledMap {
-  [key: string]: string | number | null | undefined
+  [key: string]: string | number | boolean | null | undefined
 }
 
 /**
@@ -40,7 +40,7 @@ export const useParams = (agent: Agent) => {
    * Установить значение параметра
    * @namespace Features.AgentParams.Lib.useParams.setValue
    */
-  const setValue = (name: string, value: string | number | null) => {
+  const setValue = (name: string, value: string | number | boolean | null) => {
     values.current[name] = value
   }
 

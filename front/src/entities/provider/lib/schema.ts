@@ -60,12 +60,20 @@ export interface DriverParamsConfigParameterRange extends DriverParamsConfigPara
 }
 
 /**
+ * Интерфейс конфигурации параметров запроса к драйверу (переключатель)
+ * @namespace Entities.Provider.Lib.Schema.DriverParamsConfigParameterToggle
+ */
+export interface DriverParamsConfigParameterToggle extends DriverParamsConfigParameter {
+  type: "toggle"
+}
+
+/**
  * Интерфейс конфигурации параметров запроса к драйверу
  * @namespace Entities.Provider.Lib.Schema.DriverParamsConfig
  */
 export interface DriverParamsConfig {
   meta: Record<string, unknown>
-  params: (DriverParamsConfigParameterSelect | DriverParamsConfigParameterRange)[]
+  params: (DriverParamsConfigParameterSelect | DriverParamsConfigParameterRange | DriverParamsConfigParameterToggle)[]
 }
 
 /**

@@ -9,6 +9,7 @@ import { Popover } from "@ui/popover"
 import { Slider } from "@ui/slider"
 import { Loader } from "@ui/loader/loader"
 import { InputLight } from "@ui/input-light"
+import { Switch } from "@ui/switch"
 import { ModalConfirm } from "@ui/modal-confirm"
 import { useToast } from "@features/toasts"
 
@@ -21,6 +22,7 @@ export const Main = (): ReactNode => {
   useLayoutSubtitle("Главная")
 
   const [sliderValue, setSliderValue] = useState<number[]>([0])
+  const [switchValue, setSwitchValue] = useState<boolean>(false)
   const toast = useToast()
 
   return (
@@ -92,6 +94,11 @@ export const Main = (): ReactNode => {
             {/* <InputLight value="test" minLength={10} />
             <InputLight value="test" minLength={10} maxLength={10} />
             <InputLight value="test" minLength={10} maxLength={10} placeholder="test" /> */}
+          </div>
+
+          <div className="flex gap-6">
+            <Switch checked={switchValue} onChange={setSwitchValue} />
+            <p>Switch: {switchValue ? "true" : "false"}</p>
           </div>
         </Container>
       </Card.Body>

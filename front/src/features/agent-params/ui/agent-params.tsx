@@ -5,12 +5,17 @@ import { Heading } from "@ui/heading"
 import { IconButton } from "@ui/icon-button"
 
 import { type Agent, useUpdateAgent } from "@entities/agent"
-import { type DriverParamsConfigParameterSelect, type DriverParamsConfigParameterRange } from "@entities/provider"
+import {
+  type DriverParamsConfigParameterSelect,
+  type DriverParamsConfigParameterRange,
+  type DriverParamsConfigParameterToggle
+} from "@entities/provider"
 import { useToast } from "@features/toasts"
 
 import { useParams } from "../lib/use-params"
 import { SelectParamField } from "./fields/select-param-field"
 import { RangeParamField } from "./fields/range-param-field"
+import { ToggleParamField } from "./fields/toggle-param-field"
 
 /**
  * Пропсы для компонента AgentParams
@@ -49,7 +54,9 @@ export const AgentParams = ({ agent }: AgentParamsProps) => {
    * Создать диномический компонент для поля
    * @namespace Features.AgentParams.Ui.AgentParams.createField
    */
-  const createField = (param: DriverParamsConfigParameterSelect | DriverParamsConfigParameterRange) => {
+  const createField = (
+    param: DriverParamsConfigParameterSelect | DriverParamsConfigParameterRange | DriverParamsConfigParameterToggle
+  ) => {
     switch (param.type) {
       case "select":
         return (
@@ -64,6 +71,14 @@ export const AgentParams = ({ agent }: AgentParamsProps) => {
           <RangeParamField
             param={param}
             value={getValue(param.name) as number}
+            onChange={value => setValue(param.name, value)}
+          />
+        )
+      case "toggle":
+        return (
+          <ToggleParamField
+            param={param}
+            value={getValue(param.name) as boolean}
             onChange={value => setValue(param.name, value)}
           />
         )

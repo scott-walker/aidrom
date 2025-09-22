@@ -37,7 +37,6 @@ export type AgentCreateData = {
  */
 export type AgentUpdateData = {
   name?: string
-  // providerId?: number
   params?: AgentParams
   description?: string
 }

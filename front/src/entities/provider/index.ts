@@ -6,7 +6,8 @@ export type {
   DriverParamsConfig,
   DriverParamsConfigParameter,
   DriverParamsConfigParameterSelect,
-  DriverParamsConfigParameterRange
+  DriverParamsConfigParameterRange,
+  DriverParamsConfigParameterToggle
 } from "./lib/schema"
 export type { ProviderCreateData, ProviderUpdateData } from "./lib/types"
 export { toProvider, toProviderListItem } from "./lib/mappers"
