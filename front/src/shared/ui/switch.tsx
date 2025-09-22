@@ -21,7 +21,6 @@ export const Switch = ({ disabled, checked, onChange, className }: SwitchProps) 
     "flex",
     "items-center",
     "justify-start",
-    // "data-[state=checked]:justify-end",
     "w-10",
     "h-6",
     "rounded-full",

@@ -26,8 +26,8 @@ export const ToggleParamField = ({ param, value, onChange }: ToggleParamFieldPro
   }
 
   return (
-    <FormField label={param.label} className="flex-1">
-      <Switch value={innerValue} onChange={handleChange} />
+    <FormField label={param.label} className="flex-1 flex-row items-center">
+      <Switch checked={innerValue} onChange={handleChange} />
     </FormField>
   )
 }
