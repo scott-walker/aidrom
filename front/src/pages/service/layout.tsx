@@ -13,6 +13,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   const links = [
     { label: "Провайдеры", path: "/service/providers" },
     { label: "Запросы", path: "/service/requests" },
+    { label: "Чаты", path: "/service/chats" },
     { label: "Настройки", path: "/service/settings" }
   ]
 

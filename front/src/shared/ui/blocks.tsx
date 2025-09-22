@@ -82,9 +82,6 @@ export const Blocks = ({ children, className }: BlocksProps) => {
   const classes = makeClasses(
     "flex",
     "flex-col",
-    // "flex-row",
-    // "items-start",
-    // "justify-start",
     "w-full",
     "h-full",
     "items-start",

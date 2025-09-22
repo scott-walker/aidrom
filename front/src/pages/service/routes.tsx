@@ -3,8 +3,10 @@ import type { PageRoutes } from "@lib/page-api/types"
 import { Layout } from "./layout"
 import { Providers } from "./pages/providers"
 import { Provider } from "./pages/provider"
-import { Settings } from "./pages/settings"
 import { Requests } from "./pages/requests"
+import { Request } from "./pages/request"
+import { Chats } from "./pages/chats"
+import { Settings } from "./pages/settings"
 
 /**
  * Маршруты
@@ -29,6 +31,14 @@ export const routes: PageRoutes = {
     {
       path: "requests",
       element: <Requests />
+    },
+    {
+      path: "requests/:requestId",
+      element: <Request />
+    },
+    {
+      path: "chats",
+      element: <Chats />
     },
     {
       path: "settings",

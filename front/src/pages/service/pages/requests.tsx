@@ -1,7 +1,6 @@
 import { type ReactNode } from "react"
 import { useLayoutSubtitle } from "@lib/layout-api"
-import { Blocks } from "@ui/blocks"
-import { RequestsDataTable } from "@widgets/requests-data-table"
+import { RequestsTable } from "@widgets/requests-table"
 
 /**
  * Страница сервиса - запросы
@@ -11,13 +10,5 @@ import { RequestsDataTable } from "@widgets/requests-data-table"
 export const Requests = (): ReactNode => {
   useLayoutSubtitle("Запросы")
 
-  return (
-    <Blocks>
-      <Blocks.Row>
-        <Blocks.Block>
-          <RequestsDataTable />
-        </Blocks.Block>
-      </Blocks.Row>
-    </Blocks>
-  )
+  return <RequestsTable />
 }

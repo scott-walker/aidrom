@@ -13,7 +13,7 @@ const REQUEST_QUERY_KEY = "request"
  * Время кеширования в миллисекундах
  * @namespace Entities.Request.Lib.STALE_TIME
  */
-const STALE_TIME = 300_000
+// const STALE_TIME = 300_000
 
 /**
  * Ключи запросов для записей запросов к провайдерам
@@ -32,8 +32,8 @@ export const queryKeys = {
 export const useRequests = (): RequestListQueryData => {
   const { data, isLoading, error } = useQuery({
     queryKey: queryKeys.list({}),
-    queryFn: fetchRequests,
-    staleTime: STALE_TIME
+    queryFn: fetchRequests
+    // staleTime: STALE_TIME
   })
 
   return {
@@ -51,7 +51,7 @@ export const useRequestById = (requestId: number | null): RequestDetailQueryData
   const { data, isLoading, error } = useQuery({
     queryKey: queryKeys.details(requestId || 0),
     queryFn: () => fetchRequestsByProviderId(requestId || 0),
-    staleTime: STALE_TIME,
+    // staleTime: STALE_TIME,
     enabled: requestId !== null
   })
 
