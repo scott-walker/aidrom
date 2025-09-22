@@ -137,6 +137,7 @@ export const createGigachatDriver = (config: GigachatDriverConfig): Driver => {
             logger.info("Изображение сохранено в файл", { action: "sendRequest", filePath })
           }
 
+          sender.emit(SenderEvents.CONTENT, { content })
           sender.emit(SenderEvents.COMPLETE, {
             content,
             providerRequestId: data.xHeaders.xRequestID,

@@ -70,7 +70,7 @@ export const createDummyDriver = (config: DummyDriverConfig): Driver => {
         let content = ""
         for (const chunk of responseContent.split("")) {
           content += chunk
-          sender.emit(SenderEvents.CHUNK, { content })
+          sender.emit(SenderEvents.CONTENT, { content })
 
           await new Promise(resolve => setTimeout(resolve, 100))
         }

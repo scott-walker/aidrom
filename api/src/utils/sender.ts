@@ -9,7 +9,7 @@ import { SenderError } from "@utils/errors"
 export enum SenderEvents {
   START = "start",
   END = "end",
-  CHUNK = "chunk",
+  CONTENT = "content",
   ERROR = "error",
   COMPLETE = "complete",
   REQUEST_STORED = "request-stored"
@@ -53,7 +53,7 @@ export interface ISenderEventMap {
   [SenderEvents.END]: ISenderEndEventData
   [SenderEvents.COMPLETE]: ISenderCompleteEventData
   [SenderEvents.ERROR]: ISenderErrorEventData
-  [SenderEvents.CHUNK]: ISenderChunkEventData
+  [SenderEvents.CONTENT]: ISenderContentEventData
   [SenderEvents.REQUEST_STORED]: ISenderRequestStoredEventData
   [key: string]: ISenderEventData
 }
@@ -102,10 +102,10 @@ export interface ISenderErrorEventData extends ISenderEventData {
 }
 
 /**
- * Интерфейс данных события "получение фрагмента ответа"
- * @namespace Services.ISenderChunkEventData
+ * Интерфейс данных события "получение содержимого ответа"
+ * @namespace Services.ISenderContentEventData
  */
-export interface ISenderChunkEventData extends ISenderEventData {
+export interface ISenderContentEventData extends ISenderEventData {
   content: string
 }
 

@@ -6,8 +6,8 @@
 import { Request, Response, NextFunction } from "express"
 import { createControllerLogger } from "@utils/logger"
 import * as chatService from "@services/chat.service"
-import { createSSE, Session } from "@utils/sse"
-import { SenderEvents, ISenderEndEventData, ISenderErrorEventData, ISenderChunkEventData } from "@utils/sender"
+import { createSSE, SSEMessageType, SSESession } from "@utils/sse"
+import { SenderEvents, ISenderEndEventData, ISenderErrorEventData, ISenderContentEventData } from "@utils/sender"
 
 // Создаем логгер для контроллера чатов
 const logger = createControllerLogger("ChatController")
@@ -171,7 +171,7 @@ export const sendMessage = async (req: Request, res: Response, next: NextFunctio
   const chatId = parseInt(req.params.chatId)
   const message = req.body.message
   const sseManager = createSSE(req, res)
-  let sse: Session
+  let sse: SSESession
 
   try {
     sse = sseManager.get(chatId)
@@ -186,14 +186,19 @@ export const sendMessage = async (req: Request, res: Response, next: NextFunctio
 
     const sender = await chatService.sendMessage(chatId, message)
 
+    // Начало отправки сообщения
     sender.on(SenderEvents.START, async () => {
       logger.info("Сообщение от клиента успешно отправлено", { action: "onStart", chatId })
 
-      sse.push({ type: "start" })
+      sse.push({ type: SSEMessageType.Start })
     })
-    sender.on(SenderEvents.CHUNK, async ({ content }: ISenderChunkEventData) => {
-      sse.push({ type: "chunk", content })
+
+    // Получение содержимого сообщения
+    sender.on(SenderEvents.CONTENT, async ({ content }: ISenderContentEventData) => {
+      sse.push({ type: SSEMessageType.Content, content })
     })
+
+    // Ошибка при отправке/получении сообщения
     sender.on(SenderEvents.ERROR, async ({ error }: ISenderErrorEventData) => {
       logger.error("Ошибка при отправке/получении сообщения", {
         action: "onError",
@@ -202,20 +207,25 @@ export const sendMessage = async (req: Request, res: Response, next: NextFunctio
         message
       })
 
-      sse.push({ type: "error", message: error.message })
+      sse.push({ type: SSEMessageType.Error, message: error.message })
+
       next(error)
     })
+
+    // Завершение получения сообщения
     sender.on(SenderEvents.END, async (messagePair: ISenderEndEventData) => {
       logger.info("Сообщение от AI агента успешно получено", { action: "onEnd", chatId })
 
-      sse.push({ type: "end", data: messagePair })
+      sse.push({ type: SSEMessageType.End, data: messagePair })
       res.json(messagePair)
     })
 
+    // Начать процесс отправки сообщения
     sender.process()
   } catch (err) {
     logger.error("Ошибка при отправке сообщения в чат", { action: "sendMessage", error: err.message, chatId, message })
-    // sse.push({ type: "error", message: err.message })
+
+    sse.push({ type: SSEMessageType.Error, message: err.message })
 
     next(err)
   }
@@ -228,17 +238,16 @@ export const sendMessage = async (req: Request, res: Response, next: NextFunctio
 export const initStream = async (req: Request, res: Response, next: NextFunction) => {
   const chatId = parseInt(req.params.chatId)
   const sseManager = createSSE(req, res)
-  const sse = await sseManager.open(chatId)
 
   try {
     logger.info("Поток успешно инициализирован", { chatId })
+
+    await sseManager.open(chatId)
 
     req.on("close", () => sseManager.close(chatId))
     req.on("end", () => sseManager.close(chatId))
   } catch (err) {
     logger.error("Ошибка при инициализации потока", { error: err.message, chatId })
-
-    sse.push({ type: "error", message: err.message })
 
     next(err)
   }

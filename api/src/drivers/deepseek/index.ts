@@ -147,7 +147,7 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
 
                 if (deltaContent) {
                   content += deltaContent
-                  sender.emit(SenderEvents.CHUNK, { content })
+                  sender.emit(SenderEvents.CONTENT, { content })
                 }
 
                 data = chunk

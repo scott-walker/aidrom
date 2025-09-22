@@ -15,6 +15,18 @@ const RECONNECT_TIME = 30000
 const sessionStorage = new Map<number, Session>()
 
 /**
+ * Тип данных сообщения SSE
+ * @namespace Utils.createSSE.SSEMessageType
+ */
+export enum SSEMessageType {
+  Start = "start",
+  Content = "content",
+  Complete = "complete",
+  End = "end",
+  Error = "error"
+}
+
+/**
  * Интерфейс менеджера SSE сессий
  * @namespace Utils.createSSE.ISSEManager
  */
@@ -66,4 +78,8 @@ export const createSSE = (req: Request, res: Response): ISSEManager => {
   }
 }
 
-export { Session }
+/**
+ * SSE сессия
+ * @namespace Utils.createSSE.SSESession
+ */
+export { Session as SSESession }
