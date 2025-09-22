@@ -6,19 +6,13 @@ import { useEffect, useRef } from "react"
  * @param {number} messagesLength количество сообщений
  */
 export const useScrollMessages = (messagesLength: number) => {
-  const bodyRef = useRef<HTMLDivElement>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    if (bodyRef.current) {
-      console.log("scrollToBottom")
-      bodyRef.current.scrollTop = bodyRef.current.scrollHeight
-    }
-  }, [bodyRef])
+  const scrollToBottom = (behavior: "smooth" | "instant" = "smooth") => {
+    messagesEndRef.current?.scrollIntoView({ behavior })
+  }
 
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }, [messagesLength])
+  useEffect(() => scrollToBottom("smooth"), [messagesLength])
 
-  return { bodyRef, messagesEndRef }
+  return { messagesEndRef, scrollToBottom }
 }
