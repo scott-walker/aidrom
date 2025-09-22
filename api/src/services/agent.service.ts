@@ -17,7 +17,7 @@ import {
   AgentParams
 } from "@db"
 import { DriverRequestMessage, DriverRequestMessageRole, DriverRequest, DriverRequestMessages } from "@drivers"
-import { ISender } from "@utils/sender"
+import { ISender, SenderEvents } from "@utils/sender"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
 import { getProviderById, processRequest } from "./provider.service"
@@ -181,6 +181,14 @@ export const sendRequest = async ({ agentId, messages }: AgentSendRequestParams)
 
     const request = makeAgentRequest(messages, agent.rules, agent.params)
     const sender = await processRequest(agent.providerId, request)
+
+    // Обработать событие завершения отправки сообщения к провайдеру
+    sender.on(SenderEvents.PROVIDER_SEND_COMPLETE, async data => {
+      logger.info("Запрос успешно обработан", { action: "onComplete", agentId })
+
+      // Эммитеть о том, что запросу обработан агентом
+      sender.emit(SenderEvents.AGENT_SEND_COMPLETE, data)
+    })
 
     logger.info("Запрос от AI агента к провайдеру успешно отправлен", { agentId, providerId: agent.providerId })
 

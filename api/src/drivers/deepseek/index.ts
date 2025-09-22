@@ -9,7 +9,7 @@ import {
 } from "./types"
 import { createApiLogger } from "@utils/logger"
 import { ISender, SenderEvents, createSender } from "@utils/sender"
-import { handleStream } from "@utils/helpers"
+import { handleStream } from "@utils/stream"
 
 /**
  * Фабрика драйвера Deepseek
@@ -115,7 +115,7 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
         logger.info("🚀 Отправка запроса", { action: "sendRequest" })
 
         try {
-          const asStream = true // request.stream as boolean
+          const asStream = !!request.stream as boolean
 
           // Сформировать запрос к API
           const driverRequest: DeepseekDriverRequest = {
@@ -131,12 +131,10 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
 
           let content = ""
           let data = {} as DeepseekDriverResponse | DeepseekDriverChunkResponse
+
           const response = await restClient.post("chat/completions", driverRequest, {
             responseType: asStream ? "stream" : "json"
           })
-
-          // Эммитеть событие "старт отправки сообщений"
-          sender.emit(SenderEvents.START, {})
 
           if (asStream) {
             logger.info("Получен поток ответа", { action: "sendRequest" })
@@ -147,7 +145,7 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
 
                 if (deltaContent) {
                   content += deltaContent
-                  sender.emit(SenderEvents.CONTENT, { content })
+                  sender.emit(SenderEvents.PUSH_CONTENT, { content })
                 }
 
                 data = chunk
@@ -161,9 +159,11 @@ export const createDeepseekDriver = (config: DeepseekDriverConfig): Driver => {
 
             content = response.data.choices[0].message.content
             data = response.data
+
+            sender.emit(SenderEvents.PUSH_CONTENT, { content })
           }
 
-          sender.emit(SenderEvents.COMPLETE, {
+          sender.emit(SenderEvents.DRIVER_SEND_COMPLETE, {
             providerRequestId: data?.id,
             requestParams: driverRequest,
             responseData: data,

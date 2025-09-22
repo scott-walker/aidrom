@@ -182,19 +182,19 @@ export const sendMessage = async (req: Request, res: Response, next: NextFunctio
   }
 
   try {
-    logger.info("Отправка сообщения в чат", { chatId, message })
+    logger.info("Инциализация отправки сообщения", { chatId, message })
 
     const sender = await chatService.sendMessage(chatId, message)
 
     // Начало отправки сообщения
     sender.on(SenderEvents.START, async () => {
-      logger.info("Сообщение от клиента успешно отправлено", { action: "onStart", chatId })
+      logger.info("Начало отправки сообщения", { action: "onStart", chatId })
 
       sse.push({ type: SSEMessageType.Start })
     })
 
     // Получение содержимого сообщения
-    sender.on(SenderEvents.CONTENT, async ({ content }: ISenderContentEventData) => {
+    sender.on(SenderEvents.PUSH_CONTENT, async ({ content }: ISenderContentEventData) => {
       sse.push({ type: SSEMessageType.Content, content })
     })
 

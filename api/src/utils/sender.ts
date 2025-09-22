@@ -9,9 +9,11 @@ import { SenderError } from "@utils/errors"
 export enum SenderEvents {
   START = "start",
   END = "end",
-  CONTENT = "content",
   ERROR = "error",
-  COMPLETE = "complete",
+  PUSH_CONTENT = "push-content",
+  DRIVER_SEND_COMPLETE = "driver-send-complete",
+  PROVIDER_SEND_COMPLETE = "provider-send-complete",
+  AGENT_SEND_COMPLETE = "agent-send-complete",
   REQUEST_STORED = "request-stored"
 }
 
@@ -51,10 +53,11 @@ export interface ISenderHandler {
 export interface ISenderEventMap {
   [SenderEvents.START]: ISenderStartEventData
   [SenderEvents.END]: ISenderEndEventData
-  [SenderEvents.COMPLETE]: ISenderCompleteEventData
   [SenderEvents.ERROR]: ISenderErrorEventData
-  [SenderEvents.CONTENT]: ISenderContentEventData
-  [SenderEvents.REQUEST_STORED]: ISenderRequestStoredEventData
+  [SenderEvents.PUSH_CONTENT]: ISenderContentEventData
+  [SenderEvents.DRIVER_SEND_COMPLETE]: ISenderDriverSendCompleteEventData
+  [SenderEvents.PROVIDER_SEND_COMPLETE]: ISenderProviderSendCompleteEventData
+  [SenderEvents.AGENT_SEND_COMPLETE]: ISenderAgentSendCompleteEventData
   [key: string]: ISenderEventData
 }
 
@@ -77,23 +80,6 @@ export interface ISenderStartEventData extends ISenderEventData {}
 export interface ISenderEndEventData extends ISenderEventData {}
 
 /**
- * Интерфейс данных события "завершение отправки сообщений"
- * @namespace Services.ISenderCompleteEventData
- */
-export interface ISenderCompleteEventData extends ISenderEventData {
-  providerRequestId: string
-  requestParams: {
-    [key: string]: any
-  }
-  responseData: {
-    [key: string]: any
-  }
-  requestTokens: number
-  responseTokens: number
-  content: string
-}
-
-/**
  * Интерфейс данных события "ошибка отправки сообщений"
  * @namespace Services.ISenderErrorEventData
  */
@@ -110,13 +96,36 @@ export interface ISenderContentEventData extends ISenderEventData {
 }
 
 /**
- * Интерфейс данных события "запрос сохранен в БД"
- * @namespace Services.ISenderRequestStoredEventData
+ * Интерфейс данных события "завершение отправки сообщения к драйверу"
+ * @namespace Services.ISenderDriverSendCompleteEventData
  */
-export interface ISenderRequestStoredEventData extends ISenderEventData {
+export interface ISenderDriverSendCompleteEventData extends ISenderEventData {
+  providerRequestId: string
+  requestParams: {
+    [key: string]: any
+  }
+  responseData: {
+    [key: string]: any
+  }
+  requestTokens: number
+  responseTokens: number
+  content: string
+}
+
+/**
+ * Интерфейс данных события "завершение отправки сообщения к провайдеру"
+ * @namespace Services.ISenderProviderSendCompleteEventData
+ */
+export interface ISenderProviderSendCompleteEventData extends ISenderEventData {
   requestId: number
   responseContent: string
 }
+
+/**
+ * Интерфейс данных события "завершение отправки сообщения к агенту"
+ * @namespace Services.ISenderAgentSendCompleteEventData
+ */
+export interface ISenderAgentSendCompleteEventData extends ISenderProviderSendCompleteEventData {}
 
 /**
  * Отправщик сообщений
@@ -160,6 +169,8 @@ export class Sender implements ISender {
   public async process(): Promise<void> {
     try {
       this.logger.info("Обработка запроса")
+
+      this.emit(SenderEvents.START, {})
 
       await this.handler.call(this, this)
 

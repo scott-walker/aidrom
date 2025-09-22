@@ -181,12 +181,12 @@ export const sendMessage = async (chatId: number, message: string): Promise<ISen
       messages: makeChatContextMessages(chat.context, message)
     })
 
-    // Обработать событие сохранения запроса в БД
-    sender.on(SenderEvents.REQUEST_STORED, async ({ requestId, responseContent }) => {
+    // Обработать событие завершения отправки сообщения к агенту
+    sender.on(SenderEvents.AGENT_SEND_COMPLETE, async ({ requestId, responseContent }) => {
       const messagePairId = messagePair.id
 
       // Обновить messagePair с ID запроса
-      logger.info("Обновление messagePair с ID запроса", { action: "onRequestStored" })
+      logger.info("Обновление messagePair с ID запроса", { action: "onComplete" })
       const [updatedMessagePair] = await db
         .update(messagePairs)
         .set({
@@ -197,13 +197,13 @@ export const sendMessage = async (chatId: number, message: string): Promise<ISen
         .returning()
 
       // Обновить контекст чата сообщением агента
-      logger.info("Добавление сообщения агента в контекст чата", { action: "onRequestStored", chatId })
+      logger.info("Добавление сообщения агента в контекст чата", { action: "onComplete", chatId })
       await pushChatContext(chat, CommunicationRoles.Agent, responseContent)
 
       // Еммитеть о завершении всей операции
       sender.emit(SenderEvents.END, updatedMessagePair)
       logger.info("Сообщение от AI агента успешно получено", {
-        action: "onRequestStored",
+        action: "onComplete",
         chatId,
         messagePairId,
         requestId

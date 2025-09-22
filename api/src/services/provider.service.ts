@@ -197,11 +197,11 @@ export const processRequest = async (providerId: number, request: DriverRequest)
     const { driverInstance } = await getProviderById(providerId)
     const sender = driverInstance.sendRequest(request)
 
-    // Обработать завершение запроса
-    sender.on(SenderEvents.COMPLETE, async response => {
-      logger.info("Сохранение информации о запросе к провайдеру", { action: "onComplete", providerId })
+    // Обработать событие завершения отправки сообщения к провайдеру
+    sender.on(SenderEvents.DRIVER_SEND_COMPLETE, async response => {
+      logger.info("Сохранение информации о запросе/ответе в БД", { action: "onComplete", providerId })
 
-      // Сохранить запрос в БД
+      // Сохранить информацию о запросе/ответе в БД
       const requestData = await requestService.createRequest({
         providerId,
         providerRequestId: response.providerRequestId,
@@ -211,14 +211,14 @@ export const processRequest = async (providerId: number, request: DriverRequest)
         responseTokens: response.responseTokens
       })
 
-      logger.info("Запрос к провайдеру успешно сохранен", {
+      logger.info("Запрос успешно обработан", {
         action: "onComplete",
         providerId,
         requestId: requestData.id
       })
 
-      // Эммитеть о том, что запрос сохранен в БД
-      sender.emit(SenderEvents.REQUEST_STORED, {
+      // Эммитеть о том, что запросу обработан провайдером
+      sender.emit(SenderEvents.PROVIDER_SEND_COMPLETE, {
         requestId: requestData.id,
         responseContent: response.content
       })

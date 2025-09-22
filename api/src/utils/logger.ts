@@ -3,7 +3,7 @@ import DailyRotateFile from "winston-daily-rotate-file"
 import { mkdir } from "fs/promises"
 import { dirname } from "path"
 import { getConfigParam } from "@config"
-import { safeStringify } from "./helpers"
+import { safeStringify } from "./json"
 
 /**
  * Интерфейс логгера
@@ -83,7 +83,7 @@ const createLogFormat = (): winston.Logform.Format => {
       let log = `${timestamp} [${level.toUpperCase()}]: ${layer} :: ${message}`
 
       if ("data" in meta && Object.keys(meta.data).length > 0) {
-        log += safeStringify(meta.data)
+        log += " " + safeStringify(meta.data)
       }
 
       if (stack) {

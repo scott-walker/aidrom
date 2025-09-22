@@ -63,31 +63,41 @@ export const createDummyDriver = (config: DummyDriverConfig): Driver => {
       logger.info("🚀 Отправка запроса", { action: "sendRequest", request })
 
       return createSender(async sender => {
-        await new Promise(resolve => setTimeout(resolve, 1000))
+        await new Promise(resolve => setTimeout(resolve, 100))
 
-        const responseContent = "Отличный выбор! Next.js — это один из самых"
+        try {
+          const responseContent = "Отличный выбор! Next.js — это один из самых"
 
-        let content = ""
-        for (const chunk of responseContent.split("")) {
-          content += chunk
-          sender.emit(SenderEvents.CONTENT, { content })
+          if (Math.random() > 0.8) {
+            throw new Error("Ошибка при обработке запроса")
+          }
 
-          await new Promise(resolve => setTimeout(resolve, 100))
+          let content = ""
+          for (const chunk of responseContent.split("")) {
+            content += chunk
+            sender.emit(SenderEvents.PUSH_CONTENT, { content })
+
+            await new Promise(resolve => setTimeout(resolve, 100))
+          }
+
+          sender.emit(SenderEvents.DRIVER_SEND_COMPLETE, {
+            providerRequestId: "dummy",
+            content,
+            requestParams: request,
+            responseData: {
+              request,
+              config
+            },
+            requestTokens: 0,
+            responseTokens: 0
+          })
+
+          logger.info("🚀 Получен ответ", { action: "sendRequest" })
+        } catch (error) {
+          logger.error("Ошибка при обработке запроса", { action: "sendRequest", error: error.message })
+
+          sender.emit(SenderEvents.ERROR, { error: error.message })
         }
-
-        sender.emit(SenderEvents.COMPLETE, {
-          providerRequestId: "dummy",
-          content,
-          requestParams: request,
-          responseData: {
-            request,
-            config
-          },
-          requestTokens: 0,
-          responseTokens: 0
-        })
-
-        logger.info("🚀 Получен ответ", { action: "sendRequest" })
       })
     }
   }
