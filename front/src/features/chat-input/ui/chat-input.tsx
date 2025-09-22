@@ -18,7 +18,7 @@ type ChatInputProps = {
  * @namespace Features.ChatInput.UI.ChatInput
  */
 export const ChatInput = ({ chat, className = "" }: ChatInputProps) => {
-  const { sendMessage } = useSendMessage()
+  const { sendMessage } = useSendMessage(chat.id)
   const containerClasses = makeClasses(
     "relative",
     "flex",
@@ -29,7 +29,7 @@ export const ChatInput = ({ chat, className = "" }: ChatInputProps) => {
     "mx-auto",
     className
   )
-  const onSend = (input: string) => sendMessage(chat.id, input)
+  const onSend = (input: string) => sendMessage(input)
 
   return (
     <div className={containerClasses}>

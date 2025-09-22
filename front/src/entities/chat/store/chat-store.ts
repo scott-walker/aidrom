@@ -57,8 +57,6 @@ export const useChatStore = create<ChatStore>(set => ({
    * @namespace Entities.Chat.Model.useChatStore.addMessage
    */
   addMessage: message => {
-    console.log("addMessage", message)
-
     set(state => {
       return { messages: [...state.messages, message] }
     })

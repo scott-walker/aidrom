@@ -8,7 +8,7 @@ import { createStream } from "./utils"
  * Хук для отправки сообщения
  * @namespace Features.Chat.SendMessage.Lib.UseSendMessage
  */
-export const useSendMessage = () => {
+export const useSendMessage = (chatId: number) => {
   const setPending = useChatStore(state => state.setPending)
   const addMessage = useChatStore(state => state.addMessage)
   const updateMessage = useChatStore(state => state.updateMessage)
@@ -24,13 +24,13 @@ export const useSendMessage = () => {
       stream.current?.close()
       clearMessages()
     }
-  }, [clearMessages])
+  }, [clearMessages, chatId])
 
   /**
    * Отправка сообщения
    * @namespace Features.Chat.SendMessage.Lib.UseSendMessage.sendMessage
    */
-  const sendMessage = async (chatId: number, input: string) => {
+  const sendMessage = async (input: string) => {
     if (!input.trim()) return
 
     const clientMessage = makeClientMessage(chatId, input)
