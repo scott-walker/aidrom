@@ -4,7 +4,7 @@ import { LoaderBlock } from "@ui/loader-block"
 import { useChatById, type Chat } from "@entities/chat"
 import { ChatDialogHeader } from "./chat-dialog-header"
 import { ChatDialogInput } from "./chat-dialog-input"
-import { ChatDialogBody } from "./chat-dialog-body"
+import { ChatMessages } from "@features/chat-messages"
 
 /**
  * Пропсы диалога чата
@@ -30,7 +30,7 @@ export const ChatDialog = ({ chatId, className = "" }: ChatDialogProps) => {
   return (
     <div className={containerClasses}>
       <ChatDialogHeader chat={chat as Chat} />
-      <ChatDialogBody chat={chat as Chat} />
+      <ChatMessages chat={chat as Chat} />
       <ChatDialogInput chat={chat as Chat} />
     </div>
   )

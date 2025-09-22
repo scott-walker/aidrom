@@ -16,7 +16,7 @@ type ChatDialogBodyProps = {
  * @namespace Widgets.Chat
  */
 export const ChatDialogBody = ({ chat, className = "" }: ChatDialogBodyProps) => {
-  const bodyClasses = makeClasses("flex", "flex-col", "flex-1", "overflow-y-auto", "scrollbar-hide", className)
+  const bodyClasses = makeClasses("flex", "flex-col", "flex-1", className)
 
   return (
     <div className={bodyClasses}>

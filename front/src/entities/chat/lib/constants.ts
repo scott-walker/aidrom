@@ -13,7 +13,7 @@ export enum Roles {
  */
 export enum SSEDataType {
   Start = "start",
+  End = "end",
   Error = "error",
-  Chunk = "chunk",
-  End = "end"
+  Content = "content"
 }

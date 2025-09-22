@@ -1,11 +1,11 @@
 import { SSEDataType } from "@entities/chat"
 
 /**
- * Формат данных SSE chunk
- * @namespace Features.Chat.SendMessage.Lib.Utils.SSEDataChunk
+ * Формат данных SSE content
+ * @namespace Features.Chat.SendMessage.Lib.Utils.SSEDataContent
  */
-export interface SSEDataChunk {
-  type: SSEDataType.Chunk
+export interface SSEDataContent {
+  type: SSEDataType.Content
   content: string
 }
 
@@ -42,7 +42,7 @@ export interface SSEDataError {
 export interface CreateStreamProps {
   onOpen?: () => void
   onStart?: () => void
-  onChunk?: (data: SSEDataChunk) => void
+  onContent?: (data: SSEDataContent) => void
   onEnd?: (data: SSEDataEnd) => void
   onError?: (data: SSEDataError) => void
   onClose?: () => void
@@ -54,37 +54,42 @@ export interface CreateStreamProps {
  */
 export const createStream = (
   chatId: number,
-  { onOpen, onStart, onChunk, onEnd, onError, onClose }: CreateStreamProps
+  { onOpen, onStart, onContent, onEnd, onError, onClose }: CreateStreamProps
 ) => {
   const stream = new EventSource(`${import.meta.env.VITE_API_BASE_URL}/chats/${chatId}/stream`)
   let isFirstChunk = true
 
-  stream.onopen = onOpen ?? (() => {})
-  stream.close = onClose ?? (() => {})
+  stream.onopen = () => {
+    isFirstChunk = true
+
+    onOpen?.()
+  }
+
+  stream.close = () => {
+    onClose?.()
+  }
+
   stream.onerror = () => {
     onError?.({
       type: SSEDataType.Error,
       message: "Ошибка при отправке потока"
     })
   }
+
   stream.onmessage = event => {
     const data = JSON.parse(event.data)
 
-    // if (data.type === SSEDataType.Start) {
-    //   onStart?.()
-    // }
-    if (data.type === SSEDataType.Chunk) {
+    if (data.type === SSEDataType.Content) {
       if (isFirstChunk) {
         isFirstChunk = false
+
         onStart?.()
       }
-      onChunk?.(data)
+      onContent?.(data)
     } else if (data.type === SSEDataType.End) {
       onEnd?.(data)
-      isFirstChunk = true
     } else if (data.type === SSEDataType.Error) {
       onError?.(data)
-      isFirstChunk = true
     }
   }
 

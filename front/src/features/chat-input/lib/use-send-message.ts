@@ -58,7 +58,7 @@ export const useSendMessage = (chatId: number) => {
         // toast.info("Начало получения сообщения")
         addMessage(agentMessage)
       },
-      onChunk: ({ content }) => {
+      onContent: ({ content }) => {
         updateMessage({ ...agentMessage, content })
       },
       onEnd: () => {

@@ -20,9 +20,9 @@ type ChatMessagesProps = {
  */
 export const ChatMessages = ({ chat, className = "" }: ChatMessagesProps) => {
   const bodyClasses = makeClasses(
+    "flex-1",
     "flex",
     "flex-col",
-    "flex-1",
     "h-full",
     "pt-8",
     "pb-64",
