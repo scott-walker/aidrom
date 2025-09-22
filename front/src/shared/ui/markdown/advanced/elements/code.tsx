@@ -8,28 +8,38 @@ import classes from "../style.module.css"
 type Props = {
   children: ReactNode
   className?: string
-  inline?: boolean
+  node: {
+    position: {
+      start: {
+        line: number
+      }
+      end: {
+        line: number
+      }
+    }
+  }
 }
 
 /**
  * Компонент для отображения кода
  * @namespace Shared.UI.DeepSeekMarkdown.Code
  */
-export const Code = ({ children, className, inline, ...props }: Props) => {
+export const Code = ({ children, className, node, ...props }: Props) => {
   const match = /language-(\w+)/.exec(className || "")
   const language = match ? match[1] : ""
+  const inline = node.position.start.line === node.position.end.line
 
   if (inline) {
     return (
-      <code className={className} {...props}>
+      <code className={classes["code-inline"] + " " + className} {...props}>
         {children}
       </code>
     )
   }
 
   return (
-    <div className={classes.codeBlock}>
-      {language && <div className={classes.codeBlockLanguage}>{language}</div>}
+    <div className={classes["code-block"] + " " + className}>
+      {language && <div className={classes["code-block-language"]}>{language}</div>}
 
       <pre className={className}>
         <code {...props}>{children}</code>
