@@ -77,8 +77,6 @@ export const ChatAgentCard = ({ agent, className = "" }: ChatAgentCardProps) => 
     "rounded-b-xl"
   )
 
-  console.log("agentCard", agent.id)
-
   return (
     <div className={containerClasses}>
       <section className={agentCardClasses} onClick={toggleChatList}>

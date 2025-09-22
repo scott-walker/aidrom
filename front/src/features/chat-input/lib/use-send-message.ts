@@ -20,7 +20,6 @@ export const useSendMessage = (chatId: number) => {
 
   useEffect(() => {
     return () => {
-      console.log("useSendMessage unmounted")
       stream.current?.close()
       clearMessages()
     }
