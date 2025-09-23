@@ -48,8 +48,8 @@ export const Sorter = ({
     <div className="flex items-center gap-2">
       <Label text={label} className="min-w-fit">
         <Select
-          hasEmpty
-          emptyLabel="По умолчанию"
+          // hasEmpty
+          // emptyLabel="По умолчанию"
           items={items}
           value={field}
           onChangeValue={onChangeField}

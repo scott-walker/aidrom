@@ -1,6 +1,6 @@
 import { restClient } from "@shared/api"
-import type { Request } from "../lib/schema"
-import { toRequest } from "../lib/mappers"
+import type { Request, DeleteRequestsResponse } from "../lib/schema"
+import { toRequest, toDeleteRequestsResponse } from "../lib/mappers"
 import type { RequestsFilterData } from "../lib/dto"
 
 /**
@@ -23,4 +23,22 @@ export const fetchRequestsByProviderId = async (providerId: number): Promise<Req
   const { data: dto } = await restClient.get(`requests/${providerId}`)
 
   return toRequest(dto)
+}
+
+/**
+ * Удаление запросов
+ * @namespace Entities.Request.Api.deleteRequests
+ */
+export const deleteRequests = async (params: RequestsFilterData): Promise<DeleteRequestsResponse> => {
+  const { data: dto } = await restClient.delete("requests", { params })
+
+  return toDeleteRequestsResponse(dto)
+}
+
+/**
+ * Очистка битых запросов
+ * @namespace Entities.Request.Api.clearBrokenRequests
+ */
+export const clearBrokenRequests = async (): Promise<void> => {
+  await restClient.post("requests/clear-broken-requests")
 }

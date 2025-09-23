@@ -14,3 +14,12 @@ export interface Request {
   responseTokens: number
   createdAt: Date
 }
+
+/**
+ * Схема ответа удаления запросов
+ * @namespace Entities.Request.Lib.Schema.DeleteRequestsResponse
+ */
+export interface DeleteRequestsResponse {
+  message: string
+  count: number
+}

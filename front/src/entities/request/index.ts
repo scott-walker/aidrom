@@ -1,10 +1,11 @@
 // Lib
-export { type RequestDTO, type RequestsFilterData } from "./lib/dto"
-export { type Request } from "./lib/schema"
+export { type RequestDTO, type RequestsFilterData, type DeleteRequestsDTO } from "./lib/dto"
+export { type Request, type DeleteRequestsResponse } from "./lib/schema"
 export { type RequestListQueryData, type RequestDetailQueryData } from "./lib/types"
 
 // API
 export { useRequests, useRequestById } from "./api/request-queries"
+export { useClearBrokenRequests, useDeleteRequests } from "./api/request-mutations"
 
 // UI
 export { RequestsData } from "./ui/requests-data"

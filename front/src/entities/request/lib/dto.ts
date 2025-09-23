@@ -26,3 +26,12 @@ export interface RequestsFilterData {
   sortOrder?: string | null
   limit?: number | null
 }
+
+/**
+ * DTO удаления запросов
+ * @namespace Entities.Request.Model.DeleteRequestsDTO
+ */
+export interface DeleteRequestsDTO {
+  message: string
+  count: number
+}

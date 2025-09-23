@@ -17,8 +17,14 @@ interface LabelProps extends ComponentProps<"label"> {
  * @namespace Shared.UI.Label
  */
 export const Label = ({ children, text, inline = true, ...props }: LabelProps) => {
-  const classes = makeClasses("flex", inline ? "flex-row items-center" : "flex-col gap-1", props.className)
-  const textClasses = makeClasses("min-w-fit", "px-(--ui-offset-x)", "text-sm", "font-semibold", "cursor-pointer")
+  const classes = makeClasses("flex", inline ? "flex-row items-center gap-4" : "flex-col gap-1", props.className)
+  const textClasses = makeClasses(
+    !inline && "px-(--ui-offset-x)",
+    "min-w-fit",
+    "text-sm",
+    "font-semibold",
+    "cursor-pointer"
+  )
 
   return (
     <label {...props} className={classes}>

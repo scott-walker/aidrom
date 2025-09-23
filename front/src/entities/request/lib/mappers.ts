@@ -1,5 +1,5 @@
-import type { RequestDTO } from "./dto"
-import type { Request } from "./schema"
+import type { DeleteRequestsDTO, RequestDTO } from "./dto"
+import type { DeleteRequestsResponse, Request } from "./schema"
 import { toProviderListItem } from "@entities/provider"
 
 /**
@@ -15,4 +15,13 @@ export const toRequest = (dto: RequestDTO): Request => ({
   requestTokens: dto.requestTokens,
   responseTokens: dto.responseTokens,
   createdAt: new Date(dto.createdAt)
+})
+
+/**
+ * Маппер из DTO в сущность
+ * @namespace Entities.Request.Model.toDeleteRequestsResponse
+ */
+export const toDeleteRequestsResponse = (dto: DeleteRequestsDTO): DeleteRequestsResponse => ({
+  message: dto.message,
+  count: dto.count
 })

@@ -17,7 +17,7 @@ export const Requests = (): ReactNode => {
 
   return (
     <div className="flex flex-col gap-4">
-      <RequestDataManager onFilterQuery={setSearchParams} />
+      <RequestDataManager initialFilter={filters} onFilterQuery={setSearchParams} />
       <RequestsTable filters={filters} />
     </div>
   )

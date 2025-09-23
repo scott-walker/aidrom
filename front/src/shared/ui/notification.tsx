@@ -21,10 +21,10 @@ export const Notification = ({ children, type = "info", className = "" }: Notifi
     beforeClasses: ["flex", "items-center", "gap-2", "rounded-lg", "py-4", "px-8", "text-lg", "font-display"],
     afterClasses: className,
     variants: {
-      success: "bg-green-500",
-      error: "bg-danger/10 text-danger",
-      warning: "bg-yellow-500",
-      info: "bg-blue-500"
+      success: "bg-positive text-positive-foreground",
+      error: "bg-danger text-danger-foreground",
+      warning: "bg-warning text-warning-foreground",
+      info: "bg-background-hard text-foreground-hard"
     }
   })
 
