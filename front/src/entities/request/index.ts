@@ -5,3 +5,8 @@ export { type RequestListQueryData, type RequestDetailQueryData } from "./lib/ty
 
 // API
 export { useRequests, useRequestById } from "./api/request-queries"
+
+// UI
+export { RequestsData } from "./ui/requests-data"
+export { RequestsInfo } from "./ui/requests-info"
+export { RequestsParams } from "./ui/requests-params"

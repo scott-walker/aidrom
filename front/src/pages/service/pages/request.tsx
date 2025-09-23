@@ -3,7 +3,7 @@ import { useParams } from "react-router"
 import { useLayoutSubtitle } from "@lib/layout-api"
 import { LoaderBlock } from "@ui/loader-block"
 import { useRequestById } from "@entities/request"
-import { RequestsData, RequestsParams, RequestsInfo } from "@widgets/requests-data"
+import { RequestsData, RequestsParams, RequestsInfo } from "@entities/request"
 
 /**
  * Страница сервиса - запрос

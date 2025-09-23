@@ -5,7 +5,7 @@ import { type Request } from "@entities/request"
 
 /**
  * Пропсы для компонента RequestsParams
- * @namespace Widgets.RequestsData.Ui.RequestsDataProps
+ * @namespace Entities.Request.Ui.RequestsParamsProps
  */
 interface RequestsParamsProps {
   request: Request
@@ -13,7 +13,7 @@ interface RequestsParamsProps {
 
 /**
  * Параметры запроса к провайдеру
- * @namespace Widgets.RequestsData.Ui.RequestsParams
+ * @namespace Entities.Request.Ui.RequestsParams
  */
 export const RequestsParams = ({ request }: RequestsParamsProps) => {
   return (

@@ -1,22 +1,43 @@
-import type { ComponentProps, ReactNode } from "react"
+import type { ReactNode } from "react"
 import * as RadixSelect from "@radix-ui/react-select"
 import { type SelectContentProps } from "@radix-ui/react-select"
 import { makeClasses, makeUiBox, makeUiClickable, makeUiHoverableAnimation, makeUiTransition } from "@lib/style-api"
 import { ChevronDown } from "lucide-react"
 
 /**
+ * Значение пустого селекта
+ * @namespace Shared.UI.Select.EMPTY_SELECT_VALUE
+ */
+export const EMPTY_SELECT_VALUE = "__NONE__"
+
+/**
+ * Тип значения селекта
+ * @namespace Shared.UI.Select.Value
+ */
+export type SelectValue = string
+
+/**
+ * Тип элемента селекта
+ * @namespace Shared.UI.Select.Item
+ */
+export type SelectItem = { label: string; value: SelectValue }
+
+/**
  * Пропсы
  * @namespace Shared.UI.Select.Props
  */
-export type SelectProps = Omit<ComponentProps<"select">, "size"> & {
-  items: { label: string; value: string }[]
-  value?: string | undefined | null
-  defaultValue?: string | undefined
+export interface SelectProps {
+  items: SelectItem[]
+  value?: SelectValue | null
+  defaultValue?: SelectValue | null
+  hasEmpty?: boolean
+  emptyLabel?: string
   placeholder?: string
   className?: string
-  onChangeValue?: (value: string) => void
-  renderItem?: (item: { label: string; value: string }) => ReactNode
+  onChangeValue?: (value: SelectValue | null) => void
+  renderItem?: (item: SelectItem) => ReactNode
   error?: boolean
+  disabled?: boolean
 }
 
 /**
@@ -27,12 +48,17 @@ export const Select = ({
   items,
   value,
   defaultValue,
+  hasEmpty = false,
+  emptyLabel = "Не выбрано",
   placeholder,
-  className,
   onChangeValue,
   error,
-  renderItem
+  disabled,
+  renderItem,
+  className
 }: SelectProps) => {
+  placeholder = hasEmpty ? emptyLabel : placeholder
+
   const triggerClasses = makeClasses(
     makeUiBox(),
     makeUiClickable(),
@@ -71,8 +97,30 @@ export const Select = ({
   }
   const itemClasses = makeClasses("px-4", "py-1", "cursor-pointer", "hover:bg-background", "hover:text-foreground-hard")
 
+  const handleChange = (value: SelectValue) => {
+    onChangeValue?.(value === EMPTY_SELECT_VALUE ? null : value)
+  }
+
+  /**
+   * Нормализует значение селекта
+   * @param value - Значение селекта
+   * @returns Нормализованное значение селекта
+   */
+  const normalizeValue = (value: SelectValue | null | undefined): string | undefined => {
+    if (hasEmpty) {
+      return value === null ? EMPTY_SELECT_VALUE : value
+    }
+
+    return value || undefined
+  }
+
   return (
-    <RadixSelect.Root value={value} defaultValue={defaultValue} onValueChange={onChangeValue}>
+    <RadixSelect.Root
+      value={normalizeValue(value)}
+      defaultValue={normalizeValue(defaultValue)}
+      onValueChange={handleChange}
+      disabled={disabled}
+    >
       <RadixSelect.Trigger className={triggerClasses}>
         <RadixSelect.Value placeholder={placeholder} />
         <RadixSelect.Icon>
@@ -84,13 +132,21 @@ export const Select = ({
         <RadixSelect.Content {...contentProps}>
           <RadixSelect.ScrollUpButton />
           <RadixSelect.Viewport>
+            {hasEmpty && (
+              <>
+                <RadixSelect.Item value={EMPTY_SELECT_VALUE} key={EMPTY_SELECT_VALUE} className={itemClasses}>
+                  <RadixSelect.ItemText>{emptyLabel}</RadixSelect.ItemText>
+                  <RadixSelect.ItemIndicator />
+                </RadixSelect.Item>
+                <RadixSelect.Separator />
+              </>
+            )}
             {items.map(({ label, value }) => (
               <RadixSelect.Item value={value} key={value} className={itemClasses}>
                 <RadixSelect.ItemText>{renderItem ? renderItem({ label, value }) : label}</RadixSelect.ItemText>
                 <RadixSelect.ItemIndicator />
               </RadixSelect.Item>
             ))}
-
             <RadixSelect.Separator />
           </RadixSelect.Viewport>
           <RadixSelect.ScrollDownButton />

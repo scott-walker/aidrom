@@ -5,7 +5,7 @@ import { Heading } from "@shared/ui/heading"
 
 /**
  * Пропсы для компонента RequestsInfo
- * @namespace Widgets.RequestsData.Ui.RequestsInfoProps
+ * @namespace Entities.Request.Ui.RequestsInfoProps
  */
 interface RequestsInfoProps {
   request: Request
@@ -13,7 +13,7 @@ interface RequestsInfoProps {
 
 /**
  * Информация о запросе к провайдеру
- * @namespace Widgets.RequestsData.Ui.RequestsInfo
+ * @namespace Entities.Request.Ui.RequestsInfo
  */
 export const RequestsInfo = ({ request }: RequestsInfoProps) => {
   const sectionClasses = makeClasses("flex", "flex-col", "items-start", "justify-start", "gap-4")
