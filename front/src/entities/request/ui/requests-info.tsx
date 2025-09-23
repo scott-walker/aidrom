@@ -3,6 +3,7 @@ import { Card } from "@ui/card"
 import { Heading } from "@ui/heading"
 import { type Request } from "@entities/request"
 import { RequestStatus } from "./request-status"
+import { RequestValue } from "./request-value"
 
 /**
  * Пропсы для компонента RequestsInfo
@@ -35,7 +36,9 @@ export const RequestsInfo = ({ request }: RequestsInfoProps) => {
           </section>
           <section>
             <div className={sectionLabelClasses}>ID запроса (на стороне провайдера)</div>
-            <div className={sectionValueClasses}>{request?.providerRequestId}</div>
+            <div className={sectionValueClasses}>
+              <RequestValue>{request?.providerRequestId}</RequestValue>
+            </div>
           </section>
           <section>
             <div className={sectionLabelClasses}>Провайдер</div>

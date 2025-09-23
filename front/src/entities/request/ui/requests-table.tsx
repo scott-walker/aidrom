@@ -2,7 +2,10 @@ import { makeClasses } from "@lib/style-api"
 import { Table } from "@ui/table"
 import { Card } from "@ui/card"
 import { Heading } from "@ui/heading"
+import { Tag } from "@ui/tag"
+import { RequestStatus as RequestStatusEnum } from "../lib/constants"
 import type { Request } from "../lib/schema"
+import { RequestValue } from "./request-value"
 
 /**
  * Пропсы для компонента RequestsTable
@@ -42,9 +45,15 @@ export const RequestsTable = ({ requests, onRowClick }: RequestsTableProps) => {
             {requests.map(request => (
               <Table.Row hoverable className={rowClasses} onClick={() => onRowClick?.(request)}>
                 <Table.Cell>{request.id}</Table.Cell>
-                <Table.Cell>{request.status}</Table.Cell>
+                <Table.Cell>
+                  <Tag schema={request.status === RequestStatusEnum.COMPLETED ? "soft" : "danger"}>
+                    {request.status}
+                  </Tag>
+                </Table.Cell>
                 <Table.Cell>{request.provider.name}</Table.Cell>
-                <Table.Cell>{request.providerRequestId}</Table.Cell>
+                <Table.Cell>
+                  <RequestValue>{request.providerRequestId}</RequestValue>
+                </Table.Cell>
                 <Table.Cell>{request.requestTokens}</Table.Cell>
                 <Table.Cell>{request.responseTokens}</Table.Cell>
               </Table.Row>
