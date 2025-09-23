@@ -3,7 +3,7 @@
  * @namespace Chat.Service
  */
 
-import { eq, desc } from "drizzle-orm"
+import { eq, desc, asc } from "drizzle-orm"
 import {
   db,
   chats,
@@ -30,7 +30,6 @@ const logger = createServiceLogger("ChatService")
  */
 export interface GetChatByIdParams {
   withContext?: boolean
-  withMessagePairs?: boolean
 }
 
 /**
@@ -59,17 +58,16 @@ export const getChats = async (): Promise<Chat[]> => {
  * Получить чат по его идентификатору
  * @namespace Chat.Service.getChatById
  */
-export const getChatById = async (
-  chatId: number,
-  { withMessagePairs = true, withContext = true }: GetChatByIdParams = {}
-): Promise<Chat> => {
+export const getChatById = async (chatId: number, { withContext = true }: GetChatByIdParams = {}): Promise<Chat> => {
   try {
     logger.info("Получение чата по ID", { chatId })
 
     const chat = await db.query.chats.findFirst({
       where: eq(chats.id, chatId),
       with: {
-        messagePairs: withMessagePairs || null
+        messagePairs: {
+          orderBy: [asc(messagePairs.createdAt)]
+        }
       }
     })
 
