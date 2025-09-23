@@ -1,5 +1,10 @@
 import { useEffect, useRef } from "react"
-import { useSendMessage as useApiSendMessage, makeAgentMessage, useOptimisticMessage } from "@entities/chat"
+import {
+  useSendMessage as useApiSendMessage,
+  makeAgentMessage,
+  useOptimisticMessage,
+  useChatStore
+} from "@entities/chat"
 import { useToast } from "@features/toasts"
 import { createStream } from "./utils"
 
@@ -9,6 +14,7 @@ import { createStream } from "./utils"
  */
 export const useSendMessage = (chatId: number) => {
   const { mutate: send } = useApiSendMessage()
+  const setPending = useChatStore(state => state.setPending)
   const { addMessage, updateLastMessage } = useOptimisticMessage()
   const toast = useToast()
   const stream = useRef<EventSource | null>(null)
@@ -31,8 +37,7 @@ export const useSendMessage = (chatId: number) => {
     stream.current = createStream(chatId, {
       onOpen: () => {
         // toast.info("Соединение открыто")
-        // addMessage(clientMessage)
-        // setPending(true)
+        setPending(true)
         send(
           { chatId, data: { message: input } },
           {
@@ -55,11 +60,11 @@ export const useSendMessage = (chatId: number) => {
       },
       onEnd: () => {
         // toast.info("Сообщение получено")
-        // setPending(false)
+        setPending(false)
       },
       onError: ({ message }) => {
         toast.error("Ошибка при отправке сообщения", message)
-        // setPending(false)
+        setPending(false)
       }
     })
   }

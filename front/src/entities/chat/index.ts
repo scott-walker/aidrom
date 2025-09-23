@@ -10,7 +10,6 @@ export { useCreateChat, useUpdateChat, useSendMessage, useDeleteChat, useOptimis
 
 // Store
 export { useChatStore } from "./store/chat-store"
-export { useChatMessages } from "./store/chat-selectors"
 
 // UI
 export { ChatPending } from "./ui/chat-pending"

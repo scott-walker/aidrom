@@ -134,13 +134,13 @@ export const useSendMessage = (): UseMutationResult<
     onError: (_error, { chatId }, context) => {
       queryClient.setQueryData(queryKeys.details(chatId), context?.previousChat)
     },
-    onSuccess: ({ chatId, messages }: MessageSendResult) => {
-      const previousChat = queryClient.getQueryData<Chat>(queryKeys.details(chatId))
-      const previousMessages = previousChat?.messages ?? []
-      const newMessages = [...previousMessages, ...messages]
+    onSuccess: ({ chatId }: MessageSendResult) => {
+      // const previousChat = queryClient.getQueryData<Chat>(queryKeys.details(chatId))
+      // const previousMessages = previousChat?.messages ?? []
+      // const newMessages = [...previousMessages, ...messages]
 
-      queryClient.setQueryData(queryKeys.details(chatId), { ...previousChat, messages: newMessages })
-      // queryClient.invalidateQueries({ queryKey: queryKeys.details(chatId) })
+      // queryClient.setQueryData(queryKeys.details(chatId), { ...previousChat, messages: newMessages })
+      queryClient.invalidateQueries({ queryKey: queryKeys.details(chatId) })
     }
   })
 }

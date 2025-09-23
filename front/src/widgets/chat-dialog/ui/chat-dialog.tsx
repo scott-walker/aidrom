@@ -1,10 +1,15 @@
 import { makeClasses } from "@lib/style-api"
 import { useLayoutSubtitle } from "@lib/layout-api"
 import { LoaderBlock } from "@ui/loader-block"
+
 import { useChatById, type Chat } from "@entities/chat"
+
+import { ChatMessages } from "@features/chat-messages"
+import { ChatBody } from "@features/chat-body"
+import { ChatPending } from "@features/chat-pending"
+
 import { ChatDialogHeader } from "./chat-dialog-header"
 import { ChatDialogInput } from "./chat-dialog-input"
-import { ChatMessages } from "@features/chat-messages"
 
 /**
  * Пропсы диалога чата
@@ -25,13 +30,16 @@ export const ChatDialog = ({ chatId, className = "" }: ChatDialogProps) => {
 
   useLayoutSubtitle(chat?.title || "")
 
-  if (isLoading) return <LoaderBlock />
+  if (isLoading || !chat) return <LoaderBlock />
 
   return (
     <div className={containerClasses}>
-      <ChatDialogHeader chat={chat as Chat} />
-      <ChatMessages chat={chat as Chat} />
-      <ChatDialogInput chat={chat as Chat} />
+      <ChatDialogHeader chat={chat} />
+      <ChatBody chat={chat}>
+        <ChatMessages chat={chat} />
+        <ChatPending />
+      </ChatBody>
+      <ChatDialogInput chat={chat} />
     </div>
   )
 }

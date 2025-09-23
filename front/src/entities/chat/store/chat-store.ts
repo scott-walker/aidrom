@@ -1,6 +1,4 @@
 import { create } from "zustand"
-// import { devtools } from "zustand/middleware"
-import type { Message } from "../lib/schema"
 
 /**
  * Интерфейс хранилища состояния чата
@@ -9,12 +7,8 @@ import type { Message } from "../lib/schema"
 interface ChatStore {
   input: string
   isPending: boolean
-  messages: Message[]
   setInput: (input: string) => void
   setPending: (isPending: boolean) => void
-  addMessage: (message: Message) => void
-  updateMessage: (message: Message) => void
-  clearMessages: () => void
 }
 
 /**
@@ -35,12 +29,6 @@ export const useChatStore = create<ChatStore>(set => ({
   isPending: false,
 
   /**
-   * Сообщения
-   * @namespace Entities.Chat.Model.useChatStore.messages
-   */
-  messages: [],
-
-  /**
    * Установить введенный текст
    * @namespace Entities.Chat.Model.useChatStore.setInput
    */
@@ -50,35 +38,5 @@ export const useChatStore = create<ChatStore>(set => ({
    * Установить статус ожидания
    * @namespace Entities.Chat.Model.useChatStore.setPending
    */
-  setPending: isPending => set({ isPending }),
-
-  /**
-   * Добавить сообщение
-   * @namespace Entities.Chat.Model.useChatStore.addMessage
-   */
-  addMessage: message => {
-    set(state => {
-      return { messages: [...state.messages, message] }
-    })
-  },
-
-  /**
-   * Обновить сообщение
-   * @namespace Entities.Chat.Model.useChatStore.updateMessage
-   */
-  updateMessage: message => {
-    set(state => {
-      return { messages: state.messages.map(m => (m.id === message.id ? message : m)) }
-    })
-  },
-
-  /**
-   * Очистить сообщения
-   * @namespace Entities.Chat.Model.useChatStore.clearMessages
-   */
-  clearMessages: () => {
-    set(() => {
-      return { messages: [] }
-    })
-  }
+  setPending: isPending => set({ isPending })
 }))
