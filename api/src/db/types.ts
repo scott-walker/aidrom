@@ -1,5 +1,5 @@
 import { InferSelectModel, InferInsertModel } from "drizzle-orm"
-import { providers, agents, agentRules, clients, chats, messagePairs, requests } from "./schema"
+import { providers, agents, agentRules, clients, chats, messagePairs, requests, RequestStatus } from "./schema"
 import { DriverParamsConfig, DriverInfo, DriverStatus, Driver } from "@drivers"
 
 /**
@@ -61,6 +61,12 @@ export type ChatContext = {
 }[]
 
 // Типы для запроса
+
+/**
+ * Имена статусов запроса
+ * @namespace Db.Types.RequestStatusName
+ */
+export { RequestStatus }
 export type Request = InferSelectModel<typeof requests>
 export type RequestWithProvider = Request & {
   provider: Provider

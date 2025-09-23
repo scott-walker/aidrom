@@ -1,5 +1,5 @@
 export { providers, providersRelations } from "./providers"
-export { requests, requestsRelations } from "./requests"
+export { requests, requestsRelations, RequestStatus } from "./requests"
 export { agents, agentsRelations } from "./agents"
 export { agentRules, agentRulesRelations } from "./agentRules"
 export { clients, clientsRelations } from "./clients"

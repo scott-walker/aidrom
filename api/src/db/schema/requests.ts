@@ -1,7 +1,16 @@
-import { pgTable, index } from "drizzle-orm/pg-core"
+import { pgTable, index, pgEnum } from "drizzle-orm/pg-core"
 import { relations } from "drizzle-orm"
 import { messagePairs } from "./messagePairs"
 import { providers } from "./providers"
+
+/**
+ * Статус запроса
+ * @namespace Db.Schema.RequestStatus
+ */
+export enum RequestStatus {
+  COMPLETED = "COMPLETED",
+  ERROR = "ERROR"
+}
 
 /**
  * Запросы к API
@@ -16,6 +25,10 @@ export const requests = pgTable(
       .notNull()
       .references(() => providers.id, { onDelete: "cascade" }),
     providerRequestId: table.varchar("provider_request_id", { length: 255 }),
+    status: table
+      .varchar("status", { length: 20, enum: Object.values(RequestStatus) as [string, ...string[]] })
+      .default(RequestStatus.COMPLETED)
+      .notNull(),
     requestParams: table.json("request_params"),
     responseData: table.json("response_data"),
     requestTokens: table.integer("request_tokens"),
@@ -23,6 +36,7 @@ export const requests = pgTable(
     createdAt: table.timestamp("created_at").notNull().defaultNow()
   }),
   table => [
+    index("requests_status_idx").on(table.status),
     index("requests_request_tokens_idx").on(table.requestTokens),
     index("requests_response_tokens_idx").on(table.responseTokens),
     index("requests_provider_id_idx").on(table.providerId)

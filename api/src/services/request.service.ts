@@ -22,11 +22,14 @@ const createFilters = (data?: RequestsFilterData): RequestsFilter => {
   const orderBy = data.sortOrder === "asc" ? asc(requests[sortField]) : desc(requests[sortField])
   const where: SQL<unknown>[] = []
 
-  if (data.providerId) {
+  if (data.providerId !== undefined) {
     where.push(eq(requests.providerId, Number(data.providerId)))
   }
-  if (data.searchById) {
+  if (data.searchById !== undefined) {
     where.push(like(requests.providerRequestId, `%${data.searchById}%`))
+  }
+  if (data.status !== undefined) {
+    where.push(eq(requests.status, data.status))
   }
 
   return {
@@ -49,6 +52,7 @@ export type SortOrder = "asc" | "desc"
 export interface RequestsFilterData {
   providerId?: string
   searchById?: string
+  status?: string
   sortField?: string
   sortOrder?: SortOrder
   limit?: number
@@ -74,6 +78,7 @@ export const normalizeData = (data?: RequestsFilterData): RequestsFilterData => 
   return {
     providerId: data.providerId ? String(data.providerId) : undefined,
     searchById: data.searchById ? String(data.searchById) : undefined,
+    status: data.status ? String(data.status) : undefined,
     sortField: data.sortField ? String(data.sortField) : "createdAt",
     sortOrder: data.sortOrder ? (String(data.sortOrder) as SortOrder) : "desc",
     limit: data.limit ? Number(data.limit) : undefined
@@ -152,7 +157,7 @@ export const getRequestById = async (requestId: number): Promise<RequestWithProv
  */
 export const createRequest = async (data: CreateRequestData): Promise<Request> => {
   try {
-    logger.info("Создание нового запроса в БД", data)
+    logger.info("Создание нового запроса в БД", { data })
 
     const [requestItem] = await db.insert(requests).values(data).returning()
 

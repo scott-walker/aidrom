@@ -4,9 +4,9 @@
  */
 
 import { eq, desc } from "drizzle-orm"
-import { db, providers, Provider, CreateProviderData, UpdateProviderData, ProviderWithDriver } from "@db"
+import { db, providers, Provider, CreateProviderData, UpdateProviderData, ProviderWithDriver, RequestStatus } from "@db"
 import { createServiceLogger } from "@utils/logger"
-import { NotFoundError } from "@utils/errors"
+import { NotFoundError, SenderError } from "@utils/errors"
 import {
   driverFactories,
   initDriver,
@@ -16,7 +16,7 @@ import {
   DriverStatus,
   DriverRequest
 } from "@drivers"
-import { ISender, SenderEvents } from "@utils/sender"
+import { createSender, ISender, ISenderDriverSendErrorEventData, SenderEvents } from "@utils/sender"
 import * as requestService from "./request.service"
 
 /**
@@ -195,7 +195,7 @@ export const processRequest = async (providerId: number, request: DriverRequest)
     logger.info("Обработка запроса к провайдеру", { providerId })
 
     const { driverInstance } = await getProviderById(providerId)
-    const sender = driverInstance.sendRequest(request)
+    const sender = createSender((sender: ISender) => driverInstance.sendRequest(sender, request))
 
     // Обработать событие завершения отправки сообщения к провайдеру
     sender.on(SenderEvents.DRIVER_SEND_COMPLETE, async response => {
@@ -205,6 +205,7 @@ export const processRequest = async (providerId: number, request: DriverRequest)
       const requestData = await requestService.createRequest({
         providerId,
         providerRequestId: response.providerRequestId,
+        status: RequestStatus.COMPLETED,
         requestParams: response.requestParams,
         responseData: response.responseData,
         requestTokens: response.requestTokens,
@@ -222,6 +223,33 @@ export const processRequest = async (providerId: number, request: DriverRequest)
         requestId: requestData.id,
         responseContent: response.content
       })
+    })
+
+    // Обработать событие ошибки при обработке запроса к провайдеру
+    sender.on(SenderEvents.DRIVER_SEND_ERROR, async ({ request, error }: ISenderDriverSendErrorEventData) => {
+      logger.info("Сохранение в БД ошибки при обработке запроса к провайдеру", { action: "onError", providerId })
+
+      // Сохранить информацию о запросе/ответе в БД
+      const requestData = await requestService.createRequest({
+        providerId,
+        providerRequestId: null,
+        status: RequestStatus.ERROR,
+        requestParams: request,
+        responseData: {
+          error: error.message,
+          stack: (error?.stack || "").split("\n")
+        },
+        requestTokens: 0,
+        responseTokens: 0
+      })
+
+      logger.info("Запрос успешно обработан", {
+        action: "onError",
+        providerId,
+        requestId: requestData.id
+      })
+
+      sender.emit(SenderEvents.ERROR, { error: new SenderError(error.message, error?.stack || "") })
     })
 
     return sender

@@ -11,6 +11,7 @@ export enum SenderEvents {
   END = "end",
   ERROR = "error",
   PUSH_CONTENT = "push-content",
+  DRIVER_SEND_ERROR = "driver-send-error",
   DRIVER_SEND_COMPLETE = "driver-send-complete",
   PROVIDER_SEND_COMPLETE = "provider-send-complete",
   AGENT_SEND_COMPLETE = "agent-send-complete",
@@ -55,6 +56,7 @@ export interface ISenderEventMap {
   [SenderEvents.END]: ISenderEndEventData
   [SenderEvents.ERROR]: ISenderErrorEventData
   [SenderEvents.PUSH_CONTENT]: ISenderContentEventData
+  [SenderEvents.DRIVER_SEND_ERROR]: ISenderDriverSendErrorEventData
   [SenderEvents.DRIVER_SEND_COMPLETE]: ISenderDriverSendCompleteEventData
   [SenderEvents.PROVIDER_SEND_COMPLETE]: ISenderProviderSendCompleteEventData
   [SenderEvents.AGENT_SEND_COMPLETE]: ISenderAgentSendCompleteEventData
@@ -93,6 +95,15 @@ export interface ISenderErrorEventData extends ISenderEventData {
  */
 export interface ISenderContentEventData extends ISenderEventData {
   content: string
+}
+
+/**
+ * Интерфейс данных события "ошибка отправки сообщений к драйверу"
+ * @namespace Services.ISenderDriverSendErrorEventData
+ */
+export interface ISenderDriverSendErrorEventData extends ISenderEventData {
+  error: Error
+  request: any
 }
 
 /**
@@ -202,7 +213,7 @@ export class Sender implements ISender {
           error = new SenderError(data.error as string)
         }
 
-        return { error }
+        return { ...data, error }
       }
 
       return data
@@ -220,23 +231,24 @@ export class Sender implements ISender {
      * Обернуть обработчик событий
      * @namespace Drivers.Sender.on.wrap
      */
-    const wrap = (listener: (data: ISenderEventData) => Promise<void>) => {
-      return async (data: ISenderEventData) => {
-        try {
-          this.logger.info("Обработка события", { event })
+    // const wrap = (listener: (data: ISenderEventData) => Promise<void>) => {
+    //   return async (data: ISenderEventData) => {
+    //     try {
+    //       this.logger.info("Обработка события", { event })
 
-          await listener(data)
+    //       await listener(data)
 
-          this.logger.info("Событие успешно обработано", { event })
-        } catch (error) {
-          this.logger.error("Ошибка при обработке события", { event, error: error.message })
+    //       this.logger.info("Событие успешно обработано", { event })
+    //     } catch (error) {
+    //       this.logger.error("Ошибка при обработке события", { event, error: error.message })
 
-          this.emit(SenderEvents.ERROR, { error })
-        }
-      }
-    }
+    //       this.emit(SenderEvents.ERROR, { error })
+    //     }
+    //   }
+    // }
 
-    return this.emitter.on(event as string, wrap(listener))
+    // return this.emitter.on(event as string, wrap(listener))
+    return this.emitter.on(event as string, listener)
   }
 }
 

@@ -134,7 +134,7 @@ export interface DriverInfo {
 export interface Driver {
   getInfo: () => Promise<DriverInfo>
   getParamsConfig: () => Promise<DriverParamsConfig>
-  sendRequest: (request: DriverRequest) => ISender
+  sendRequest: (sender: ISender, request: DriverRequest) => Promise<void>
 }
 
 /**

@@ -4,7 +4,7 @@ import { createApiLogger } from "@utils/logger"
 import * as imager from "@utils/imager"
 import { Driver, DriverRequest, DriverParamsConfig } from "../types"
 import { GigachatDriverConfig, GigachatDriverRequest } from "./types"
-import { createSender, ISender, SenderEvents } from "@utils/sender"
+import { ISender, SenderEvents } from "@utils/sender"
 
 /**
  * Область видимости для Gigachat
@@ -102,56 +102,54 @@ export const createGigachatDriver = (config: GigachatDriverConfig): Driver => {
      * Отправка запроса к API Gigachat для генерации изображения
      * @namespace Drivers.Gigachat.sendGenerateImage
      */
-    sendRequest: (request: DriverRequest): ISender => {
+    async sendRequest(sender: ISender, request: DriverRequest): Promise<void> {
       logger.info("🚀 Отправка запроса", { action: "sendRequest", request })
 
-      return createSender(async sender => {
-        try {
-          const driverRequest: GigachatDriverRequest = {
-            messages: request.messages,
-            model: request.model as string,
-            temperature: request.temperature as number,
-            top_p: request.topP as number,
-            max_tokens: request.maxTokens as number,
-            repetition_penalty: request.repetitionPenalty as number,
-            function_call: "auto"
-          }
+      const driverRequest: GigachatDriverRequest = {
+        messages: request.messages,
+        model: request.model as string,
+        temperature: request.temperature as number,
+        top_p: request.topP as number,
+        max_tokens: request.maxTokens as number,
+        repetition_penalty: request.repetitionPenalty as number,
+        function_call: "auto"
+      }
 
-          const data = await giga.chat(driverRequest)
-          let content = data.choices[0]?.message.content ?? ""
+      try {
+        const data = await giga.chat(driverRequest)
+        let content = data.choices[0]?.message.content ?? ""
 
-          logger.info("Получен ответ", { action: "sendRequest" })
+        logger.info("Получен ответ", { action: "sendRequest" })
 
-          // Получение изображения по идентификатору
-          const detectedImage = detectImage(content)
+        // Получение изображения по идентификатору
+        const detectedImage = detectImage(content)
 
-          // Если в содержимом есть изображение
-          if (detectedImage) {
-            logger.info("Запрос на получение изображения", { action: "sendRequest" })
+        // Если в содержимом есть изображение
+        if (detectedImage) {
+          logger.info("Запрос на получение изображения", { action: "sendRequest" })
 
-            const image = await giga.getImage(detectedImage.uuid)
-            const fileName = `${detectedImage.uuid}.jpeg`
-            content = content.replace(detectedImage.uuid, `/static/${fileName}`)
+          const image = await giga.getImage(detectedImage.uuid)
+          const fileName = `${detectedImage.uuid}.jpeg`
+          content = content.replace(detectedImage.uuid, `/static/${fileName}`)
 
-            const filePath = imager.save(fileName, image.content)
-            logger.info("Изображение сохранено в файл", { action: "sendRequest", filePath })
-          }
-
-          sender.emit(SenderEvents.PUSH_CONTENT, { content })
-          sender.emit(SenderEvents.DRIVER_SEND_COMPLETE, {
-            content,
-            providerRequestId: data.xHeaders.xRequestID,
-            requestParams: driverRequest,
-            responseData: data,
-            requestTokens: data.usage.prompt_tokens,
-            responseTokens: data.usage.completion_tokens
-          })
-        } catch (error) {
-          logger.error("Ошибка при обработке запроса", { action: "sendRequest", error: error.message })
-
-          sender.emit(SenderEvents.ERROR, { error: error.message })
+          const filePath = imager.save(fileName, image.content)
+          logger.info("Изображение сохранено в файл", { action: "sendRequest", filePath })
         }
-      })
+
+        sender.emit(SenderEvents.PUSH_CONTENT, { content })
+        sender.emit(SenderEvents.DRIVER_SEND_COMPLETE, {
+          content,
+          providerRequestId: data.xHeaders.xRequestID,
+          requestParams: driverRequest,
+          responseData: data,
+          requestTokens: data.usage.prompt_tokens,
+          responseTokens: data.usage.completion_tokens
+        })
+      } catch (error) {
+        logger.error("Ошибка при обработке запроса", { action: "sendRequest", error: error.message })
+
+        sender.emit(SenderEvents.DRIVER_SEND_ERROR, { error, request: driverRequest })
+      }
     }
   }
 
