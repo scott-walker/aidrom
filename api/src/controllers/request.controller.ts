@@ -6,7 +6,6 @@
 import { Request, Response, NextFunction } from "express"
 import { createControllerLogger } from "@utils/logger"
 import * as requestService from "@services/request.service"
-import { ValidationError } from "@utils/errors"
 
 // Создаем логгер для контроллера запросов
 const logger = createControllerLogger("RequestController")
@@ -19,7 +18,7 @@ export const getRequests = async (req: Request, res: Response, next: NextFunctio
   try {
     logger.info("Получение списка всех запросов")
 
-    const requests = await requestService.getRequests()
+    const requests = await requestService.getRequests(requestService.normalizeData(req.query))
 
     logger.info("Список запросов успешно получен", { count: requests.length })
 
