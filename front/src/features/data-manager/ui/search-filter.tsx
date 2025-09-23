@@ -13,7 +13,7 @@ interface SearchFilterProps {
 }
 
 /**
- * Фильтр по провайдерам
+ * Поиск по строке
  * @namespace Features.DataManager.Ui.SearchFilter
  */
 export const SearchFilter = ({

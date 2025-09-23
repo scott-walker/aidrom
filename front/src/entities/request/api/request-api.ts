@@ -1,13 +1,16 @@
-import { restClient } from "@features/provider-form/model/api"
+import { restClient } from "@shared/api"
 import type { Request } from "../lib/schema"
 import { toRequest } from "../lib/mappers"
+import type { RequestsFilterData } from "../lib/dto"
 
 /**
  * Получить список запросов
  * @namespace Entities.Request.Api.fetchRequests
  */
-export const fetchRequests = async (): Promise<Request[]> => {
-  const { data: dtos } = await restClient.get("requests")
+export const fetchRequests = async (params?: RequestsFilterData): Promise<Request[]> => {
+  params = params ?? {}
+
+  const { data: dtos } = await restClient.get("requests", { params })
 
   return dtos.map(toRequest)
 }

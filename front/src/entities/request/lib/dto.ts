@@ -14,3 +14,15 @@ export interface RequestDTO {
   responseTokens: number
   createdAt: string
 }
+
+/**
+ * Параметры фильтрации
+ * @namespace Entities.Request.Model.RequestsFilterData
+ */
+export interface RequestsFilterData {
+  providerId?: string | null
+  searchById?: string | null
+  sortField?: string | null
+  sortOrder?: string | null
+  limit?: number | null
+}

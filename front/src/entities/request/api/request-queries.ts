@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query"
 import type { RequestListQueryData, RequestDetailQueryData } from "../lib/types"
 import { fetchRequestsByProviderId, fetchRequests } from "./request-api"
-import type { RestError } from "@features/provider-form/model/api/rest-error"
+import type { RestError } from "@shared/api/rest-error"
+import type { RequestsFilterData } from "../lib/dto"
 
 /**
  * Ключ запроса для записей запросов к провайдерам
@@ -10,18 +11,13 @@ import type { RestError } from "@features/provider-form/model/api/rest-error"
 const REQUEST_QUERY_KEY = "request"
 
 /**
- * Время кеширования в миллисекундах
- * @namespace Entities.Request.Lib.STALE_TIME
- */
-// const STALE_TIME = 300_000
-
-/**
  * Ключи запросов для записей запросов к провайдерам
  * @namespace Entities.Request.Lib.QueryKeys
  */
 export const queryKeys = {
   all: [REQUEST_QUERY_KEY] as const,
-  list: (filters: Record<string, string>) => [...queryKeys.all, "list", filters] as const,
+  list: (filters: RequestsFilterData) => [...queryKeys.all, "list", filters] as const,
+  // list: () => [...queryKeys.all, "list"] as const,
   details: (id: number) => [...queryKeys.all, "details", id] as const
 }
 
@@ -29,11 +25,10 @@ export const queryKeys = {
  * Хук для списка "запросов к провайдерам"
  * @namespace Entities.Request.Model.Queries.useRequests
  */
-export const useRequests = (): RequestListQueryData => {
+export const useRequests = (params?: RequestsFilterData): RequestListQueryData => {
   const { data, isLoading, error } = useQuery({
-    queryKey: queryKeys.list({}),
-    queryFn: fetchRequests
-    // staleTime: STALE_TIME
+    queryKey: queryKeys.list(params || {}),
+    queryFn: () => fetchRequests(params)
   })
 
   return {
@@ -51,7 +46,6 @@ export const useRequestById = (requestId: number | null): RequestDetailQueryData
   const { data, isLoading, error } = useQuery({
     queryKey: queryKeys.details(requestId || 0),
     queryFn: () => fetchRequestsByProviderId(requestId || 0),
-    // staleTime: STALE_TIME,
     enabled: requestId !== null
   })
 

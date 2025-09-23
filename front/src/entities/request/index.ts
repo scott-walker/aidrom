@@ -1,5 +1,5 @@
 // Lib
-export { type RequestDTO } from "./lib/dto"
+export { type RequestDTO, type RequestsFilterData } from "./lib/dto"
 export { type Request } from "./lib/schema"
 export { type RequestListQueryData, type RequestDetailQueryData } from "./lib/types"
 

@@ -25,7 +25,7 @@ export interface SorterProps {
 }
 
 /**
- * Фильтр по провайдерам
+ * Сортировка по полям
  * @namespace Features.DataManager.Ui.Sorter
  */
 export const Sorter = ({

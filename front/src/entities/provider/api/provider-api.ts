@@ -1,4 +1,4 @@
-import { restClient } from "@features/provider-form/model/api"
+import { restClient } from "@shared/api"
 import type { Provider } from "../lib/schema"
 import type { ProviderCreateData, ProviderUpdateData } from "../lib/types"
 import { toProvider, toProviderListItem, toProviderCreateDTO, toProviderUpdateDTO } from "../lib/mappers"

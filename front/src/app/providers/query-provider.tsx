@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 import { QueryClient, QueryClientProvider, QueryCache } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
-import type { RestError } from "@features/provider-form/model/api/rest-error"
+import type { RestError } from "@shared/api/rest-error"
 
 /**
  * Провайдер запросов
