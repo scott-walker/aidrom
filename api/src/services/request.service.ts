@@ -3,7 +3,7 @@
  * @namespace Request.Service
  */
 
-import { eq, desc, asc, like, SQL, and } from "drizzle-orm"
+import { eq, desc, asc, like, SQL, and, or, inArray } from "drizzle-orm"
 import { db, requests, Request, CreateRequestData, RequestWithProvider } from "@db"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
@@ -31,6 +31,7 @@ const createFilters = (data?: RequestsFilterData): RequestsFilter => {
 
   return {
     where: where.length > 0 ? and(...where) : undefined,
+    limit: data.limit ? Number(data.limit) : undefined,
     orderBy: [orderBy]
   }
 }
@@ -50,6 +51,7 @@ export interface RequestsFilterData {
   searchById?: string
   sortField?: string
   sortOrder?: SortOrder
+  limit?: number
 }
 
 /**
@@ -58,6 +60,7 @@ export interface RequestsFilterData {
  */
 export interface RequestsFilter {
   where: SQL<unknown> | undefined
+  limit?: number
   orderBy: SQL<unknown>[]
 }
 
@@ -72,7 +75,8 @@ export const normalizeData = (data?: RequestsFilterData): RequestsFilterData => 
     providerId: data.providerId ? String(data.providerId) : undefined,
     searchById: data.searchById ? String(data.searchById) : undefined,
     sortField: data.sortField ? String(data.sortField) : "createdAt",
-    sortOrder: data.sortOrder ? (String(data.sortOrder) as SortOrder) : "desc"
+    sortOrder: data.sortOrder ? (String(data.sortOrder) as SortOrder) : "desc",
+    limit: data.limit ? Number(data.limit) : undefined
   }
 }
 
@@ -84,8 +88,9 @@ export const getRequests = async (filters?: RequestsFilterData): Promise<Request
   try {
     logger.info("Получение всех запросов из БД")
 
-    const { where, orderBy } = createFilters(filters)
+    const { where, limit, orderBy } = createFilters(filters)
     const items = await db.query.requests.findMany({
+      limit,
       orderBy,
       where,
       with: {
@@ -114,7 +119,16 @@ export const getRequestById = async (requestId: number): Promise<RequestWithProv
     const requestItem = await db.query.requests.findFirst({
       where: eq(requests.id, requestId),
       with: {
-        provider: true
+        provider: true,
+        messagePair: {
+          with: {
+            chat: {
+              with: {
+                agent: true
+              }
+            }
+          }
+        }
       }
     })
 
@@ -147,6 +161,33 @@ export const createRequest = async (data: CreateRequestData): Promise<Request> =
     return requestItem
   } catch (error) {
     logger.error("Ошибка при создании запроса", { error: error.message, data })
+
+    throw error
+  }
+}
+
+/**
+ * Очистка запросов с невалидным данными
+ * @namespace Request.Service.cleanBrokenRequests
+ */
+export const cleanBrokenRequests = async (): Promise<void> => {
+  try {
+    logger.info("Очистка битых запросов")
+
+    const brokenRequests = await db.query.requests.findMany({
+      where: or(eq(requests.requestParams, null), eq(requests.responseData, null))
+    })
+
+    await db.delete(requests).where(
+      inArray(
+        requests.id,
+        brokenRequests.map(request => request.id)
+      )
+    )
+
+    logger.info("Битые запросы успешно очищены", { brokenRequests: brokenRequests.length })
+  } catch (error) {
+    logger.error("Ошибка при очистке битых запросов", { error: error.message })
 
     throw error
   }

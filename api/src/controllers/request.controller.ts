@@ -51,3 +51,23 @@ export const getRequest = async (req: Request, res: Response, next: NextFunction
     next(err)
   }
 }
+
+/**
+ * Очистка битых запросов
+ * @namespace Request.Controller.cleanBrokenRequests
+ */
+export const cleanBrokenRequests = async (req: Request, res: Response, next: NextFunction) => {
+  try { 
+    logger.info("Очистка битых запросов")
+
+    await requestService.cleanBrokenRequests()
+
+    logger.info("Битые запросы успешно очищены")
+
+    res.json({ message: "Битые запросы успешно очищены" })
+  } catch (err) {
+    logger.error("Ошибка при очистке битых запросов", { error: err.message })
+
+    next(err)
+  }
+}
