@@ -17,7 +17,6 @@ const REQUEST_QUERY_KEY = "request"
 export const queryKeys = {
   all: [REQUEST_QUERY_KEY] as const,
   list: (filters: RequestsFilterData) => [...queryKeys.all, "list", filters] as const,
-  // list: () => [...queryKeys.all, "list"] as const,
   details: (id: number) => [...queryKeys.all, "details", id] as const
 }
 

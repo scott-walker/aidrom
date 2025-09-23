@@ -10,6 +10,7 @@ export const toRequest = (dto: RequestDTO): Request => ({
   id: dto.id,
   provider: toProviderListItem(dto.provider),
   providerRequestId: dto.providerRequestId,
+  status: dto.status,
   requestParams: dto.requestParams,
   responseData: dto.responseData,
   requestTokens: dto.requestTokens,

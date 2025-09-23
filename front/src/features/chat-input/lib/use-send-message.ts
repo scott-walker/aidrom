@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react"
-import { useChatStore } from "@entities/chat"
-import { useSendMessage as useApiSendMessage, makeClientMessage, makeAgentMessage } from "@entities/chat"
+import { useSendMessage as useApiSendMessage, makeAgentMessage, useOptimisticMessage } from "@entities/chat"
 import { useToast } from "@features/toasts"
 import { createStream } from "./utils"
 
@@ -9,21 +8,16 @@ import { createStream } from "./utils"
  * @namespace Features.Chat.SendMessage.Lib.UseSendMessage
  */
 export const useSendMessage = (chatId: number) => {
-  const setPending = useChatStore(state => state.setPending)
-  const addMessage = useChatStore(state => state.addMessage)
-  const updateMessage = useChatStore(state => state.updateMessage)
-  const clearMessages = useChatStore(state => state.clearMessages)
-
   const { mutate: send } = useApiSendMessage()
+  const { addMessage, updateLastMessage } = useOptimisticMessage()
   const toast = useToast()
   const stream = useRef<EventSource | null>(null)
 
   useEffect(() => {
     return () => {
       stream.current?.close()
-      clearMessages()
     }
-  }, [clearMessages, chatId])
+  }, [chatId])
 
   /**
    * Отправка сообщения
@@ -32,14 +26,13 @@ export const useSendMessage = (chatId: number) => {
   const sendMessage = async (input: string) => {
     if (!input.trim()) return
 
-    const clientMessage = makeClientMessage(chatId, input)
     const agentMessage = makeAgentMessage(chatId, "")
 
     stream.current = createStream(chatId, {
       onOpen: () => {
         // toast.info("Соединение открыто")
-        addMessage(clientMessage)
-        setPending(true)
+        // addMessage(clientMessage)
+        // setPending(true)
         send(
           { chatId, data: { message: input } },
           {
@@ -55,18 +48,18 @@ export const useSendMessage = (chatId: number) => {
       },
       onStart: () => {
         // toast.info("Начало получения сообщения")
-        addMessage(agentMessage)
+        addMessage(chatId, agentMessage)
       },
       onContent: ({ content }) => {
-        updateMessage({ ...agentMessage, content })
+        updateLastMessage(chatId, { ...agentMessage, content })
       },
       onEnd: () => {
         // toast.info("Сообщение получено")
-        setPending(false)
+        // setPending(false)
       },
       onError: ({ message }) => {
         toast.error("Ошибка при отправке сообщения", message)
-        setPending(false)
+        // setPending(false)
       }
     })
   }

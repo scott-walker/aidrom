@@ -8,6 +8,7 @@ export interface RequestDTO {
   id: number
   provider: ProviderDTO
   providerRequestId: string
+  status: string
   requestParams: Record<string, unknown>
   responseData: Record<string, unknown>
   requestTokens: number
@@ -22,6 +23,7 @@ export interface RequestDTO {
 export interface RequestsFilterData {
   providerId?: string | null
   searchById?: string | null
+  status?: string | null
   sortField?: string | null
   sortOrder?: string | null
   limit?: number | null

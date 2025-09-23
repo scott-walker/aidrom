@@ -1,7 +1,8 @@
 import { makeClasses } from "@lib/style-api"
+import { Card } from "@ui/card"
+import { Heading } from "@ui/heading"
 import { type Request } from "@entities/request"
-import { Card } from "@shared/ui/card"
-import { Heading } from "@shared/ui/heading"
+import { RequestStatus } from "./request-status"
 
 /**
  * Пропсы для компонента RequestsInfo
@@ -23,7 +24,8 @@ export const RequestsInfo = ({ request }: RequestsInfoProps) => {
   return (
     <Card>
       <Card.Header>
-        <Heading>Информация о запросе</Heading>
+        <Heading>Информация</Heading>
+        <RequestStatus request={request} />
       </Card.Header>
       <Card.Body>
         <div className={sectionClasses}>

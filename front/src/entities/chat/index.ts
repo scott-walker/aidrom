@@ -6,7 +6,7 @@ export { makeClientMessage, makeAgentMessage } from "./lib/utils"
 
 // API
 export { useChats, useChatById } from "./api/chat-queries"
-export { useCreateChat, useUpdateChat, useSendMessage, useDeleteChat } from "./api/chat-mutations"
+export { useCreateChat, useUpdateChat, useSendMessage, useDeleteChat, useOptimisticMessage } from "./api/chat-mutations"
 
 // Store
 export { useChatStore } from "./store/chat-store"

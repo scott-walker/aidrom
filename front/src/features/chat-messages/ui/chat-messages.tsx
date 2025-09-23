@@ -1,9 +1,9 @@
 import { makeClasses } from "@lib/style-api"
-import { type Chat } from "@entities/chat"
-import { ChatNoneMessages } from "./chat-none-messages"
-import { ChatPrevMessages } from "./chat-prev-messages"
-import { ChatLastMessages } from "./chat-last-messages"
+import { MessageEmptyList, type Chat } from "@entities/chat"
 import { ChatPending } from "./chat-pending"
+import { ChatMessage } from "@features/chat-message"
+import { useScrollMessages } from "../lib/use-scroll-messages"
+import { useEffect } from "react"
 
 /**
  * Пропсы компонента сообщений
@@ -19,6 +19,15 @@ type ChatMessagesProps = {
  * @namespace Features.ChatMessages
  */
 export const ChatMessages = ({ chat, className = "" }: ChatMessagesProps) => {
+  const { messagesStartRef, messagesEndRef, scrollToBottom } = useScrollMessages()
+
+  useEffect(() => scrollToBottom("instant"), [scrollToBottom, chat.id])
+  useEffect(() => scrollToBottom("smooth"), [scrollToBottom, chat.messages.length])
+
+  if (!chat.messages.length) {
+    return <MessageEmptyList />
+  }
+
   const bodyClasses = makeClasses(
     "flex-1",
     "flex",
@@ -33,10 +42,12 @@ export const ChatMessages = ({ chat, className = "" }: ChatMessagesProps) => {
 
   return (
     <div className={bodyClasses}>
-      <ChatNoneMessages messages={chat.messages} />
-      <ChatPrevMessages messages={chat.messages} />
-      <ChatLastMessages chatId={chat.id} />
+      <div ref={messagesStartRef} />
+      {chat.messages.map(message => (
+        <ChatMessage key={message.id} {...message} />
+      ))}
       <ChatPending />
+      <div ref={messagesEndRef} />
     </div>
   )
 }

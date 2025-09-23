@@ -1,6 +1,8 @@
 import type { RestError } from "@shared/api"
 import type { Request } from "./schema"
 
+export type { RequestStatus } from "./constants"
+
 /**
  * Тип для данных списка "запросов к провайдерам"
  * @namespace Entities.Request.Lib.RequestListQueryData

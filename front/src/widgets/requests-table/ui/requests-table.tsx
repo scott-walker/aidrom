@@ -1,11 +1,7 @@
-import { useRequests } from "@entities/request/api/request-queries"
-import { Table } from "@ui/table"
-import { Card } from "@ui/card"
-import { Heading } from "@ui/heading"
+import { useNavigate } from "react-router"
 import { Loader } from "@ui/loader/loader"
 import { Notification } from "@ui/notification"
-import type { RequestsFilterData } from "@entities/request"
-import { RequestsItem } from "./requests-item"
+import { useRequests, RequestsTable as BaseRequestsTable, type RequestsFilterData } from "@entities/request"
 
 /**
  * Таблица запросов к провайдерам
@@ -13,6 +9,7 @@ import { RequestsItem } from "./requests-item"
  */
 export const RequestsTable = ({ filters }: { filters: RequestsFilterData }) => {
   const { requests, isLoading, error } = useRequests(filters)
+  const navigate = useNavigate()
 
   if (isLoading) {
     return <Loader />
@@ -26,30 +23,5 @@ export const RequestsTable = ({ filters }: { filters: RequestsFilterData }) => {
     return <Notification type="info">Запросов не найдено</Notification>
   }
 
-  return (
-    <Card>
-      <Card.Header>
-        <Heading>Запросы к провайдерам</Heading>
-      </Card.Header>
-
-      <Card.Body hasOffset={false}>
-        <Table>
-          <Table.Header>
-            <Table.Row hoverable={false}>
-              <Table.Head>ID</Table.Head>
-              <Table.Head>Провайдер</Table.Head>
-              <Table.Head>ID запроса</Table.Head>
-              <Table.Head>Токены на вход</Table.Head>
-              <Table.Head>Токены на выход</Table.Head>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {requests.map(request => (
-              <RequestsItem key={request.id} request={request} />
-            ))}
-          </Table.Body>
-        </Table>
-      </Card.Body>
-    </Card>
-  )
+  return <BaseRequestsTable requests={requests} onRowClick={({ id }) => navigate(`/service/requests/${id}`)} />
 }

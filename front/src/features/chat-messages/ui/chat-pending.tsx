@@ -1,11 +1,11 @@
-import { ChatPending as BaseChatPending, useChatStore } from "@entities/chat"
+import { useSendMessage, ChatPending as BaseChatPending } from "@entities/chat"
 
 /**
  * Компонент ожидания ответа
  * @namespace Features.ChatPending
  */
 export const ChatPending = () => {
-  const isPending = useChatStore(state => state.isPending)
+  const { isPending } = useSendMessage()
 
   if (isPending) return <BaseChatPending />
 

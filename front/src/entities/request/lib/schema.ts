@@ -8,6 +8,7 @@ export interface Request {
   id: number
   provider: ProviderListItem
   providerRequestId: string
+  status: string
   requestParams: Record<string, unknown>
   responseData: Record<string, unknown>
   requestTokens: number
