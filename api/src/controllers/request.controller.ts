@@ -5,6 +5,7 @@
 
 import { Request, Response, NextFunction } from "express"
 import { createControllerLogger } from "@utils/logger"
+import { BadRequestError } from "@utils/errors"
 import * as requestService from "@services/request.service"
 
 // Создаем логгер для контроллера запросов
@@ -53,18 +54,42 @@ export const getRequest = async (req: Request, res: Response, next: NextFunction
 }
 
 /**
- * Очистка битых запросов
- * @namespace Request.Controller.cleanBrokenRequests
+ * Удаление запросов
+ * @namespace Request.Controller.deleteRequests
  */
-export const cleanBrokenRequests = async (req: Request, res: Response, next: NextFunction) => {
-  try { 
+export const deleteRequests = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    logger.info("Удаление запросов")
+
+    if (Object.keys(req.query).length === 0) {
+      throw new BadRequestError("Не переданы параметры запроса")
+    }
+
+    const requests = await requestService.deleteRequests(requestService.normalizeData(req.query))
+
+    logger.info("Запросы успешно удалены")
+
+    res.json({ message: "Запросы успешно удалены", count: requests.length })
+  } catch (err) {
+    logger.error("Ошибка при удалении запросов", { error: err.message })
+
+    next(err)
+  }
+}
+
+/**
+ * Очистка битых запросов
+ * @namespace Request.Controller.clearBrokenRequests
+ */
+export const clearBrokenRequests = async (req: Request, res: Response, next: NextFunction) => {
+  try {
     logger.info("Очистка битых запросов")
 
-    await requestService.cleanBrokenRequests()
+    const requests = await requestService.clearBrokenRequests()
 
     logger.info("Битые запросы успешно очищены")
 
-    res.json({ message: "Битые запросы успешно очищены" })
+    res.json({ message: "Битые запросы успешно очищены", count: requests.length })
   } catch (err) {
     logger.error("Ошибка при очистке битых запросов", { error: err.message })
 

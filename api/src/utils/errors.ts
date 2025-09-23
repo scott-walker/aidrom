@@ -60,6 +60,16 @@ export class ForbiddenError extends AppError {
 }
 
 /**
+ * Ошибка для случаев неверного запроса
+ * @namespace Utils.BadRequestError
+ */
+export class BadRequestError extends AppError {
+  constructor(message = "Неверный запрос", code = "BAD_REQUEST") {
+    super(message, 400, code)
+  }
+}
+
+/**
  * Ошибка для случаев ошибок API
  * @namespace Utils.ApiError
  */

@@ -3,7 +3,7 @@
  * @namespace Request.Service
  */
 
-import { eq, desc, asc, like, SQL, and, or, inArray } from "drizzle-orm"
+import { eq, desc, asc, like, SQL, and, or, inArray, isNull } from "drizzle-orm"
 import { db, requests, Request, CreateRequestData, RequestWithProvider } from "@db"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
@@ -167,25 +167,65 @@ export const createRequest = async (data: CreateRequestData): Promise<Request> =
 }
 
 /**
- * Очистка запросов с невалидным данными
- * @namespace Request.Service.cleanBrokenRequests
+ * Удаление запросов
+ * @namespace Request.Service.deleteRequests
  */
-export const cleanBrokenRequests = async (): Promise<void> => {
+export const deleteRequests = async (filters: RequestsFilterData): Promise<Request[]> => {
   try {
-    logger.info("Очистка битых запросов")
+    logger.info("Удаление запросов", { filters })
 
-    const brokenRequests = await db.query.requests.findMany({
-      where: or(eq(requests.requestParams, null), eq(requests.responseData, null))
+    const { where, limit, orderBy } = createFilters(filters)
+    const items = await db.query.requests.findMany({
+      where,
+      limit,
+      orderBy
     })
 
     await db.delete(requests).where(
       inArray(
         requests.id,
-        brokenRequests.map(request => request.id)
+        items.map(request => request.id)
       )
     )
 
-    logger.info("Битые запросы успешно очищены", { brokenRequests: brokenRequests.length })
+    logger.info("Запросы успешно удалены", { count: items.length })
+
+    return items
+  } catch (error) {
+    logger.error("Ошибка при удалении запросов", { error: error.message, filters })
+
+    throw error
+  }
+}
+
+/**
+ * Очистка запросов с невалидным данными
+ * @namespace Request.Service.clearBrokenRequests
+ */
+export const clearBrokenRequests = async (): Promise<Request[]> => {
+  try {
+    logger.info("Очистка битых запросов")
+
+    const items = await db.query.requests.findMany({
+      where: or(
+        isNull(requests.providerRequestId),
+        isNull(requests.requestParams),
+        isNull(requests.responseData),
+        isNull(requests.requestTokens),
+        isNull(requests.responseTokens)
+      )
+    })
+
+    await db.delete(requests).where(
+      inArray(
+        requests.id,
+        items.map(request => request.id)
+      )
+    )
+
+    logger.info("Битые запросы успешно очищены", { count: items.length })
+
+    return items
   } catch (error) {
     logger.error("Ошибка при очистке битых запросов", { error: error.message })
 
