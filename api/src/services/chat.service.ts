@@ -238,8 +238,10 @@ export const sendMessage = async (chatId: number, message: string): Promise<ISen
       logger.info("Добавление сообщения агента в контекст чата", { action: "onComplete", chatId })
       await pushChatContext(chat, CommunicationRoles.Agent, responseContent)
 
+      const messages = await getChatMessages(chatId)
+
       // Еммитеть о завершении всей операции
-      sender.emit(SenderEvents.END, updatedMessagePair)
+      sender.emit(SenderEvents.END, { chatId, messages })
       logger.info("Сообщение от AI агента успешно получено", {
         action: "onComplete",
         chatId,
