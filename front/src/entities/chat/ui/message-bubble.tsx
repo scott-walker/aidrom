@@ -1,7 +1,7 @@
+import type { ReactNode, CSSProperties, Ref } from "react"
 import { makeClasses } from "@lib/style-api"
 import { DateTag } from "@ui/date-tag"
 import { Roles } from "../lib/constants"
-import type { ReactNode } from "react"
 
 /**
  * Элемент списка сообщений
@@ -9,16 +9,27 @@ import type { ReactNode } from "react"
  */
 type MessageBubbleProps = {
   children: ReactNode
+  id: string
   role: Roles
   createdAt: Date
   className?: string
+  style?: CSSProperties
+  ref?: Ref<HTMLDivElement>
 }
 
 /**
  * Облачко сообщения
  * @namespace Entities.Chat.UI.MessageBubble
  */
-export const MessageBubble = ({ children, role, createdAt, className = "" }: MessageBubbleProps) => {
+export const MessageBubble = ({
+  children,
+  id,
+  role,
+  createdAt,
+  className = "",
+  style = {},
+  ref
+}: MessageBubbleProps) => {
   const containerClasses = makeClasses("flex", "flex-col", className)
   const roleClasses = makeClasses("px-6 py-2 text-sm text-foreground-soft/80 font-bold uppercase")
   const createdAtClasses = makeClasses("px-6 py-2 text-sm text-foreground-soft/50 text-right")
@@ -35,7 +46,7 @@ export const MessageBubble = ({ children, role, createdAt, className = "" }: Mes
   )
 
   return (
-    <div className={containerClasses}>
+    <div className={containerClasses} style={style} ref={ref} data-id={id}>
       <div className={roleClasses}>{role}</div>
       <div className={contentClasses}>{children}</div>
       <div className={createdAtClasses}>

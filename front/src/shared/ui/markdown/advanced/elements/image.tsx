@@ -15,10 +15,12 @@ type Props = {
  * @namespace Shared.UI.DeepSeekMarkdown.Image
  */
 export const Image = ({ src, alt }: Props) => {
-  if (!src.startsWith("https://")) {
-    src = src.replace(/^\//, "")
-    src = src.startsWith(API_BASE_URL) ? src : `${API_BASE_URL}/${src}`
-  }
+  if (src.startsWith("https://")) return null
 
-  return <img src={src} alt={alt} className="mb-4 border-3 border-primary rounded-2xl w-full max-w-[300px]" />
+  src = src.replace(/^\//, "")
+  src = src.startsWith(API_BASE_URL) ? src : `${API_BASE_URL}/${src}`
+
+  return (
+    <img src={src} alt={alt} className="mb-4 border-3 border-primary rounded-2xl w-full min-h-[50px] max-h-[300px]" />
+  )
 }

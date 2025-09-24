@@ -1,5 +1,4 @@
 import { makeClasses } from "@lib/style-api"
-import { type Chat } from "@entities/chat"
 import { useSendMessage } from "../lib/use-send-message"
 import { ChatInputTextarea } from "./chat-input-textarea"
 import { ChatInputButton } from "./chat-input button"
@@ -9,7 +8,7 @@ import { ChatInputButton } from "./chat-input button"
  * @namespace Features.ChatInput.UI.ChatInputProps
  */
 type ChatInputProps = {
-  chat: Chat
+  chatId: number
   className?: string
 }
 
@@ -17,8 +16,8 @@ type ChatInputProps = {
  * Компонент ввода сообщения
  * @namespace Features.ChatInput.UI.ChatInput
  */
-export const ChatInput = ({ chat, className = "" }: ChatInputProps) => {
-  const { sendMessage } = useSendMessage(chat.id)
+export const ChatInput = ({ chatId, className = "" }: ChatInputProps) => {
+  const { sendMessage } = useSendMessage(chatId)
   const containerClasses = makeClasses(
     "relative",
     "flex",

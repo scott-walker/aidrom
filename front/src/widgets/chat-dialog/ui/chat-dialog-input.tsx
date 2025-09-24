@@ -1,5 +1,4 @@
 import { makeClasses } from "@lib/style-api"
-import type { Chat } from "@entities/chat"
 import { ChatInput } from "@features/chat-input"
 
 /**
@@ -7,7 +6,7 @@ import { ChatInput } from "@features/chat-input"
  * @namespace Widgets.Chat.ChatProps
  */
 type ChatDialogInputProps = {
-  chat: Chat
+  chatId: number
   className?: string
 }
 
@@ -15,7 +14,7 @@ type ChatDialogInputProps = {
  * Ввод сообщения в диалог чата
  * @namespace Widgets.Chat
  */
-export const ChatDialogInput = ({ chat, className = "" }: ChatDialogInputProps) => {
+export const ChatDialogInput = ({ chatId, className = "" }: ChatDialogInputProps) => {
   const containerClasses = makeClasses(
     "absolute",
     "bottom-0",
@@ -30,7 +29,7 @@ export const ChatDialogInput = ({ chat, className = "" }: ChatDialogInputProps) 
 
   return (
     <div className={containerClasses}>
-      <ChatInput chat={chat} />
+      <ChatInput chatId={chatId} />
     </div>
   )
 }

@@ -5,7 +5,7 @@ export type { ChatCreateData, ChatUpdateData, MessageSendData, MessageSendResult
 export { makeClientMessage, makeAgentMessage } from "./lib/utils"
 
 // API
-export { useChats, useChatById } from "./api/chat-queries"
+export { useChats, useChatById, useChatMessages } from "./api/chat-queries"
 export { useCreateChat, useUpdateChat, useSendMessage, useDeleteChat, useOptimisticMessage } from "./api/chat-mutations"
 
 // Store

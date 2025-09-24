@@ -3,7 +3,8 @@ import {
   useSendMessage as useApiSendMessage,
   makeAgentMessage,
   useOptimisticMessage,
-  useChatStore
+  useChatStore,
+  makeClientMessage
 } from "@entities/chat"
 import { useToast } from "@features/toasts"
 import { createStream } from "./utils"
@@ -32,11 +33,13 @@ export const useSendMessage = (chatId: number) => {
   const sendMessage = async (input: string) => {
     if (!input.trim()) return
 
+    const clientMessage = makeClientMessage(chatId, input)
     const agentMessage = makeAgentMessage(chatId, "")
 
     stream.current = createStream(chatId, {
       onOpen: () => {
         // toast.info("Соединение открыто")
+        addMessage(chatId, clientMessage)
         setPending(true)
         send(
           { chatId, data: { message: input } },

@@ -57,3 +57,14 @@ export type ChatDetailQueryData = {
   error: RestError | null
   refetch: () => void
 }
+
+/**
+ * Данные запроса сообщений чата
+ * @namespace Entities.Chat.Lib.Types.ChatMessagesQueryData
+ */
+export type ChatMessagesQueryData = {
+  messages: Message[]
+  isLoading: boolean
+  error: RestError | null
+  refetch: () => void
+}
