@@ -8,7 +8,7 @@ import { MarkdownReader } from "./reader"
  * @namespace Shared.UI.Markdown.isHtml
  */
 const isHtml = (value: string) => {
-  return value.includes("<img")
+  return value.includes("<img") || value.includes("|--")
 }
 
 /**
