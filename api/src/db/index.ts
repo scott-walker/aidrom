@@ -31,10 +31,13 @@ export type {
 
   // Чаты
   Chat,
+  ChatContext,
   CreateChatData,
   UpdateChatData,
+
+  // Сообщения
   MessagePair,
-  ChatContext,
+  Message,
 
   // Запросы
   Request,

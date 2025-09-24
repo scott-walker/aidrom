@@ -59,6 +59,13 @@ export type ChatContext = {
   role: CommunicationRoles
   content: string
 }[]
+export type Message = {
+  id: string
+  chatId: number
+  role: CommunicationRoles
+  content: string
+  createdAt: string
+}
 
 // Типы для запроса
 

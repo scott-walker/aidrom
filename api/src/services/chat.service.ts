@@ -13,7 +13,10 @@ import {
   CreateChatData,
   UpdateChatData,
   ChatContext,
-  CommunicationRoles
+  CommunicationRoles,
+  MessagePair,
+  Message,
+  mapMessagePairToMessages
 } from "@db"
 import { createServiceLogger } from "@utils/logger"
 import { NotFoundError } from "@utils/errors"
@@ -58,17 +61,17 @@ export const getChats = async (): Promise<Chat[]> => {
  * Получить чат по его идентификатору
  * @namespace Chat.Service.getChatById
  */
-export const getChatById = async (chatId: number, { withContext = true }: GetChatByIdParams = {}): Promise<Chat> => {
+export const getChatById = async (chatId: number, { withContext = false }: GetChatByIdParams = {}): Promise<Chat> => {
   try {
     logger.info("Получение чата по ID", { chatId })
 
     const chat = await db.query.chats.findFirst({
-      where: eq(chats.id, chatId),
-      with: {
-        messagePairs: {
-          orderBy: [asc(messagePairs.createdAt)]
-        }
-      }
+      where: eq(chats.id, chatId)
+      // with: {
+      //   messagePairs: {
+      //     orderBy: [asc(messagePairs.createdAt)]
+      //   }
+      // }
     })
 
     if (!chat) {
@@ -82,6 +85,31 @@ export const getChatById = async (chatId: number, { withContext = true }: GetCha
     logger.error("Ошибка при получении чата по ID", { error: error.message, chatId })
 
     throw error
+  }
+}
+
+/**
+ * Получить сообщения чата по его идентификатору
+ * @namespace Chat.Service.getChatMessages
+ */
+export const getChatMessages = async (chatId: number): Promise<Message[]> => {
+  try {
+    logger.info("Получение сообщений чата по ID", { chatId })
+
+    const messagePairItems = await db.query.messagePairs.findMany({
+      where: eq(messagePairs.chatId, chatId),
+      orderBy: [asc(messagePairs.createdAt)]
+    })
+
+    const messages = messagePairItems.reduce((messages: Message[], messagePair: MessagePair) => {
+      return [...messages, ...mapMessagePairToMessages(messagePair)]
+    }, [])
+
+    logger.info("Сообщения чата успешно получены", { chatId, count: messages.length })
+
+    return messages
+  } catch (error) {
+    logger.error("Ошибка при получении сообщений чата по ID", { error: error.message, chatId })
   }
 }
 

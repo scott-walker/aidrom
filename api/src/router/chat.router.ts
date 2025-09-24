@@ -6,6 +6,7 @@ const router: Router = Router()
 // Роуты для чатов
 router.get("/", chatController.getChats)
 router.get("/:chatId", chatController.getChat)
+router.get("/:chatId/messages", chatController.getChatMessages)
 router.post("/", chatController.createChat)
 router.put("/:chatId", chatController.updateChat)
 router.delete("/:chatId", chatController.deleteChat)

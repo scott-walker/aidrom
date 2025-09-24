@@ -55,6 +55,28 @@ export const getChat = async (req: Request, res: Response, next: NextFunction) =
 }
 
 /**
+ * Получить сообщения чата по ID чата
+ * @namespace Chat.Controller.getChatMessages
+ */
+export const getChatMessages = async (req: Request, res: Response, next: NextFunction) => {
+  const chatId = parseInt(req.params.chatId)
+
+  try {
+    logger.info("Получение сообщений чата по ID", { chatId })
+
+    const messages = await chatService.getChatMessages(chatId)
+
+    logger.info("Сообщения чата успешно получены", { chatId, count: messages.length })
+
+    res.json(messages)
+  } catch (err) {
+    logger.error("Ошибка при получении сообщений чата", { error: err.message, chatId })
+
+    next(err)
+  }
+}
+
+/**
  * Создать новый чат
  * @namespace Chat.Controller.createChat
  */
