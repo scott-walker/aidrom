@@ -1,13 +1,14 @@
 import { useQuery } from "@tanstack/react-query"
 import type { RestError } from "@shared/api"
 import type { ChatListQueryData, ChatDetailQueryData, ChatMessagesQueryData } from "../lib/types"
-import { fetchChatById, fetchChats } from "./chat-api"
+import { fetchChatById, fetchChats, fetchChatMessages } from "./chat-api"
 
 /**
  * Ключ запроса списка чатов
  * @namespace Entities.Chat.Api.Queries.CHATS_QUERY_KEY
  */
 const CHATS_QUERY_KEY = "chats"
+const MESSAGES_QUERY_KEY = "messages"
 
 /**
  * Ключи инвалидации для чатов
@@ -16,8 +17,8 @@ const CHATS_QUERY_KEY = "chats"
 export const queryKeys = {
   all: [CHATS_QUERY_KEY] as const,
   list: [CHATS_QUERY_KEY, "list"] as const,
-  details: (id: number) => [...queryKeys.all, "details", id.toString()] as const,
-  messages: (id: number) => [...queryKeys.all, "messages", id.toString()] as const
+  chat: (id: number) => [...queryKeys.all, "chat", id.toString()] as const,
+  messages: (id: number) => [...queryKeys.all, MESSAGES_QUERY_KEY, id.toString()] as const
 }
 
 /**
@@ -43,7 +44,7 @@ export const useChats = (): ChatListQueryData => {
  */
 export const useChatById = (chatId: number): ChatDetailQueryData => {
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: queryKeys.details(chatId),
+    queryKey: queryKeys.chat(chatId),
     queryFn: () => fetchChatById(chatId),
     enabled: !!chatId
   })
@@ -63,11 +64,7 @@ export const useChatById = (chatId: number): ChatDetailQueryData => {
 export const useChatMessages = (chatId: number): ChatMessagesQueryData => {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: queryKeys.messages(chatId),
-    queryFn: async () => {
-      const chat = await fetchChatById(chatId)
-
-      return chat.messages ?? []
-    },
+    queryFn: () => fetchChatMessages(chatId),
     enabled: !!chatId
   })
 

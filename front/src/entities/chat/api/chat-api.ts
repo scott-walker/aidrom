@@ -1,5 +1,5 @@
 import { restClient } from "@shared/api"
-import type { Chat, ChatListItem } from "../lib/schema"
+import type { Chat, ChatListItem, Message } from "../lib/schema"
 import type { ChatCreateData, ChatUpdateData, MessageSendData, MessageSendResult } from "../lib/types"
 import {
   toChat,
@@ -7,7 +7,8 @@ import {
   toMessageSendResult,
   toChatCreateDTO,
   toChatUpdateDTO,
-  toMessageSendDTO
+  toMessageSendDTO,
+  toMessage
 } from "../lib/mappers"
 
 /**
@@ -28,6 +29,16 @@ export const fetchChatById = async (chatId: number): Promise<Chat> => {
   const { data: dto } = await restClient.get(`chats/${chatId}`)
 
   return toChat(dto)
+}
+
+/**
+ * Получение сообщений чата по ID
+ * @namespace Entities.Chat.Api.ChatApi.fetchChatMessages
+ */
+export const fetchChatMessages = async (chatId: number): Promise<Message[]> => {
+  const { data: dtos } = await restClient.get(`chats/${chatId}/messages`)
+
+  return dtos.map(toMessage)
 }
 
 /**

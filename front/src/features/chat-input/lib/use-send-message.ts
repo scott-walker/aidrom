@@ -55,6 +55,8 @@ export const useSendMessage = (chatId: number) => {
         )
       },
       onStart: () => {
+        // const messageElement = document.querySelector(`[data-chat-message-id=${agentMessage.id}]`)
+
         // toast.info("Начало получения сообщения")
         addMessage(chatId, agentMessage)
       },

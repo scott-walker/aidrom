@@ -46,7 +46,7 @@ export const MessageBubble = ({
   )
 
   return (
-    <div className={containerClasses} style={style} ref={ref} data-id={id}>
+    <div className={containerClasses} style={style} ref={ref} data-chat-message-id={id}>
       <div className={roleClasses}>{role}</div>
       <div className={contentClasses}>{children}</div>
       <div className={createdAtClasses}>

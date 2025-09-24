@@ -33,7 +33,6 @@ export type MessageSendData = {
  */
 export type MessageSendResult = {
   chatId: number
-  requestId: number
   messages: Message[]
 }
 

@@ -1,17 +1,15 @@
 import type { Roles } from "./constants"
 
 /**
- * DTO пары сообщений
- * @namespace Entities.Chat.Model.MessagePairDTO
+ * DTO сообщения
+ * @namespace Entities.Chat.Model.MessageDTO
  */
-export interface MessagePairDTO {
-  id: number
+export interface MessageDTO {
+  id: string
   chatId: number
-  requestId: number
-  clientMessage: string
-  agentMessage: string
+  role: Roles
+  content: string
   createdAt: string
-  updatedAt: string
 }
 
 /**
@@ -33,7 +31,6 @@ export interface ChatDTO {
   clientId: number
   title: string
   context: ChatContextItemDTO[]
-  messagePairs: MessagePairDTO[]
   createdAt: string
   updatedAt: string
 }
@@ -82,11 +79,6 @@ export interface MessageSendDTO {
  * @namespace Entities.Chat.Model.MessageSendResultDTO
  */
 export interface MessageSendResultDTO {
-  id: number
   chatId: number
-  requestId: number
-  clientMessage: string
-  agentMessage: string
-  createdAt: string
-  updatedAt: string
+  messages: MessageDTO[]
 }

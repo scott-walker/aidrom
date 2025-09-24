@@ -1,12 +1,11 @@
-import { Roles } from "./constants"
 import type {
   ChatDTO,
   ChatListItemDTO,
   ChatCreateDTO,
   ChatUpdateDTO,
-  MessagePairDTO,
   MessageSendDTO,
-  MessageSendResultDTO
+  MessageSendResultDTO,
+  MessageDTO
 } from "./dto"
 import { type Chat, type ChatListItem, type Message } from "./schema"
 import type { ChatCreateData, ChatUpdateData, MessageSendData, MessageSendResult } from "./types"
@@ -21,8 +20,7 @@ export const toChat = (dto: ChatDTO): Chat => {
     title: dto.title,
     agentId: dto.agentId,
     clientId: dto.clientId,
-    context: dto.context,
-    messages: dto.messagePairs.map(toMessages).flat(),
+    // context: dto.context,
     createdAt: new Date(dto.createdAt),
     updatedAt: new Date(dto.updatedAt)
   }
@@ -47,34 +45,24 @@ export const toChatListItem = (dto: ChatListItemDTO): ChatListItem => {
  * Маппер из DTO сообщения в сущность сообщения
  * @namespace Entities.Chat.Lib.Mappers.toMessage
  */
-export const toMessages = (dto: MessagePairDTO): Message[] => {
-  return [
-    {
-      id: crypto.randomUUID(),
-      chatId: dto.chatId,
-      role: Roles.Client,
-      content: dto.clientMessage,
-      createdAt: new Date(dto.createdAt)
-    },
-    {
-      id: crypto.randomUUID(),
-      chatId: dto.chatId,
-      role: Roles.Agent,
-      content: dto.agentMessage,
-      createdAt: new Date(dto.createdAt)
-    }
-  ]
+export const toMessage = (dto: MessageDTO): Message => {
+  return {
+    id: dto.id,
+    chatId: dto.chatId,
+    role: dto.role,
+    content: dto.content,
+    createdAt: new Date(dto.createdAt)
+  }
 }
 
 /**
- * Маппер из DTO результата отправки сообщения в сущность чата
+ * Маппер из DTO результата отправки сообщения в сущность результата отправки сообщения
  * @namespace Entities.Chat.Lib.Mappers.toMessageSendResult
  */
 export const toMessageSendResult = (dto: MessageSendResultDTO): MessageSendResult => {
   return {
     chatId: dto.chatId,
-    requestId: dto.requestId,
-    messages: toMessages(dto)
+    messages: dto.messages.map(toMessage)
   }
 }
 

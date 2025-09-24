@@ -30,8 +30,7 @@ export interface Chat {
   title: string
   agentId: number
   clientId: number
-  context: ChatContextItem[]
-  messages: Message[]
+  // context: ChatContextItem[]
   createdAt: Date
   updatedAt: Date
 }

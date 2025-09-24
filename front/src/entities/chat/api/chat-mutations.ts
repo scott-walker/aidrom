@@ -2,7 +2,6 @@ import { useMutation, useQueryClient, type UseMutationResult } from "@tanstack/r
 import { createChat, updateChat, sendMessage, deleteChat } from "./chat-api"
 import type { ChatListItem, Message } from "../lib/schema"
 import type { ChatCreateData, ChatUpdateData, MessageSendData, MessageSendResult } from "../lib/types"
-// import { makeClientMessage } from "../lib/utils"
 import { queryKeys } from "./chat-queries"
 
 /**
@@ -112,29 +111,18 @@ export const useSendMessage = (): UseMutationResult<
   { chatId: number; data: MessageSendData }
 > => {
   const queryClient = useQueryClient()
-  // const { addMessage } = useOptimisticMessage()
-
   return useMutation({
     mutationFn: ({ chatId, data }: { chatId: number; data: MessageSendData }) => sendMessage(chatId, data),
     onMutate: ({ chatId }: { chatId: number; data: MessageSendData }) => {
       const previousMessages = queryClient.getQueryData<Message[]>(queryKeys.messages(chatId))
-      // const clientMessage = makeClientMessage(chatId, data.message)
-
-      // queryClient.cancelQueries({ queryKey: queryKeys.messages(chatId) })
-
-      // addMessage(chatId, clientMessage)
 
       return { previousMessages }
     },
     onError: (_error, { chatId }, context) => {
       queryClient.setQueryData(queryKeys.messages(chatId), context?.previousMessages)
     },
-    onSuccess: ({ chatId }: MessageSendResult) => {
-      // const previousMessages = queryClient.getQueryData<Message[]>(queryKeys.messages(chatId))
-      // const newMessages = [...previousMessages, ...messages]
-
-      // queryClient.setQueryData(queryKeys.messages(chatId), { ...previousMessages, messages: newMessages })
-      queryClient.invalidateQueries({ queryKey: queryKeys.messages(chatId) })
+    onSuccess: ({ chatId, messages }: MessageSendResult) => {
+      queryClient.setQueryData(queryKeys.messages(chatId), messages)
     }
   })
 }
