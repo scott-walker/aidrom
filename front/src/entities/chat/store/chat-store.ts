@@ -26,7 +26,7 @@ export const useChatStore = create<ChatStore>(set => ({
    * Статус ожидания
    * @namespace Entities.Chat.Model.useChatStore.isPending
    */
-  isPending: false,
+  isPending: true,
 
   /**
    * Установить введенный текст

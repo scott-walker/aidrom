@@ -1,9 +1,10 @@
 {
   "recommendations": [
-    "Vue.volar", 
-    "esbenp.prettier-vscode", 
+    "Vue.volar",
+    "esbenp.prettier-vscode",
     "dbaeumer.vscode-eslint",
     "ms-azuretools.vscode-docker",
-    "bradlc.vscode-tailwindcss"
+    "bradlc.vscode-tailwindcss",
+    "cipchk.cssrem"
   ]
 }

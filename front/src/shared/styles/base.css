@@ -66,3 +66,10 @@
     display: none; /* Chrome, Safari, Opera */
   }
 }
+
+@utility animate-fade-in {
+  animation-name: fade-in;
+}
+@utility animate-fade-out {
+  animation-name: fade-out;
+}

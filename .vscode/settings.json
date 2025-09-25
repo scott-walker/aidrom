@@ -1,6 +1,6 @@
 {
   "editor.tabSize": 2,
-
+  
   "[javascript]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -42,7 +42,6 @@
   // "search.exclude": {
   //   "**/node_modules": false
   // }
-
   // Автоматическое изменение пути до файла
   // "typescript.updateImportsOnFileMove.enabled": "never",
   // "javascript.updateImportsOnFileMove.enabled": "never"

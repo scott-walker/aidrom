@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { useChatStore, type Message } from "@entities/chat"
+import { useChatStore } from "@entities/chat"
 import { useScroll } from "../lib/use-scroll"
 
 /**

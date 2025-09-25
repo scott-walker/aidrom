@@ -6,10 +6,11 @@ import { useChatById, useChatMessages } from "@entities/chat"
 
 import { ChatMessages } from "@features/chat-messages"
 import { ChatPending } from "@features/chat-pending"
-import { ChatScroller } from "@features/chat-scroller"
+// import { ChatScroller } from "@features/chat-scroller"
 
 import { ChatDialogHeader } from "./chat-dialog-header"
 import { ChatDialogInput } from "./chat-dialog-input"
+// import { ChatDialogFog } from "./chat-dialog-fog"
 
 /**
  * Пропсы диалога чата
@@ -36,14 +37,26 @@ export const ChatDialog = ({ chatId, className = "" }: ChatDialogProps) => {
   if (!chat) return null
 
   const containerClasses = makeClasses("relative flex flex-col w-full h-full", className)
+  const contentClasses = makeClasses("relative", "w-full", "h-full")
+  const fogClasses = makeClasses(
+    "absolute",
+    "z-10",
+    "inset-0",
+    "pointer-events-none",
+    "bg-background",
+    "animate-[fade-out_ease-in-out_0.5s_1_0.15s_forwards]"
+  )
+  const pendingClasses = makeClasses("absolute", "z-10", "bottom-48", "left-0", "right-0")
 
   return (
     <div className={containerClasses}>
       <ChatDialogHeader chat={chat} />
-      <ChatMessages chatId={chatId} messages={messages}>
-        <ChatPending />
-        {/* <ChatScroller chatId={chatId} /> */}
-      </ChatMessages>
+
+      <div className={contentClasses}>
+        <div className={fogClasses} />
+        <ChatMessages messages={messages} />
+      </div>
+
       <ChatDialogInput chatId={chatId} />
     </div>
   )

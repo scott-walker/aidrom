@@ -1,5 +1,6 @@
 import { makeClasses } from "@lib/style-api"
 import { ChatInput } from "@features/chat-input"
+import { ChatPending } from "@features/chat-pending"
 
 /**
  * Пропсы компонента ввода сообщения
@@ -17,6 +18,7 @@ type ChatDialogInputProps = {
 export const ChatDialogInput = ({ chatId, className = "" }: ChatDialogInputProps) => {
   const containerClasses = makeClasses(
     "absolute",
+    "z-20",
     "bottom-0",
     "left-0",
     "right-0",
@@ -26,9 +28,19 @@ export const ChatDialogInput = ({ chatId, className = "" }: ChatDialogInputProps
     "py-10",
     className
   )
+  const pendingClasses = makeClasses(
+    "absolute",
+    "z-10",
+    "-top-18",
+    "p-4",
+    "bg-background-soft",
+    "rounded-2xl",
+    "shadow-md/15"
+  )
 
   return (
     <div className={containerClasses}>
+      <ChatPending className={pendingClasses} />
       <ChatInput chatId={chatId} />
     </div>
   )
