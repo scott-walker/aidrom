@@ -1,3 +1,5 @@
+<img src="./etc/screen.png" alt="AIDrom" width="100%" style="margin-bottom: 30px;">
+
 # AIDrom
 
 Платформа для тестирования и интеграции AI моделей различных провайдеров.
@@ -73,15 +75,18 @@ make up
 ### Технологический стек
 
 **Backend:**
-- Node.js 18+ с TypeScript
-- Express.js фреймворк
-- PostgreSQL с Drizzle ORM
-- Winston для логирования
+- Node.js 18+ (TypeScript)
+- Express.js
+- Drizzle ORM
+- PostgreSQL
+- Winston
 
 **Frontend:**
-- React 19 с TypeScript
-- Vite для сборки
-- Tailwind CSS для стилей
+- React 19 (TypeScript)
+- Vite
+- TanStack Query
+- Zustand
+- Tailwind CSS
 - Feature Sliced Design архитектура
 
 **Infrastructure:**
@@ -122,42 +127,23 @@ make db-reset    # Сброс базы данных
 └── docker-compose.yaml
 ```
 
-### Памятка по разработке
-
-**Для комментариев:**
-- Комментарии на русском языке
-- JSDoc для всех функций и компонентов
-
-**Для кода:**
-- Использование стрелочных функций
-- TypeScript strict mode
-- ESLint + Prettier форматирование
-
-**Для стилей:**
-- Tailwind CSS утилиты
-- Адаптивный дизайн (mobile-first)
-- CSS переменные для токенов
-
 ## Roadmap
 
 ### Текущие задачи
 - Добавить TraceID для логирования `NGINX -> API -> Response`
-- Рефакторинг модели обработчиков запросов к агентам  
 - Добавить валидацию тела запроса
 - Логирование фронтенда по API
 
 ### Планируемые функции
 - Поддержка дополнительных AI провайдеров
-- Система ролей и прав доступа
 - Аналитика использования агентов
 - API для интеграции с внешними системами
 
 ## Поддержка
 
-- **Issues**: Создавайте issue для сообщения о багах
 - **Документация**: Подробная документация в папке `docs/`
 - **API Reference**: Автогенерируемая документация API
 
 ## Лицензия
 
-Проект разрабатывается под лицензией MIT.
+Проект распространяется под лицензией [MIT](LICENSE).
