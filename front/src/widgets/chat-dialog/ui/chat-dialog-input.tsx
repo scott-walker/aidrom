@@ -1,6 +1,6 @@
 import { makeClasses } from "@lib/style-api"
 import { ChatInput } from "@features/chat-input"
-import { ChatPending } from "@features/chat-pending"
+import { useChatStore, ChatPending } from "@entities/chat"
 
 /**
  * Пропсы компонента ввода сообщения
@@ -16,6 +16,8 @@ type ChatDialogInputProps = {
  * @namespace Widgets.Chat
  */
 export const ChatDialogInput = ({ chatId, className = "" }: ChatDialogInputProps) => {
+  const isPending = useChatStore(state => state.isPending)
+
   const containerClasses = makeClasses(
     "absolute",
     "z-20",
@@ -40,8 +42,8 @@ export const ChatDialogInput = ({ chatId, className = "" }: ChatDialogInputProps
 
   return (
     <div className={containerClasses}>
-      <ChatPending className={pendingClasses} />
-      <ChatInput chatId={chatId} />
+      {isPending && <ChatPending className={pendingClasses} />}
+      {!isPending && <ChatInput chatId={chatId} />}
     </div>
   )
 }

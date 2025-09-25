@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, type ReactNode } from "react"
+import { useMemo, useRef, useEffect, type ReactNode } from "react"
 import { useVirtualizer } from "@tanstack/react-virtual"
 import { type Message } from "@entities/chat"
 import { ChatMessage } from "@features/chat-message"
@@ -11,6 +11,7 @@ import { makeClasses } from "@shared/lib/style-api"
  * @namespace Features.ChatMessages.Props
  */
 type ChatMessagesProps = {
+  chatId: number
   messages: Message[]
   children?: ReactNode
 }
@@ -19,7 +20,7 @@ type ChatMessagesProps = {
  * Компонент сообщений
  * @namespace Features.ChatMessages
  */
-export const ChatMessages = ({ messages, children }: ChatMessagesProps) => {
+export const ChatMessages = ({ chatId, messages, children }: ChatMessagesProps) => {
   // console.log("ChatMessages")
 
   const containerRef = useRef<HTMLDivElement>(null)
@@ -38,7 +39,7 @@ export const ChatMessages = ({ messages, children }: ChatMessagesProps) => {
       const isLast = virtualRow.index === messages.length
 
       const key = isLast ? "last" : message.id
-      const content = isLast ? <div className="h-88 w-full"></div> : <ChatMessage {...message} />
+      const content = isLast ? <div className="h-64 w-full"></div> : <ChatMessage {...message} />
 
       return (
         <ChatMessagesItem
@@ -53,9 +54,9 @@ export const ChatMessages = ({ messages, children }: ChatMessagesProps) => {
     })
   }, [messages, virtualItems])
 
-  // useEffect(() => {
-  //   virtualizer.scrollToIndex(messages.length, { align: "end" })
-  // }, [virtualizer, messages])
+  useEffect(() => {
+    virtualizer.scrollToIndex(messages.length, { align: "end" })
+  }, [virtualizer, chatId])
 
   const containerClasses = makeClasses("w-full", "h-full", "overflow-y-auto", "scrollbar-hide", "pt-10")
 
