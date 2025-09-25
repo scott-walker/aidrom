@@ -1,5 +1,5 @@
 import { createBrowserRouter, Outlet } from "react-router"
-import { MainLayout } from "@shared/ui/layout"
+import { Layout } from "@widgets/layout"
 import { pageRegistry } from "@pages"
 import { ErrorBoundary } from "@widgets/error-boundary"
 
@@ -10,14 +10,14 @@ import { ErrorBoundary } from "@widgets/error-boundary"
 export const router = createBrowserRouter([
   {
     element: (
-      <MainLayout>
+      <Layout>
         <Outlet />
-      </MainLayout>
+      </Layout>
     ),
     errorElement: (
-      <MainLayout>
+      <Layout>
         <ErrorBoundary />
-      </MainLayout>
+      </Layout>
     ),
     children: pageRegistry.getRoutes()
   }

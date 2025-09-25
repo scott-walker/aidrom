@@ -10,7 +10,7 @@ const menuItems: MenuItems = [
   {
     label: "Сервис",
     icon: "settings",
-    path: "/service/providers"
+    path: "/service"
   }
 ]
 

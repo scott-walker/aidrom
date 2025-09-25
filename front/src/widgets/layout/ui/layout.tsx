@@ -1,15 +1,15 @@
 import type { ReactNode } from "react"
 import { makeClasses } from "@lib/style-api"
-import { Header } from "@shared/ui/layout/ui/header"
-import { Sidebar } from "@shared/ui/layout/ui/sidebar"
-import { Body } from "@shared/ui/layout/ui/body"
+import { LayoutHeader } from "@widgets/layout-header"
+import { LayoutSidebar } from "@widgets/layout-sidebar"
+import { LayoutBody } from "@widgets/layout-body"
 
 /**
  * Главный макет приложения
- * @namespace Widgets.Layouts.Main
+ * @namespace Widgets.Layout
  * @param {ReactNode} children дочерние элементы
  */
-export const Main = ({ children }: { children: ReactNode }): ReactNode => {
+export const Layout = ({ children }: { children: ReactNode }): ReactNode => {
   const containerClasses = makeClasses(
     "fixed",
     "inset-0",
@@ -26,9 +26,9 @@ export const Main = ({ children }: { children: ReactNode }): ReactNode => {
 
   return (
     <div className={containerClasses}>
-      <Sidebar className={sidebarClasses} />
-      <Header className={headerClasses} />
-      <Body className={bodyClasses}>{children}</Body>
+      <LayoutSidebar className={sidebarClasses} />
+      <LayoutHeader className={headerClasses} />
+      <LayoutBody className={bodyClasses}>{children}</LayoutBody>
     </div>
   )
 }

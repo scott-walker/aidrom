@@ -3,18 +3,18 @@ import { makeClasses } from "@lib/style-api"
 
 /**
  * Пропсы тела макета
- * @namespace Widgets.Layouts.UI.BodyProps
+ * @namespace Widgets.LayoutBody.Props
  */
-interface BodyProps {
+interface LayoutBodyProps {
   children: ReactNode
   className?: string
 }
 
 /**
  * Тело макета
- * @namespace Widgets.Layouts.UI.Body
+ * @namespace Widgets.LayoutBody
  */
-export const Body = ({ children, className = "" }: BodyProps): ReactNode => {
+export const LayoutBody = ({ children, className = "" }: LayoutBodyProps): ReactNode => {
   const classes = makeClasses(
     "h-[calc(100vh-var(--layout-header-height))]",
     "w-full",

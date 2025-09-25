@@ -5,17 +5,17 @@ import { makeClasses } from "@shared/lib/style-api"
 
 /**
  * Пропсы для триггера переключения темы
- * @namespace Shared.UI.ThemeTrigger.Props
+ * @namespace Features.LayoutThemeTrigger.Props
  */
-interface ThemeTriggerProps {
+interface LayoutThemeTriggerProps {
   className?: string
 }
 
 /**
  * Триггер для переключения темы
- * @namespace Shared.UI.ThemeTrigger
+ * @namespace Features.LayoutThemeTrigger
  */
-export const ThemeTrigger = ({ className = "" }: ThemeTriggerProps): ReactNode => {
+export const LayoutThemeTrigger = ({ className = "" }: LayoutThemeTriggerProps): ReactNode => {
   const classes = makeClasses("w-9 h-9", className)
   const { isDark, toggleTheme } = useToggleTheme()
   const iconName = isDark ? "sun" : "moon"

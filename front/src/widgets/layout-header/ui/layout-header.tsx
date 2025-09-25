@@ -4,21 +4,21 @@ import { makeClasses } from "@lib/style-api"
 import { Heading } from "@ui/heading"
 import { Icon } from "@ui/icon"
 import { Brand } from "@ui/brand"
-import { ThemeTrigger } from "./theme-trigger"
+import { LayoutThemeTrigger } from "@features/layout-theme-trigger"
 
 /**
  * Пропсы хедера
- * @namespace Widgets.Layouts.UI.HeaderProps
+ * @namespace Widgets.LayoutHeader.Props
  */
-interface HeaderProps {
+interface LayoutHeaderProps {
   className?: string
 }
 
 /**
  * Хедер
- * @namespace Widgets.Layouts.UI.Header
+ * @namespace Widgets.LayoutHeader
  */
-export const Header = ({ className = "" }: HeaderProps): ReactNode => {
+export const LayoutHeader = ({ className = "" }: LayoutHeaderProps): ReactNode => {
   const title = useLayoutStore(state => state.title)
   const subtitle = useLayoutStore(state => state.subtitle)
   const classes = makeClasses(
@@ -44,7 +44,7 @@ export const Header = ({ className = "" }: HeaderProps): ReactNode => {
         </Heading>
       </div>
       <div className="flex items-center gap-4">
-        <ThemeTrigger />
+        <LayoutThemeTrigger />
       </div>
     </div>
   )

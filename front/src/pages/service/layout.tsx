@@ -11,7 +11,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   useLayoutTitle("Сервис")
 
   const links = [
-    { label: "Провайдеры", path: "/service/providers" },
+    { label: "Провайдеры", path: "/service", end: true },
     { label: "Запросы", path: "/service/requests" },
     { label: "Чаты", path: "/service/chats" },
     { label: "Настройки", path: "/service/settings" }

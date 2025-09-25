@@ -1,5 +1,5 @@
 import type { ReactNode } from "react"
-import { useMenuItems } from "@lib/layout-api"
+import { useMenuItems } from "../lib/use-menu-items"
 import { makeClasses } from "@lib/style-api"
 import { Menu } from "@ui/menu"
 import { Separator } from "@ui/separator"
@@ -7,18 +7,17 @@ import { Icon } from "@ui/icon"
 
 /**
  * Пропсы сайдбара
- * @namespace Widgets.Layouts.UI.SidebarProps
+ * @namespace Widgets.LayoutSidebar.Props
  */
-interface SidebarProps {
+interface LayoutSidebarProps {
   className?: string
 }
 
 /**
  * Сайдбар
- * @namespace Widgets.Layouts.UI.Sidebar
- * @returns {ReactNode}
+ * @namespace Widgets.LayoutSidebar
  */
-export const Sidebar = ({ className = "" }: SidebarProps): ReactNode => {
+export const LayoutSidebar = ({ className = "" }: LayoutSidebarProps): ReactNode => {
   const { menuItems, chatMenuItems, developmentMenuItems } = useMenuItems()
 
   const sidebarClasses = makeClasses(
