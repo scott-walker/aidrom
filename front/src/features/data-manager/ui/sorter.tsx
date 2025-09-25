@@ -1,5 +1,5 @@
 import { Label } from "@ui/label"
-import { Select, type SelectItem } from "@ui/select"
+import { Select, type SelectItem } from "@shared/ui/select-old"
 
 export const SORT_ORDER_ASC = "asc"
 export const SORT_ORDER_DESC = "desc"
@@ -37,6 +37,8 @@ export const Sorter = ({
   placeholder = "Выберите сортировку",
   label = "Сортировка"
 }: SorterProps) => {
+  console.log("Sorter", { field, order })
+
   order = order ?? SORT_ORDER_ASC
 
   const orderItems: SelectItem[] = [

@@ -43,7 +43,7 @@ export const RequestsTable = ({ requests, onRowClick }: RequestsTableProps) => {
           </Table.Header>
           <Table.Body>
             {requests.map(request => (
-              <Table.Row hoverable className={rowClasses} onClick={() => onRowClick?.(request)}>
+              <Table.Row key={request.id} hoverable className={rowClasses} onClick={() => onRowClick?.(request)}>
                 <Table.Cell>{request.id}</Table.Cell>
                 <Table.Cell>
                   <Tag schema={request.status === RequestStatusEnum.COMPLETED ? "soft" : "danger"}>

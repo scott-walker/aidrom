@@ -1,5 +1,5 @@
 import { Label } from "@ui/label"
-import { Select, type SelectValue } from "@ui/select"
+import { Select, type SelectValue } from "@shared/ui/select-old"
 import { useProviders } from "@entities/provider"
 
 /**

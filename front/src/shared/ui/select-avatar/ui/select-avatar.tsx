@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { Avatar } from "@ui/avatar"
-import { Select, type SelectProps } from "@ui/select"
+import { Select, type SelectProps } from "@shared/ui/select-old"
 import { avatarList, makeAvatar } from "../lib/utils"
 import { SelectColor } from "@shared/ui/select-color"
 

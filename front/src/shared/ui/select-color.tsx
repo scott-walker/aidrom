@@ -1,4 +1,4 @@
-import { Select, type SelectProps } from "@ui/select"
+import { Select, type SelectProps } from "@shared/ui/select-old"
 
 /**
  * Пропсы

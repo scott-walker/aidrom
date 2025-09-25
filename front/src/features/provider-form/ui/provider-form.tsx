@@ -3,7 +3,7 @@ import { Controller } from "react-hook-form"
 
 import { Input } from "@ui/input"
 import { FormField } from "@ui/form-field"
-import { Select } from "@ui/select"
+import { Select } from "@shared/ui/select-old"
 
 import { type Provider, useDrivers } from "@entities/provider"
 import { type ProviderForm as ProviderFormType } from "../model/form-schema"

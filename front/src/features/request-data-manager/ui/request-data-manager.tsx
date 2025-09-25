@@ -1,7 +1,7 @@
 import { useState, useMemo, type FormEvent } from "react"
 import { makeClasses } from "@lib/style-api"
 import { Button } from "@ui/button"
-import { Select, type SelectItem } from "@ui/select"
+import { Select, type SelectItem } from "@shared/ui/select-old"
 import type { RequestsFilterData } from "@entities/request"
 import {
   SORT_ORDER_DESC,
@@ -30,6 +30,8 @@ interface RequestDataManagerProps {
  * @namespace Features.RequestDataManager.Ui.RequestDataManager
  */
 export const RequestDataManager = ({ initialFilter, onFilter, onFilterQuery }: RequestDataManagerProps) => {
+  console.log("RequestDataManager")
+
   const sortItems = useMemo(
     () => [
       { label: "Дата создания", value: "createdAt" },
@@ -145,6 +147,8 @@ export const RequestDataManager = ({ initialFilter, onFilter, onFilterQuery }: R
 
   // Сортировка
   const sorter = useMemo(() => {
+    console.log("sorter useMemo", sortField, sortOrder)
+
     return (
       <Sorter
         items={sortItems}

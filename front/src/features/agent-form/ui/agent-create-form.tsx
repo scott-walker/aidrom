@@ -4,7 +4,7 @@ import { Controller } from "react-hook-form"
 import { Button } from "@ui/button"
 import { FormField } from "@ui/form-field"
 import { Input } from "@ui/input"
-import { Select } from "@ui/select"
+import { Select } from "@shared/ui/select-old"
 import { SelectAvatar } from "@ui/select-avatar"
 
 import { useCreateAgent, type Agent, type AgentCreateData } from "@entities/agent"

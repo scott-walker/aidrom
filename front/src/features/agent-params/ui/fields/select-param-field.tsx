@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { FormField } from "@ui/form-field"
-import { Select } from "@ui/select"
+import { Select } from "@shared/ui/select-old"
 import type { DriverParamsConfigParameterSelect } from "@entities/provider"
 
 /**
