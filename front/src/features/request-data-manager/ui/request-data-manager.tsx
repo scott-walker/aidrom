@@ -1,4 +1,4 @@
-import { useState, useMemo, type FormEvent, useEffect } from "react"
+import { useState, useMemo, type FormEvent } from "react"
 import { makeClasses } from "@lib/style-api"
 import { Button } from "@ui/button"
 import { Select, type SelectItem } from "@ui/select"
@@ -114,8 +114,6 @@ export const RequestDataManager = ({ initialFilter, onFilter, onFilterQuery }: R
 
     handleFilter()
   }
-
-  useEffect(() => handleFilter(), [])
 
   // Фильтр по ID запроса
   const searchFilter = useMemo(() => {

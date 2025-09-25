@@ -15,6 +15,10 @@ export const RequestsTable = ({ filters }: { filters: RequestsFilterData }) => {
     return <Loader />
   }
 
+  if (!Object.keys(filters).length) {
+    return <Notification type="info">Необходимо выбрать фильтры</Notification>
+  }
+
   if (error) {
     return <Notification type="error">{(error as Error).message}</Notification>
   }

@@ -1,4 +1,4 @@
-import { Outlet } from "react-router"
+import { Outlet, redirect } from "react-router"
 import type { PageRoutes } from "@lib/page-api/types"
 import { Layout } from "./layout"
 import { Providers } from "./pages/providers"
@@ -21,7 +21,11 @@ export const routes: PageRoutes = {
   path: "service",
   children: [
     {
-      path: "",
+      index: true,
+      loader: () => redirect("/service/providers")
+    },
+    {
+      path: "providers",
       element: <Providers />
     },
     {
