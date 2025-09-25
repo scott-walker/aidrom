@@ -1,8 +1,9 @@
 import { Outlet } from "react-router"
 import type { PageRoutes } from "@lib/page-api/types"
+import { LoaderBlock } from "@ui/loader-block"
 import { AgentsLayout } from "./layout"
-import { Main } from "./pages/main"
-import { Agent } from "./pages/agent"
+// import { Main } from "./pages/main"
+// import { Agent } from "./pages/agent"
 
 /**
  * Маршруты страницы Agents
@@ -15,14 +16,23 @@ export const routes: PageRoutes = {
     </AgentsLayout>
   ),
   path: "agents",
+  hydrateFallbackElement: <LoaderBlock />,
   children: [
     {
       index: true,
-      element: <Main />
+      lazy: async () => {
+        const { Main } = await import("./pages/main")
+
+        return { element: <Main /> }
+      }
     },
     {
       path: ":agentId",
-      element: <Agent />
+      lazy: async () => {
+        const { Agent } = await import("./pages/agent")
+
+        return { element: <Agent /> }
+      }
     }
   ]
 }

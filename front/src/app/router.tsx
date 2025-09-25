@@ -1,7 +1,7 @@
 import { createBrowserRouter, Outlet } from "react-router"
 import { Layout } from "@widgets/layout"
-import { pageRegistry } from "@pages"
 import { ErrorBoundary } from "@widgets/error-boundary"
+import { pageRegistry } from "@pages"
 
 /**
  * Маршрутизатор
