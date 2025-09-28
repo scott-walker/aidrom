@@ -216,7 +216,7 @@ export const addRule = async (agentId: number, data: CreateAgentRuleData): Promi
 
     logger.info("Максимальный приоритет правил агента", { maxPriority })
 
-    const priority = maxPriority + 1
+    const priority = (maxPriority || 0) + 1
 
     logger.info("Приоритет правила агента успешно вычислен", { priority })
 
@@ -251,15 +251,13 @@ export const deleteRule = async (agentId: number, ruleId: number): Promise<void>
     logger.info("Пересчет приоритетов правил агента", { agentId })
 
     const rules = await db
-      .select()
+      .select({ id: agentRules.id })
       .from(agentRules)
       .where(eq(agentRules.agentId, agentId))
       .orderBy(asc(agentRules.priority))
       .execute()
 
-    rules.forEach(async (rule, index) => {
-      await db.update(agentRules).set({ priority: index }).where(eq(agentRules.id, rule.id))
-    })
+    await recalculateRulesPriority(rules.map(rule => rule.id))
 
     logger.info("Правило агента успешно удалено", { agentId, ruleId })
   } catch (error) {
@@ -277,15 +275,28 @@ export const sortRules = async (agentId: number, ruleIds: number[]): Promise<voi
   try {
     logger.info("Сортировка правил агента в БД", { agentId, ruleIds })
 
-    ruleIds.forEach(async (ruleId, index) => {
-      await db.update(agentRules).set({ priority: index }).where(eq(agentRules.id, ruleId))
-    })
+    await recalculateRulesPriority(ruleIds)
 
     logger.info("Правила агента успешно отсортированы", { agentId })
   } catch (error) {
     logger.error("Ошибка при сортировке правил агента в БД", { error: error.message, agentId, ruleIds })
 
     throw error
+  }
+}
+
+/**
+ * Пересчитать приоритеты правил агента
+ * @namespace Agent.Service.recalculateRulesPriority
+ */
+const recalculateRulesPriority = async (ruleIds: number[]): Promise<void> => {
+  for (const index in ruleIds) {
+    await db
+      .update(agentRules)
+      .set({
+        priority: parseInt(index) + 1
+      })
+      .where(eq(agentRules.id, ruleIds[index]))
   }
 }
 
