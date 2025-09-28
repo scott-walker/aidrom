@@ -1,4 +1,4 @@
-<img src="./etc/screen.png" alt="AIDrom" width="100%" style="margin-bottom: 30px;">
+<img src="./etc/screen.png" alt="AIDrom" width="100%">
 
 # AIDrom
 
