@@ -63,8 +63,21 @@ export const useAddAgentRule = (): UseMutationResult<
 
   return useMutation({
     mutationFn: ({ agentId, data }: { agentId: number; data: AgentRuleCreateData }) => addAgentRule(agentId, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.all })
+    onMutate: ({ agentId, data }) => {
+      const previousAgent = queryClient.getQueryData(queryKeys.details(agentId)) as Agent
+
+      if (previousAgent) {
+        const lastPriority = previousAgent.rules[previousAgent.rules.length - 1].priority
+        const newRule = { ...data, id: 0, agentId, priority: lastPriority + 1 }
+        const updatedAgent = { ...previousAgent, rules: [...previousAgent.rules, newRule] }
+
+        queryClient.setQueryData(queryKeys.details(agentId), updatedAgent)
+      }
+
+      return { previousAgent }
+    },
+    onSuccess: ({ agentId }) => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.details(agentId) })
     }
   })
 }
@@ -78,6 +91,20 @@ export const useDeleteAgentRule = (): UseMutationResult<void, Error, { agentId: 
 
   return useMutation({
     mutationFn: ({ agentId, ruleId }: { agentId: number; ruleId: number }) => deleteAgentRule(agentId, ruleId),
+    onMutate: ({ agentId, ruleId }) => {
+      const previousAgent = queryClient.getQueryData(queryKeys.details(agentId)) as Agent
+
+      if (previousAgent) {
+        const newRules = previousAgent.rules
+          .filter(rule => rule.id !== ruleId)
+          .map((rule, index) => ({ ...rule, priority: index + 1 }))
+        const updatedAgent = { ...previousAgent, rules: newRules }
+
+        queryClient.setQueryData(queryKeys.details(agentId), updatedAgent)
+      }
+
+      return { previousAgent }
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.all })
     }
@@ -93,6 +120,22 @@ export const useSortAgentRules = (): UseMutationResult<void, Error, { agentId: n
 
   return useMutation({
     mutationFn: ({ agentId, data }: { agentId: number; data: AgentRuleSortData }) => sortAgentRules(agentId, data),
+    onMutate: ({ agentId, data }) => {
+      const previousAgent = queryClient.getQueryData(queryKeys.details(agentId)) as Agent
+
+      if (previousAgent) {
+        const newRules = data.ruleIds.map((ruleId, index) => {
+          const rule = previousAgent.rules.find(rule => rule.id === ruleId)
+
+          return { ...rule, priority: index + 1 }
+        })
+        const updatedAgent = { ...previousAgent, rules: newRules }
+
+        queryClient.setQueryData(queryKeys.details(agentId), updatedAgent)
+      }
+
+      return { previousAgent }
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.all })
     }

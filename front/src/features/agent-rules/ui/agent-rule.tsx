@@ -48,7 +48,7 @@ export const AgentRule = ({ id, priority, content, children, className = "" }: A
 
   return (
     <div className={cardClasses} data-id={id}>
-      <div className={priorityClasses}>{priority + 1}</div>
+      <div className={priorityClasses}>{priority}</div>
       <div>{content}</div>
       <div className="ml-auto flex items-center gap-4">{children}</div>
     </div>
