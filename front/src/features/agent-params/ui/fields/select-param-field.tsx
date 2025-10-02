@@ -20,9 +20,9 @@ type SelectParamFieldProps = {
 export const SelectParamField = ({ param, value, onChange }: SelectParamFieldProps) => {
   const [innerValue, setInnerValue] = useState<string>(value ?? param.options[0] ?? "")
 
-  const handleChange = (value: string) => {
-    setInnerValue(value)
-    onChange(value)
+  const handleChange = (value: string | null) => {
+    setInnerValue(value ?? "")
+    onChange(value ?? "")
   }
 
   return (
