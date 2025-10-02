@@ -1,4 +1,9 @@
-# Развертывание системы AIDrom
+# Великая инициация развертывания системы AIDrom 🙌
+
+**(в 80% случаев, это не причиняет больших проблем, но если все-таки стало больно, то есть служба поддержки 😇)**
+
+[![Telegram](https://img.shields.io/badge/Telegram-@scottvvalker-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/scottvvalker)
+[![GitHub Issues](https://img.shields.io/badge/GitHub-Issues-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/scott-walker/aidrom/issues)
 
 ## Требования к окружению
 
