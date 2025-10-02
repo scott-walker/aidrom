@@ -44,34 +44,14 @@ services:
       - default
 
   # Фронтенд
-  front:
-    container_name: front-dev
-    build:
-      context: ./front
-      dockerfile: ./docker/dev/Dockerfile
-    restart: always
-    environment:
-      HOST: ${FRONTEND_HOST}
-      PORT: ${FRONTEND_PORT}
-      FRONTEND_BASE_URL: ${FRONTEND_BASE_URL}
-      FRONTEND_PUBLIC_HOST: ${GATEWAY_FRONTEND_HOST}
-      API_BASE_URL: ${FRONTEND_API_BASE_URL}
-      API_PUBLIC_HOST: ${GATEWAY_API_HOST}
-    depends_on:
-      - ${SERVICE_API}
-    volumes:
-      - ./front/docker/dev/entrypoint.sh:/entrypoint.sh
-      - ./front:/app
-      - ${EXTERNAL_FRONTEND_LOGS}:/app/logs
-    networks:
-      - default
   # front:
-  #   container_name: front-build
+  #   container_name: front-dev
   #   build:
   #     context: ./front
-  #     dockerfile: ./docker/build/Dockerfile
+  #     dockerfile: ./docker/dev/Dockerfile
   #   restart: always
   #   environment:
+  #     HOST: ${FRONTEND_HOST}
   #     PORT: ${FRONTEND_PORT}
   #     FRONTEND_BASE_URL: ${FRONTEND_BASE_URL}
   #     FRONTEND_PUBLIC_HOST: ${GATEWAY_FRONTEND_HOST}
@@ -79,8 +59,35 @@ services:
   #     API_PUBLIC_HOST: ${GATEWAY_API_HOST}
   #   depends_on:
   #     - ${SERVICE_API}
+  #   volumes:
+  #     - ./front/docker/dev/entrypoint.sh:/entrypoint.sh
+  #     - ./front:/app
+  #     - ${EXTERNAL_FRONTEND_LOGS}:/app/logs
   #   networks:
   #     - default
+  front:
+    container_name: front-build
+    build:
+      context: ./front
+      dockerfile: ./docker/build/Dockerfile
+      tags:
+        - ${REGISTRY_FRONTEND_BUILD_IMAGE_TAG}
+    restart: always
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+    environment:
+      NGINX_PORT: ${FRONTEND_PORT}
+      FRONTEND_BASE_URL: ${FRONTEND_BASE_URL}
+      FRONTEND_PUBLIC_HOST: ${GATEWAY_FRONTEND_HOST}
+      API_BASE_URL: ${FRONTEND_API_BASE_URL}
+      API_PUBLIC_HOST: ${GATEWAY_API_HOST}
+    volumes:
+      - ./front/docker/build/nginx.conf:/etc/nginx/templates/default.conf.template
+      - ./front/docker/build/entrypoint.sh:/entrypoint.sh
+    depends_on:
+      - ${SERVICE_API}
+    networks:
+      - default
 
   # Главные враты 🙄🤦‍♂️
   gateway:
