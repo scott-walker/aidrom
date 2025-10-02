@@ -1,7 +1,7 @@
 FROM node:current-alpine
 
 COPY . /app
-COPY ./docker/entrypoint.sh /entrypoint.sh
+COPY ./docker/dev/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # Чтобы было удобно 🙃😇
