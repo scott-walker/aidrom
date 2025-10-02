@@ -90,6 +90,11 @@ make up
 └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
 ```
 
+## Stack
+<img src="https://skillicons.dev/icons?i=ts,nodejs,express,postgres,vite,react,docker,nginx,linux,bash&theme=dark" alt="Infrastructure Skills" width="300px">
+
+<br/>
+
 <table>
 <thead>
   <tr>
@@ -132,10 +137,6 @@ make up
   </tr>
 </tbody>
 </table>
-
-<br/>
-
-<img src="https://skillicons.dev/icons?i=ts,nodejs,express,postgres,vite,react,docker,nginx,linux,bash&theme=dark" alt="Infrastructure Skills" width="100%">
 
 ## Управление
 
