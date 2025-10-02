@@ -1,6 +1,12 @@
 # Многоэтапная сборка для production
 FROM node:current-alpine AS builder
 
+ARG API_BASE_URL
+ARG FRONTEND_BASE_URL
+
+ENV API_BASE_URL=$API_BASE_URL
+ENV FRONTEND_BASE_URL=$FRONTEND_BASE_URL
+
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci

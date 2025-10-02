@@ -43,13 +43,16 @@ api-build:
 # Сборка контейнера для фронта
 front-build:	
 	docker build -D --no-cache \
+		-f ./front/docker/build/Dockerfile \
+		-t ${REGISTRY_FRONTEND_BUILD_IMAGE_TAG} \
+		--build-arg API_BASE_URL=${FRONTEND_API_BASE_URL} \
+		--build-arg FRONTEND_BASE_URL=${FRONTEND_BASE_URL} \
+		./front
+front-dev-build:	
+	docker build -D --no-cache \
 		-f ./front/docker/dev/Dockerfile \
 		-t ${REGISTRY_FRONTEND_DEV_IMAGE_TAG} \
 		./front
-# docker build -D --no-cache \
-# 	-f ./front/docker/build/Dockerfile \
-# 	-t ${REGISTRY_FRONTEND_BUILD_IMAGE_TAG} \
-# 	./front
 
 # Сборка контейнера для шлюза
 gateway-build:
@@ -95,28 +98,28 @@ api-up:
 		${REGISTRY_API_IMAGE_TAG}
 
 # Запуск контейнера с фронтом
-front-up:
+front-dev-up:
 	docker run -d --rm --name front \
 		-e HOST=${FRONTEND_HOST} \
 		-e PORT=${FRONTEND_PORT} \
 		-e FRONTEND_BASE_URL=${FRONTEND_BASE_URL} \
-		-e FRONTEND_PUBLIC_HOST=${FRONTEND_PUBLIC_HOST} \
+		-e FRONTEND_PUBLIC_HOST=${GATEWAY_FRONTEND_HOST} \
 		-e API_BASE_URL=${FRONTEND_API_BASE_URL} \
-		-e API_PUBLIC_HOST=${FRONTEND_API_PUBLIC_HOST} \
+		-e API_PUBLIC_HOST=${GATEWAY_API_HOST} \
 		--network ${NETWORK} \
 		-p ${EXTERNAL_FRONTEND_PORT}:${FRONTEND_PORT} \
 		-v ${EXTERNAL_FRONTEND_LOGS}:/app/logs \
 		${REGISTRY_FRONTEND_DEV_IMAGE_TAG}
-# docker run -d --rm --name front-build \
-# 	-e HOST=${FRONTEND_HOST} \
-# 	-e PORT=${FRONTEND_PORT} \
-# 	-e FRONTEND_BASE_URL=${FRONTEND_BASE_URL} \
-# 	-e FRONTEND_PUBLIC_HOST=${FRONTEND_PUBLIC_HOST} \
-# 	-e API_BASE_URL=${FRONTEND_API_BASE_URL} \
-# 	-e API_PUBLIC_HOST=${FRONTEND_API_PUBLIC_HOST} \
-# 	--network ${NETWORK} \
-# 	-p ${EXTERNAL_FRONTEND_PORT}:${FRONTEND_PORT} \
-# 	${REGISTRY_FRONTEND_BUILD_IMAGE_TAG}
+front-build-up:
+	docker run -d --rm --name front-build \
+		-e NGINX_PORT=${FRONTEND_PORT} \
+		-e FRONTEND_BASE_URL=${FRONTEND_BASE_URL} \
+		-e FRONTEND_PUBLIC_HOST=${GATEWAY_FRONTEND_HOST} \
+		-e API_BASE_URL=${FRONTEND_API_BASE_URL} \
+		-e API_PUBLIC_HOST=${GATEWAY_API_HOST} \
+		--network ${NETWORK} \
+		-p ${EXTERNAL_FRONTEND_PORT}:${FRONTEND_PORT} \
+		${REGISTRY_FRONTEND_BUILD_IMAGE_TAG}
 
 # Запуск контейнера со шлюзом (переопределяем порты чтобы не конфликтовать... ну типа ты понял 😎)
 gateway-up:

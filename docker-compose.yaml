@@ -70,6 +70,9 @@ services:
     build:
       context: ./front
       dockerfile: ./docker/build/Dockerfile
+      args:
+        API_BASE_URL: ${FRONTEND_API_BASE_URL}
+        FRONTEND_BASE_URL: ${FRONTEND_BASE_URL}
       tags:
         - ${REGISTRY_FRONTEND_BUILD_IMAGE_TAG}
     restart: always
@@ -81,9 +84,9 @@ services:
       FRONTEND_PUBLIC_HOST: ${GATEWAY_FRONTEND_HOST}
       API_BASE_URL: ${FRONTEND_API_BASE_URL}
       API_PUBLIC_HOST: ${GATEWAY_API_HOST}
-    volumes:
-      - ./front/docker/build/nginx.conf:/etc/nginx/templates/default.conf.template
-      - ./front/docker/build/entrypoint.sh:/entrypoint.sh
+    # volumes:
+    #   - ./front/docker/build/nginx.conf:/etc/nginx/templates/default.conf.template
+    #   - ./front/docker/build/entrypoint.sh:/entrypoint.sh
     depends_on:
       - ${SERVICE_API}
     networks:
