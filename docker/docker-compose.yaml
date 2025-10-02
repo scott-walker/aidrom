@@ -1,0 +1,12 @@
+include:
+  - docker/compose/db.yaml
+  - docker/compose/api.yaml
+  - docker/compose/front-dev.yaml
+  # - docker/compose/front-build.yaml
+  - docker/compose/gateway.yaml
+
+networks:
+  aidrom-network:
+    name: ${NETWORK}
+    driver: bridge
+    

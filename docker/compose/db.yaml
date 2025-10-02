@@ -1,0 +1,29 @@
+services:
+  # База данных
+  db:
+    container_name: db
+    build:
+      context: ../../db
+      dockerfile: ./docker/Dockerfile
+    restart: unless-stopped
+    environment:
+      POSTGRES_PORT: ${DB_PORT}
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${EXTERNAL_DB_PORT}:${DB_PORT}"
+    volumes:
+      - ../../db/docker/entrypoint.sh:/entrypoint.sh
+      - ../../db/docker/postgresql.conf:/tmp/postgresql.conf
+      - ${EXTERNAL_DB_DATA}:/var/lib/postgresql/data
+      - ${EXTERNAL_DB_LOGS}:/var/lib/postgresql/data/log
+      - ${EXTERNAL_DB_BACKUPS}:/backups
+    networks:
+      - aidrom-network
+
+# networks:
+#   aidrom-network:
+#     name: ${NETWORK}
+#     driver: bridge
+#     external: true

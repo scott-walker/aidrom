@@ -1,0 +1,29 @@
+services:
+  # Front: Dev
+  front:
+    container_name: front
+    build:
+      context: ../../front
+      dockerfile: ./docker/dev/Dockerfile
+    restart: always
+    environment:
+      HOST: ${FRONTEND_HOST}
+      PORT: ${FRONTEND_PORT}
+      FRONTEND_BASE_URL: ${FRONTEND_BASE_URL}
+      FRONTEND_PUBLIC_HOST: ${GATEWAY_FRONTEND_HOST}
+      API_BASE_URL: ${FRONTEND_API_BASE_URL}
+      API_PUBLIC_HOST: ${GATEWAY_API_HOST}
+    depends_on:
+      - ${SERVICE_API}
+    volumes:
+      - ../../front/docker/dev/entrypoint.sh:/entrypoint.sh
+      - ../../front:/app
+      - ${EXTERNAL_FRONTEND_LOGS}:/app/logs
+    networks:
+      - aidrom-network
+
+# networks:
+#   aidrom-network:
+#     name: ${NETWORK}
+#     driver: bridge
+#     external: true

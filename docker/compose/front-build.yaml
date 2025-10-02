@@ -1,0 +1,24 @@
+services:
+  # Front: Build
+  front:
+    container_name: front
+    build:
+      context: ../../front
+      dockerfile: ./docker/build/Dockerfile
+    restart: always
+    environment:
+      PORT: ${FRONTEND_PORT}
+      FRONTEND_BASE_URL: ${FRONTEND_BASE_URL}
+      FRONTEND_PUBLIC_HOST: ${GATEWAY_FRONTEND_HOST}
+      API_BASE_URL: ${FRONTEND_API_BASE_URL}
+      API_PUBLIC_HOST: ${GATEWAY_API_HOST}
+    depends_on:
+      - ${SERVICE_API}
+    networks:
+      - aidrom-network
+
+# networks:
+#   aidrom-network:
+#     name: ${NETWORK}
+#     driver: bridge
+#     external: true

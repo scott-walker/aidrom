@@ -1,0 +1,27 @@
+services:
+  # API
+  api:
+    container_name: api
+    build:
+      context: ../../api
+      dockerfile: ./docker/Dockerfile
+    restart: always
+    depends_on:
+      - ${SERVICE_DB}
+    environment:
+      HOST: ${API_HOST}
+      PORT: ${API_PORT}
+      DB_CONNECTION_URL: ${API_DB_CONNECTION_URL}
+    volumes:
+      - ../../api/docker/entrypoint.sh:/entrypoint.sh
+      - ../../api:/app
+      - ${EXTERNAL_API_LOGS}:/app/logs
+      - ${EXTERNAL_API_RUNTIME}:/app/runtime
+    networks:
+      - aidrom-network
+
+# networks:
+#   aidrom-network:
+#     name: ${NETWORK}
+#     driver: bridge
+#     external: true
