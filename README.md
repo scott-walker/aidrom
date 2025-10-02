@@ -2,9 +2,9 @@
 
 <div align="center">
 
-# 🤖 AIDrom
+# AIDrom
 
-**Платформа для тестирования и интеграции AI моделей различных провайдеров**
+**Платформа для тестирования и интеграции AI моделей через единый интерфейс LLM провайдеров**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Docker](https://img.shields.io/badge/Docker-20.10+-blue.svg)](https://www.docker.com/)
@@ -12,11 +12,17 @@
 [![React](https://img.shields.io/badge/React-19+-61DAFB.svg)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5+-3178C6.svg)](https://www.typescriptlang.org/)
 
+#### Frontend performance
+
+[![Performance](https://img.shields.io/badge/Performance-A+-00C851.svg)](docs/PERFORMANCE.md)
+[![LCP](https://img.shields.io/badge/LCP-492ms-00C851.svg)](docs/PERFORMANCE.md)
+[![CLS](https://img.shields.io/badge/CLS-0.00-00C851.svg)](docs/PERFORMANCE.md)
+
 </div>
 
 ## Описание проекта
 
-AIDrom - микросервисная система для работы с AI моделями, обеспечивающая единый интерфейс для различных провайдеров искусственного интеллекта. Система поддерживает создание AI агентов, ведение чатов и мониторинг запросов.
+**AIDrom** — микросервисная система для работы с AI моделями, обеспечивающая единый интерфейс для различных провайдеров искусственного интеллекта. Система поддерживает создание AI агентов, ведение чатов и мониторинг запросов.
 
 ### Основные возможности
 
@@ -33,22 +39,17 @@ AIDrom - микросервисная система для работы с AI �
 - **[API Документация](docs/API.md)** - Полное описание REST API эндпоинтов
 - **[Frontend](docs/FRONTEND.md)** - Архитектура фронтенда, FSD структура, компоненты
 - **[Развертывание](docs/DEPLOYMENT.md)** - Инструкции по установке, настройке и развертыванию
+- **[Производительность](docs/PERFORMANCE.md)** - Метрики производительности и анализ скорости загрузки
 
-## Быстрый старт
+## Установка
 
-### Требования
+![Docker](https://img.shields.io/badge/Docker-20.10+-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Docker Compose](https://img.shields.io/badge/Docker%20Compose-2.0+-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![mkcert](https://img.shields.io/badge/mkcert-SSL%20certificates-FF6B6B?style=for-the-badge&logo=letsencrypt&logoColor=white)
 
-- Docker 20.10+
-- Docker Compose 2.0+
-- mkcert (для SSL сертификатов)
+### (DISCLAIMER: иногда не все так просто, как всегда 😅😇)
 
-### Установка
-#### (на самом деле не все так просто, как всегда 😅😇)
-
-⚠️ Для подробностей всех этапов установки, обратитесь к [**"великой книге перемен"**](docs/DEPLOYMENT.md) (которая, кстати, и не всегда в актуальном состоянии 🙃, но если что, есть issues и телега
-
-[![Telegram](https://img.shields.io/badge/Telegram-@scottvvalker-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/scottvvalker)
-[![GitHub Issues](https://img.shields.io/badge/GitHub-Issues-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/scott-walker/aidrom/issues)
+⚠️ Для подробностей всех этапов установки, обратитесь к [**"великой книге перемен"**](docs/DEPLOYMENT.md) (которая, кстати, и не всегда в актуальном состоянии 🙃, но если что, есть морально-техническая [поддержка](#-поддержка))
 
 
 ```bash
@@ -91,34 +92,16 @@ make up
 ```
 
 
-## Backend:
-[![Backend Skills](https://skillicons.dev/icons?i=nodejs,ts,express,postgres,winston&theme=dark)](https://skillicons.dev)
-- Node.js 24 (TypeScript)
-- Express.js
-- Drizzle ORM
-- PostgreSQL
-- Winston
+## Stack
 
-## Frontend:
-[![Frontend Skills](https://skillicons.dev/icons?i=react,ts,vite,tailwind,axios,zod&theme=dark)](https://skillicons.dev)
-- React 19 (TypeScript)
-- Vite
-- React Router 7
-- React Hook Form
-- TanStack Query
-- Zustand
-- Axios
-- Zod
-- Tailwind CSS
-- Radix UI
-- Lucide React
-- FSD архитектура
+<div align="center">
 
-## Infrastructure:
-[![Infrastructure Skills](https://skillicons.dev/icons?i=docker,nginx,linux,bash&theme=dark)](https://skillicons.dev)
-- Docker & Docker Compose
-- Nginx как reverse proxy
-- SSL/TLS с mkcert
+| **Backend** | **Frontend** | **Infrastructure** |
+|:---|:---|:---|
+| [![Backend Skills](https://skillicons.dev/icons?i=nodejs,ts,express,postgres&theme=dark)](https://skillicons.dev) | [![Frontend Skills](https://skillicons.dev/icons?i=react,ts,vite,tailwind&theme=dark)](https://skillicons.dev) | [![Infrastructure Skills](https://skillicons.dev/icons?i=docker,nginx,linux,bash&theme=dark)](https://skillicons.dev) |
+| • Node.js 24 (TypeScript)<br/>• Express.js<br/>• Drizzle ORM<br/>• PostgreSQL<br/>• Winston | • React 19 (TypeScript)<br/>• Vite<br/>• React Router 7<br/>• React Hook Form<br/>• TanStack Query<br/>• Zustand<br/>• Axios<br/>• Zod<br/>• Tailwind CSS<br/>• Radix UI<br/>• Lucide React<br/>• FSD архитектура | • Docker & Docker Compose<br/>• Nginx как reverse proxy<br/>• SSL/TLS с mkcert<br/>• Linux<br/>• Bash scripting |
+
+</div>
 
 ## Управление
 
@@ -140,9 +123,7 @@ make db-dump     # Создание резервной копии
 make db-reset    # Сброс базы данных
 ```
 
-## Разработка
-
-### 📁 Структура проекта
+## 📁 Структура проекта
 
 ```
 ├── api/          # Backend API сервер
@@ -153,10 +134,21 @@ make db-reset    # Сброс базы данных
 └── docker-compose.yaml
 ```
 
-## 📚 Поддержка
+## 🧑‍🔧 Поддержка
 
-- **Документация**: Подробная документация в папке `docs/`
-- **API Reference**: Автогенерируемая документация API
+#### Документация (/docs)
+
+- **[Архитектура системы](docs/ARCHITECTURE.md)** - Описание архитектуры, компонентов и их взаимодействия
+- **[Бизнес-процессы](docs/BUSINESS-FLOW.md)** - Описание бизнес-процессов системы
+- **[API Документация](docs/API.md)** - Полное описание REST API эндпоинтов
+- **[Frontend](docs/FRONTEND.md)** - Архитектура фронтенда, FSD структура, компоненты
+- **[Развертывание](docs/DEPLOYMENT.md)** - Инструкции по установке, настройке и развертыванию
+- **[Производительность](docs/PERFORMANCE.md)** - Метрики производительности и анализ скорости загрузки
+
+<br/>
+
+[![GitHub Issues](https://img.shields.io/badge/GitHub-Issues-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/scott-walker/aidrom/issues)
+[![Telegram](https://img.shields.io/badge/Telegram-@scottvvalker-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](https://t.me/scottvvalker)
 
 ## Лицензия
 
