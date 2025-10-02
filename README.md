@@ -109,7 +109,6 @@ make up
         <li>Winston</li>
       </ul>
       <br/>
-      <img src="https://skillicons.dev/icons?i=nodejs,ts,express,postgres,winston&theme=dark" alt="Backend Skills" width="100%">
     </td>
     <td valign="top">
       <ul>
@@ -121,7 +120,6 @@ make up
         <li>Zustand</li>
       </ul>
       <br/>
-      <img src="https://skillicons.dev/icons?i=react,ts,vite,tailwind,axios,zod&theme=dark" alt="Frontend Skills" width="100%">
     </td>
     <td valign="top">
       <ul>
@@ -130,11 +128,14 @@ make up
         <li>SSL/TLS с mkcert</li>
       </ul>
       <br/>
-      <img src="https://skillicons.dev/icons?i=docker,nginx,linux,bash&theme=dark" alt="Infrastructure Skills" width="100%">
     </td>
   </tr>
 </tbody>
 </table>
+
+<br/>
+
+<img src="https://skillicons.dev/icons?i=ts,nodejs,express,postgres,vite,react,docker,nginx,linux,bash&theme=dark" alt="Infrastructure Skills" width="100%">
 
 ## Управление
 
