@@ -30,7 +30,6 @@
 - **Управление агентами**: Создание и настройка AI агентов с индивидуальными параметрами
 - **Чат-интерфейс**: Веб-интерфейс для общения с агентами в реальном времени
 - **Мониторинг**: Журналирование и анализ запросов к AI сервисам
-- **Масштабируемость**: Контейнеризованная архитектура с Docker
 
 ## Документация
 
@@ -109,7 +108,8 @@ make up
         <li>PostgreSQL</li>
         <li>Winston</li>
       </ul>
-    <img src="https://skillicons.dev/icons?i=nodejs,ts,express,postgres,winston&theme=dark" alt="Backend Skills" width="100%">
+      <br/>
+      <img src="https://skillicons.dev/icons?i=nodejs,ts,express,postgres,winston&theme=dark" alt="Backend Skills" width="100%">
     </td>
     <td valign="top">
       <ul>
@@ -120,7 +120,8 @@ make up
         <li>TanStack Query</li>
         <li>Zustand</li>
       </ul>
-    <img src="https://skillicons.dev/icons?i=react,ts,vite,tailwind,axios,zod&theme=dark" alt="Frontend Skills" width="100%">
+      <br/>
+      <img src="https://skillicons.dev/icons?i=react,ts,vite,tailwind,axios,zod&theme=dark" alt="Frontend Skills" width="100%">
     </td>
     <td valign="top">
       <ul>
@@ -128,7 +129,8 @@ make up
         <li>Nginx как reverse proxy</li>
         <li>SSL/TLS с mkcert</li>
       </ul>
-    <img src="https://skillicons.dev/icons?i=docker,nginx,linux,bash&theme=dark" alt="Infrastructure Skills" width="100%">
+      <br/>
+      <img src="https://skillicons.dev/icons?i=docker,nginx,linux,bash&theme=dark" alt="Infrastructure Skills" width="100%">
     </td>
   </tr>
 </tbody>
