@@ -30,8 +30,6 @@ interface RequestDataManagerProps {
  * @namespace Features.RequestDataManager.Ui.RequestDataManager
  */
 export const RequestDataManager = ({ initialFilter, onFilter, onFilterQuery }: RequestDataManagerProps) => {
-  console.log("RequestDataManager")
-
   const sortItems = useMemo(
     () => [
       { label: "Дата создания", value: "createdAt" },
@@ -147,8 +145,6 @@ export const RequestDataManager = ({ initialFilter, onFilter, onFilterQuery }: R
 
   // Сортировка
   const sorter = useMemo(() => {
-    console.log("sorter useMemo", sortField, sortOrder)
-
     return (
       <Sorter
         items={sortItems}

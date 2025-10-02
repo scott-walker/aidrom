@@ -22,8 +22,6 @@ type ChatDialogProps = {
  * @namespace Widgets.Chat
  */
 export const ChatDialog = ({ chatId, className = "" }: ChatDialogProps) => {
-  console.log("ChatDialog")
-
   const { chat, isLoading: isChatLoading } = useChatById(chatId)
   const { messages, isLoading: isMessagesLoading } = useChatMessages(chatId)
 

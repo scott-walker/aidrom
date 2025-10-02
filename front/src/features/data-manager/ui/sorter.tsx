@@ -37,8 +37,6 @@ export const Sorter = ({
   placeholder = "Выберите сортировку",
   label = "Сортировка"
 }: SorterProps) => {
-  console.log("Sorter", { field, order })
-
   order = order ?? SORT_ORDER_ASC
 
   const orderItems: SelectItem[] = [

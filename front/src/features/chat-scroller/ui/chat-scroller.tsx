@@ -18,8 +18,6 @@ export const ChatScroller = ({ chatId }: ChatScrollerProps) => {
   const isPending = useChatStore(state => state.isPending)
   const { scrollerEndRef, scrollToBottom } = useScroll()
 
-  console.log("ChatScroller isPending", isPending)
-
   useEffect(() => scrollToBottom("instant"), [scrollToBottom, chatId])
   useEffect(() => scrollToBottom("smooth"), [scrollToBottom, isPending])
 

@@ -26,14 +26,6 @@ export const ChatMessage = ({ id, content, role, createdAt, className = "", styl
     return makeClasses(role === Roles.Agent && "items-start", role === Roles.Client && "items-end", className)
   }
 
-  // useEffect(() => {
-  //   console.log("ChatMessage mount", id)
-
-  //   return () => {
-  //     console.log("ChatMessage unmount", id)
-  //   }
-  // }, [id])
-
   const normalizedContent = role === Roles.Agent ? <Markdown value={content} /> : <p>{content}</p>
 
   return (

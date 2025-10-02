@@ -18,7 +18,7 @@ export const createRestClient = (config: RestClientConfig) => {
   // Перехватчик запросов
   client.interceptors.request.use(
     config => {
-      console.log(`🚀 ${config.method?.toUpperCase()} ${config.url}`)
+      // console.log(`🚀 ${config.method?.toUpperCase()} ${config.url}`)
       return config
     },
     error => Promise.reject(error)

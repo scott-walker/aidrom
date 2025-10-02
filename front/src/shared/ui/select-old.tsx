@@ -57,8 +57,6 @@ export const Select = ({
   renderItem,
   className
 }: SelectProps) => {
-  console.log("Select", placeholder, items)
-
   placeholder = hasEmpty ? emptyLabel : placeholder
 
   const triggerClasses = makeClasses(

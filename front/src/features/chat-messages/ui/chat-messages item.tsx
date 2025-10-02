@@ -17,8 +17,6 @@ type ChatMessagesItemProps = {
  * @namespace Features.ChatMessages.UI.ChatMessagesItem
  */
 export const ChatMessagesItem = memo(({ itemKey, index, start, children, measureElement }: ChatMessagesItemProps) => {
-  // console.log("ChatMessagesItem", index)
-
   return (
     <div
       key={itemKey}

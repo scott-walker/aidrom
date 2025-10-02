@@ -21,8 +21,6 @@ type ChatMessagesProps = {
  * @namespace Features.ChatMessages
  */
 export const ChatMessages = ({ chatId, messages, children }: ChatMessagesProps) => {
-  // console.log("ChatMessages")
-
   const containerRef = useRef<HTMLDivElement>(null)
   const virtualizer = useVirtualizer({
     count: messages.length + 1,
@@ -32,8 +30,6 @@ export const ChatMessages = ({ chatId, messages, children }: ChatMessagesProps) 
 
   const virtualItems = virtualizer.getVirtualItems()
   const messageItems = useMemo(() => {
-    // console.log("messageItemsUseMemo", virtualItems.length)
-
     return virtualItems.map(virtualRow => {
       const message = messages[virtualRow.index]
       const isLast = virtualRow.index === messages.length
