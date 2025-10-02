@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { Controller } from "react-hook-form"
 import { Json } from "@ui/json"
 import { IconButton } from "@ui/icon-button"
