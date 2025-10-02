@@ -113,7 +113,6 @@ make up
         <li>PostgreSQL</li>
         <li>Winston</li>
       </ul>
-      <br/>
     </td>
     <td valign="top">
       <ul>
@@ -124,7 +123,6 @@ make up
         <li>TanStack Query</li>
         <li>Zustand</li>
       </ul>
-      <br/>
     </td>
     <td valign="top">
       <ul>
@@ -132,7 +130,6 @@ make up
         <li>Nginx как reverse proxy</li>
         <li>SSL/TLS с mkcert</li>
       </ul>
-      <br/>
     </td>
   </tr>
 </tbody>
