@@ -91,17 +91,48 @@ make up
 └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
 ```
 
-
-## Stack
-
-<div align="center">
-
-| **Backend** | **Frontend** | **Infrastructure** |
-|:---|:---|:---|
-| [![Backend Skills](https://skillicons.dev/icons?i=nodejs,ts,express,postgres&theme=dark)](https://skillicons.dev) | [![Frontend Skills](https://skillicons.dev/icons?i=react,ts,vite,tailwind&theme=dark)](https://skillicons.dev) | [![Infrastructure Skills](https://skillicons.dev/icons?i=docker,nginx,linux,bash&theme=dark)](https://skillicons.dev) |
-| • Node.js 24 (TypeScript)<br/>• Express.js<br/>• Drizzle ORM<br/>• PostgreSQL<br/>• Winston | • React 19 (TypeScript)<br/>• Vite<br/>• React Router 7<br/>• React Hook Form<br/>• TanStack Query<br/>• Zustand<br/>• Axios<br/>• Zod<br/>• Tailwind CSS<br/>• Radix UI<br/>• Lucide React<br/>• FSD архитектура | • Docker & Docker Compose<br/>• Nginx как reverse proxy<br/>• SSL/TLS с mkcert<br/>• Linux<br/>• Bash scripting |
-
-</div>
+<table>
+<thead>
+  <tr>
+    <th>Backend</th>
+    <th>Frontend</th>
+    <th>Infrastructure</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td valign="top">
+      <ul>
+        <li>Node.js 24 (TypeScript)</li>
+        <li>Express.js</li>
+        <li>Drizzle ORM</li>
+        <li>PostgreSQL</li>
+        <li>Winston</li>
+      </ul>
+    <img src="https://skillicons.dev/icons?i=nodejs,ts,express,postgres,winston&theme=dark" alt="Backend Skills" width="100%">
+    </td>
+    <td valign="top">
+      <ul>
+        <li>React 19 (TypeScript)</li>
+        <li>Vite</li>
+        <li>React Router 7</li>
+        <li>React Hook Form</li>
+        <li>TanStack Query</li>
+        <li>Zustand</li>
+      </ul>
+    <img src="https://skillicons.dev/icons?i=react,ts,vite,tailwind,axios,zod&theme=dark" alt="Frontend Skills" width="100%">
+    </td>
+    <td valign="top">
+      <ul>
+        <li>Docker & Docker Compose</li>
+        <li>Nginx как reverse proxy</li>
+        <li>SSL/TLS с mkcert</li>
+      </ul>
+    <img src="https://skillicons.dev/icons?i=docker,nginx,linux,bash&theme=dark" alt="Infrastructure Skills" width="100%">
+    </td>
+  </tr>
+</tbody>
+</table>
 
 ## Управление
 
@@ -154,5 +185,4 @@ make db-reset    # Сброс базы данных
 
 Проект распространяется под лицензией [MIT](LICENSE).
 
-<img src="./etc/stack.png" alt="AIDrom Backend" width="100%" style="margin: 0 auto; display: block;">
-
+<img src="./etc/footer.png" alt="AIDrom" width="100%" style="margin: 0 auto; display: block;">
