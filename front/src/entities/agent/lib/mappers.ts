@@ -80,7 +80,6 @@ export const toAgentUpdateDTO = (data: AgentUpdateData): AgentUpdateDTO => {
   const dto = {} as AgentUpdateDTO
 
   if (data.name !== undefined) dto.name = data.name
-  // if (data.providerId !== undefined) dto.providerId = data.providerId
   if (data.params !== undefined) dto.params = data.params
   if (data.description !== undefined) dto.description = data.description
 

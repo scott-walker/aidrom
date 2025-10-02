@@ -41,7 +41,7 @@ export interface AgentListItemDTO {
  * @namespace Entities.Agent.Model.AgentParamsDTO
  */
 export interface AgentParamsDTO {
-  [key: string]: string | number | boolean
+  [key: string]: unknown
 }
 
 /**
