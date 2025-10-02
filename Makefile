@@ -202,24 +202,6 @@ hand-up: net-up	db-up	api-up front-up gateway-up
 # Ручное убийство всей инфраструктуры (для прода)
 hand-down: db-down api-down	front-down gateway-down	net-down
 
-# Очистить все блокировки
-# db-lock-clear:
-# 	sudo rm -rf \
-# 		./db/data/postmaster.pid \
-# 		./db/data/postgresql.lock \
-# 		./db/data/postgresql.log* \
-# 		./db/data/pg_logical/replorigin_checkpoint \
-# 		./db/data/pg_wal/000000010000000000000001 2>/dev/null || true
-
-# Полная очистка данных базы (ОСТОРОЖНО!)
-# db-drop:
-# 	@echo "⚠️ ВНИМАНИЕ: Это удалит ВСЕ данные базы данных! ⚠️"
-# 	@echo "Создание резервной копии..."
-# 	@cp -r ./db/data ./db/data_backup_$(date +%Y%m%d_%H%M%S) 2>/dev/null || true
-# 	@echo "Очистка данных..."
-# 	@rm -rf ./db/data/*
-# 	@echo "Данные очищены. Резервная копия сохранена."
-
 # Накатить миграции
 db-migrate:
 	docker exec -it -w /app api npm run db:push
