@@ -41,7 +41,7 @@ export const createRestClient: RestClientFactory = (config: RestClientConfig) =>
     res => {
       logger.info("Успешный запрос", {
         action: "interceptor.successResponse",
-        status: res.status,
+        status: res.status.toString(),
         url: res.config.url,
         method: res.config.method,
         data: res.data
@@ -53,7 +53,7 @@ export const createRestClient: RestClientFactory = (config: RestClientConfig) =>
       logger.error("Ошибка в запросе", {
         action: "interceptor.errorResponse",
         message: err.message,
-        status: err.response?.status,
+        status: err.response?.status?.toString(),
         url: err.config?.url,
         method: err.config?.method,
         responseData: err.response?.data
