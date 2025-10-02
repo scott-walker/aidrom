@@ -17,7 +17,7 @@ type SelectAvatarProps = Omit<SelectProps, "items"> & {
  * @namespace Shared.UI.AvatarSelect
  */
 export const SelectAvatar = ({ value, onChangeValue, disabled, ...props }: SelectAvatarProps) => {
-  const [avatar, setAvatar] = useState(value)
+  const [avatar, setAvatar] = useState<string | undefined>(value ?? undefined)
   const [seed, setSeed] = useState(avatarList[0].value)
   const [color, setColor] = useState("#ffffff")
 
@@ -28,6 +28,14 @@ export const SelectAvatar = ({ value, onChangeValue, disabled, ...props }: Selec
     onChangeValue?.(avatar)
   }, [seed, color, onChangeValue])
 
+  const handleSeedChange = (value: string | null) => {
+    if (value) setSeed(value)
+  }
+
+  const handleColorChange = (value: string | null) => {
+    if (value) setColor(value)
+  }
+
   return (
     <div className="flex items-center justify-center gap-4">
       <Avatar src={avatar} size="xl" />
@@ -36,10 +44,10 @@ export const SelectAvatar = ({ value, onChangeValue, disabled, ...props }: Selec
         {...props}
         items={avatarList}
         value={seed}
-        onChangeValue={setSeed}
+        onChangeValue={handleSeedChange}
         disabled={disabled}
       />
-      <SelectColor className="w-fit" value={color} onChangeValue={setColor} disabled={disabled} />
+      <SelectColor className="w-fit" value={color} onChangeValue={handleColorChange} disabled={disabled} />
     </div>
   )
 }
