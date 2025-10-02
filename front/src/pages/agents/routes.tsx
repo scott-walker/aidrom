@@ -2,8 +2,8 @@ import { Outlet } from "react-router"
 import type { PageRoutes } from "@lib/page-api/types"
 import { LoaderBlock } from "@ui/loader-block"
 import { AgentsLayout } from "./layout"
-// import { Main } from "./pages/main"
-// import { Agent } from "./pages/agent"
+import { Main } from "./pages/main"
+import { Agent } from "./pages/agent"
 
 /**
  * Маршруты страницы Agents
@@ -20,19 +20,11 @@ export const routes: PageRoutes = {
   children: [
     {
       index: true,
-      lazy: async () => {
-        const { Main } = await import("./pages/main")
-
-        return { element: <Main /> }
-      }
+      element: <Main />
     },
     {
       path: ":agentId",
-      lazy: async () => {
-        const { Agent } = await import("./pages/agent")
-
-        return { element: <Agent /> }
-      }
+      element: <Agent />
     }
   ]
 }
