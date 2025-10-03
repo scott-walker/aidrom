@@ -53,8 +53,8 @@
 
 ```bash
 # Клонирование репозитория
-git clone https://github.com/your-org/aidrom.tech.git
-cd aidrom.tech
+git clone https://github.com/scott-walker/aidrom.git
+cd aidrom
 
 # Генерация SSL сертификатов
 sudo apt install libnss3-tools mkcert
