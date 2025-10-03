@@ -84,7 +84,7 @@ make up
 ## Архитектура
 
 ```
-🌐 Gateway    ⚛️ Frontend    🔧 API        🗄️ Database
+🌐 Gateway    ⚛️ Frontend    ⚙️ API        🗄️ Database
    (Nginx)  ────  (React)  ──── (Node.js) ──── (PostgreSQL)
 ```
     
